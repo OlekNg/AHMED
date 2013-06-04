@@ -40,9 +40,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Chromosome.cs" />
+    <Compile Include="Evaluator.cs" />
+    <Compile Include="Generation.cs" />
+    <Compile Include="ISimulationResult.cs" />
     <Compile Include="Population.cs" />
     <Compile Include="Selector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestSimulationResult.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
