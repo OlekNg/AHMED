@@ -40,6 +40,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BuildingMap.cs" />
+    <Compile Include="FloorSquare.cs" />
+    <Compile Include="IWallElement.cs" />
     <Compile Include="PeopleGroup.cs" />
     <Compile Include="PeopleMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
