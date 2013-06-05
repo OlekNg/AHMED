@@ -8,5 +8,8 @@ namespace Structure
 {
     public class PeopleMap
     {
+        public PeopleGroup[] People;
+
+        
     }
 }

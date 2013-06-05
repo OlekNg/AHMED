@@ -15,5 +15,7 @@ namespace Structure
         public uint Quantity { get; set; }
 
         public uint Ticks { get; set; }
+
+        public bool Processed;
     }
 }

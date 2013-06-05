@@ -13,11 +13,31 @@ namespace Simulation
 
         public PeopleMap PeopleMap { get; set; }
 
-        public int MaximumTicks { get; set; }
+        public uint MaximumTicks { get; set; }
 
         public PeopleGroup[] Simulate(bool[] genotype)
         {
+            for (uint i = 0; i < MaximumTicks; ++i)
+            {
+                foreach(PeopleGroup group in PeopleMap.People){
+                    if (!group.Processed)
+                    {
+                        //TODO: magic
+
+
+                       
+                    }
+                }
+            }
+
             return null;
+        }
+
+        private void Process(PeopleGroup group)
+        {
+            //TODO: magic^2
+
+            group.Processed = true;
         }
     }
 }
