@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="BuildingMap.cs" />
     <Compile Include="PeopleGroup.cs" />
+    <Compile Include="PeopleMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
