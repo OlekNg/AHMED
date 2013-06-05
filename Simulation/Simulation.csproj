@@ -43,6 +43,12 @@
     <Compile Include="Simulator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Structure\Structure.csproj">
+      <Project>{fe48dff8-eacb-4778-9df0-5d71a664927a}</Project>
+      <Name>Structure</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
