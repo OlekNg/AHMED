@@ -8,6 +8,10 @@ namespace Structure
 {
     public class PeopleGroup
     {
+        public uint X { get; set; }
+
+        public uint Y { get; set; }
+
         public uint Quantity { get; set; }
 
         public uint Ticks { get; set; }
