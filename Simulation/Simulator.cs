@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Structure;
 
 namespace Simulation
 {
     public class Simulator
     {
-        public SimulationResult Simulate(bool[] genotype)
+
+
+        public PeopleGroup[] Simulate(bool[] genotype)
         {
             return null;
         }
