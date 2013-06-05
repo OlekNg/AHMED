@@ -15,7 +15,7 @@ namespace Simulation
 
         public uint MaximumTicks { get; set; }
 
-        public PeopleGroup[] Simulate(bool[] genotype)
+        public PeopleGroup[] Simulate()
         {
             for (uint i = 0; i < MaximumTicks; ++i)
             {
@@ -33,11 +33,18 @@ namespace Simulation
             return null;
         }
 
+        public void MapGenotype(bool[] genotype)
+        {
+            BuildingMap.MapGenotype(genotype);
+        }
+
         private void Process(PeopleGroup group)
         {
             //TODO: magic^2
 
             group.Processed = true;
+
+            
         }
     }
 }
