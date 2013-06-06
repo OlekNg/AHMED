@@ -6,14 +6,16 @@ using System.Threading.Tasks;
 
 namespace Simulation
 {
-    public class EvacuationGroup
+    public class EscapedGroup
     {
         public uint Quantity { get; set; }
 
         public uint Ticks { get; set; }
 
-        public bool Processed { get; set; }
-
-        public EvacuationElement Position { get; set; }
+        public EscapedGroup(EvacuationElement ee)
+        {
+            Quantity = ee.PeopleQuantity;
+            Ticks = ee.Ticks;
+        }
     }
 }

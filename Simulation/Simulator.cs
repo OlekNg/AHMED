@@ -17,7 +17,9 @@ namespace Simulation
 
         private EvacuationElement[][] _evacuationMap;
 
-        private EvacuationGroup[] _groupsToEvacuate;
+        private List<EvacuationElement> _evacuationGroups = new List<EvacuationElement>();
+
+        private List<EscapedGroup> _escapedGroups = new List<EscapedGroup>();
 
         public void SetupSimulator()
         {
@@ -47,44 +49,57 @@ namespace Simulation
 
             for (uint i = 0; i < MaximumTicks; ++i)
             {
-                foreach(EvacuationGroup group in _groupsToEvacuate){
-                    if (!group.Processed)
-                    {
-                        //TODO: magic
-                        Process(group);
+                for (int j = _evacuationGroups.Count - 1; j >= 0; --j)
+                {
+                    Process(_evacuationGroups[j], i);
+                }
 
-                       
+                for (int j = _evacuationGroups.Count - 1; j >= 0; --j)
+                {
+                    if (_evacuationGroups[j].PeopleQuantity == 0)
+                    {
+                        _evacuationGroups.RemoveAt(j);
+                    }
+                    else
+                    {
+                        _evacuationGroups[j].Processed = false;
                     }
                 }
 
-                //reset Processed
             }
 
             return null;
         }
 
-        private EvacuationGroup Process(EvacuationGroup group)
+        private void Process(EvacuationElement group, uint tick)
         {
-            //TODO: magic^2
-            EvacuationGroup targetGroup;
+            uint targetGroupQuantity;
+            EvacuationElement nextStep = group.NextStep;
+
+            if (group.Processed == true) return;
 
             group.Processed = true;
+            group.Ticks = tick;
 
-            if (group.Position.NextStep == null)
+            if (nextStep == null)
             {
                 //group finally evacuated, yeah
-                if (group.Position.Passage.CanPassThrough())
+                if (group.Passage.CanPassThrough())
                 {
-                    uint passageEfficency = group.Position.Passage.Capacity();
-                    if (group.Quantity <= passageEfficency)
+                    uint passageEfficency = group.Passage.Capacity();
+                    if (group.PeopleQuantity <= passageEfficency)
                     {
                         //whole group escaped
-                        return group;
+                        group.PeopleQuantity = 0;
+                        _escapedGroups.Add(new EscapedGroup(group));
+                        return;
                     }
                     else
                     {
                         //partial group escaped
-
+                        group.PeopleQuantity -= passageEfficency;
+                        _escapedGroups.Add(new EscapedGroup(group));
+                        return;
                     }
                 }
                 else
@@ -94,18 +109,129 @@ namespace Simulation
                 }
             }
 
-            return null;
+            //there is more steps to do in evacuation route
+            targetGroupQuantity = nextStep.PeopleQuantity;
 
-            /*
-            if ((targetGroup = group.Position.NextStep.EvacuatingGroup) == null)
+            if (targetGroupQuantity == 0)
             {
+                //there is no other group on the next step
+                uint maximumCapacity = nextStep.FloorSquare.Capacity;
+                if (nextStep.Passage != null)
+                {
+                    //there is wall or door
+                    if (nextStep.Passage.CanPassThrough())
+                    {
+                        //door, uff
+                        maximumCapacity = Math.Min(maximumCapacity, nextStep.Passage.Capacity());
+                        if (group.PeopleQuantity <= maximumCapacity)
+                        {
+                            //move whole group
+                            nextStep.PeopleQuantity = group.PeopleQuantity;
+                            nextStep.Processed = true;
+                            group.PeopleQuantity = 0;
+                            _evacuationGroups.Add(nextStep);
+                        }
+                        else
+                        {
+                            //move part of group
+                            nextStep.PeopleQuantity = maximumCapacity;
+                            nextStep.Processed = true;
+                            group.PeopleQuantity -= maximumCapacity;
+                            _evacuationGroups.Add(nextStep);
+                        }
+                    }
+                    else
+                    {
+                        //wall, wtf?!
+                        //error
+                    }
 
+                }
+                else
+                {
+                    //there is no wall or door
+                    if (group.PeopleQuantity <= maximumCapacity)
+                    {
+                        //move whole group
+                        nextStep.PeopleQuantity = group.PeopleQuantity;
+                        nextStep.Processed = true;
+                        group.PeopleQuantity = 0;
+                        _evacuationGroups.Add(nextStep);
+                    }
+                    else
+                    {
+                        //move part of group
+                        nextStep.PeopleQuantity = maximumCapacity;
+                        nextStep.Processed = true;
+                        group.PeopleQuantity -= maximumCapacity;
+                        _evacuationGroups.Add(nextStep);
+                    }
+                }
             }
             else
             {
-                //if(targetGroup
+                //there is somebody
+                Process(nextStep, tick);
+                uint maximumCapacity = nextStep.PeopleQuantityLeft;
+                if (maximumCapacity == 0)
+                {
+                    //there is no room for anybody
+                    return;
+                }
+
+                if (nextStep.Passage != null)
+                {
+                    //there is wall or door
+                    if (nextStep.Passage.CanPassThrough())
+                    {
+                        //door, uff
+                        maximumCapacity = Math.Min(maximumCapacity, nextStep.Passage.Capacity());
+                        if (group.PeopleQuantity <= maximumCapacity)
+                        {
+                            //move whole group
+                            nextStep.PeopleQuantity = group.PeopleQuantity;
+                            nextStep.Processed = true;
+                            group.PeopleQuantity = 0;
+                            _evacuationGroups.Add(nextStep);
+                        }
+                        else
+                        {
+                            //move part of group
+                            nextStep.PeopleQuantity = maximumCapacity;
+                            nextStep.Processed = true;
+                            group.PeopleQuantity -= maximumCapacity;
+                            _evacuationGroups.Add(nextStep);
+                        }
+                    }
+                    else
+                    {
+                        //wall, wtf?!
+                        //error
+                    }
+
+                }
+                else
+                {
+                    //there is no wall or door
+                    if (group.PeopleQuantity <= maximumCapacity)
+                    {
+                        //move whole group
+                        nextStep.PeopleQuantity = group.PeopleQuantity;
+                        nextStep.Processed = true;
+                        group.PeopleQuantity = 0;
+                        _evacuationGroups.Add(nextStep);
+                    }
+                    else
+                    {
+                        //move part of group
+                        nextStep.PeopleQuantity = maximumCapacity;
+                        nextStep.Processed = true;
+                        group.PeopleQuantity -= maximumCapacity;
+                        _evacuationGroups.Add(nextStep);
+                    }
+                }
             }
-            */
+
         }
     }
 }
