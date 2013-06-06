@@ -48,6 +48,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Wall.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Genetics\Genetics.csproj">
+      <Project>{b9d02f16-015b-4640-aed3-f850ae382a32}</Project>
+      <Name>Genetics</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
