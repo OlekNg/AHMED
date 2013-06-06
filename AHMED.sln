@@ -2,6 +2,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AHMED", "AHMED\AHMED.csproj", "{46211B00-CEF6-486B-B20C-EAACBF4E4DD9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B9D02F16-015B-4640-AED3-F850AE382A32} = {B9D02F16-015B-4640-AED3-F850AE382A32}
+		{A479BFB8-948E-4CFB-B9AF-A8D1ACC4AF44} = {A479BFB8-948E-4CFB-B9AF-A8D1ACC4AF44}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Genetics", "Genetics\Genetics.csproj", "{B9D02F16-015B-4640-AED3-F850AE382A32}"
 EndProject

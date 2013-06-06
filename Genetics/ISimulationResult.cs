@@ -10,22 +10,22 @@ namespace Genetics
     /// Result from simulator has to implement this interface.
     /// (This is expected data by genetic algorithm.)
     /// </summary>
-    interface ISimulationResult
+    public interface ISimulationResult
     {
         /// <summary>
         /// Avarage time that each persons needed
         /// to leave the building.
         /// </summary>
-        public double AvgEscapeTime { get; }
+        double AvgEscapeTime { get; }
 
         /// <summary>
         /// The longest escape time.
         /// </summary>
-        public double MaxEscapeTime { get; }
+        double MaxEscapeTime { get; }
 
         /// <summary>
         /// True if there are people left in the building.
         /// </summary>
-        public bool PeopleLeftInBuilding { get; }
+        bool PeopleLeftInBuilding { get; }
     }
 }
