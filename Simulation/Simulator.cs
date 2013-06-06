@@ -9,9 +9,9 @@ namespace Simulation
 {
     public class Simulator
     {
-        public BuildingMap BuildingMap { get; set; }
+        private BuildingMap _buildingMap;
 
-        public PeopleMap PeopleMap { get; set; }
+        private PeopleMap _peopleMap;
 
         public uint MaximumTicks { get; set; }
 
@@ -21,24 +21,28 @@ namespace Simulation
 
         private List<EscapedGroup> _escapedGroups = new List<EscapedGroup>();
 
-        public void SetupSimulator()
+        public void SetupSimulator(BuildingMap bm, PeopleMap pm)
         {
-            if (BuildingMap == null) return;
-            if (PeopleMap == null) return;
+            if (bm == null) return;
+            if (pm == null) return;
 
-            _evacuationMap = new EvacuationElement[BuildingMap.Width][];
-            for (uint i = 0; i < BuildingMap.Width; ++i)
+            _buildingMap = bm;
+            _peopleMap = pm;
+
+            _evacuationMap = new EvacuationElement[_buildingMap.Width][];
+            for (uint i = 0; i < _buildingMap.Width; ++i)
             {
-                _evacuationMap[i] = new EvacuationElement[BuildingMap.Height];
-                for (int j = 0; j < BuildingMap.Height; ++j)
+                _evacuationMap[i] = new EvacuationElement[_buildingMap.Height];
+                for (int j = 0; j < _buildingMap.Height; ++j)
                 {
-                    _evacuationMap[i][j].FloorSquare = BuildingMap.Floor[i][j];
+                    _evacuationMap[i][j].FloorSquare = _buildingMap.Floor[i][j];
                 }
             }
         }
 
         public PeopleGroup[] Simulate(bool[] genotype)
         {
+            //setup current situation
             foreach (EvacuationElement[] e in _evacuationMap)
             {
                 foreach (EvacuationElement element in e)
@@ -84,9 +88,9 @@ namespace Simulation
             if (nextStep == null)
             {
                 //group finally evacuated, yeah
-                if (group.Passage.CanPassThrough())
+                if (group.Passage.CanPassThrough)
                 {
-                    uint passageEfficency = group.Passage.Capacity();
+                    uint passageEfficency = group.Passage.Capacity;
                     if (group.PeopleQuantity <= passageEfficency)
                     {
                         //whole group escaped
@@ -119,10 +123,10 @@ namespace Simulation
                 if (nextStep.Passage != null)
                 {
                     //there is wall or door
-                    if (nextStep.Passage.CanPassThrough())
+                    if (nextStep.Passage.CanPassThrough)
                     {
                         //door, uff
-                        maximumCapacity = Math.Min(maximumCapacity, nextStep.Passage.Capacity());
+                        maximumCapacity = Math.Min(maximumCapacity, nextStep.Passage.Capacity);
                         if (group.PeopleQuantity <= maximumCapacity)
                         {
                             //move whole group
@@ -182,10 +186,10 @@ namespace Simulation
                 if (nextStep.Passage != null)
                 {
                     //there is wall or door
-                    if (nextStep.Passage.CanPassThrough())
+                    if (nextStep.Passage.CanPassThrough)
                     {
                         //door, uff
-                        maximumCapacity = Math.Min(maximumCapacity, nextStep.Passage.Capacity());
+                        maximumCapacity = Math.Min(maximumCapacity, nextStep.Passage.Capacity);
                         if (group.PeopleQuantity <= maximumCapacity)
                         {
                             //move whole group
