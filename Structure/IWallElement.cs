@@ -8,8 +8,8 @@ namespace Structure
 {
     public interface IWallElement
     {
-        public bool CanPassThrough();
+        bool CanPassThrough();
 
-        public uint Capacity();
+        uint Capacity();
     }
 }
