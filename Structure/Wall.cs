@@ -8,13 +8,20 @@ namespace Structure
 {
     public class Wall : IWallElement
     {
-        public bool CanPassThrough()
+        public bool CanPassThrough
         {
-            return false;
+            get
+            {
+                return false;
+            }
         }
 
-        public uint Capacity() {
-            return 0;
+        public uint Capacity
+        {
+            get
+            {
+                return 0;
+            }
         }
     }
 }

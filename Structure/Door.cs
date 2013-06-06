@@ -8,16 +8,14 @@ namespace Structure
 {
     public class Door : IWallElement
     {
-        private uint _capacity;
-
-        public bool CanPassThrough()
+        public bool CanPassThrough
         {
-            return true;
+            get
+            {
+                return true;
+            }
         }
 
-        public uint Capacity()
-        {
-            return _capacity;
-        }
+        public uint Capacity { get; set; }
     }
 }
