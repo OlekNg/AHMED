@@ -50,9 +50,47 @@ namespace Genetics
         }
 
         /// <summary>
+        /// Possible fenotype's alleles.
+        /// </summary>
+        public enum Allele { UP, DOWN, LEFT, RIGHT }
+
+        /// <summary>
         /// Crossover operator used by Cross...() methods.
         /// </summary>
         public static ICrossoverOperator CrossoverOperator { get; set; }
+
+        /// <summary>
+        /// Chromosome's fenotype.
+        /// </summary>
+        public List<Allele> Fenotype
+        {
+            get
+            {
+                if (Length % 2 != 0)
+                    throw new Exception("Invalid chromosome! There should be even number of bits.");
+
+                List<Allele> fenotype = new List<Allele>(Length / 2);
+                for (int i = 0; i < Length; i += 2)
+                {
+                    if (_genotype[i] == true)
+                    {
+                        if (_genotype[i + 1] == true)
+                            fenotype.Add(Allele.RIGHT); // 11
+                        else
+                            fenotype.Add(Allele.UP); // 10
+                    }
+                    else
+                    {
+                        if (_genotype[i + 1] == true)
+                            fenotype.Add(Allele.DOWN); // 01
+                        else
+                            fenotype.Add(Allele.LEFT); // 00
+                    }
+                }
+
+                return fenotype;
+            }
+        }
 
         /// <summary>
         /// Property for binary chain.
