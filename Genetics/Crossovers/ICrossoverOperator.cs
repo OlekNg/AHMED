@@ -9,7 +9,7 @@ namespace Genetics.Crossovers
     /// <summary>
     /// Interface for crossover operators.
     /// </summary>
-    interface ICrossoverOperator
+    public interface ICrossoverOperator
     {
         /// <summary>
         /// Performs crossover. Doesn't affect arguments.
@@ -20,7 +20,7 @@ namespace Genetics.Crossovers
         Chromosome[] CrossAndCreate(Chromosome c1, Chromosome c2);
 
         /// <summary>
-        /// Performs crossover replacing given chromosomes.
+        /// Performs crossover replacing original chromosomes.
         /// </summary>
         /// <param name="c1">First chromosome.</param>
         /// <param name="c2">Second chromosome.</param>
