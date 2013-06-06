@@ -8,10 +8,14 @@ namespace Structure
 {
     public class BuildingMap
     {
-        private Door[] _doors;
+        public uint Height { get; set; }
 
-        private Wall[] _walls;
+        public uint Width { get; set; }
 
-        private FloorSquare[][] _floor;
+        public Door[] Doors { get; set; }
+
+        public Wall[] Walls { get; set; }
+
+        public FloorSquare[][] Floor { get; set; }
     }
 }
