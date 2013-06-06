@@ -9,5 +9,7 @@ namespace Structure
     public class FloorSquare
     {
         public uint Capacity { get; set; }
+
+        public IWallElement[] Side { get; set; }
     }
 }
