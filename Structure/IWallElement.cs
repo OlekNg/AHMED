@@ -10,6 +10,6 @@ namespace Structure
     {
         public bool CanPassThrough();
 
-
+        public uint Capacity();
     }
 }
