@@ -6,12 +6,20 @@ using System.Threading.Tasks;
 
 namespace Genetics
 {
-    class Chromosome
+    public class Chromosome
     {
         /// <summary>
-        /// Default constructor.
+        /// Binary chain.
         /// </summary>
-        public Chromosome() { }
+        private List<bool> _genotype;
+
+        /// <summary>
+        /// Default constructor - empty chromosome.
+        /// </summary>
+        public Chromosome()
+        {
+            _genotype = new List<bool>();
+        }
 
         /// <summary>
         /// Constructor.
@@ -19,13 +27,37 @@ namespace Genetics
         /// <param name="genotype">Initial genotype.</param>
         public Chromosome(bool[] genotype)
         {
-            Genotype = genotype;
+            _genotype = new List<bool>(genotype);
         }
 
         /// <summary>
-        /// Binary chain.
+        /// Constructor.
         /// </summary>
-        public bool[] Genotype { get; set; }
+        /// <param name="genotype">String that contains numbers 1 or 0.</param>
+        public Chromosome(string genotype)
+        {
+            _genotype = new List<bool>(genotype.Length);
+
+            for (int i = 0; i < genotype.Length; i++)
+                _genotype.Add(genotype[i] == '1' ? true : false);
+        }
+
+        /// <summary>
+        /// Property for binary chain.
+        /// </summary>
+        public List<bool> Genotype
+        {
+            get { return _genotype; }
+            set { _genotype = value; }
+        }
+
+        /// <summary>
+        /// Length of chromosome (its genotype).
+        /// </summary>
+        public int Length
+        {
+            get { return _genotype.Count; }
+        }
 
         /// <summary>
         /// Performs crossover with other chromosome
@@ -46,6 +78,16 @@ namespace Genetics
         public void Mutate(double probability)
         {
             return;
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder(_genotype.Count);
+
+            for (int i = 0; i < _genotype.Count; i++)
+                sb.Append(_genotype[i] == true ? '1' : '0');
+
+            return sb.ToString();
         }
     }
 }
