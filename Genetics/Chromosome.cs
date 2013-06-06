@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Genetics.Evaluators;
 
 namespace Genetics
 {
@@ -14,6 +15,11 @@ namespace Genetics
         /// Binary chain.
         /// </summary>
         private List<bool> _genotype;
+
+        /// <summary>
+        /// Chromosome value produced by evaluator.
+        /// </summary>
+        private double _value;
 
         /// <summary>
         /// Default constructor - empty chromosome.
@@ -60,12 +66,18 @@ namespace Genetics
         public static ICrossoverOperator CrossoverOperator { get; set; }
 
         /// <summary>
+        /// Evaluator used by Evaluate() method.
+        /// </summary>
+        public static IEvaluator Evaluator { get; set; }
+
+        /// <summary>
         /// Chromosome's fenotype.
         /// </summary>
         public List<Allele> Fenotype
         {
             get
             {
+                // To convert to fenotype bits have to be paired.
                 if (Length % 2 != 0)
                     throw new Exception("Invalid chromosome! There should be even number of bits.");
 
@@ -115,6 +127,14 @@ namespace Genetics
         public static IMutationOperator MutationOperator { get; set; }
 
         /// <summary>
+        /// Readonly accessor for chromosome's value.
+        /// </summary>
+        public double Value
+        {
+            get { return _value; }
+        }
+
+        /// <summary>
         /// Performs crossing over with chromosome c and creates new
         /// chromosomes. Doesn't affect original chromosomes.
         /// </summary>
@@ -141,6 +161,17 @@ namespace Genetics
                 throw new CrossoverException("No crossover operator defined!");
 
             CrossoverOperator.CrossAndReplace(this, c);
+        }
+
+        /// <summary>
+        /// Evaluates chromosome - stores evaluated value in the Value property.
+        /// </summary>
+        public void Evaluate()
+        {
+            if (Evaluator == null)
+                throw new EvaluatorException("No evaluator defined!");
+
+            _value = Evaluator.Evaluate(this);
         }
 
         /// <summary>

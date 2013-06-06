@@ -21,7 +21,7 @@ namespace Genetics
         /// <param name="avgTime">Avarage escape time.</param>
         /// <param name="maxTime">Max escape time.</param>
         /// <param name="peopleLeft">Is there people left in the building.</param>
-        TestSimulationResult(double avgTime, double maxTime, bool peopleLeft)
+        public TestSimulationResult(double avgTime, double maxTime, bool peopleLeft)
         {
             _avgEscapeTime = avgTime;
             _maxEscapeTime = maxTime;

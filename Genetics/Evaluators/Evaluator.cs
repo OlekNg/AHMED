@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Genetics
+namespace Genetics.Evaluators
 {
     /// <summary>
     /// Calculates fitness function.
     /// It is a midclass between simulator and generation.
     /// </summary>
-    class Evaluator
+    class Evaluator : IEvaluator
     {
         /// <summary>
         /// Default constructor.
@@ -24,7 +24,7 @@ namespace Genetics
         /// chromosome.</param>
         public Evaluator(SimulationDelegate simulationFunction)
         {
-            SimulationFunction = simulationFunction;
+            Simulate = simulationFunction;
         }
 
         /// <summary>
@@ -33,18 +33,35 @@ namespace Genetics
         /// <param name="genotype">Genotype to simulate.</param>
         /// <returns>Simulation result - see ISimulationResult interface.</returns>
         /// <see cref="ISimulationResult"/>
-        public delegate ISimulationResult SimulationDelegate(bool[] genotype);
+        public delegate ISimulationResult SimulationDelegate(Chromosome c);
 
-        /// <summary>
-        /// Chromosome that will be passed to simulator
-        /// and evaluated afterwards.
-        /// </summary>
-        public Chromosome Chromosome { get; set; }
+        public double Evaluate(Chromosome c)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Property for simulation function.
         /// <see cref="SimulationDelegate"/>
         /// </summary>
-        public SimulationDelegate SimulationFunction { get; set; }
+        public SimulationDelegate Simulate { get; set; }
+
+        /// <summary>
+        /// For testing purposes.
+        /// </summary>
+        /// <param name="genotype"></param>
+        /// <returns></returns>
+        public TestSimulationResult TestSimulationFunction(Chromosome c)
+        {
+            
+            List<bool> genotype = c.Genotype;
+            double sum = genotype.Count * genotype.Count + 2;
+            for (int i = 0; i < genotype.Count; i++)
+            {
+                sum -= genotype[i] ? i : 0;
+            }
+
+            return new TestSimulationResult(sum, 10, false);
+        }
     }
 }
