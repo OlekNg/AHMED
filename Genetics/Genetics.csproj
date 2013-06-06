@@ -40,6 +40,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Chromosome.cs" />
+    <Compile Include="Crossovers\CrossoverException.cs" />
+    <Compile Include="Crossovers\ICrossoverOperator.cs" />
+    <Compile Include="Crossovers\OnePointCrossover.cs" />
     <Compile Include="Evaluator.cs" />
     <Compile Include="Generation.cs" />
     <Compile Include="ISimulationResult.cs" />
@@ -47,6 +50,9 @@
     <Compile Include="Selector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestSimulationResult.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Selectors\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
