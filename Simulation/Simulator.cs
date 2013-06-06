@@ -15,36 +15,97 @@ namespace Simulation
 
         public uint MaximumTicks { get; set; }
 
-        public PeopleGroup[] Simulate()
+        private EvacuationElement[][] _evacuationMap;
+
+        private EvacuationGroup[] _groupsToEvacuate;
+
+        public void SetupSimulator()
         {
+            if (BuildingMap == null) return;
+            if (PeopleMap == null) return;
+
+            _evacuationMap = new EvacuationElement[BuildingMap.Width][];
+            for (uint i = 0; i < BuildingMap.Width; ++i)
+            {
+                _evacuationMap[i] = new EvacuationElement[BuildingMap.Height];
+                for (int j = 0; j < BuildingMap.Height; ++j)
+                {
+                    _evacuationMap[i][j].FloorSquare = BuildingMap.Floor[i][j];
+                }
+            }
+        }
+
+        public PeopleGroup[] Simulate(bool[] genotype)
+        {
+            foreach (EvacuationElement[] e in _evacuationMap)
+            {
+                foreach (EvacuationElement element in e)
+                {
+                    //change nextroom, passage and so on
+                }
+            }
+
             for (uint i = 0; i < MaximumTicks; ++i)
             {
-                foreach(PeopleGroup group in PeopleMap.People){
+                foreach(EvacuationGroup group in _groupsToEvacuate){
                     if (!group.Processed)
                     {
                         //TODO: magic
-
+                        Process(group);
 
                        
                     }
                 }
+
+                //reset Processed
             }
 
             return null;
         }
 
-        public void MapGenotype(bool[] genotype)
-        {
-            BuildingMap.MapGenotype(genotype);
-        }
-
-        private void Process(PeopleGroup group)
+        private EvacuationGroup Process(EvacuationGroup group)
         {
             //TODO: magic^2
+            EvacuationGroup targetGroup;
 
             group.Processed = true;
 
-            
+            if (group.Position.NextStep == null)
+            {
+                //group finally evacuated, yeah
+                if (group.Position.Passage.CanPassThrough())
+                {
+                    uint passageEfficency = group.Position.Passage.Capacity();
+                    if (group.Quantity <= passageEfficency)
+                    {
+                        //whole group escaped
+                        return group;
+                    }
+                    else
+                    {
+                        //partial group escaped
+
+                    }
+                }
+                else
+                {
+                    //there is a wall
+                    //error
+                }
+            }
+
+            return null;
+
+            /*
+            if ((targetGroup = group.Position.NextStep.EvacuatingGroup) == null)
+            {
+
+            }
+            else
+            {
+                //if(targetGroup
+            }
+            */
         }
     }
 }
