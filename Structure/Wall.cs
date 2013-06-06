@@ -13,7 +13,7 @@ namespace Structure
             return false;
         }
 
-        public int Capacity() {
+        public uint Capacity() {
             return 0;
         }
     }
