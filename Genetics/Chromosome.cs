@@ -32,6 +32,11 @@ namespace Genetics
             _genotype = new List<bool>(genotype);
         }
 
+        public Chromosome(List<bool> genotype)
+        {
+            _genotype = new List<bool>(genotype);
+        }
+
         /// <summary>
         /// Constructor.
         /// </summary>
