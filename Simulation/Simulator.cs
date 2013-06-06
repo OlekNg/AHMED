@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Structure;
+using Genetics;
+
 
 namespace Simulation
 {
@@ -40,7 +42,7 @@ namespace Simulation
             }
         }
 
-        public PeopleGroup[] Simulate(bool[] genotype)
+        public PeopleGroup[] Simulate(Chromosome genotype)
         {
             //setup current situation
             foreach (EvacuationElement[] e in _evacuationMap)
@@ -48,6 +50,7 @@ namespace Simulation
                 foreach (EvacuationElement element in e)
                 {
                     //change nextroom, passage and so on
+
                 }
             }
 
