@@ -46,6 +46,9 @@
     <Compile Include="Evaluator.cs" />
     <Compile Include="Generation.cs" />
     <Compile Include="ISimulationResult.cs" />
+    <Compile Include="Mutations\ClassicMutation.cs" />
+    <Compile Include="Mutations\IMutationOperator.cs" />
+    <Compile Include="Mutations\MutationException.cs" />
     <Compile Include="Population.cs" />
     <Compile Include="Selector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

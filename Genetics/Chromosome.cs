@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Genetics.Crossovers;
+using Genetics.Mutations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,6 +32,11 @@ namespace Genetics
             _genotype = new List<bool>(genotype);
         }
 
+        public Chromosome(List<bool> genotype)
+        {
+            _genotype = new List<bool>(genotype);
+        }
+
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -40,6 +47,49 @@ namespace Genetics
 
             for (int i = 0; i < genotype.Length; i++)
                 _genotype.Add(genotype[i] == '1' ? true : false);
+        }
+
+        /// <summary>
+        /// Possible fenotype's alleles.
+        /// </summary>
+        public enum Allele { UP, DOWN, LEFT, RIGHT }
+
+        /// <summary>
+        /// Crossover operator used by Cross...() methods.
+        /// </summary>
+        public static ICrossoverOperator CrossoverOperator { get; set; }
+
+        /// <summary>
+        /// Chromosome's fenotype.
+        /// </summary>
+        public List<Allele> Fenotype
+        {
+            get
+            {
+                if (Length % 2 != 0)
+                    throw new Exception("Invalid chromosome! There should be even number of bits.");
+
+                List<Allele> fenotype = new List<Allele>(Length / 2);
+                for (int i = 0; i < Length; i += 2)
+                {
+                    if (_genotype[i] == true)
+                    {
+                        if (_genotype[i + 1] == true)
+                            fenotype.Add(Allele.RIGHT); // 11
+                        else
+                            fenotype.Add(Allele.UP); // 10
+                    }
+                    else
+                    {
+                        if (_genotype[i + 1] == true)
+                            fenotype.Add(Allele.DOWN); // 01
+                        else
+                            fenotype.Add(Allele.LEFT); // 00
+                    }
+                }
+
+                return fenotype;
+            }
         }
 
         /// <summary>
@@ -60,24 +110,61 @@ namespace Genetics
         }
 
         /// <summary>
-        /// Performs crossover with other chromosome
-        /// using specific number of crossover points.
+        /// Mutation operator used by Mutate() methods.
         /// </summary>
-        /// <param name="points">Number of points to split the chromosome into.</param>
+        public static IMutationOperator MutationOperator { get; set; }
+
+        /// <summary>
+        /// Performs crossing over with chromosome c and creates new
+        /// chromosomes. Doesn't affect original chromosomes.
+        /// </summary>
         /// <param name="c">Second chromosome to crossover.</param>
-        /// <returns>New chromosome.</returns>
-        public Chromosome Crossover(uint points, Chromosome chromosome)
+        /// <returns>Recombined chromosomes.</returns>
+        /// <exception cref="CrossoverException">Occurs while no crossover operator is defined.</exception>
+        public Chromosome[] CrossAndCreate(Chromosome c)
         {
-            return null;
+            if (CrossoverOperator == null)
+                throw new CrossoverException("No crossover operator defined!");
+
+            return CrossoverOperator.CrossAndCreate(this, c);
         }
 
         /// <summary>
-        /// Mutates chromosome.
+        /// Performs crossing over with chromosome c and replaces genotype
+        /// of original chromosomes.
         /// </summary>
-        /// <param name="probability">Probability of single bit mutation.</param>
+        /// <param name="c">Second chromosome to crossover.</param>
+        /// /// <exception cref="CrossoverException">Occurs while no crossover operator is defined.</exception>
+        public void CrossAndReplace(Chromosome c)
+        {
+            if (CrossoverOperator == null)
+                throw new CrossoverException("No crossover operator defined!");
+
+            CrossoverOperator.CrossAndReplace(this, c);
+        }
+
+        /// <summary>
+        /// Mutates chromosome with default probability.
+        /// </summary>
+        /// <exception cref="MutationException">Occurs while no mutation operator is defined.</exception>
+        public void Mutate()
+        {
+            if (MutationOperator == null)
+                throw new MutationException("No mutation operator defined!");
+
+            MutationOperator.Mutate(this);
+        }
+
+        /// <summary>
+        /// Mutates chromosome with given probability.
+        /// </summary>
+        /// <exception cref="MutationException">Occurs while no mutation operator is defined.</exception>
         public void Mutate(double probability)
         {
-            return;
+            if (MutationOperator == null)
+                throw new MutationException("No mutation operator defined!");
+
+            MutationOperator.Mutate(this, probability);
         }
 
         public override string ToString()
