@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Genetics;
 
 namespace Structure
 {
@@ -46,23 +47,35 @@ namespace Structure
 
         private void SetWallElement(uint x, uint y, IWallElement wallElement)
         {
+            FloorSquare floor = Floor[x][y];
+
             if (x % 2 == 0)
             {
                 //column walls
-                if (x == 0)
+                if (x != 0)
                 {
-                    //first column
-                    
+                    //not first column
+                    Floor[x - 1][y].Side[(int)Chromosome.Allele.RIGHT] = wallElement;
                 }
-                else
+                if (x != Width)
                 {
-
+                    //not last column
+                    Floor[x][y].Side[(int)Chromosome.Allele.LEFT] = wallElement;
                 }
             }
             else
             {
                 //row walls
-
+                if (y != 0)
+                {
+                    //not top row
+                    Floor[x][y - 1].Side[(int)Chromosome.Allele.UP] = wallElement;
+                }
+                if (y != Height)
+                {
+                    //not last row
+                    Floor[x][y].Side[(int)Chromosome.Allele.DOWN] = wallElement;
+                }
             }
         }
     }
