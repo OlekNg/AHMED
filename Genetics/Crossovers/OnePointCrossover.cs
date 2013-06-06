@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Genetics.Crossovers
 {
-    class OnePointCrossover : ICrossoverOperator
+    public class OnePointCrossover : ICrossoverOperator
     {
         /// <summary>
         /// To draw a slice point.
@@ -26,8 +26,8 @@ namespace Genetics.Crossovers
             // Create new chromosomes.
             Chromosome[] result = new Chromosome[2];
 
-            result[0].Genotype = newGenotypes[0];
-            result[1].Genotype = newGenotypes[1];
+            result[0] = new Chromosome(newGenotypes[0]);
+            result[1] = new Chromosome(newGenotypes[1]);
 
             return result;
         }
@@ -70,13 +70,17 @@ namespace Genetics.Crossovers
             int length = c1.Length;
 
             // Slicing point.
-            int point = randomizer.Next(1, length - 1);
+            // Drawing from 1 to length, because Next(min, max)
+            // actually draws from min to (max-1).
+            int point = randomizer.Next(1, length);
 
             // Combine and create new genotypes.
             List<bool> g1 = c1.Genotype;
             List<bool> g2 = c2.Genotype;
 
             List<bool>[] newGenotypes = new List<bool>[2];
+            newGenotypes[0] = new List<bool>(length);
+            newGenotypes[1] = new List<bool>(length);
 
             // First genotype.
             newGenotypes[0].AddRange(g1.GetRange(0, point));
