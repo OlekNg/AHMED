@@ -12,7 +12,6 @@ namespace Genetics
     /// </summary>
     class Generation
     {
-        private Evaluator _evaluator;
         private Population _population;
         private Selector _selector;
 
