@@ -13,9 +13,5 @@ namespace Structure
         public uint Y { get; set; }
 
         public uint Quantity { get; set; }
-
-        public uint Ticks { get; set; }
-
-        public bool Processed;
     }
 }
