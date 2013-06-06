@@ -8,12 +8,14 @@ namespace Structure
 {
     public class BuildingMap
     {
-        private FloorSquare[][] _floor;
+        public uint Height { get; set; }
 
-        public void MapGenotype(bool[] genotype)
-        {
+        public uint Width { get; set; }
 
-        }
+        public Door[] Doors { get; set; }
 
+        public Wall[] Walls { get; set; }
+
+        public FloorSquare[][] Floor { get; set; }
     }
 }
