@@ -37,7 +37,7 @@ namespace Simulation
                 _evacuationMap[i] = new EvacuationElement[_buildingMap.Height];
                 for (int j = 0; j < _buildingMap.Height; ++j)
                 {
-                    _evacuationMap[i][j].FloorSquare = _buildingMap.Floor[i][j];
+                    _evacuationMap[i][j] = new EvacuationElement(_buildingMap.Floor[i][j]);
                 }
             }
         }
@@ -45,12 +45,53 @@ namespace Simulation
         public PeopleGroup[] Simulate(Chromosome genotype)
         {
             //setup current situation
+
+            _evacuationGroups.Clear();
+
             foreach (EvacuationElement[] e in _evacuationMap)
             {
                 foreach (EvacuationElement element in e)
                 {
-                    //change nextroom, passage and so on
+                    element.PeopleQuantity = 0;
+                }
+            }
 
+            foreach(PeopleGroup group in _peopleMap.People){
+                _evacuationMap[group.X][group.Y].PeopleQuantity = group.Quantity;
+                _evacuationGroups.Add(_evacuationMap[group.X][group.Y]);
+            }
+
+
+            var fenotype = genotype.Fenotype.GetEnumerator();
+            for (int i = 0; i < _buildingMap.Width; ++i)
+            {
+                for (int j = 0; j < _buildingMap.Height; ++j)
+                {
+                    EvacuationElement element = _evacuationMap[i][j];
+
+                    if (element == null) continue;
+
+                    Chromosome.Allele direction = fenotype.Current;
+
+                    element.Passage = element.FloorSquare.Side[(int)direction];
+
+                    switch (direction)
+                    {
+                        case Chromosome.Allele.DOWN:
+                            element.NextStep = GetEvacuationElement(i, j + 1);
+                        break;
+                        case Chromosome.Allele.UP:
+                            element.NextStep = GetEvacuationElement(i, j - 1);
+                        break;
+                        case Chromosome.Allele.LEFT:
+                            element.NextStep = GetEvacuationElement(i - 1, j);
+                        break;
+                        case Chromosome.Allele.RIGHT:
+                            element.NextStep = GetEvacuationElement(i + 1, j);
+                        break;
+                    }
+
+                    fenotype.MoveNext();
                 }
             }
 
@@ -76,6 +117,13 @@ namespace Simulation
             }
 
             return null;
+        }
+
+        private EvacuationElement GetEvacuationElement(int x, int y)
+        {
+            if (x < 0 || x >= _buildingMap.Width) return null;
+            if (y < 0 || y >= _buildingMap.Height) return null;
+            return _evacuationMap[x][y];
         }
 
         private void Process(EvacuationElement group, uint tick)
