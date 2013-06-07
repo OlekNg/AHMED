@@ -17,7 +17,7 @@ namespace Genetics.Evaluators
             double sum = 0;
             for (int i = 0; i < genotype.Count; i++)
             {
-                sum += genotype[i] ? i : 0;
+                sum += genotype[i] ? i + 1 : 0;
             }
 
             return sum;
