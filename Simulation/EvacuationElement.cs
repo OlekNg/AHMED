@@ -27,5 +27,12 @@ namespace Simulation
                 return FloorSquare.Capacity - PeopleQuantity; 
             } 
         }
+
+        public EvacuationElement(FloorSquare fs)
+        {
+            Ticks = 0;
+            Processed = false;
+            FloorSquare = fs;
+        }
     }
 }
