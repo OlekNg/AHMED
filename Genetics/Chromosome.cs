@@ -9,8 +9,13 @@ using Genetics.Evaluators;
 
 namespace Genetics
 {
-    public class Chromosome
+    public class Chromosome : IComparable
     {
+        /// <summary>
+        /// Randomizer for creating random chromosome.
+        /// </summary>
+        private static Random _randomizer = new Random();
+
         /// <summary>
         /// Binary chain.
         /// </summary>
@@ -27,6 +32,12 @@ namespace Genetics
         public Chromosome()
         {
             _genotype = new List<bool>();
+        }
+
+        public Chromosome(Chromosome c)
+        {
+            _genotype = new List<bool>(c._genotype);
+            _value = c._value;
         }
 
         /// <summary>
@@ -135,6 +146,36 @@ namespace Genetics
         }
 
         /// <summary>
+        /// Creates random chromosome.
+        /// </summary>
+        /// <param name="length">Length of generated chromosome.</param>
+        /// <returns>New chromosome.</returns>
+        public static Chromosome CreateRandom(int length)
+        {
+            List<bool> genotype = new List<bool>(length);
+            for (int i = 0; i <= length; i++)
+                genotype.Add(_randomizer.NextDouble() > 0.5 ? true : false);
+
+            return new Chromosome(genotype);
+        }
+
+        /// <summary>
+        /// Sorting by Value property.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public int CompareTo(object obj)
+        {
+            Chromosome c = (Chromosome)obj;
+
+            if (c.Value > this.Value)
+                return -1;
+            else if (c.Value < this.Value)
+                return 1;
+            return 0;
+        }
+
+        /// <summary>
         /// Performs crossing over with chromosome c and creates new
         /// chromosomes. Doesn't affect original chromosomes.
         /// </summary>
@@ -207,5 +248,7 @@ namespace Genetics
 
             return sb.ToString();
         }
+
+        
     }
 }
