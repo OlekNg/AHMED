@@ -11,5 +11,11 @@ namespace Structure
         public uint Capacity { get; set; }
 
         public IWallElement[] Side { get; set; }
+
+        public FloorSquare(uint c)
+        {
+            Capacity = c;
+            Side = new IWallElement[4];
+        }
     }
 }

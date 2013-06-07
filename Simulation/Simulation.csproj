@@ -46,6 +46,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Genetics\Genetics.csproj">
+      <Project>{b9d02f16-015b-4640-aed3-f850ae382a32}</Project>
+      <Name>Genetics</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Structure\Structure.csproj">
       <Project>{fe48dff8-eacb-4778-9df0-5d71a664927a}</Project>
       <Name>Structure</Name>
