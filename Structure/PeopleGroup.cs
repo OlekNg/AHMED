@@ -13,5 +13,12 @@ namespace Structure
         public uint Y { get; set; }
 
         public uint Quantity { get; set; }
+
+        public PeopleGroup(uint x, uint y, uint quantity)
+        {
+            X = x;
+            Y = y;
+            Quantity = quantity;
+        }
     }
 }
