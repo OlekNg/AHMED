@@ -41,6 +41,9 @@
   <ItemGroup>
     <Compile Include="EscapedGroup.cs" />
     <Compile Include="EvacuationElement.cs" />
+    <Compile Include="EvacuationMap.cs" />
+    <Compile Include="Exceptions\SimulatorException.cs" />
+    <Compile Include="Exceptions\UnexpectedWallException.cs" />
     <Compile Include="SimulationResult.cs" />
     <Compile Include="Simulator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
