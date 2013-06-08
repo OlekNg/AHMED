@@ -7,6 +7,8 @@ using Genetics;
 
 namespace Structure
 {
+    public enum WallPosition { TOP, LEFT }
+
     public class BuildingMap
     {
         public uint Height { get; set; }
@@ -19,62 +21,62 @@ namespace Structure
 
         public FloorSquare[][] Floor { get; set; }
 
-        public void SetSize(uint h, uint w)
+        public void SetSize(uint w, uint h)
         {
             Height = h;
             Width = w;
-            Floor = new FloorSquare[w][];
+            Floor = new FloorSquare[h][];
             for (int i = 0; i < h; ++i)
             {
-                Floor[i] = new FloorSquare[h];
+                Floor[i] = new FloorSquare[w];
             }
         }
 
-        public void SetFloor(uint x, uint y, uint capacity)
+        public void SetFloor(uint row, uint col, uint capacity)
         {
-            Floor[x][y] = new FloorSquare(capacity);
+            Floor[row][col] = new FloorSquare(capacity);
         }
 
-        public void SetWall(uint x, uint y)
+        public void SetWall(uint row, uint col, WallPosition position)
         {
-            SetWallElement(x, y, new Wall());
+            SetWallElement(row, col, new Wall(), position);
         }
 
-        public void SetDoor(uint x, uint y, uint capacity)
+        public void SetDoor(uint row, uint col, uint capacity, WallPosition position)
         {
-            SetWallElement(x, y, new Door { Capacity = capacity });
+            SetWallElement(row, col, new Door { Capacity = capacity }, position);
         }
 
-        private void SetWallElement(uint x, uint y, IWallElement wallElement)
+        private void SetWallElement(uint row, uint col, IWallElement wallElement, WallPosition wallPosition)
         {
-            FloorSquare floor = Floor[x][y];
-
-            if (x % 2 == 0)
+            if (wallPosition == WallPosition.LEFT)
             {
-                //column walls
-                if (x != 0)
+                if (col != 0)
                 {
                     //not first column
-                    Floor[x - 1][y].Side[(int)Chromosome.Allele.RIGHT] = wallElement;
+                    //set as right side of adjacent floor tile
+                    Floor[row][col - 1].Side[(int)Chromosome.Allele.RIGHT] = wallElement;
                 }
-                if (x != Width)
+                if (col != Width)
                 {
                     //not last column
-                    Floor[x][y].Side[(int)Chromosome.Allele.LEFT] = wallElement;
+                    //set as left side
+                    Floor[row][col].Side[(int)Chromosome.Allele.LEFT] = wallElement;
                 }
             }
             else
             {
-                //row walls
-                if (y != 0)
+                if (row != 0)
                 {
-                    //not top row
-                    Floor[x][y - 1].Side[(int)Chromosome.Allele.UP] = wallElement;
+                    //not first row
+                    //set as bootom side of upper tile
+                    Floor[row - 1][col].Side[(int)Chromosome.Allele.DOWN] = wallElement;
                 }
-                if (y != Height)
+                if (row != Height)
                 {
                     //not last row
-                    Floor[x][y].Side[(int)Chromosome.Allele.DOWN] = wallElement;
+                    //set as top side
+                    Floor[row][col].Side[(int)Chromosome.Allele.UP] = wallElement;
                 }
             }
         }
