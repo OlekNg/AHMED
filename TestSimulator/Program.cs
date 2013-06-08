@@ -55,7 +55,7 @@ namespace TestSimulator
             {
                 map.SetWall(i, 2, WallPosition.LEFT);
                 map.SetWall(i, 4, WallPosition.LEFT);
-                map.SetWall(i, 5, WallPosition.LEFT);
+                map.SetWall(3 + i, 5, WallPosition.LEFT);
                 map.SetWall(3, 5 + i, WallPosition.TOP);
             }
             for (uint i = 0; i < w; ++i)
@@ -124,7 +124,11 @@ namespace TestSimulator
                                             "11101010101010");
 
             List<EscapedGroup> escape = sim.Simulate(chr);
-            
+
+            foreach (EscapedGroup e in escape)
+            {
+                Console.WriteLine("Escaped " + e.Quantity + " people in " + e.Ticks + " ticks");
+            }
             
             Console.ReadLine();
         }
