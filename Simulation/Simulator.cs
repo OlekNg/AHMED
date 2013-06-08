@@ -42,7 +42,7 @@ namespace Simulation
             }
         }
 
-        public PeopleGroup[] Simulate(Chromosome genotype)
+        public List<EscapedGroup> Simulate(Chromosome genotype)
         {
             //setup current situation
 
@@ -63,9 +63,9 @@ namespace Simulation
 
 
             var fenotype = genotype.Fenotype.GetEnumerator();
-            for (int i = 0; i < _buildingMap.Width; ++i)
+            for (int i = 0; i < _buildingMap.Height; ++i)
             {
-                for (int j = 0; j < _buildingMap.Height; ++j)
+                for (int j = 0; j < _buildingMap.Width; ++j)
                 {
                     EvacuationElement element = _evacuationMap[i][j];
 
@@ -116,14 +116,14 @@ namespace Simulation
 
             }
 
-            return null;
+            return _escapedGroups;
         }
 
-        private EvacuationElement GetEvacuationElement(int x, int y)
+        private EvacuationElement GetEvacuationElement(int row, int col)
         {
-            if (x < 0 || x >= _buildingMap.Width) return null;
-            if (y < 0 || y >= _buildingMap.Height) return null;
-            return _evacuationMap[x][y];
+            if (row < 0 || row >= _buildingMap.Width) return null;
+            if (col < 0 || col >= _buildingMap.Height) return null;
+            return _evacuationMap[row][col];
         }
 
         private void Process(EvacuationElement group, uint tick)
