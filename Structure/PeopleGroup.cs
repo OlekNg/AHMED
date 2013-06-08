@@ -8,16 +8,16 @@ namespace Structure
 {
     public class PeopleGroup
     {
-        public uint X { get; set; }
+        public uint Row { get; set; }
 
-        public uint Y { get; set; }
+        public uint Col { get; set; }
 
         public uint Quantity { get; set; }
 
-        public PeopleGroup(uint x, uint y, uint quantity)
+        public PeopleGroup(uint row, uint col, uint quantity)
         {
-            X = x;
-            Y = y;
+            Row = row;
+            Col = col;
             Quantity = quantity;
         }
     }
