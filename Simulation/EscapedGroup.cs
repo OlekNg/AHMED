@@ -12,10 +12,10 @@ namespace Simulation
 
         public uint Ticks { get; set; }
 
-        public EscapedGroup(EvacuationElement ee)
+        public EscapedGroup(uint q, uint t)
         {
-            Quantity = ee.PeopleQuantity;
-            Ticks = ee.Ticks;
+            Quantity = q;
+            Ticks = t;
         }
     }
 }
