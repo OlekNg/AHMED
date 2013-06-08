@@ -98,7 +98,7 @@ namespace Simulation
                 }
             }
 
-            for (uint i = 0; i < MaximumTicks; ++i)
+            for (uint i = 1; i <= MaximumTicks; ++i)
             {
                 for (int j = _evacuationGroups.Count - 1; j >= 0; --j)
                 {
@@ -148,15 +148,15 @@ namespace Simulation
                     if (group.PeopleQuantity <= passageEfficency)
                     {
                         //whole group escaped
+                        _escapedGroups.Add(new EscapedGroup(group.PeopleQuantity, tick));
                         group.PeopleQuantity = 0;
-                        _escapedGroups.Add(new EscapedGroup(group));
                         return;
                     }
                     else
                     {
                         //partial group escaped
                         group.PeopleQuantity -= passageEfficency;
-                        _escapedGroups.Add(new EscapedGroup(group));
+                        _escapedGroups.Add(new EscapedGroup(group.PeopleQuantity, tick));
                         return;
                     }
                 }
@@ -247,7 +247,7 @@ namespace Simulation
                         if (group.PeopleQuantity <= maximumCapacity)
                         {
                             //move whole group
-                            nextStep.PeopleQuantity = group.PeopleQuantity;
+                            nextStep.PeopleQuantity += group.PeopleQuantity;
                             nextStep.Processed = true;
                             group.PeopleQuantity = 0;
                             _evacuationGroups.Add(nextStep);
@@ -255,7 +255,7 @@ namespace Simulation
                         else
                         {
                             //move part of group
-                            nextStep.PeopleQuantity = maximumCapacity;
+                            nextStep.PeopleQuantity += maximumCapacity;
                             nextStep.Processed = true;
                             group.PeopleQuantity -= maximumCapacity;
                             _evacuationGroups.Add(nextStep);
@@ -274,7 +274,7 @@ namespace Simulation
                     if (group.PeopleQuantity <= maximumCapacity)
                     {
                         //move whole group
-                        nextStep.PeopleQuantity = group.PeopleQuantity;
+                        nextStep.PeopleQuantity += group.PeopleQuantity;
                         nextStep.Processed = true;
                         group.PeopleQuantity = 0;
                         _evacuationGroups.Add(nextStep);
@@ -282,7 +282,7 @@ namespace Simulation
                     else
                     {
                         //move part of group
-                        nextStep.PeopleQuantity = maximumCapacity;
+                        nextStep.PeopleQuantity += maximumCapacity;
                         nextStep.Processed = true;
                         group.PeopleQuantity -= maximumCapacity;
                         _evacuationGroups.Add(nextStep);
