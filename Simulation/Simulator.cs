@@ -121,8 +121,8 @@ namespace Simulation
 
         private EvacuationElement GetEvacuationElement(int row, int col)
         {
-            if (row < 0 || row >= _buildingMap.Width) return null;
-            if (col < 0 || col >= _buildingMap.Height) return null;
+            if (row < 0 || row >= _buildingMap.Height) return null;
+            if (col < 0 || col >= _buildingMap.Width) return null;
             return _evacuationMap[row][col];
         }
 
