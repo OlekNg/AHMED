@@ -8,18 +8,7 @@ namespace Structure
 {
     public class PeopleMap
     {
-        public PeopleGroup[] People;
-
-        public PeopleGroup GetByPosition(uint x, uint y)
-        {
-            foreach (PeopleGroup group in People)
-            {
-                if (group.X == x && group.Y == y)
-                {
-                    return group;
-                }
-            }
-            return null;
-        }
+        //TODO: maybe there is no need for this?
+        public List<PeopleGroup> People;
     }
 }
