@@ -24,6 +24,7 @@ namespace TestSimulator
             const int doorCapacity = 3;
             BuildingMap map = new BuildingMap();
             PeopleMap pmap = new PeopleMap();
+            Simulator sim = new Simulator();
 
 
             map.SetSize(w, h);
@@ -102,8 +103,24 @@ namespace TestSimulator
             }
             Console.ReadLine();
 
+            //add people group
+            pmap.People.Add(new PeopleGroup(0, 0, 3));
+            pmap.People.Add(new PeopleGroup(0, 3, 2));
+            pmap.People.Add(new PeopleGroup(0, 6, 6));
+            pmap.People.Add(new PeopleGroup(3, 6, 1));
+            pmap.People.Add(new PeopleGroup(4, 0, 2));
+            pmap.People.Add(new PeopleGroup(4, 2, 1));
+            pmap.People.Add(new PeopleGroup(4, 3, 1));
+
+            sim.SetupSimulator(map, pmap);
+            sim.MaximumTicks = 50;
 
 
+            
+            
+            
+            
+            Console.ReadLine();
         }
     }
 }
