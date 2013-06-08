@@ -115,8 +115,15 @@ namespace TestSimulator
 
             sim.SetupSimulator(map, pmap);
             sim.MaximumTicks = 50;
-            
-            
+
+
+            Chromosome chr = new Chromosome("11010101010101" +
+                                            "11010100000000" +
+                                            "11011111111111" +
+                                            "00000000100000" + 
+                                            "11101010101010");
+
+            List<EscapedGroup> escape = sim.Simulate(chr);
             
             
             Console.ReadLine();
