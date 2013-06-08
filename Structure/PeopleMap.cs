@@ -9,6 +9,6 @@ namespace Structure
     public class PeopleMap
     {
         //TODO: maybe there is no need for this?
-        public List<PeopleGroup> People;
+        public List<PeopleGroup> People = new List<PeopleGroup>();
     }
 }
