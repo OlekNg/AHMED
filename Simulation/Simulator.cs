@@ -71,6 +71,11 @@ namespace Simulation
 
                     if (element == null) continue;
 
+                    if (!fenotype.MoveNext())
+                    {
+                        //TODO: error, not enough genes
+                    }
+
                     Chromosome.Allele direction = fenotype.Current;
 
                     element.Passage = element.FloorSquare.Side[(int)direction];
@@ -78,20 +83,18 @@ namespace Simulation
                     switch (direction)
                     {
                         case Chromosome.Allele.DOWN:
-                            element.NextStep = GetEvacuationElement(i, j + 1);
-                        break;
-                        case Chromosome.Allele.UP:
-                            element.NextStep = GetEvacuationElement(i, j - 1);
-                        break;
-                        case Chromosome.Allele.LEFT:
-                            element.NextStep = GetEvacuationElement(i - 1, j);
-                        break;
-                        case Chromosome.Allele.RIGHT:
                             element.NextStep = GetEvacuationElement(i + 1, j);
                         break;
+                        case Chromosome.Allele.UP:
+                            element.NextStep = GetEvacuationElement(i - 1, j);
+                        break;
+                        case Chromosome.Allele.LEFT:
+                            element.NextStep = GetEvacuationElement(i, j - 1);
+                        break;
+                        case Chromosome.Allele.RIGHT:
+                            element.NextStep = GetEvacuationElement(i, j + 1);
+                        break;
                     }
-
-                    fenotype.MoveNext();
                 }
             }
 
