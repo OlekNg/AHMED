@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Simulation;
 using Structure;
+using Genetics;
 
 namespace TestSimulator
 {
@@ -114,8 +115,6 @@ namespace TestSimulator
 
             sim.SetupSimulator(map, pmap);
             sim.MaximumTicks = 50;
-
-
             
             
             
