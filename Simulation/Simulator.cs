@@ -31,11 +31,11 @@ namespace Simulation
             _buildingMap = bm;
             _peopleMap = pm;
 
-            _evacuationMap = new EvacuationElement[_buildingMap.Width][];
-            for (uint i = 0; i < _buildingMap.Width; ++i)
+            _evacuationMap = new EvacuationElement[_buildingMap.Height][];
+            for (uint i = 0; i < _buildingMap.Height; ++i)
             {
-                _evacuationMap[i] = new EvacuationElement[_buildingMap.Height];
-                for (int j = 0; j < _buildingMap.Height; ++j)
+                _evacuationMap[i] = new EvacuationElement[_buildingMap.Width];
+                for (int j = 0; j < _buildingMap.Width; ++j)
                 {
                     _evacuationMap[i][j] = new EvacuationElement(_buildingMap.Floor[i][j]);
                 }
@@ -57,8 +57,8 @@ namespace Simulation
             }
 
             foreach(PeopleGroup group in _peopleMap.People){
-                _evacuationMap[group.X][group.Y].PeopleQuantity = group.Quantity;
-                _evacuationGroups.Add(_evacuationMap[group.X][group.Y]);
+                _evacuationMap[group.Row][group.Col].PeopleQuantity = group.Quantity;
+                _evacuationGroups.Add(_evacuationMap[group.Row][group.Col]);
             }
 
 
