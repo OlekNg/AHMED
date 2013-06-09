@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Genetics;
 
 namespace Structure
 {
@@ -55,13 +54,13 @@ namespace Structure
                 {
                     //not first column
                     //set as right side of adjacent floor tile
-                    Floor[row][col - 1].Side[(int)Chromosome.Allele.RIGHT] = wallElement;
+                    Floor[row][col - 1].SetSide(Direction.RIGHT, wallElement);
                 }
                 if (col != Width)
                 {
                     //not last column
                     //set as left side
-                    Floor[row][col].Side[(int)Chromosome.Allele.LEFT] = wallElement;
+                    Floor[row][col].SetSide(Direction.LEFT, wallElement);
                 }
             }
             else
@@ -70,13 +69,13 @@ namespace Structure
                 {
                     //not first row
                     //set as bootom side of upper tile
-                    Floor[row - 1][col].Side[(int)Chromosome.Allele.DOWN] = wallElement;
+                    Floor[row - 1][col].SetSide(Direction.DOWN, wallElement);
                 }
                 if (row != Height)
                 {
                     //not last row
                     //set as top side
-                    Floor[row][col].Side[(int)Chromosome.Allele.UP] = wallElement;
+                    Floor[row][col].SetSide(Direction.UP, wallElement);
                 }
             }
         }

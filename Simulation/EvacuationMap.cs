@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Structure;
-using Genetics;
 
 namespace Simulation
 {
@@ -55,9 +54,9 @@ namespace Simulation
                     element.PeopleQuantity = 0;
         }
 
-        public void MapGenotype(Chromosome genotype)
+        public void MapFenotype(Direction[] fenotype)
         {
-            var fenotype = genotype.Fenotype.GetEnumerator();
+            var fenotypeEnumerator = fenotype.GetEnumerator();
             for (uint i = 0; i < _height; ++i)
             {
                 for (uint j = 0; j < _width; ++j)
@@ -66,27 +65,27 @@ namespace Simulation
 
                     if (element == null) continue;
 
-                    if (!fenotype.MoveNext())
+                    if (!fenotypeEnumerator.MoveNext())
                     {
                         //TODO: error, not enough genes
                     }
 
-                    Chromosome.Allele direction = fenotype.Current;
+                    Direction direction = (Direction)fenotypeEnumerator.Current;
 
-                    element.Passage = element.FloorSquare.Side[(int)direction];
+                    element.Passage = element.FloorSquare.GetSide(direction);
 
                     switch (direction)
                     {
-                        case Chromosome.Allele.DOWN:
+                        case Direction.DOWN:
                             element.NextStep = Get(i + 1, j);
                             break;
-                        case Chromosome.Allele.UP:
+                        case Direction.UP:
                             element.NextStep = Get(i - 1, j);
                             break;
-                        case Chromosome.Allele.LEFT:
+                        case Direction.LEFT:
                             element.NextStep = Get(i, j - 1);
                             break;
-                        case Chromosome.Allele.RIGHT:
+                        case Direction.RIGHT:
                             element.NextStep = Get(i, j + 1);
                             break;
                     }

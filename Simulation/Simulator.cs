@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Structure;
-using Genetics;
 
 
 namespace Simulation
@@ -34,7 +33,7 @@ namespace Simulation
             _evacuationMap.InitializeFromBuildingMap(_buildingMap);
         }
 
-        public List<EscapedGroup> Simulate(Chromosome genotype)
+        public List<EscapedGroup> Simulate(Direction[] fenotype)
         {
             //setup current situation
             _evacuationGroups.Clear();
@@ -44,7 +43,7 @@ namespace Simulation
                 _evacuationMap.SetPeopleGroup(group);
                 _evacuationGroups.Add(_evacuationMap.Get(group.Row, group.Col));
             }
-            _evacuationMap.MapGenotype(genotype);
+            _evacuationMap.MapFenotype(fenotype);
 
             //start simulation
             for (uint i = 1; i <= MaximumTicks; ++i)
