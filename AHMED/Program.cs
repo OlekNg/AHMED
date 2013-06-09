@@ -26,6 +26,8 @@ namespace AHMED
                 LetsGeneticShiftPlusOne();
             }
 
+            Console.WriteLine();
+
 
             Console.ReadKey();
         }
@@ -34,16 +36,17 @@ namespace AHMED
             Chromosome.MutationOperator = new ClassicMutation();
             Chromosome.CrossoverOperator = new OnePointCrossover();
             Chromosome.Evaluator = new TestEvaluator();
+            //Generation.Selector = new TournamentSelector();
             Generation.Selector = new RouletteSelector();
 
             Generation g = new Generation(100);
-            g.MaxNumber = 2000;
+            g.MaxNumber = 500;
             g.MutationProbability = 0.001;
             g.CrossoverProbability = 0.75;
 
             g.Initiate(100);
             while (!g.Next()) { }
-            Console.WriteLine("Best chromosome: {0}", g.BestChromosome.Value);
+            Console.WriteLine("Best chromosome: {0} ({1})", g.BestChromosome.Value, g.BestChromosome);
         }
     }
 }

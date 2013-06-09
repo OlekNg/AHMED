@@ -56,6 +56,7 @@
     <Compile Include="Selectors\ISelector.cs" />
     <Compile Include="Selectors\RouletteSelector.cs" />
     <Compile Include="Selectors\SelectorException.cs" />
+    <Compile Include="Selectors\TournamentSelector.cs" />
     <Compile Include="TestSimulationResult.cs" />
   </ItemGroup>
   <ItemGroup />
