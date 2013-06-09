@@ -33,7 +33,7 @@ namespace Simulation
             _evacuationMap.InitializeFromBuildingMap(_buildingMap);
         }
 
-        public List<EscapedGroup> Simulate(Direction[] fenotype)
+        public List<EscapedGroup> Simulate(List<Direction> fenotype)
         {
             //setup current situation
             _evacuationGroups.Clear();
