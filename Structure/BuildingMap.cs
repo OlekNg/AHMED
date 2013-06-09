@@ -14,16 +14,15 @@ namespace Structure
 
         public uint Width { get; set; }
 
-        //public Door[] Doors { get; set; }
-
-        //public Wall[] Walls { get; set; }
+        public uint StandardPassageEfficency { get; set; }
 
         public FloorSquare[][] Floor { get; set; }
 
-        public void SetSize(uint w, uint h)
+        public void Setup(uint w, uint h, uint standardPassageEfficency)
         {
             Height = h;
             Width = w;
+            StandardPassageEfficency = standardPassageEfficency;
             Floor = new FloorSquare[h][];
             for (int i = 0; i < h; ++i)
             {
@@ -34,6 +33,10 @@ namespace Structure
         public void SetFloor(uint row, uint col, uint capacity)
         {
             Floor[row][col] = new FloorSquare(capacity);
+            for(int i = 0; i < 4; ++i)
+            {
+                Floor[row][col].Side[i] = new Door { Capacity = StandardPassageEfficency };
+            }
         }
 
         public void SetWall(uint row, uint col, WallPosition position)
