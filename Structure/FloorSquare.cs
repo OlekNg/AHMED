@@ -17,5 +17,10 @@ namespace Structure
             Capacity = c;
             Side = new IWallElement[4];
         }
+
+        public IWallElement GetSide(Direction dir)
+        {
+            return Side[(int)dir];
+        }
     }
 }
