@@ -42,6 +42,7 @@
     <Compile Include="EscapedGroup.cs" />
     <Compile Include="EvacuationElement.cs" />
     <Compile Include="EvacuationMap.cs" />
+    <Compile Include="Exceptions\NullArgumentException.cs" />
     <Compile Include="Exceptions\SimulatorException.cs" />
     <Compile Include="Exceptions\UnexpectedWallException.cs" />
     <Compile Include="SimulationResult.cs" />
