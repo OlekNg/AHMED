@@ -20,6 +20,15 @@ namespace Genetics.Evaluators
                 sum += genotype[i] ? i + 1 : 0;
             }
 
+            if (genotype[5] == true)
+                sum -= 50;
+
+            if (genotype[6] == true)
+                sum -= 50;
+
+            if (sum <= 0)
+                sum = 1;
+
             return sum;
         }
     }
