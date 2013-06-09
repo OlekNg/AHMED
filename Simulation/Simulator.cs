@@ -17,7 +17,7 @@ namespace Simulation
 
         public uint MaximumTicks { get; set; }
 
-        private EvacuationElement[][] _evacuationMap;
+        private EvacuationMap _evacuationMap = new EvacuationMap();
 
         private List<EvacuationElement> _evacuationGroups = new List<EvacuationElement>();
 
@@ -31,24 +31,20 @@ namespace Simulation
             _buildingMap = bm;
             _peopleMap = pm;
 
-            _evacuationMap = new EvacuationElement[_buildingMap.Height][];
-            for (uint i = 0; i < _buildingMap.Height; ++i)
-            {
-                _evacuationMap[i] = new EvacuationElement[_buildingMap.Width];
-                for (int j = 0; j < _buildingMap.Width; ++j)
-                {
-                    _evacuationMap[i][j] = new EvacuationElement(_buildingMap.Floor[i][j]);
-                }
-            }
+            _evacuationMap.InitializeFromBuildingMap(_buildingMap);
         }
 
         public List<EscapedGroup> Simulate(Chromosome genotype)
         {
             //setup current situation
             _evacuationGroups.Clear();
-            ResetPeopleQuantity();
-            MapPeopleQuantity();
-            PrepareEvacuationRoutes(genotype);
+            _evacuationMap.ResetPeopleGroups();
+            foreach (PeopleGroup group in _peopleMap.People)
+            {
+                _evacuationMap.SetPeopleGroup(group);
+                _evacuationGroups.Add(_evacuationMap.Get(group.Row, group.Col));
+            }
+            _evacuationMap.MapGenotype(genotype);
 
             //start simulation
             for (uint i = 1; i <= MaximumTicks; ++i)
@@ -60,68 +56,13 @@ namespace Simulation
                 {
                     if (_evacuationGroups[j].PeopleQuantity == 0)
                         _evacuationGroups.RemoveAt(j);
-                    else
+                    else 
                         _evacuationGroups[j].Processed = false;
                 }
 
             }
 
             return _escapedGroups;
-        }
-
-        private void PrepareEvacuationRoutes(Chromosome genotype)
-        {
-            var fenotype = genotype.Fenotype.GetEnumerator();
-            for (int i = 0; i < _buildingMap.Height; ++i)
-            {
-                for (int j = 0; j < _buildingMap.Width; ++j)
-                {
-                    EvacuationElement element = _evacuationMap[i][j];
-
-                    if (element == null) continue;
-
-                    if (!fenotype.MoveNext())
-                    {
-                        //TODO: error, not enough genes
-                    }
-
-                    Chromosome.Allele direction = fenotype.Current;
-
-                    element.Passage = element.FloorSquare.Side[(int)direction];
-
-                    switch (direction)
-                    {
-                        case Chromosome.Allele.DOWN:
-                            element.NextStep = GetEvacuationElement(i + 1, j);
-                            break;
-                        case Chromosome.Allele.UP:
-                            element.NextStep = GetEvacuationElement(i - 1, j);
-                            break;
-                        case Chromosome.Allele.LEFT:
-                            element.NextStep = GetEvacuationElement(i, j - 1);
-                            break;
-                        case Chromosome.Allele.RIGHT:
-                            element.NextStep = GetEvacuationElement(i, j + 1);
-                            break;
-                    }
-                }
-            }
-        }
-
-        private void MapPeopleQuantity()
-        {
-            foreach (PeopleGroup group in _peopleMap.People)
-            {
-                _evacuationMap[group.Row][group.Col].PeopleQuantity = group.Quantity;
-                _evacuationGroups.Add(_evacuationMap[group.Row][group.Col]);
-            }
-        }
-
-        private EvacuationElement GetEvacuationElement(int row, int col)
-        {
-            if (row < 0 || row >= _buildingMap.Height) return null;
-            if (col < 0 || col >= _buildingMap.Width) return null;
-            return _evacuationMap[row][col];
         }
 
         private void Process(EvacuationElement group, uint tick)
@@ -171,7 +112,7 @@ namespace Simulation
                 }
                 else
                 {
-                    //ooops, something went wrong
+                    //ooops, something went wrong, wall found
                 }
             }
 
@@ -181,13 +122,6 @@ namespace Simulation
             nextStep.Processed = true;
             group.PeopleQuantity -= peopleCount;
             _evacuationGroups.Add(nextStep);
-        }
-
-        private void ResetPeopleQuantity()
-        {
-            foreach (EvacuationElement[] e in _evacuationMap)
-                foreach (EvacuationElement element in e)
-                    element.PeopleQuantity = 0;
         }
     }
 }
