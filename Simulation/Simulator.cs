@@ -35,6 +35,8 @@ namespace Simulation
 
         public List<EscapedGroup> Simulate(List<Direction> fenotype)
         {
+            _escapedGroups.Clear();
+
             //setup current situation
             _evacuationGroups.Clear();
             _evacuationMap.ResetPeopleGroups();
@@ -103,17 +105,17 @@ namespace Simulation
                 //there is no room for anybody
                 return;
             }
-            if (group.Passage != null)
+            //if (group.Passage != null)
+            //{
+            if (group.Passage.CanPassThrough)
             {
-                if (group.Passage.CanPassThrough)
-                {
-                    peopleCount = Math.Min(peopleCount, group.Passage.Capacity);
-                }
-                else
-                {
-                    //ooops, something went wrong, wall found
-                }
+                peopleCount = Math.Min(peopleCount, group.Passage.Capacity);
             }
+            else
+            {
+                //ooops, something went wrong, wall found
+            }
+            //}
 
             peopleCount = Math.Min(peopleCount, group.PeopleQuantity);
             nextStep.PeopleQuantity += peopleCount;
