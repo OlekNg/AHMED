@@ -22,13 +22,14 @@ namespace TestSimulator
             const uint w = 7;
             const uint h = 5;
             const uint capacity = 6;
-            const int doorCapacity = 3;
+            const uint doorCapacity = 3;
+            const uint standardEff = 4;
             BuildingMap map = new BuildingMap();
             PeopleMap pmap = new PeopleMap();
             Simulator sim = new Simulator();
 
 
-            map.SetSize(w, h);
+            map.Setup(w, h, standardEff);
             //add floor
             for (uint i = 0; i < h; ++i)
                 for (uint j = 0; j < w; ++j)
@@ -123,7 +124,7 @@ namespace TestSimulator
                                             "00000000100000" + 
                                             "11101010101010");
 
-            List<EscapedGroup> escape = sim.Simulate(chr.Fenotype.ToArray());
+            List<EscapedGroup> escape = sim.Simulate(chr.Fenotype);
 
             foreach (EscapedGroup e in escape)
             {

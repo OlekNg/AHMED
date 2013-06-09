@@ -54,7 +54,7 @@ namespace Simulation
                     element.PeopleQuantity = 0;
         }
 
-        public void MapFenotype(Direction[] fenotype)
+        public void MapFenotype(List<Direction> fenotype)
         {
             var fenotypeEnumerator = fenotype.GetEnumerator();
             for (uint i = 0; i < _height; ++i)
@@ -70,7 +70,7 @@ namespace Simulation
                         //TODO: error, not enough genes
                     }
 
-                    Direction direction = (Direction)fenotypeEnumerator.Current;
+                    Direction direction = fenotypeEnumerator.Current;
 
                     element.Passage = element.FloorSquare.GetSide(direction);
 
