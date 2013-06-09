@@ -51,7 +51,10 @@ namespace Simulation
         {
             foreach (EvacuationElement[] e in _map)
                 foreach (EvacuationElement element in e)
+                {
                     element.PeopleQuantity = 0;
+                    element.Processed = false;
+                }
         }
 
         public void MapFenotype(List<Direction> fenotype)
