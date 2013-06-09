@@ -53,13 +53,20 @@
     <Compile Include="Mutations\IMutationOperator.cs" />
     <Compile Include="Mutations\MutationException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repairers\AHMEDSimpleRepairer.cs" />
+    <Compile Include="Repairers\IRepairer.cs" />
     <Compile Include="Selectors\ISelector.cs" />
     <Compile Include="Selectors\RouletteSelector.cs" />
     <Compile Include="Selectors\SelectorException.cs" />
     <Compile Include="Selectors\TournamentSelector.cs" />
     <Compile Include="TestSimulationResult.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Structure\Structure.csproj">
+      <Project>{fe48dff8-eacb-4778-9df0-5d71a664927a}</Project>
+      <Name>Structure</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

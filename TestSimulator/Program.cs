@@ -123,7 +123,7 @@ namespace TestSimulator
                                             "00000000100000" + 
                                             "11101010101010");
 
-            List<EscapedGroup> escape = sim.Simulate(chr);
+            List<EscapedGroup> escape = sim.Simulate(chr.Fenotype.ToArray());
 
             foreach (EscapedGroup e in escape)
             {
