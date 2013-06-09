@@ -62,6 +62,10 @@
     <Compile Include="TestSimulationResult.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Simulation\Simulation.csproj">
+      <Project>{a479bfb8-948e-4cfb-b9af-a8d1acc4af44}</Project>
+      <Name>Simulation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Structure\Structure.csproj">
       <Project>{fe48dff8-eacb-4778-9df0-5d71a664927a}</Project>
       <Name>Structure</Name>
