@@ -22,5 +22,10 @@ namespace Structure
         {
             return Side[(int)dir];
         }
+
+        public void SetSide(Direction dir, IWallElement side)
+        {
+            Side[(int)dir] = side;
+        }
     }
 }
