@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Genetics.Evaluators;
+using Structure;
 
 namespace Genetics
 {
@@ -84,7 +85,7 @@ namespace Genetics
         /// <summary>
         /// Chromosome's fenotype.
         /// </summary>
-        public List<Allele> Fenotype
+        public List<Direction> Fenotype
         {
             get
             {
@@ -92,22 +93,22 @@ namespace Genetics
                 if (Length % 2 != 0)
                     throw new Exception("Invalid chromosome! There should be even number of bits.");
 
-                List<Allele> fenotype = new List<Allele>(Length / 2);
+                List<Direction> fenotype = new List<Direction>(Length / 2);
                 for (int i = 0; i < Length; i += 2)
                 {
                     if (_genotype[i] == true)
                     {
                         if (_genotype[i + 1] == true)
-                            fenotype.Add(Allele.RIGHT); // 11
+                            fenotype.Add(Direction.RIGHT); // 11
                         else
-                            fenotype.Add(Allele.UP); // 10
+                            fenotype.Add(Direction.UP); // 10
                     }
                     else
                     {
                         if (_genotype[i + 1] == true)
-                            fenotype.Add(Allele.DOWN); // 01
+                            fenotype.Add(Direction.DOWN); // 01
                         else
-                            fenotype.Add(Allele.LEFT); // 00
+                            fenotype.Add(Direction.LEFT); // 00
                     }
                 }
 
