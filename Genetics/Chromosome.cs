@@ -154,7 +154,7 @@ namespace Genetics
         public static Chromosome CreateRandom(int length)
         {
             List<bool> genotype = new List<bool>(length);
-            for (int i = 0; i <= length; i++)
+            for (int i = 0; i < length; i++)
                 genotype.Add(_randomizer.NextDouble() > 0.5 ? true : false);
 
             return new Chromosome(genotype);
@@ -240,12 +240,58 @@ namespace Genetics
             MutationOperator.Mutate(this, probability);
         }
 
+        /// <summary>
+        /// Changes fenotype allel (implicitly genotype).
+        /// </summary>
+        /// <param name="index">Index of fenotype element (allel).</param>
+        /// <param name="dir">New value.</param>
+        public void SetFenotype(int index, Direction dir)
+        {
+            int genotypeIndex = index * 2;
+
+            // Out of range
+            if (genotypeIndex > _genotype.Count || genotypeIndex < 0)
+                return;
+
+            switch (dir)
+            {
+                case Direction.UP: // 10
+                    _genotype[genotypeIndex] = true;
+                    _genotype[genotypeIndex + 1] = false;
+                    break;
+
+                case Direction.DOWN: // 01
+                    _genotype[genotypeIndex] = false;
+                    _genotype[genotypeIndex + 1] = true;
+                    break;
+
+                case Direction.LEFT: // 00
+                    _genotype[genotypeIndex] = false;
+                    _genotype[genotypeIndex + 1] = false;
+                    break;
+
+                case Direction.RIGHT: // 11
+                    _genotype[genotypeIndex] = true;
+                    _genotype[genotypeIndex + 1] = true;
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder(_genotype.Count);
 
             for (int i = 0; i < _genotype.Count; i++)
+            {
+                if (i % 14 == 0 && i != 0)
+                    sb.Append("\n");
+
                 sb.Append(_genotype[i] == true ? '1' : '0');
+                
+            }
 
             return sb.ToString();
         }

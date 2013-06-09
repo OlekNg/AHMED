@@ -43,7 +43,7 @@
     <Compile Include="Crossovers\CrossoverException.cs" />
     <Compile Include="Crossovers\ICrossoverOperator.cs" />
     <Compile Include="Crossovers\OnePointCrossover.cs" />
-    <Compile Include="Evaluators\Evaluator.cs" />
+    <Compile Include="Evaluators\AHMEDEvaluator.cs" />
     <Compile Include="Evaluators\EvaluatorException.cs" />
     <Compile Include="Evaluators\IEvaluator.cs" />
     <Compile Include="Evaluators\TestEvaluator.cs" />
@@ -55,6 +55,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repairers\AHMEDSimpleRepairer.cs" />
     <Compile Include="Repairers\IRepairer.cs" />
+    <Compile Include="Repairers\RepairerException.cs" />
     <Compile Include="Selectors\ISelector.cs" />
     <Compile Include="Selectors\RouletteSelector.cs" />
     <Compile Include="Selectors\SelectorException.cs" />

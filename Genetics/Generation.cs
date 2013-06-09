@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Genetics.Repairers;
 
 namespace Genetics
 {
@@ -82,6 +83,11 @@ namespace Genetics
             // Empty chromosome (value = 0)
             _bestChromosome = new Chromosome();
         }
+
+        /// <summary>
+        /// Repairer used to fix chromosomes. Optional - can be null.
+        /// </summary>
+        public static IRepairer Repairer { get; set; }
 
         /// <summary>
         /// Selector used to perform selection on current population.
@@ -245,6 +251,7 @@ namespace Genetics
 
             for (int i = 0; i < popsize; i++)
                 _currentPopulation.Add(Chromosome.CreateRandom(_chromosomeLength));
+            Repair();
             Evaluate();
         }
 
@@ -267,6 +274,7 @@ namespace Genetics
             ApplyCrossover();
             ApplyMutation();
             CreateNewCurrentPopulation();
+            Repair();
             Evaluate();
             _number++;
             return false;
@@ -279,6 +287,18 @@ namespace Genetics
         {
             for (int i = 0; i < _currentPopulation.Count; i++)
                 Console.WriteLine(_currentPopulation[i]);
+        }
+
+        /// <summary>
+        /// Repairs current population - if used should be called before evaluation.
+        /// </summary>
+        public void Repair()
+        {
+            if (Repairer == null)
+                return;
+
+            for (int i = 0; i < _currentPopulation.Count; i++)
+                Repairer.RepairAndReplace(_currentPopulation[i]);
         }
 
         /// <summary>
