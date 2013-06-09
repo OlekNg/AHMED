@@ -8,11 +8,11 @@ namespace Genetics.Selectors
 {
     public class RouletteSelector : ISelector
     {
-        private Random randomizer;
+        private Random _randomizer;
 
         public RouletteSelector()
         {
-            randomizer = new Random();
+            _randomizer = new Random();
         }
 
         public List<Chromosome> Select(List<Chromosome> population)
@@ -35,7 +35,7 @@ namespace Genetics.Selectors
             List<Chromosome> result = new List<Chromosome>(population.Count);
             for (int i = 0; i < F.Count; i++)
             {
-                double number = randomizer.NextDouble();
+                double number = _randomizer.NextDouble();
 
                 // Binary search - later
 
