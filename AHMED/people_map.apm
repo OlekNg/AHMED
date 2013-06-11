@@ -2,7 +2,8 @@
 	<group row="0" col="0" quantity="3" />
 	<group row="0" col="3" quantity="2" />
 	<group row="0" col="6" quantity="6" />
-	<group row="3" col="6" quantity="1" />
+	<group row="3" col="6" quantity="5" />
+	<group row="4" col="5" quantity="5" />
 	<group row="4" col="0" quantity="2" />
 	<group row="4" col="2" quantity="1" />
 	<group row="4" col="3" quantity="1" />
