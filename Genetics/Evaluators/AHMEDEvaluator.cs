@@ -34,13 +34,21 @@ namespace Genetics.Evaluators
                 peopleEscaped += (int)g.Quantity;
             }
 
+//             if (peopleEscaped > 0)
+//             {
+//                 Console.WriteLine("Escaped: {0}", peopleEscaped);
+//             }
+
             double avg;
             if (peopleEscaped != 16)
                 avg = 0;
             else
+            {
+                //Console.WriteLine("Everyone escaped!");
                 avg = sum / (double)sumTicks;
-
-            return avg;
+            }
+            return (double)peopleEscaped + avg;
+            //return avg;
         }
     }
 }
