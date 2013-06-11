@@ -103,18 +103,19 @@ namespace AHMED
             pmap.People.Add(new PeopleGroup(4, 3, 1));
 
             sim.SetupSimulator(map, pmap);
-            sim.MaximumTicks = 50;
+            sim.MaximumTicks = map.Width * map.Height;
 
 
             Chromosome.MutationOperator = new ClassicMutation();
             Chromosome.CrossoverOperator = new OnePointCrossover();
             Chromosome.Evaluator = new AHMEDEvaluator(sim);
-            Generation.Selector = new TournamentSelector();
-            //Generation.Selector = new RouletteSelector();
-            Generation.Repairer = new AHMEDSimpleRepairer(map);
+            //Generation.Selector = new TournamentSelector();
+            Generation.Selector = new RouletteSelector();
+            //Generation.Repairer = new AHMEDSimpleRepairer(map);
+            Generation.Repairer = new AHMEDAdvancedRepairer(map);
 
             Generation g = new Generation((int)map.Height * (int)map.Width * 2);
-            g.MaxNumber = 400;
+            g.MaxNumber = 500;
             g.MutationProbability = 0.001;
             g.CrossoverProbability = 0.75;
 
@@ -129,9 +130,14 @@ namespace AHMED
 //             return;
 
             g.Initiate(100);
+
+            Stopwatch s = new Stopwatch();
+            s.Start();
             while (!g.Next()) { }
+            s.Stop();
             Console.CursorTop += 6;
             Console.WriteLine("Best chromosome: {0} \n{1}", g.BestChromosome.Value, g.BestChromosome);
+            Console.WriteLine("Algorithm time: {0}ms", s.ElapsedMilliseconds);
         }
 
         static void RepairTest()

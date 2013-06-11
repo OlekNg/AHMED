@@ -50,6 +50,12 @@ namespace Genetics
         private List<Chromosome> _currentPopulation;
 
         /// <summary>
+        /// For diagnostics purposes - true if already found first chromosome
+        /// where all people escaped.
+        /// </summary>
+        private bool _foundFirstCorrect = false;
+
+        /// <summary>
         /// Upper limit of generations (stop condition).
         /// </summary>
         private int _maxNumber;
@@ -248,7 +254,14 @@ namespace Genetics
                 _populationFitness += _currentPopulation[i].Value;
 
                 if (_currentPopulation[i].CompareTo(_bestChromosome) == 1)
+                {
                     _bestChromosome = new Chromosome(_currentPopulation[i]);
+                    if (_bestChromosome.Value >= 16 && _foundFirstCorrect == false)
+                    {
+                        Console.WriteLine("Found first correct chromosome at generation {0}", _number);
+                        _foundFirstCorrect = true;
+                    }
+                }
             }
 
             // Calculate avarage population fitness.
