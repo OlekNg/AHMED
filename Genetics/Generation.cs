@@ -277,6 +277,16 @@ namespace Genetics
             Repair();
             Evaluate();
             _number++;
+
+            if (_number % 10 == 0)
+            {
+                int progress = _number * 100 / _maxNumber;
+                // Progress
+                Console.SetCursorPosition(0, Console.CursorTop);
+                Console.Write("{0}%", progress);
+            }
+
+
             return false;
         }
 
