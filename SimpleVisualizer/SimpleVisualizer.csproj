@@ -4,16 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{46211B00-CEF6-486B-B20C-EAACBF4E4DD9}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{DC602539-E6E1-4851-A909-80E028FEB48F}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AHMED</RootNamespace>
-    <AssemblyName>AHMED</AssemblyName>
+    <RootNamespace>SimpleVisualizer</RootNamespace>
+    <AssemblyName>SimpleVisualizer</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -34,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -42,25 +41,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="TestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForm.Designer.cs">
+      <DependentUpon>TestForm.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForm.resx">
+      <DependentUpon>TestForm.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Genetics\Genetics.csproj">
-      <Project>{b9d02f16-015b-4640-aed3-f850ae382a32}</Project>
-      <Name>Genetics</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SimpleVisualizer\SimpleVisualizer.csproj">
-      <Project>{dc602539-e6e1-4851-a909-80e028feb48f}</Project>
-      <Name>SimpleVisualizer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Simulation\Simulation.csproj">
-      <Project>{a479bfb8-948e-4cfb-b9af-a8d1acc4af44}</Project>
-      <Name>Simulation</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Structure\Structure.csproj">
       <Project>{fe48dff8-eacb-4778-9df0-5d71a664927a}</Project>
       <Name>Structure</Name>
