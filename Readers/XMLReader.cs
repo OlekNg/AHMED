@@ -43,13 +43,6 @@ namespace Readers
             try
             {
                 doc = XDocument.Load(filepath);
-                /*var peopleGroups = doc.Descendants("group");
-                foreach (var group in peopleGroups)
-                {
-                    result.People.Add(new PeopleGroup(uint.Parse(group.Attribute("row").Value),
-                                                      uint.Parse(group.Attribute("col").Value),
-                                                      uint.Parse(group.Attribute("quantity").Value)));
-                }*/
                 result.Setup(uint.Parse(doc.Root.Attribute("w").Value),
                              uint.Parse(doc.Root.Attribute("h").Value),
                              uint.Parse(doc.Root.Attribute("std_eff").Value));
@@ -67,7 +60,7 @@ namespace Readers
                                    uint.Parse(w.Attribute("col").Value),
                                    WallPosition.LEFT);
                 }
-                walls = doc.Descendants("walls").Descendants("rows");
+                walls = doc.Descendants("walls").Descendants("row");
                 foreach (var w in walls)
                 {
                     result.SetWall(uint.Parse(w.Attribute("row").Value),
