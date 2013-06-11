@@ -64,6 +64,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Readers\Readers.csproj">
+      <Project>{48f90f3f-81c4-4644-a392-d9e6a2052791}</Project>
+      <Name>Readers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Structure\Structure.csproj">
       <Project>{fe48dff8-eacb-4778-9df0-5d71a664927a}</Project>
       <Name>Structure</Name>

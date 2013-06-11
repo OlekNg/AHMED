@@ -1,0 +1,147 @@
+<building w="10" h="7" std_eff="4">
+	<floors>
+		<square row="0" col="0" capacity="6" />
+		<square row="0" col="1" capacity="6" />
+		<square row="0" col="2" capacity="6" />
+		<square row="0" col="3" capacity="6" />
+		<square row="0" col="4" capacity="6" />
+		<square row="0" col="5" capacity="6" />
+		<square row="0" col="6" capacity="6" />
+		<square row="0" col="7" capacity="6" />
+		<square row="0" col="8" capacity="6" />
+		<square row="0" col="9" capacity="6" />
+		<square row="0" col="7" capacity="6" />
+		<square row="1" col="0" capacity="6" />
+		<square row="1" col="1" capacity="6" />
+		<square row="1" col="2" capacity="6" />
+		<square row="1" col="3" capacity="6" />
+		<square row="1" col="4" capacity="6" />
+		<square row="1" col="5" capacity="6" />
+		<square row="1" col="6" capacity="6" />
+		<square row="1" col="7" capacity="6" />
+		<square row="1" col="8" capacity="6" />
+		<square row="1" col="9" capacity="6" />
+		<square row="2" col="0" capacity="6" />
+		<square row="2" col="1" capacity="6" />
+		<square row="2" col="2" capacity="6" />
+		<square row="2" col="3" capacity="6" />
+		<square row="2" col="4" capacity="6" />
+		<square row="2" col="5" capacity="6" />
+		<square row="2" col="6" capacity="6" />
+		<square row="2" col="7" capacity="6" />
+		<square row="2" col="8" capacity="6" />
+		<square row="2" col="9" capacity="6" />
+		<square row="3" col="0" capacity="6" />
+		<square row="3" col="1" capacity="6" />
+		<square row="3" col="2" capacity="6" />
+		<square row="3" col="3" capacity="6" />
+		<square row="3" col="4" capacity="6" />
+		<square row="3" col="5" capacity="6" />
+		<square row="3" col="6" capacity="6" />
+		<square row="3" col="7" capacity="6" />
+		<square row="3" col="8" capacity="6" />
+		<square row="3" col="9" capacity="6" />
+		<square row="4" col="0" capacity="6" />
+		<square row="4" col="1" capacity="6" />
+		<square row="4" col="2" capacity="6" />
+		<square row="4" col="3" capacity="6" />
+		<square row="4" col="4" capacity="6" />
+		<square row="4" col="5" capacity="6" />
+		<square row="4" col="6" capacity="6" />
+		<square row="4" col="7" capacity="6" />
+		<square row="4" col="8" capacity="6" />
+		<square row="4" col="9" capacity="6" />
+		<square row="5" col="0" capacity="6" />
+		<square row="5" col="1" capacity="6" />
+		<square row="5" col="2" capacity="6" />
+		<square row="5" col="3" capacity="6" />
+		<square row="5" col="4" capacity="6" />
+		<square row="5" col="5" capacity="6" />
+		<square row="5" col="6" capacity="6" />
+		<square row="5" col="7" capacity="6" />
+		<square row="5" col="8" capacity="6" />
+		<square row="5" col="9" capacity="6" />
+		<square row="6" col="0" capacity="6" />
+		<square row="6" col="1" capacity="6" />
+		<square row="6" col="2" capacity="6" />
+		<square row="6" col="3" capacity="6" />
+		<square row="6" col="4" capacity="6" />
+		<square row="6" col="5" capacity="6" />
+		<square row="6" col="6" capacity="6" />
+		<square row="6" col="7" capacity="6" />
+		<square row="6" col="8" capacity="6" />
+		<square row="6" col="9" capacity="6" />
+	</floors>
+	<walls>
+		<column row="0" col="0" />
+		<column row="1" col="0" />
+		<column row="2" col="0" />
+		<column row="3" col="0" />
+		<column row="4" col="0" />
+		<column row="5" col="0" />
+		<column row="6" col="0" />
+		<column row="0" col="10" />
+		<column row="1" col="10" />
+		<column row="2" col="10" />
+		<column row="3" col="10" />
+		<column row="2" col="5" />
+		<column row="3" col="5" />
+		<column row="4" col="5" />
+		<column row="5" col="5" />
+		<column row="6" col="5" />
+		<column row="0" col="2" />
+		<column row="1" col="2" />
+		<column row="2" col="2" />
+		<column row="3" col="2" />
+		<column row="4" col="2" />
+		<column row="5" col="2" />
+		<column row="6" col="2" />
+		<column row="0" col="8" />
+		<column row="1" col="8" />
+		<column row="2" col="8" />
+		<column row="2" col="6" />
+		<column row="3" col="6" />
+		<row row="0" col="0" />
+		<row row="0" col="1" />
+		<row row="0" col="2" />
+		<row row="0" col="3" />
+		<row row="0" col="4" />
+		<row row="0" col="5" />
+		<row row="0" col="6" />
+		<row row="0" col="7" />
+		<row row="0" col="8" />
+		<row row="0" col="9" />
+		<row row="7" col="0" />
+		<row row="7" col="1" />
+		<row row="7" col="2" />
+		<row row="7" col="3" />
+		<row row="7" col="4" />	
+		<row row="4" col="5" />	
+		<row row="4" col="6" />	
+		<row row="4" col="7" />	
+		<row row="4" col="8" />	
+		<row row="4" col="9" />	
+		<row row="4" col="0" />	
+		<row row="4" col="1" />	
+		<row row="2" col="0" />	
+		<row row="2" col="1" />
+		<row row="2" col="2" />	
+		<row row="2" col="3" />
+		<row row="2" col="4" />	
+		<row row="2" col="7" />
+		<row row="2" col="6" />
+		<row row="3" col="8" />	
+		<row row="3" col="9" />	
+	</walls>
+	<doors>
+		<column row="1" col="10" efficiency="10"/>
+		<column row="1" col="2" efficiency="10"/>
+		<column row="5" col="2" efficiency="10"/>
+		<column row="0" col="8" efficiency="10"/>
+		<column row="2" col="6" efficiency="10"/>
+		<column row="3" col="5" efficiency="10"/>
+		<row row="7" col="3" efficiency="3"/>
+		<row row="2" col="0" efficiency="3"/>
+		<row row="2" col="3" efficiency="3"/>
+	</doors>
+</building>

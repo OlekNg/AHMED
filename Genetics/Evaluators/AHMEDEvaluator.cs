@@ -46,7 +46,7 @@ namespace Genetics.Evaluators
             }
 
             double avg;
-            if (peopleEscaped != 16)
+            if (peopleEscaped != _peopleCount)
                 avg = 0;
             else
             {

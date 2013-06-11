@@ -34,6 +34,8 @@ namespace AHMED
 
             Console.WriteLine();
 
+            //PreviewMap();
+
             OfficialBetaTest();
 
             //OfficialTest();
@@ -41,11 +43,26 @@ namespace AHMED
             //Console.ReadKey();
         }
 
-        static void OfficialBetaTest()
+        static void PreviewMap()
         {
             XMLReader reader = new XMLReader();
             BuildingMap map = reader.ReadBuildingMap("..\\..\\building_map.abm");
             PeopleMap pmap = reader.ReadPeopleMap("..\\..\\people_map.apm");
+
+            TestForm form = new TestForm(map, pmap);
+            form.ShowDialog();
+            Console.ReadKey();
+        }
+
+        static void OfficialBetaTest()
+        {
+            XMLReader reader = new XMLReader();
+            BuildingMap map = reader.ReadBuildingMap("..\\..\\building_map2.abm");
+            PeopleMap pmap = reader.ReadPeopleMap("..\\..\\people_map2.apm");
+
+            int peopleCount = 0;
+            foreach (PeopleGroup group in pmap.People)
+                peopleCount += (int)group.Quantity;
 
             Simulator sim = new Simulator();
             sim.SetupSimulator(map, pmap);
@@ -53,14 +70,14 @@ namespace AHMED
 
             Chromosome.MutationOperator = new ClassicMutation();
             Chromosome.CrossoverOperator = new OnePointCrossover();
-            Chromosome.Evaluator = new AHMEDEvaluator(sim, 16, map);
-            Generation.Selector = new TournamentSelector();
-            //Generation.Selector = new RouletteSelector();
+            Chromosome.Evaluator = new AHMEDEvaluator(sim, peopleCount, map);
+            //Generation.Selector = new TournamentSelector();
+            Generation.Selector = new RouletteSelector();
             //Generation.Repairer = new AHMEDSimpleRepairer(map);
             Generation.Repairer = new AHMEDAdvancedRepairer(map);
 
             Generation g = new Generation((int)map.Height * (int)map.Width * 2);
-            g.MaxNumber = 500;
+            g.MaxNumber = 50;
             g.MutationProbability = 0.01;
             g.CrossoverProbability = 0.75;
 
@@ -72,7 +89,7 @@ namespace AHMED
             s.Stop();
             Console.CursorTop += 6;
             Console.WriteLine("Best chromosome: {0} \n{1}", g.BestChromosome.Value, g.BestChromosome);
-            Console.WriteLine("Avg escape time: {0}", 35 - (g.BestChromosome.Value - 16));
+            Console.WriteLine("Avg escape time: {0}", map.Width * map.Height - (g.BestChromosome.Value - peopleCount));
             Console.WriteLine("Algorithm time: {0}ms", s.ElapsedMilliseconds);
 
             TestForm form = new TestForm(map, pmap, g.BestChromosome.Fenotype);
