@@ -25,11 +25,12 @@ namespace TestSimulator
             const uint capacity = 6;
             const uint doorCapacity = 3;
             const uint standardEff = 4;
-            BuildingMap map = new BuildingMap();
+            BuildingMap map/* = new BuildingMap()*/;
             PeopleMap pmap/* = new PeopleMap()*/;
             Simulator sim = new Simulator();
             XMLReader reader = new XMLReader();
 
+            /*
             map.Setup(w, h, standardEff);
             //add floor
             for (uint i = 0; i < h; ++i)
@@ -71,7 +72,9 @@ namespace TestSimulator
                 map.SetDoor(2, 1 + i, doorCapacity, WallPosition.TOP);
             for (uint i = 0; i < 3; ++i)
                 map.SetDoor(4, 1 + i, doorCapacity, WallPosition.TOP);
+            */
 
+            map = reader.ReadBuildingMap("building_map.abm");
 
             //show
             Console.WriteLine("Capacity[UP,DOWN,LEFT,RIGHT]");
