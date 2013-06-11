@@ -57,13 +57,15 @@ namespace Structure
                 {
                     //not first column
                     //set as right side of adjacent floor tile
-                    Floor[row][col - 1].SetSide(Direction.RIGHT, wallElement);
+                    if(Floor[row][col - 1] != null)
+                        Floor[row][col - 1].SetSide(Direction.RIGHT, wallElement);
                 }
                 if (col != Width)
                 {
                     //not last column
                     //set as left side
-                    Floor[row][col].SetSide(Direction.LEFT, wallElement);
+                    if(Floor[row][col] != null)
+                        Floor[row][col].SetSide(Direction.LEFT, wallElement);
                 }
             }
             else
@@ -72,13 +74,15 @@ namespace Structure
                 {
                     //not first row
                     //set as bootom side of upper tile
-                    Floor[row - 1][col].SetSide(Direction.DOWN, wallElement);
+                    if (Floor[row - 1][col] != null)
+                        Floor[row - 1][col].SetSide(Direction.DOWN, wallElement);
                 }
                 if (row != Height)
                 {
                     //not last row
                     //set as top side
-                    Floor[row][col].SetSide(Direction.UP, wallElement);
+                    if (Floor[row][col] != null)
+                        Floor[row][col].SetSide(Direction.UP, wallElement);
                 }
             }
         }
