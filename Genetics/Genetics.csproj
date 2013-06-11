@@ -54,6 +54,7 @@
     <Compile Include="Mutations\MutationException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repairers\AHMEDSimpleRepairer.cs" />
+    <Compile Include="Repairers\AHMEDAdvancedRepairer.cs" />
     <Compile Include="Repairers\IRepairer.cs" />
     <Compile Include="Repairers\RepairerException.cs" />
     <Compile Include="Selectors\ISelector.cs" />
