@@ -4,23 +4,34 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Simulation;
+using Structure;
 
 namespace Genetics.Evaluators
 {
     public class AHMEDEvaluator : IEvaluator
     {
+        /// <summary>
+        /// Maximum avarage escape time (it is simply amount of all building tiles).
+        /// </summary>
+        private double _maxAvgEscapeTime;
+
+        /// <summary>
+        /// Amount of the people in the building.
+        /// </summary>
+        private int _peopleCount;
+
         private Simulator _simulator;
 
-        public AHMEDEvaluator(Simulator simulator)
+        public AHMEDEvaluator(Simulator simulator, int poepleCount, BuildingMap bmap)
         {
             _simulator = simulator;
+            _peopleCount = poepleCount;
+            _maxAvgEscapeTime = bmap.Width * bmap.Height;
         }
 
         public double Evaluate(Chromosome c)
         {
             List<EscapedGroup> result = _simulator.Simulate(c.Fenotype);
-
-            int peopleCount = 16;
 
             // Calculate avarage.
             double sum = 0;
@@ -34,21 +45,15 @@ namespace Genetics.Evaluators
                 peopleEscaped += (int)g.Quantity;
             }
 
-//             if (peopleEscaped > 0)
-//             {
-//                 Console.WriteLine("Escaped: {0}", peopleEscaped);
-//             }
-
             double avg;
             if (peopleEscaped != 16)
                 avg = 0;
             else
             {
-                //Console.WriteLine("Everyone escaped!");
-                avg = sum / (double)sumTicks;
+                avg = _maxAvgEscapeTime - (sum / (double)_peopleCount);
             }
+
             return (double)peopleEscaped + avg;
-            //return avg;
         }
     }
 }
