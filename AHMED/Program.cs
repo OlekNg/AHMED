@@ -90,40 +90,6 @@ namespace AHMED
             for (uint i = 0; i < 3; ++i)
                 map.SetDoor(4, 1 + i, doorCapacity, WallPosition.TOP);
 
-
-            //show
-            Console.WriteLine("Capacity[UP,DOWN,LEFT,RIGHT]");
-            for (int i = 0; i < h; ++i)
-            {
-                for (int j = 0; j < w; ++j)
-                {
-                    Console.Write(map.Floor[i][j].Capacity);
-                    Console.Write("[");
-                    foreach (IWallElement e in map.Floor[i][j].Side)
-                    {
-                        if (e == null)
-                        {
-                            Console.Write("_");
-                        }
-                        else if (e.CanPassThrough)
-                        {
-                            Console.Write(e.Capacity);
-                        }
-                        else if (!e.CanPassThrough)
-                        {
-                            Console.Write("W");
-                        }
-                        else
-                        {
-                            Console.Write("#");
-                        }
-                    }
-                    Console.Write("] ");
-                }
-                Console.WriteLine();
-            }
-            Console.ReadLine();
-
             //add people group
             pmap.People.Add(new PeopleGroup(0, 0, 3));
             pmap.People.Add(new PeopleGroup(0, 3, 2));
@@ -159,9 +125,10 @@ namespace AHMED
 //             Console.WriteLine("Evaluated: {0}", chr.Value);
 //             return;
 
-            g.Initiate(50);
+            g.Initiate(100);
             while (!g.Next()) { }
-            Console.WriteLine("Best chromosome: {0} ({1})", g.BestChromosome.Value, g.BestChromosome);
+            Console.WriteLine();
+            Console.WriteLine("Best chromosome: {0} \n{1}", g.BestChromosome.Value, g.BestChromosome);
         }
 
         static void RepairTest()
