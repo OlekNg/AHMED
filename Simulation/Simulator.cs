@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Structure;
-
+using Simulation.Exceptions;
 
 namespace Simulation
 {
@@ -91,7 +91,7 @@ namespace Simulation
                 else
                 {
                     //there is a wall
-                    //error
+                    throw new UnexpectedWallException();
                 }
             }
 
@@ -114,6 +114,7 @@ namespace Simulation
             else
             {
                 //ooops, something went wrong, wall found
+                throw new UnexpectedWallException();
             }
             //}
 
