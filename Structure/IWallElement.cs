@@ -11,5 +11,7 @@ namespace Structure
         bool CanPassThrough { get; }
 
         uint Capacity { get; }
+
+        bool Draw { get; }
     }
 }
