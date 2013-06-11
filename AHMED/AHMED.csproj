@@ -53,6 +53,10 @@
       <Project>{b9d02f16-015b-4640-aed3-f850ae382a32}</Project>
       <Name>Genetics</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Readers\Readers.csproj">
+      <Project>{48f90f3f-81c4-4644-a392-d9e6a2052791}</Project>
+      <Name>Readers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SimpleVisualizer\SimpleVisualizer.csproj">
       <Project>{dc602539-e6e1-4851-a909-80e028feb48f}</Project>
       <Name>SimpleVisualizer</Name>

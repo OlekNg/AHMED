@@ -44,9 +44,9 @@ namespace SimpleVisualizer
             g.Clear(Color.FromArgb(255, 230, 230, 230));
 
             // Pens
-            Pen wallPen = new Pen(Color.FromArgb(255, 0, 0, 255), 5);
-            Pen doorPen = new Pen(Color.Orange, 5);
-            Pen pathPen = new Pen(Color.Green, 6);
+            Pen wallPen = new Pen(Color.FromArgb(255, 0, 0, 255), wallSize);
+            Pen doorPen = new Pen(Color.Orange, wallSize);
+            Pen pathPen = new Pen(Color.Green, wallSize);
 
             // Brushes
             SolidBrush tileBrush = new SolidBrush(Color.FromArgb(255, 200, 200, 200));
@@ -145,38 +145,44 @@ namespace SimpleVisualizer
             // Draw path from each people group
             Point startPoint = new Point();
             Point endPoint = new Point();
+            Point endPointDraw = new Point();
             foreach (PeopleGroup group in _pmap.People)
             {
                 int i = (int)group.Row;
                 int j = (int)group.Col;
                 // Start point of the escape path-line.
-                endPoint.X = startPoint.X = j * (tileSize + wallSize) + wallSize + tileSize / 2;
-                endPoint.Y = startPoint.Y = i * (tileSize + wallSize) + wallSize + tileSize / 2;
-
-                Console.WriteLine("Analyzing group at ({0}, {1})", i, j);
+                startPoint.X = j * (tileSize + wallSize) + wallSize + tileSize / 2;
+                startPoint.Y = i * (tileSize + wallSize) + wallSize + tileSize / 2;
 
                 // While we are in the building - draw path.
                 while (i < _bmap.Height && j < _bmap.Width && i >= 0 && j >= 0)
                 {
+                    endPointDraw.X = endPoint.X = startPoint.X;
+                    endPointDraw.Y = endPoint.Y = startPoint.Y;
+                    
                     switch (_fenotype[i * (int)_bmap.Width + j])
                     {
                         case Direction.UP:
                             endPoint.Y -= tileSize + wallSize;
+                            endPointDraw.Y -= tileSize + (int)(wallSize * 1.5);
                             i--;
                             break;
 
                         case Direction.DOWN:
                             endPoint.Y += tileSize + wallSize;
+                            endPointDraw.Y += tileSize + (int)(wallSize * 1.5);
                             i++;
                             break;
 
                         case Direction.LEFT:
                             endPoint.X -= tileSize + wallSize;
+                            endPointDraw.X -= tileSize + (int)(wallSize * 1.5);
                             j--;
                             break;
 
                         case Direction.RIGHT:
                             endPoint.X += tileSize + wallSize;
+                            endPointDraw.X += tileSize + (int)(wallSize * 1.5);
                             j++;
                             break;
 
@@ -184,7 +190,7 @@ namespace SimpleVisualizer
                             break;
                     }
 
-                    g.DrawLine(pathPen, startPoint, endPoint);
+                    g.DrawLine(pathPen, startPoint, endPointDraw);
                     startPoint.X = endPoint.X;
                     startPoint.Y = endPoint.Y;
                 }
