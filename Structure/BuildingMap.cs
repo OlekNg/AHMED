@@ -35,7 +35,7 @@ namespace Structure
             Floor[row][col] = new FloorSquare(capacity);
             for(int i = 0; i < 4; ++i)
             {
-                Floor[row][col].Side[i] = new Door { Capacity = StandardPassageEfficency };
+                Floor[row][col].Side[i] = new Door(StandardPassageEfficency, false);
             }
         }
 
@@ -46,7 +46,7 @@ namespace Structure
 
         public void SetDoor(uint row, uint col, uint capacity, WallPosition position)
         {
-            SetWallElement(row, col, new Door { Capacity = capacity }, position);
+            SetWallElement(row, col, new Door(capacity), position);
         }
 
         private void SetWallElement(uint row, uint col, IWallElement wallElement, WallPosition wallPosition)

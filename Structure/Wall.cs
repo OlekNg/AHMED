@@ -23,5 +23,13 @@ namespace Structure
                 return 0;
             }
         }
+
+        public bool Draw
+        {
+            get
+            {
+                return true;
+            }
+        }
     }
 }
