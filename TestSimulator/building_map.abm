@@ -1,0 +1,49 @@
+<building w="7" h="5" std_eff="4">
+	<floors>
+		<square row="0" col="0" capacity="6" />
+		<square row="0" col="1" capacity="6" />
+		<square row="0" col="2" capacity="6" />
+		<square row="0" col="3" capacity="6" />
+		<square row="0" col="4" capacity="6" />
+		<square row="0" col="5" capacity="6" />
+		<square row="0" col="6" capacity="6" />
+		<square row="1" col="0" capacity="6" />
+		<square row="1" col="1" capacity="6" />
+		<square row="1" col="2" capacity="6" />
+		<square row="1" col="3" capacity="6" />
+		<square row="1" col="4" capacity="6" />
+		<square row="1" col="5" capacity="6" />
+		<square row="1" col="6" capacity="6" />
+		<square row="2" col="0" capacity="6" />
+		<square row="2" col="1" capacity="6" />
+		<square row="2" col="2" capacity="6" />
+		<square row="2" col="3" capacity="6" />
+		<square row="2" col="4" capacity="6" />
+		<square row="2" col="5" capacity="6" />
+		<square row="2" col="6" capacity="6" />
+		<square row="3" col="0" capacity="6" />
+		<square row="3" col="1" capacity="6" />
+		<square row="3" col="2" capacity="6" />
+		<square row="3" col="3" capacity="6" />
+		<square row="3" col="4" capacity="6" />
+		<square row="3" col="5" capacity="6" />
+		<square row="3" col="6" capacity="6" />
+		<square row="4" col="0" capacity="6" />
+		<square row="4" col="1" capacity="6" />
+		<square row="4" col="2" capacity="6" />
+		<square row="4" col="3" capacity="6" />
+		<square row="4" col="4" capacity="6" />
+		<square row="4" col="5" capacity="6" />
+		<square row="4" col="6" capacity="6" />
+	</floors>
+	<walls>
+		<column row="" col="" />
+		<column row="" col="" />
+		<column row="" col="" />
+		<column row="" col="" />
+		<column row="" col="" />
+		<column row="" col="" />
+		<column row="" col="" />
+		<column row="" col="" />
+	</walls>
+</building>

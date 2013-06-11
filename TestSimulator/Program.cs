@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Simulation;
 using Structure;
 using Genetics;
+using Readers;
 
 namespace TestSimulator
 {
@@ -25,9 +26,9 @@ namespace TestSimulator
             const uint doorCapacity = 3;
             const uint standardEff = 4;
             BuildingMap map = new BuildingMap();
-            PeopleMap pmap = new PeopleMap();
+            PeopleMap pmap/* = new PeopleMap()*/;
             Simulator sim = new Simulator();
-
+            XMLReader reader = new XMLReader();
 
             map.Setup(w, h, standardEff);
             //add floor
@@ -106,6 +107,7 @@ namespace TestSimulator
             Console.ReadLine();
 
             //add people group
+            /*
             pmap.People.Add(new PeopleGroup(0, 0, 3));
             pmap.People.Add(new PeopleGroup(0, 3, 2));
             pmap.People.Add(new PeopleGroup(0, 6, 6));
@@ -113,6 +115,14 @@ namespace TestSimulator
             pmap.People.Add(new PeopleGroup(4, 0, 2));
             pmap.People.Add(new PeopleGroup(4, 2, 1));
             pmap.People.Add(new PeopleGroup(4, 3, 1));
+            */
+            pmap = reader.ReadPeopleMap("people_map.apm");
+            if (pmap == null)
+            {
+                Console.WriteLine("Problem with reading people map.");
+                return;
+            }
+
 
             sim.SetupSimulator(map, pmap);
             sim.MaximumTicks = 50;
