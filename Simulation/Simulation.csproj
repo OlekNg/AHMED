@@ -45,7 +45,6 @@
     <Compile Include="Exceptions\NullArgumentException.cs" />
     <Compile Include="Exceptions\SimulatorException.cs" />
     <Compile Include="Exceptions\UnexpectedWallException.cs" />
-    <Compile Include="SimulationResult.cs" />
     <Compile Include="Simulator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
