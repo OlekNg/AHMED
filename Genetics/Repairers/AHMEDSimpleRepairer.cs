@@ -7,6 +7,9 @@ using Structure;
 
 namespace Genetics.Repairers
 {
+    /// <summary>
+    /// Repaires only directing walls.
+    /// </summary>
     public class AHMEDSimpleRepairer : IRepairer
     {
         private BuildingMap _bmap;
@@ -55,14 +58,6 @@ namespace Genetics.Repairers
 
                     if(availableDirections.Count == 0)
                         throw new RepairerException("Cannot fix chromosome. There is a tile with no available direction.");
-
-//                     Console.WriteLine("Row: {0} Col: {1} Fenotypeindex: {2}", i, j, fenotypeIndex);
-//                     Console.WriteLine("Incorrect direction: {0}", fenotype[fenotypeIndex]);
-//                     Console.Write("Available directions: ");
-//                     foreach (Direction d in availableDirections)
-//                         Console.Write(d.ToString() + " ");
-//                     Console.WriteLine();
-                    
 
                     // Set new direction choosing one of available randomly.
                     c.SetFenotype(fenotypeIndex, availableDirections[_randomizer.Next(0, availableDirections.Count)]);
