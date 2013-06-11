@@ -11,6 +11,7 @@ using Genetics.Selectors;
 using Structure;
 using Simulation;
 using Genetics.Repairers;
+using System.Diagnostics;
 
 namespace AHMED
 {
@@ -30,6 +31,8 @@ namespace AHMED
 //             }
 
             Console.WriteLine();
+
+
 
             OfficialTest();
 
@@ -127,7 +130,7 @@ namespace AHMED
 
             g.Initiate(100);
             while (!g.Next()) { }
-            Console.WriteLine();
+            Console.CursorTop += 6;
             Console.WriteLine("Best chromosome: {0} \n{1}", g.BestChromosome.Value, g.BestChromosome);
         }
 

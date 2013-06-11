@@ -1,10 +1,15 @@
-﻿using Genetics.Selectors;
+﻿#define DIAGNOSTICS
+
+using Genetics.Selectors;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Genetics.Repairers;
+using System.Diagnostics;
+
+
 
 namespace Genetics
 {
@@ -71,6 +76,11 @@ namespace Genetics
 
         private Random _randomizer;
 
+        /// <summary>
+        /// For diagnostics purposes.
+        /// </summary>
+        private Stopwatch[] _stopwatches;
+
         public Generation(int chromosomeLength)
         {
             _crossoverProbability = DEFAULT_CROSSOVER_PROBABILITY;
@@ -82,6 +92,10 @@ namespace Genetics
 
             // Empty chromosome (value = 0)
             _bestChromosome = new Chromosome();
+
+            _stopwatches = new Stopwatch[3];
+            for (int i = 0; i < _stopwatches.Length; i++)
+                _stopwatches[i] = new Stopwatch();
         }
 
         /// <summary>
@@ -270,20 +284,52 @@ namespace Genetics
         {
             if (CheckStopCondition())
                 return true;
+
+#if (DIAGNOSTICS)
+            _stopwatches[0].Start();
+            Select();
+            ApplyCrossover();
+            ApplyMutation();
+            CreateNewCurrentPopulation();
+            _stopwatches[0].Stop();
+            _stopwatches[1].Start();
+            Repair();
+            _stopwatches[1].Stop();
+            _stopwatches[2].Start();
+            Evaluate();
+            _stopwatches[2].Stop();
+#else
             Select();
             ApplyCrossover();
             ApplyMutation();
             CreateNewCurrentPopulation();
             Repair();
             Evaluate();
+#endif
+
             _number++;
 
             if (_number % 10 == 0)
             {
                 int progress = _number * 100 / _maxNumber;
+
+                long total = 0;
+                for(int i = 0; i < _stopwatches.Length; i++)
+                    total += _stopwatches[i].ElapsedMilliseconds;
+
                 // Progress
-                Console.SetCursorPosition(0, Console.CursorTop);
-                Console.Write("{0}%", progress);
+                int top = Console.CursorTop;
+
+                Console.CursorLeft = 0;
+                Console.WriteLine("Progress: {0}%", progress);
+#if (DIAGNOSTICS)
+                Console.WriteLine("Power balance:");
+                Console.WriteLine("Selection and operators: {0}%", _stopwatches[0].ElapsedMilliseconds * 100 / total);
+                Console.WriteLine("Repair: {0}%", _stopwatches[1].ElapsedMilliseconds * 100 / total);
+                Console.WriteLine("Evaluation (simulation): {0}%", _stopwatches[2].ElapsedMilliseconds * 100 / total);
+#endif
+
+                Console.CursorTop = top;
             }
 
 
