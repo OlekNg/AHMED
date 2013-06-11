@@ -288,6 +288,8 @@ namespace Genetics
             {
                 if (i % 14 == 0 && i != 0)
                     sb.Append("\n");
+                else if (i % 2 == 0 && i != 0)
+                    sb.Append(" ");
 
                 sb.Append(_genotype[i] == true ? '1' : '0');
                 
