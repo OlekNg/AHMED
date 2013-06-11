@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Simulation.Exceptions
 {
+    /// <summary>
+    /// Exception threw when simulator came across unexpected wall
+    /// </summary>
     public class UnexpectedWallException : SimulatorException
     {
     }
