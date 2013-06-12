@@ -27,31 +27,89 @@ namespace AHMED
         {
             Console.WriteLine("Welcome to AHMED.");
 
-//             for (int i = 0; i < 10; i++)
-//             {
-//                 LetsGeneticShiftPlusOne();
-//             }
+            if (args.Length != 2)
+            {
+                Console.WriteLine("Invalid argument count!");
+                return;
+            }
 
-            Console.WriteLine();
+            if (args[0] == "-p")
+            {
+                PreviewMap(args[1]);
+            }
+            else
+            {
+                Final(args[0], args[1]);
+            }
 
-            //PreviewMap();
-
-            OfficialBetaTest();
-
-            //OfficialTest();
-
-            //Console.ReadKey();
         }
 
-        static void PreviewMap()
+        static void PreviewMap(string filename)
         {
             XMLReader reader = new XMLReader();
-            BuildingMap map = reader.ReadBuildingMap("..\\..\\building_map.abm");
-            PeopleMap pmap = reader.ReadPeopleMap("..\\..\\people_map.apm");
+            BuildingMap map = reader.ReadBuildingMap(filename);
+            if (map == null)
+            {
+                Console.WriteLine("Error loading building map!");
+                return;
+            }
 
-            TestForm form = new TestForm(map, pmap);
+            TestForm form = new TestForm(map, null);
             form.ShowDialog();
-            Console.ReadKey();
+        }
+
+        static void Final(string bmapPath, string pmapPath)
+        {
+            XMLReader reader = new XMLReader();
+            BuildingMap map = reader.ReadBuildingMap(bmapPath);
+            PeopleMap pmap = reader.ReadPeopleMap(pmapPath);
+
+            if (map == null)
+            {
+                Console.WriteLine("Error laoding buidling map!");
+                return;
+            }
+
+            if (pmap == null)
+            {
+                Console.WriteLine("Error laoding people map!");
+                return;
+            }
+
+            int peopleCount = 0;
+            foreach (PeopleGroup group in pmap.People)
+                peopleCount += (int)group.Quantity;
+
+            Simulator sim = new Simulator();
+            sim.SetupSimulator(map, pmap);
+            sim.MaximumTicks = map.Width * map.Height;
+
+            Chromosome.MutationOperator = new ClassicMutation();
+            Chromosome.CrossoverOperator = new OnePointCrossover();
+            Chromosome.Evaluator = new AHMEDEvaluator(sim, peopleCount, map);
+            //Generation.Selector = new TournamentSelector();
+            Generation.Selector = new RouletteSelector();
+            //Generation.Repairer = new AHMEDSimpleRepairer(map);
+            Generation.Repairer = new AHMEDAdvancedRepairer(map);
+
+            Generation g = new Generation((int)map.Height * (int)map.Width * 2);
+            g.MaxNumber = 300;
+            g.MutationProbability = 0.01;
+            g.CrossoverProbability = 0.75;
+
+            g.Initiate(100);
+
+            Stopwatch s = new Stopwatch();
+            s.Start();
+            while (!g.Next()) { }
+            s.Stop();
+            Console.CursorTop += 6;
+            Console.WriteLine("Best chromosome: {0} \n{1}", g.BestChromosome.Value, g.BestChromosome);
+            Console.WriteLine("Avg escape time: {0}", map.Width * map.Height - (g.BestChromosome.Value - peopleCount));
+            Console.WriteLine("Algorithm time: {0}ms", s.ElapsedMilliseconds);
+
+            TestForm form = new TestForm(map, pmap, g.BestChromosome.Fenotype);
+            form.ShowDialog();
         }
 
         static void OfficialBetaTest()
