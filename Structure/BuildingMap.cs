@@ -6,18 +6,42 @@ using System.Threading.Tasks;
 
 namespace Structure
 {
+    /// <summary>
+    /// Enum containing possible locations of wall element (door, wall) next to each floor square
+    /// </summary>
     public enum WallPosition { TOP, LEFT }
 
+    /// <summary>
+    /// Class containing informations about building structure
+    /// </summary>
     public class BuildingMap
     {
+        /// <summary>
+        /// Height of the map
+        /// </summary>
         public uint Height { get; set; }
 
+        /// <summary>
+        /// Width of the map
+        /// </summary>
         public uint Width { get; set; }
-
+        
+        /// <summary>
+        /// Efficiency for passages between floor squares (when there is no door set)
+        /// </summary>
         public uint StandardPassageEfficency { get; set; }
 
+        /// <summary>
+        /// Floor (null when there is no floor set with coordinates)
+        /// </summary>
         public FloorSquare[][] Floor { get; set; }
 
+        /// <summary>
+        /// Initialize building map with given size and efficiency
+        /// </summary>
+        /// <param name="w">Map width</param>
+        /// <param name="h">Map height</param>
+        /// <param name="standardPassageEfficency">Standard efficiency for not set passages</param>
         public void Setup(uint w, uint h, uint standardPassageEfficency)
         {
             Height = h;
@@ -30,6 +54,12 @@ namespace Structure
             }
         }
 
+        /// <summary>
+        /// Set floor with given coordinates and capacity
+        /// </summary>
+        /// <param name="row">Row</param>
+        /// <param name="col">Column</param>
+        /// <param name="capacity">Capacity</param>
         public void SetFloor(uint row, uint col, uint capacity)
         {
             Floor[row][col] = new FloorSquare(capacity);
@@ -39,16 +69,36 @@ namespace Structure
             }
         }
 
+        /// <summary>
+        /// Set wall oriented to floor square with given coordinates
+        /// </summary>
+        /// <param name="row">Row</param>
+        /// <param name="col">Column</param>
+        /// <param name="position">Wall orientation</param>
         public void SetWall(uint row, uint col, WallPosition position)
         {
             SetWallElement(row, col, new Wall(), position);
         }
 
+        /// <summary>
+        /// Set door with given efficiency oriented to floor square with given coordinates
+        /// </summary>
+        /// <param name="row">Row</param>
+        /// <param name="col">Column</param>
+        /// <param name="capacity">Door eficiency</param>
+        /// <param name="position">Door orientation</param>
         public void SetDoor(uint row, uint col, uint capacity, WallPosition position)
         {
             SetWallElement(row, col, new Door(capacity), position);
         }
 
+        /// <summary>
+        /// Set given wall element oritented to floor eith given coordinations
+        /// </summary>
+        /// <param name="row">Row</param>
+        /// <param name="col">Column</param>
+        /// <param name="wallElement">Wall element</param>
+        /// <param name="wallPosition">Wall element orientation</param>
         private void SetWallElement(uint row, uint col, IWallElement wallElement, WallPosition wallPosition)
         {
             if (wallPosition == WallPosition.LEFT)
