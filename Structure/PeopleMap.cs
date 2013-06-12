@@ -6,9 +6,14 @@ using System.Threading.Tasks;
 
 namespace Structure
 {
+    /// <summary>
+    /// Class containing all people groups in building
+    /// </summary>
     public class PeopleMap
     {
-        //TODO: maybe there is no need for this?
+        /// <summary>
+        /// List of groups
+        /// </summary>
         public List<PeopleGroup> People = new List<PeopleGroup>();
     }
 }

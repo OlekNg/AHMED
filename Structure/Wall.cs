@@ -6,8 +6,14 @@ using System.Threading.Tasks;
 
 namespace Structure
 {
+    /// <summary>
+    /// Class for wall
+    /// </summary>
     public class Wall : IWallElement
     {
+        /// <summary>
+        /// There is no way to pass through wall
+        /// </summary>
         public bool CanPassThrough
         {
             get
@@ -16,6 +22,9 @@ namespace Structure
             }
         }
 
+        /// <summary>
+        /// No one can pass through the wall
+        /// </summary>
         public uint Capacity
         {
             get
@@ -24,6 +33,9 @@ namespace Structure
             }
         }
 
+        /// <summary>
+        /// Wall are alwyas drawn
+        /// </summary>
         public bool Draw
         {
             get
