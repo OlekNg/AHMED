@@ -87,8 +87,8 @@ namespace AHMED
             Chromosome.MutationOperator = new ClassicMutation();
             Chromosome.CrossoverOperator = new OnePointCrossover();
             Chromosome.Evaluator = new AHMEDEvaluator(sim, peopleCount, map);
-            //Generation.Selector = new TournamentSelector();
-            Generation.Selector = new RouletteSelector();
+            Generation.Selector = new TournamentSelector();
+            //Generation.Selector = new RouletteSelector();
             //Generation.Repairer = new AHMEDSimpleRepairer(map);
             Generation.Repairer = new AHMEDAdvancedRepairer(map);
 
