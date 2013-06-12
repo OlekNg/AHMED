@@ -49,8 +49,8 @@ namespace SimpleVisualizer
             const int wallSize = 5;
 
 
-            Bitmap b = new Bitmap((int)_bmap.Width * (tileSize + wallSize) + wallSize,
-                                  (int)_bmap.Height * (tileSize + wallSize) + wallSize);
+            Bitmap b = new Bitmap((int)_bmap.Width * (tileSize + wallSize) + wallSize + 20,
+                                  (int)_bmap.Height * (tileSize + wallSize) + wallSize + 20);
 
             Graphics g = Graphics.FromImage(b);
 
@@ -64,6 +64,13 @@ namespace SimpleVisualizer
 
             // Brushes
             SolidBrush tileBrush = new SolidBrush(Color.FromArgb(255, 200, 200, 200));
+            SolidBrush peopleStringBrush = new SolidBrush(Color.LimeGreen);
+            SolidBrush doorStringBrush = new SolidBrush(Color.Black);
+
+            // Fonts
+            Font peopleFont = new Font(FontFamily.GenericSansSerif, 25);
+            Font doorFont = new Font(FontFamily.GenericSansSerif, 10);
+
 
             // Draw tiles and walls/doors
             for (int i = 0; i < (int)_bmap.Height; i++)
@@ -149,6 +156,8 @@ namespace SimpleVisualizer
                             }
 
                             g.DrawLine(doorPen, p1, p2);
+                            PointF pf = new PointF(p1.X, p1.Y);
+                            g.DrawString(_bmap.Floor[i][j].GetSide(d).Capacity.ToString(), doorFont, doorStringBrush, pf);
                         }
                         else
                             // Draw wall
@@ -211,6 +220,22 @@ namespace SimpleVisualizer
                 }
             }
 
+            
+            foreach (PeopleGroup group in _pmap.People)
+            {
+                int i = (int)group.Row;
+                int j = (int)group.Col;
+
+                float x = j * (tileSize + wallSize);
+                float y = i * (tileSize + wallSize);
+
+                PointF pf = new PointF(x, y);
+
+                g.DrawString(group.Quantity.ToString(), peopleFont, peopleStringBrush, pf);
+            }
+
+            
+            
 
             // Show image.
             uxImage.Width = b.Width;
