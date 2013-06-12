@@ -8,20 +8,46 @@ using Simulation.Exceptions;
 
 namespace Simulation
 {
+    /// <summary>
+    /// Main class for simulator
+    /// </summary>
     public class Simulator
     {
+        /// <summary>
+        /// Building map
+        /// </summary>
         private BuildingMap _buildingMap;
 
+        /// <summary>
+        /// People map
+        /// </summary>
         private PeopleMap _peopleMap;
 
+        /// <summary>
+        /// Maximum ticks for simulation
+        /// </summary>
         public uint MaximumTicks { get; set; }
 
+        /// <summary>
+        /// Evacuation map
+        /// </summary>
         private EvacuationMap _evacuationMap = new EvacuationMap();
 
+        /// <summary>
+        /// List of evacuation elements which needs evacuate people
+        /// </summary>
         private List<EvacuationElement> _evacuationGroups = new List<EvacuationElement>();
 
+        /// <summary>
+        /// Groups which have already escaped
+        /// </summary>
         private List<EscapedGroup> _escapedGroups = new List<EscapedGroup>();
 
+        /// <summary>
+        /// Initialize simulator for given building and people map
+        /// </summary>
+        /// <param name="bm">Building map</param>
+        /// <param name="pm">People map</param>
         public void SetupSimulator(BuildingMap bm, PeopleMap pm)
         {
             if (bm == null) return;
@@ -33,6 +59,11 @@ namespace Simulation
             _evacuationMap.InitializeFromBuildingMap(_buildingMap);
         }
 
+        /// <summary>
+        /// Simulate given fenotype
+        /// </summary>
+        /// <param name="fenotype">Fenotype</param>
+        /// <returns>List of escaped groups</returns>
         public List<EscapedGroup> Simulate(List<Direction> fenotype)
         {
             _escapedGroups.Clear();
@@ -66,6 +97,11 @@ namespace Simulation
             return _escapedGroups;
         }
 
+        /// <summary>
+        /// Process one element of evacuation route
+        /// </summary>
+        /// <param name="group">Evacuation element to process</param>
+        /// <param name="tick">Process goven element with this tick</param>
         private void Process(EvacuationElement group, uint tick)
         {
             uint peopleCount;
@@ -105,8 +141,6 @@ namespace Simulation
                 //there is no room for anybody
                 return;
             }
-            //if (group.Passage != null)
-            //{
             if (group.Passage.CanPassThrough)
             {
                 peopleCount = Math.Min(peopleCount, group.Passage.Capacity);
@@ -116,7 +150,6 @@ namespace Simulation
                 //ooops, something went wrong, wall found
                 throw new UnexpectedWallException();
             }
-            //}
 
             peopleCount = Math.Min(peopleCount, group.PeopleQuantity);
             nextStep.PeopleQuantity += peopleCount;

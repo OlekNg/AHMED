@@ -8,8 +8,16 @@ using Structure;
 
 namespace Readers
 {
+    /// <summary>
+    /// Reader class using XML files as data sources
+    /// </summary>
     public class XMLReader
     {
+        /// <summary>
+        /// Method to read people map from XML file
+        /// </summary>
+        /// <param name="filepath">Filepath to data source</param>
+        /// <returns>Null if error (file not found, malformed XML, etc.), created people map otherwise</returns>
         public PeopleMap ReadPeopleMap(string filepath)
         {
             PeopleMap result = new PeopleMap();
@@ -35,6 +43,11 @@ namespace Readers
             return result;
         }
 
+        /// <summary>
+        /// Method to read building map from XML file
+        /// </summary>
+        /// <param name="filepath">Filepath to data source</param>
+        /// <returns>Null if error (file not found, malformed XML, etc.), created building map otherwise</returns>
         public BuildingMap ReadBuildingMap(string filepath)
         {
             BuildingMap result = new BuildingMap();
