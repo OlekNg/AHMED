@@ -1,6 +1,6 @@
 ﻿namespace SimpleVisualizer
 {
-    partial class TestForm
+    partial class VisualizerForm
     {
         /// <summary>
         /// Required designer variable.
@@ -51,15 +51,15 @@
             this.uxRefreshButton.UseVisualStyleBackColor = true;
             this.uxRefreshButton.Click += new System.EventHandler(this.uxRefreshButton_Click);
             // 
-            // TestForm
+            // VisualizerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(799, 482);
             this.Controls.Add(this.uxRefreshButton);
             this.Controls.Add(this.uxImage);
-            this.Name = "TestForm";
-            this.Text = "TestForm";
+            this.Name = "VisualizerForm";
+            this.Text = "AHMED Visualizer";
             ((System.ComponentModel.ISupportInitialize)(this.uxImage)).EndInit();
             this.ResumeLayout(false);
 

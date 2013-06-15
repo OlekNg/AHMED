@@ -54,7 +54,7 @@ namespace AHMED
                 return;
             }
 
-            TestForm form = new TestForm(map, null);
+            VisualizerForm form = new VisualizerForm(map, null);
             form.ShowDialog();
         }
 
@@ -108,7 +108,7 @@ namespace AHMED
             Console.WriteLine("Avg escape time: {0}", map.Width * map.Height - (g.BestChromosome.Value - peopleCount));
             Console.WriteLine("Algorithm time: {0}ms", s.ElapsedMilliseconds);
 
-            TestForm form = new TestForm(map, pmap, g.BestChromosome.Fenotype);
+            VisualizerForm form = new VisualizerForm(map, pmap, g.BestChromosome.Fenotype);
             form.ShowDialog();
         }
 
@@ -150,7 +150,7 @@ namespace AHMED
             Console.WriteLine("Avg escape time: {0}", map.Width * map.Height - (g.BestChromosome.Value - peopleCount));
             Console.WriteLine("Algorithm time: {0}ms", s.ElapsedMilliseconds);
 
-            TestForm form = new TestForm(map, pmap, g.BestChromosome.Fenotype);
+            VisualizerForm form = new VisualizerForm(map, pmap, g.BestChromosome.Fenotype);
             form.ShowDialog();
             Console.ReadKey();
         }
@@ -465,7 +465,7 @@ namespace AHMED
                                             "00000000100000" + 
                                             "11101010101010");
 
-            TestForm form = new TestForm(map, pmap, chr.Fenotype);
+            VisualizerForm form = new VisualizerForm(map, pmap, chr.Fenotype);
             form.ShowDialog();
         }
     }

@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace SimpleVisualizer
 {
-    public partial class TestForm : Form
+    public partial class VisualizerForm : Form
     {
         private BuildingMap _bmap;
 
@@ -25,7 +25,7 @@ namespace SimpleVisualizer
         /// </summary>
         /// <param name="bmap"></param>
         /// <param name="pmap"></param>
-        public TestForm(BuildingMap bmap, PeopleMap pmap)
+        public VisualizerForm(BuildingMap bmap, PeopleMap pmap)
         {
             InitializeComponent();
             _bmap = bmap;
@@ -33,7 +33,7 @@ namespace SimpleVisualizer
             PreviewMap();
         }
 
-        public TestForm(BuildingMap bmap, PeopleMap pmap, List<Direction> fenotype)
+        public VisualizerForm(BuildingMap bmap, PeopleMap pmap, List<Direction> fenotype)
         {
             InitializeComponent();
 
