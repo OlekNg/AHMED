@@ -27,14 +27,12 @@ namespace WPFTest.Logic
             ToggleFloor(s);
         }
 
-        public override void MouseMove(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        public override void MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            throw new NotImplementedException();
         }
 
         public override void MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            throw new NotImplementedException();
         }
 
         private void ToggleFloor(Segment s)

@@ -45,7 +45,12 @@ namespace WPFTest
         {
         }
 
-        private void Rectangle_MouseDown_1(object sender, MouseButtonEventArgs e)
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void Segment_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Tool selectedTool = (Tool)uxToolbox.SelectedItem;
 
@@ -53,9 +58,20 @@ namespace WPFTest
                 selectedTool.MouseDown(sender, e);
         }
 
-        private void Exit_Click(object sender, RoutedEventArgs e)
+        private void Segment_MouseMove(object sender, MouseEventArgs e)
         {
-            this.Close();
+            Tool selectedTool = (Tool)uxToolbox.SelectedItem;
+
+            if (selectedTool != null)
+                selectedTool.MouseMove(sender, e);
+        }
+
+        private void Segment_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            Tool selectedTool = (Tool)uxToolbox.SelectedItem;
+
+            if (selectedTool != null)
+                selectedTool.MouseMove(sender, e);
         }
     }
 }

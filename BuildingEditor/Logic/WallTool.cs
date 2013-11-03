@@ -7,6 +7,8 @@ using System.Windows.Shapes;
 
 namespace WPFTest.Logic
 {
+    public enum Side {NONE, LEFT, TOP, RIGHT, BOTTOM }
+
     public class WallTool : Tool
     {
         private Building _building;
@@ -28,27 +30,34 @@ namespace WPFTest.Logic
             Point p = e.GetPosition((UIElement)sender);
             var size = shape.ActualHeight;
 
-            if (p.X > p.Y && p.X < (size - p.Y))
-                ToggleWall(s.TopSide);
+            Side side = GetSide(size, p);
 
-            if (p.X > p.Y && p.X > (size - p.Y))
-                ToggleWall(s.RightSide);
-
-            if (p.X < p.Y && p.X < (size - p.Y))
-                ToggleWall(s.LeftSide);
-
-            if (p.X < p.Y && p.X > (size - p.Y))
-                ToggleWall(s.BottomSide);
+            switch (side)
+            {
+                case Side.LEFT:
+                    ToggleWall(s.LeftSide);
+                    break;
+                case Side.TOP:
+                    ToggleWall(s.TopSide);
+                    break;
+                case Side.RIGHT:
+                    ToggleWall(s.RightSide);
+                    break;
+                case Side.BOTTOM:
+                    ToggleWall(s.BottomSide);
+                    break;
+            }
+            
         }
 
-        public override void MouseMove(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        public override void MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            throw new NotImplementedException();
+            
         }
 
         public override void MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            throw new NotImplementedException();
+            
         }
 
         private void ToggleWall(SideElement e)
@@ -57,6 +66,23 @@ namespace WPFTest.Logic
                 e.Type = SideElementType.NONE;
             else
                 e.Type = SideElementType.WALL;
+        }
+
+        private Side GetSide(double size, Point p)
+        {
+            if (p.X > p.Y && p.X < (size - p.Y))
+                return Side.TOP;
+
+            if (p.X > p.Y && p.X > (size - p.Y))
+                return Side.RIGHT;
+
+            if (p.X < p.Y && p.X < (size - p.Y))
+                return Side.LEFT;
+
+            if (p.X < p.Y && p.X > (size - p.Y))
+                return Side.BOTTOM;
+
+            return Side.NONE;
         }
     }
 }

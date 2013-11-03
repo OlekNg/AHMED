@@ -22,7 +22,7 @@ namespace WPFTest.Logic
         public string Name { get; set; }
 
         public abstract void MouseDown(object sender, MouseButtonEventArgs e);
-        public abstract void MouseMove(object sender, MouseButtonEventArgs e);
+        public abstract void MouseMove(object sender, MouseEventArgs e);
         public abstract void MouseUp(object sender, MouseButtonEventArgs e);
     }
 }

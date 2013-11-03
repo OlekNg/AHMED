@@ -90,6 +90,9 @@ namespace WPFTest.Logic
                 BottomLeftCorner.Type = SideElementType.NONE;
         }
 
+        /// <summary>
+        /// Sets wall if adjacent segment is of type NONE (for each side).
+        /// </summary>
         public void UpdateOuterWalls()
         {
             // Clear walls if we are type none.
