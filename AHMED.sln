@@ -23,6 +23,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneticAlgorithm", "Genetic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneticAlgorithmTest", "GeneticAlgorithmTest\GeneticAlgorithmTest.csproj", "{64222020-EA56-4C57-92FA-03737CE4F448}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildingEditor", "BuildingEditor\BuildingEditor.csproj", "{BD97471A-48C6-48C2-83FD-75054045D0CF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{64AE33FC-05A8-483C-8F04-0A82DC0EF2A9}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +74,10 @@ Global
 		{64222020-EA56-4C57-92FA-03737CE4F448}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{64222020-EA56-4C57-92FA-03737CE4F448}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{64222020-EA56-4C57-92FA-03737CE4F448}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD97471A-48C6-48C2-83FD-75054045D0CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD97471A-48C6-48C2-83FD-75054045D0CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD97471A-48C6-48C2-83FD-75054045D0CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD97471A-48C6-48C2-83FD-75054045D0CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
