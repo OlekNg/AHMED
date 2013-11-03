@@ -36,7 +36,7 @@ namespace WPFTest
             toolbox.Add(new FloorTool(_building));
             toolbox.Add(new WallTool(_building));
 
-            Toolbox.ItemsSource = toolbox;
+            uxToolbox.ItemsSource = toolbox;
 
             _randomizer = new Random();
         }
@@ -47,10 +47,15 @@ namespace WPFTest
 
         private void Rectangle_MouseDown_1(object sender, MouseButtonEventArgs e)
         {
-            Tool selectedTool = (Tool)Toolbox.SelectedItem;
+            Tool selectedTool = (Tool)uxToolbox.SelectedItem;
 
             if (selectedTool != null)
                 selectedTool.MouseDown(sender, e);
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }
