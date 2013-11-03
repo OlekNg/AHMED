@@ -19,6 +19,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleVisualizer", "SimpleV
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Readers", "Readers\Readers.csproj", "{48F90F3F-81C4-4644-A392-D9E6A2052791}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneticAlgorithm", "GeneticAlgorithm\GeneticAlgorithm.csproj", "{2F9368F3-05B9-4A87-9845-5AFAC662DE16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneticAlgorithmTest", "GeneticAlgorithmTest\GeneticAlgorithmTest.csproj", "{64222020-EA56-4C57-92FA-03737CE4F448}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +57,14 @@ Global
 		{48F90F3F-81C4-4644-A392-D9E6A2052791}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48F90F3F-81C4-4644-A392-D9E6A2052791}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48F90F3F-81C4-4644-A392-D9E6A2052791}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F9368F3-05B9-4A87-9845-5AFAC662DE16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F9368F3-05B9-4A87-9845-5AFAC662DE16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F9368F3-05B9-4A87-9845-5AFAC662DE16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F9368F3-05B9-4A87-9845-5AFAC662DE16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64222020-EA56-4C57-92FA-03737CE4F448}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64222020-EA56-4C57-92FA-03737CE4F448}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64222020-EA56-4C57-92FA-03737CE4F448}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64222020-EA56-4C57-92FA-03737CE4F448}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
