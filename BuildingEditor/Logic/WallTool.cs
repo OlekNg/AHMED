@@ -24,30 +24,15 @@ namespace WPFTest.Logic
             Rectangle shape = sender as Rectangle;
             if (shape == null) return;
 
-            Segment s = shape.Tag as Segment;
-            if (s == null) return;
+            Segment segment = shape.Tag as Segment;
+            if (segment == null) return;
 
-            Point p = e.GetPosition((UIElement)sender);
+            Point pos = e.GetPosition((UIElement)sender);
             var size = shape.ActualHeight;
 
-            Side side = GetSide(size, p);
+            Side side = CalculateSegmentClickedSide(size, pos);
 
-            switch (side)
-            {
-                case Side.LEFT:
-                    ToggleWall(s.LeftSide);
-                    break;
-                case Side.TOP:
-                    ToggleWall(s.TopSide);
-                    break;
-                case Side.RIGHT:
-                    ToggleWall(s.RightSide);
-                    break;
-                case Side.BOTTOM:
-                    ToggleWall(s.BottomSide);
-                    break;
-            }
-            
+            segment.ToggleSide(side, SideElementType.WALL);
         }
 
         public override void MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
@@ -60,26 +45,24 @@ namespace WPFTest.Logic
             
         }
 
-        private void ToggleWall(SideElement e)
+        /// <summary>
+        /// Caluclates which side (triangle) of segment has been clicked.
+        /// </summary>
+        /// <param name="size">Size of segment (rendered width/height - assumption that segment is square).</param>
+        /// <param name="pos">Mouse click location relative to segment.</param>
+        /// <returns></returns>
+        private Side CalculateSegmentClickedSide(double size, Point pos)
         {
-            if (e.Type == SideElementType.WALL)
-                e.Type = SideElementType.NONE;
-            else
-                e.Type = SideElementType.WALL;
-        }
-
-        private Side GetSide(double size, Point p)
-        {
-            if (p.X > p.Y && p.X < (size - p.Y))
+            if (pos.X > pos.Y && pos.X < (size - pos.Y))
                 return Side.TOP;
 
-            if (p.X > p.Y && p.X > (size - p.Y))
+            if (pos.X > pos.Y && pos.X > (size - pos.Y))
                 return Side.RIGHT;
 
-            if (p.X < p.Y && p.X < (size - p.Y))
+            if (pos.X < pos.Y && pos.X < (size - pos.Y))
                 return Side.LEFT;
 
-            if (p.X < p.Y && p.X > (size - p.Y))
+            if (pos.X < pos.Y && pos.X > (size - pos.Y))
                 return Side.BOTTOM;
 
             return Side.NONE;

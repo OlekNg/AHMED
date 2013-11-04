@@ -51,10 +51,49 @@ namespace WPFTest.Logic
         public SideElement BottomLeftCorner { get; set; }
         #endregion
 
+        public SideElement GetSideElement(Side side)
+        {
+            SideElement result = null;
+
+            switch (side)
+            {
+                case Side.LEFT:
+                    result = LeftSide; break;
+                case Side.TOP:
+                    result = TopSide; break;
+                case Side.RIGHT:
+                    result = RightSide; break;
+                case Side.BOTTOM:
+                    result = BottomSide; break;
+                default:
+                    result = null; break;
+            }
+
+            return result;
+        }
+
+        public void ToggleSide(Side side, SideElementType value)
+        {
+            SideElement element = GetSideElement(side);
+
+            if (element.Type == value)
+                element.Type = SideElementType.NONE;
+            else
+                element.Type = value;
+        }
+
+        public void ToggleFloor()
+        {
+            if (Type == SegmentType.FLOOR)
+                Type = SegmentType.NONE;
+            else
+                Type = SegmentType.FLOOR;
+        }
+
         public void UpdateCorners()
         {
             // Top left corner.
-            if(LeftSide.Type == SideElementType.WALL ||
+            if (LeftSide.Type == SideElementType.WALL ||
                 TopSide.Type == SideElementType.WALL ||
                 (LeftSegment != null && LeftSegment.TopSide.Type == SideElementType.WALL) ||
                 (TopSegment != null && TopSegment.LeftSide.Type == SideElementType.WALL))
@@ -63,7 +102,7 @@ namespace WPFTest.Logic
                 TopLeftCorner.Type = SideElementType.NONE;
 
             // Top Right corner.
-            if(RightSide.Type == SideElementType.WALL ||
+            if (RightSide.Type == SideElementType.WALL ||
                 TopSide.Type == SideElementType.WALL ||
                 (RightSegment != null && RightSegment.TopSide.Type == SideElementType.WALL) ||
                 (TopSegment != null && TopSegment.RightSide.Type == SideElementType.WALL))
@@ -72,7 +111,7 @@ namespace WPFTest.Logic
                 TopRightCorner.Type = SideElementType.NONE;
 
             // Bottom Right corner.
-            if(RightSide.Type == SideElementType.WALL ||
+            if (RightSide.Type == SideElementType.WALL ||
                 BottomSide.Type == SideElementType.WALL ||
                 (RightSegment != null && RightSegment.BottomSide.Type == SideElementType.WALL) ||
                 (BottomSegment != null && BottomSegment.RightSide.Type == SideElementType.WALL))
@@ -81,7 +120,7 @@ namespace WPFTest.Logic
                 BottomRightCorner.Type = SideElementType.NONE;
 
             // Bottom left corner.
-            if(LeftSide.Type == SideElementType.WALL ||
+            if (LeftSide.Type == SideElementType.WALL ||
                 BottomSide.Type == SideElementType.WALL ||
                 (LeftSegment != null && LeftSegment.BottomSide.Type == SideElementType.WALL) ||
                 (BottomSegment != null && BottomSegment.LeftSide.Type == SideElementType.WALL))

@@ -21,10 +21,10 @@ namespace WPFTest.Logic
             Rectangle shape = sender as Rectangle;
             if (shape == null) return;
 
-            Segment s = shape.Tag as Segment;
-            if (s == null) return;
+            Segment segment = shape.Tag as Segment;
+            if (segment == null) return;
 
-            ToggleFloor(s);
+            segment.ToggleFloor();
         }
 
         public override void MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
@@ -33,14 +33,6 @@ namespace WPFTest.Logic
 
         public override void MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-        }
-
-        private void ToggleFloor(Segment s)
-        {
-            if (s.Type == SegmentType.FLOOR)
-                s.Type = SegmentType.NONE;
-            else
-                s.Type = SegmentType.FLOOR;
         }
     }
 }
