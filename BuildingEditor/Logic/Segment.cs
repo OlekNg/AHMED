@@ -31,6 +31,7 @@ namespace WPFTest.Logic
         #region Properties
         public int Row { get; set; }
         public int Column { get; set; }
+        public bool Preview { get; set; }
 
         public int Capacity { get; set; }
         public SegmentType Type { get; set; }
@@ -51,6 +52,25 @@ namespace WPFTest.Logic
         public SideElement BottomLeftCorner { get; set; }
         #endregion
 
+        public Segment GetNeighbour(Side side)
+        {
+            Segment result = null;
+
+            switch (side)
+            {
+                case Side.LEFT:
+                    result = LeftSegment; break;
+                case Side.TOP:
+                    result = TopSegment; break;
+                case Side.RIGHT:
+                    result = RightSegment; break;
+                case Side.BOTTOM:
+                    result = BottomSegment; break;
+            }
+
+            return result;
+        }
+
         public SideElement GetSideElement(Side side)
         {
             SideElement result = null;
@@ -65,11 +85,14 @@ namespace WPFTest.Logic
                     result = RightSide; break;
                 case Side.BOTTOM:
                     result = BottomSide; break;
-                default:
-                    result = null; break;
             }
 
             return result;
+        }
+
+        public void SetSide(Side side, SideElementType value)
+        {
+            GetSideElement(side).Type = value;
         }
 
         public void ToggleSide(Side side, SideElementType value)
@@ -137,32 +160,22 @@ namespace WPFTest.Logic
             // Clear walls if we are type none.
             if (Type == SegmentType.NONE)
             {
-                if (LeftSegment == null || LeftSegment.Type == SegmentType.NONE)
-                    LeftSide.Type = SideElementType.NONE;
-
-                if (TopSegment == null || TopSegment.Type == SegmentType.NONE)
-                    TopSide.Type = SideElementType.NONE;
-
-                if (RightSegment == null || RightSegment.Type == SegmentType.NONE)
-                    RightSide.Type = SideElementType.NONE;
-
-                if (BottomSegment == null || BottomSegment.Type == SegmentType.NONE)
-                    BottomSide.Type = SideElementType.NONE;
+                foreach (Side s in typeof(Side).GetEnumValues())
+                {
+                    Segment segment = GetNeighbour(s);
+                    if (segment == null || segment.Type == SegmentType.NONE)
+                        SetSide(s, SideElementType.NONE);
+                }
                 return;
             }
 
             // Set walls.
-            if (LeftSegment == null || LeftSegment.Type == SegmentType.NONE)
-                LeftSide.Type = SideElementType.WALL;
-
-            if (TopSegment == null || TopSegment.Type == SegmentType.NONE)
-                TopSide.Type = SideElementType.WALL;
-
-            if (RightSegment == null || RightSegment.Type == SegmentType.NONE)
-                RightSide.Type = SideElementType.WALL;
-
-            if (BottomSegment == null || BottomSegment.Type == SegmentType.NONE)
-                BottomSide.Type = SideElementType.WALL;
+            foreach (Side s in typeof(Side).GetEnumValues())
+            {
+                Segment segment = GetNeighbour(s);
+                if(segment == null || segment.Type == SegmentType.NONE)
+                    SetSide(s, SideElementType.WALL);
+            }
         }
     }
 }

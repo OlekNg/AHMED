@@ -7,11 +7,16 @@ using System.Windows.Shapes;
 
 namespace WPFTest.Logic
 {
-    public enum Side {NONE, LEFT, TOP, RIGHT, BOTTOM }
+    public class PrevievWall
+    {
+        public Segment Segment { get; set; }
+        public Side Side { get; set; }
+    }
 
     public class WallTool : Tool
     {
         private Building _building;
+        private List<PrevievWall> _selectedWalls = new List<PrevievWall>();
 
         public WallTool(Building b)
         {
@@ -33,14 +38,25 @@ namespace WPFTest.Logic
             Side side = CalculateSegmentClickedSide(size, pos);
 
             segment.ToggleSide(side, SideElementType.WALL);
+
         }
 
         public override void MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            
+
         }
 
         public override void MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            
+        }
+
+        public override void MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            
+        }
+
+        public override void MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
             
         }
@@ -65,7 +81,14 @@ namespace WPFTest.Logic
             if (pos.X < pos.Y && pos.X > (size - pos.Y))
                 return Side.BOTTOM;
 
-            return Side.NONE;
+            return Side.BOTTOM;
+        }
+
+
+
+        public override void CancelAction()
+        {
+            
         }
     }
 }

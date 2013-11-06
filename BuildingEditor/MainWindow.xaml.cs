@@ -41,8 +41,13 @@ namespace WPFTest
             _randomizer = new Random();
         }
 
-        private void uxWorkspaceGrid_MouseDown_1(object sender, MouseButtonEventArgs e)
+
+        private void Workspace_MouseLeave(object sender, MouseEventArgs e)
         {
+            // Cancel any action that is performing by selected tool.
+            Tool selectedTool = (Tool)uxToolbox.SelectedItem;
+            if (selectedTool != null)
+                selectedTool.CancelAction();
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
@@ -71,7 +76,25 @@ namespace WPFTest
             Tool selectedTool = (Tool)uxToolbox.SelectedItem;
 
             if (selectedTool != null)
-                selectedTool.MouseMove(sender, e);
+                selectedTool.MouseUp(sender, e);
         }
+
+        private void Segment_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Tool selectedTool = (Tool)uxToolbox.SelectedItem;
+
+            if (selectedTool != null)
+                selectedTool.MouseEnter(sender, e);
+        }
+
+        private void Segment_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Tool selectedTool = (Tool)uxToolbox.SelectedItem;
+
+            if (selectedTool != null)
+                selectedTool.MouseLeave(sender, e);
+        }
+
+        
     }
 }

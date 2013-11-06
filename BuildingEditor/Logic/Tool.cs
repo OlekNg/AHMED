@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Shapes;
 
 namespace WPFTest.Logic
 {
@@ -21,8 +22,21 @@ namespace WPFTest.Logic
     {
         public string Name { get; set; }
 
+        public abstract void CancelAction();
         public abstract void MouseDown(object sender, MouseButtonEventArgs e);
         public abstract void MouseMove(object sender, MouseEventArgs e);
         public abstract void MouseUp(object sender, MouseButtonEventArgs e);
+        public abstract void MouseEnter(object sender, MouseEventArgs e);
+        public abstract void MouseLeave(object sender, MouseEventArgs e);
+
+        protected Segment SenderToSegment(object sender)
+        {
+            Rectangle shape = sender as Rectangle;
+            if (shape == null)
+                return null;
+
+            Segment segment = shape.Tag as Segment;
+            return segment;
+        }
     }
 }

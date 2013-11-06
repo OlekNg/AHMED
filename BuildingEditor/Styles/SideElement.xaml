@@ -3,6 +3,7 @@
                     xmlns:l="clr-namespace:WPFTest.Logic">
     
     <Style x:Key="SideElementStyle" TargetType="Rectangle">
+        <Setter Property="Fill" Value="White"/>
         <Style.Triggers>
             <DataTrigger Binding="{Binding Type}" Value="{x:Static l:SideElementType.WALL}">
                 <Setter Property="Fill" Value="Blue"/>

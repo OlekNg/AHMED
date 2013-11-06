@@ -8,6 +8,10 @@
             <DataTrigger Binding="{Binding Type}" Value="{x:Static l:SegmentType.FLOOR}">
                 <Setter Property="Fill" Value="LightGray"/>
             </DataTrigger>
+            <DataTrigger Binding="{Binding Preview}" Value="True">
+                <Setter Property="Fill" Value="LightGray"/>
+                <Setter Property="Opacity" Value="0.8"/>
+            </DataTrigger>
         </Style.Triggers>
     </Style>
     
