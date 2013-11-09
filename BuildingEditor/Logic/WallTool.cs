@@ -154,30 +154,44 @@ namespace WPFTest.Logic
             if (Math.Abs(rowEnd - rowBegin) > Math.Abs(colEnd - colBegin))
             {
                 // Vertical line
-                Side s = GetHorizontalRelation(_selectionEnd.MousePosition);
+                Side s = GetHorizontalRelation();
                 for (int row = rowBegin; row <= rowEnd; row++)
-                    result.Add(_building.Data[row][colBegin].GetSideElement(s));
+                    result.Add(_building.Data[row][_selectionStart.Segment.Column].GetSideElement(s));
             }
             else
             {
                 // Horizontal line
-                Side s = GetVerticalRelation(_selectionEnd.MousePosition);
+                Side s = GetVerticalRelation();
                 for (int col = colBegin; col <= colEnd; col++)
-                    result.Add(_building.Data[rowBegin][col].GetSideElement(s));
+                    result.Add(_building.Data[_selectionStart.Segment.Row][col].GetSideElement(s));
 
             }
 
             return result;
         }
 
-        private Side GetVerticalRelation(Point pos)
+        private Side GetVerticalRelation()
         {
-            return pos.Y < 0 ? Side.TOP : Side.BOTTOM;
+            Point pos = _selectionEnd.MousePosition;
+            int startRow = _selectionStart.Segment.Row;
+            int endRow = _selectionEnd.Segment.Row;
+
+            if (startRow == endRow)
+                return pos.Y < 0 ? Side.TOP : Side.BOTTOM;
+            else
+                return startRow > endRow ? Side.TOP : Side.BOTTOM;
         }
 
-        private Side GetHorizontalRelation(Point pos)
+        private Side GetHorizontalRelation()
         {
-            return pos.X < 0 ? Side.LEFT : Side.RIGHT;
+            Point pos = _selectionEnd.MousePosition;
+            int startCol = _selectionStart.Segment.Column;
+            int endCol = _selectionEnd.Segment.Column;
+
+            if (startCol == endCol)
+                return pos.X < 0 ? Side.LEFT : Side.RIGHT;
+            else
+                return startCol > endCol ? Side.LEFT : Side.RIGHT;
         }
     }
 }
