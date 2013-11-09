@@ -52,16 +52,19 @@ namespace WPFTest.Logic
             UpdateSelectionPreview();
         }
 
-        
-
         public override void MouseMove(object sender, MouseEventArgs e)
         {
-            if (_selectionStart != null)
-            {
-                SegmentSide segmentSide = ProcessEventArg(sender, e);
+            SegmentSide segmentSide = ProcessEventArg(sender, e);
                 if (segmentSide == null) return;
 
+            if (_selectionStart != null && e.LeftButton == MouseButtonState.Pressed)
+            {
                 _selectionEnd = segmentSide;
+                UpdateSelectionPreview();
+            }
+            else
+            {
+                _selectionStart = _selectionEnd = segmentSide;
                 UpdateSelectionPreview();
             }
         }
@@ -150,6 +153,12 @@ namespace WPFTest.Logic
             rowEnd = Math.Max(_selectionStart.Segment.Row, _selectionEnd.Segment.Row);
             colBegin = Math.Min(_selectionStart.Segment.Column, _selectionEnd.Segment.Column);
             colEnd = Math.Max(_selectionStart.Segment.Column, _selectionEnd.Segment.Column);
+
+            if (rowBegin == rowEnd && colBegin == colEnd)
+            {
+                result.Add(_selectionEnd.SideElement);
+                return result;
+            }
 
             if (Math.Abs(rowEnd - rowBegin) > Math.Abs(colEnd - colBegin))
             {
