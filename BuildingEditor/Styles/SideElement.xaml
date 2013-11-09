@@ -11,6 +11,14 @@
             <DataTrigger Binding="{Binding Type}" Value="{x:Static l:SideElementType.DOOR}">
                 <Setter Property="Fill" Value="Orange"/>
             </DataTrigger>
+            <DataTrigger Binding="{Binding PreviewWall}" Value="True">
+                <Setter Property="Fill" Value="Blue"/>
+                <Setter Property="Opacity" Value="0.5"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding PreviewDoor}" Value="True">
+                <Setter Property="Fill" Value="Orange"/>
+                <Setter Property="Opacity" Value="0.5"/>
+            </DataTrigger>
         </Style.Triggers>
     </Style>
     
