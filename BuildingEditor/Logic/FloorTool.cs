@@ -95,28 +95,10 @@ namespace WPFTest.Logic
                 return result;
 
             int rowBegin, rowEnd, colBegin, colEnd;
-
-            if (_selectionStart.Row < _selectionEnd.Row)
-            {
-                rowBegin = _selectionStart.Row;
-                rowEnd = _selectionEnd.Row;
-            }
-            else
-            {
-                rowBegin = _selectionEnd.Row;
-                rowEnd = _selectionStart.Row;
-            }
-
-            if (_selectionStart.Column < _selectionEnd.Column)
-            {
-                colBegin = _selectionStart.Column;
-                colEnd = _selectionEnd.Column;
-            }
-            else
-            {
-                colBegin = _selectionEnd.Column;
-                colEnd = _selectionStart.Column;
-            }
+            rowBegin = Math.Min(_selectionStart.Row, _selectionEnd.Row);
+            rowEnd = Math.Max(_selectionStart.Row, _selectionEnd.Row);
+            colBegin = Math.Min(_selectionStart.Column, _selectionEnd.Column);
+            colEnd = Math.Max(_selectionStart.Column, _selectionEnd.Column);
 
             for (int row = rowBegin; row <= rowEnd; row++)
                 for (int col = colBegin; col <= colEnd; col++)
