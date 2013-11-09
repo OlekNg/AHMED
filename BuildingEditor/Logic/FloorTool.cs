@@ -45,28 +45,38 @@ namespace WPFTest.Logic
                 _selectionEnd = SenderToSegment(sender);
                 UpdateSelectionPreview();
             }
+            else
+                SenderToSegment(sender).Preview = true;
         }
 
         public override void MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             _selectionStart = _selectionEnd = null;
+            Apply();
             UpdateSelectionPreview();
         }
 
 
-
         public override void MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            Segment segment = SenderToSegment(sender);
+            if (_selectionStart != null) return;
 
-            //segment.Preview = true;
+            Segment segment = SenderToSegment(sender);
+            segment.Preview = true;
         }
 
         public override void MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            Segment segment = SenderToSegment(sender);
+            if (_selectionStart != null) return;
 
-            //segment.Preview = false;
+            Segment segment = SenderToSegment(sender);
+            segment.Preview = false;
+        }
+
+        private void Apply()
+        {
+            SegmentType value = Clear == true ?  SegmentType.NONE : SegmentType.FLOOR;
+            _selectedSegments.ForEach(x => x.Type = value);
         }
 
         private void UpdateSelectionPreview()

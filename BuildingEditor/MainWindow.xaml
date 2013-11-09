@@ -84,24 +84,23 @@
             </Border>
             <ListView Name="uxToolbox">
                 <ListView.Resources>
-                    <DataTemplate x:Key="NotSelected">
-                        <TextBlock Text="{Binding Name}"/>
-                    </DataTemplate>
-                    <DataTemplate x:Key="Selected">
-                        <StackPanel>
-                            <TextBlock Text="{Binding Name}"/>
-                            <TextBlock Text="Selected"/>
-                        </StackPanel>
-                    </DataTemplate>
                     <Style TargetType="{x:Type ListViewItem}">
-                        <Setter Property="ContentTemplate" Value="{StaticResource NotSelected}"/>
+                        <Setter Property="Height" Value="20"/>
                         <Style.Triggers>
                             <Trigger Property="IsSelected" Value="True">
-                                <Setter Property="ContentTemplate" Value="{StaticResource Selected}"/>
+                                <Setter Property="Height" Value="50"/>
                             </Trigger>
                         </Style.Triggers>
                     </Style>
                 </ListView.Resources>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                        <TextBlock Text="{Binding Name}" HorizontalAlignment="Center"/>
+                        <CheckBox Content="Clear mode" IsChecked="{Binding Clear, Mode=TwoWay}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
             </ListView>
         </StackPanel>
 

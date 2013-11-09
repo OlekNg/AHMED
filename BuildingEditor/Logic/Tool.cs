@@ -21,6 +21,7 @@ namespace WPFTest.Logic
     public abstract class Tool
     {
         public string Name { get; set; }
+        public bool Clear { get; set; }
 
         public abstract void CancelAction();
         public abstract void MouseDown(object sender, MouseButtonEventArgs e);
