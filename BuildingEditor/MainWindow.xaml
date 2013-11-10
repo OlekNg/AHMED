@@ -8,7 +8,13 @@
             <DataTemplate.Resources>
                 <Style BasedOn="{StaticResource SideElementStyle}" TargetType="Rectangle"/>
             </DataTemplate.Resources>
-            <Grid Width="50" Height="50">
+            <Grid Width="50" Height="50"
+                  MouseDown="Segment_MouseDown"
+                  MouseMove="Segment_MouseMove"
+                  MouseUp="Segment_MouseUp"
+                  MouseEnter="Segment_MouseEnter"
+                  MouseLeave="Segment_MouseLeave"
+                  Tag="{Binding}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2"/>
                     <ColumnDefinition/>
@@ -31,13 +37,8 @@
 
                 <Rectangle Style="{StaticResource SegmentContentStyle}"
                            Grid.Column="1"
-                           Grid.Row="1"
-                           Tag="{Binding}"
-                           MouseDown="Segment_MouseDown"
-                           MouseMove="Segment_MouseMove"
-                           MouseUp="Segment_MouseUp"
-                           MouseEnter="Segment_MouseEnter"
-                           MouseLeave="Segment_MouseLeave"/>
+                           Grid.Row="1">
+                </Rectangle>
             </Grid>
         </DataTemplate>
 
@@ -96,8 +97,8 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
-                        <TextBlock Text="{Binding Name}" HorizontalAlignment="Center"/>
-                        <CheckBox Content="Clear mode" IsChecked="{Binding Clear, Mode=TwoWay}"/>
+                            <TextBlock Text="{Binding Name}" HorizontalAlignment="Center"/>
+                            <CheckBox Content="Clear mode" IsChecked="{Binding Clear, Mode=TwoWay}"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>

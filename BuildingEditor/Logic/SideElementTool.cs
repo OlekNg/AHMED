@@ -118,14 +118,14 @@ namespace WPFTest.Logic
 
         private SegmentSide ProcessEventArg(object sender, MouseEventArgs e)
         {
-            Rectangle shape = sender as Rectangle;
-            if (shape == null) return null;
+            FrameworkElement element = sender as FrameworkElement;
+            if (element == null) return null;
 
-            Segment segment = shape.Tag as Segment;
+            Segment segment = element.Tag as Segment;
             if (segment == null) return null;
 
-            Point pos = e.GetPosition((UIElement)sender);
-            var size = shape.ActualHeight;
+            Point pos = e.GetPosition(element);
+            var size = element.ActualHeight;
 
             Side side = CalculateSegmentSide(size, pos);
 

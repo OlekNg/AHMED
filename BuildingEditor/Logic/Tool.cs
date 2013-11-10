@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Shapes;
 
@@ -32,11 +33,11 @@ namespace WPFTest.Logic
 
         protected Segment SenderToSegment(object sender)
         {
-            Rectangle shape = sender as Rectangle;
-            if (shape == null)
+            FrameworkElement element = sender as FrameworkElement;
+            if (element == null)
                 return null;
 
-            Segment segment = shape.Tag as Segment;
+            Segment segment = element.Tag as Segment;
             return segment;
         }
     }
