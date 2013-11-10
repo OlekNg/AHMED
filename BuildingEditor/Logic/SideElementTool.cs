@@ -21,17 +21,19 @@ namespace WPFTest.Logic
         }
     }
 
-    public class WallTool : Tool
+    public class SideElementTool : Tool
     {
-        private Building _building;
-        private SegmentSide _selectionStart;
-        private SegmentSide _selectionEnd;
-        private List<SideElement> _selectedWalls = new List<SideElement>();
+        protected Building _building;
+        protected SegmentSide _selectionStart;
+        protected SegmentSide _selectionEnd;
+        protected List<SideElement> _selectedSides = new List<SideElement>();
+        protected SideElementType _elementType;
 
-        public WallTool(Building b)
+        public SideElementTool(Building b, SideElementType elementType, string name = "SideTool")
         {
             _building = b;
-            Name = "Wall";
+            _elementType = elementType;
+            Name = name;
         }
 
         public override void CancelAction()
@@ -55,7 +57,7 @@ namespace WPFTest.Logic
         public override void MouseMove(object sender, MouseEventArgs e)
         {
             SegmentSide segmentSide = ProcessEventArg(sender, e);
-                if (segmentSide == null) return;
+            if (segmentSide == null) return;
 
             if (_selectionStart != null && e.LeftButton == MouseButtonState.Pressed)
             {
@@ -86,8 +88,8 @@ namespace WPFTest.Logic
 
         private void Apply()
         {
-            SideElementType value = Clear == true ? SideElementType.NONE : SideElementType.WALL;
-            _selectedWalls.ForEach(x => x.Type = value);
+            SideElementType value = Clear == true ? SideElementType.NONE : _elementType;
+            _selectedSides.ForEach(x => x.Type = value);
             _building.UpdateBuilding();
         }
 
@@ -139,17 +141,17 @@ namespace WPFTest.Logic
         /// </summary>
         private void UpdateSelectionPreview()
         {
-            List<SideElement> oldSelection = _selectedWalls;
-            _selectedWalls = CalcualateAffectedWalls();
-            oldSelection.Except(_selectedWalls).ToList().ForEach(x => x.PreviewWall = false);
-            _selectedWalls.ForEach(x => x.PreviewWall = true);
+            List<SideElement> oldSelection = _selectedSides;
+            _selectedSides = CalcualateAffectedSides();
+            oldSelection.Except(_selectedSides).ToList().ForEach(x => x.Preview = false);
+            _selectedSides.ForEach(x => { x.PreviewType = _elementType; x.Preview = true; });
         }
 
         /// <summary>
         /// Calculates affected wall basing on selection start and selection end.
         /// </summary>
         /// <returns>List of side elements that are affected by selection.</returns>
-        private List<SideElement> CalcualateAffectedWalls()
+        private List<SideElement> CalcualateAffectedSides()
         {
             List<SideElement> result = new List<SideElement>();
 

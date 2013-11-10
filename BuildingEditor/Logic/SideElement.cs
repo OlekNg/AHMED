@@ -20,8 +20,9 @@ namespace WPFTest.Logic
         #region Properties
         public int Capacity { get; set; }
         public SideElementType Type { get; set; }
-        public bool PreviewWall { get; set; }
-        public bool PreviewDoor { get; set; }
+
+        public SideElementType PreviewType { get; set; }
+        public bool Preview { get; set; }
         #endregion
     }
 }

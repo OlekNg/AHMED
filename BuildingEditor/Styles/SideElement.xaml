@@ -11,14 +11,25 @@
             <DataTrigger Binding="{Binding Type}" Value="{x:Static l:SideElementType.DOOR}">
                 <Setter Property="Fill" Value="Orange"/>
             </DataTrigger>
-            <DataTrigger Binding="{Binding PreviewWall}" Value="True">
+            <!-- Wall preview -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Preview}" Value="True"/>
+                    <Condition Binding="{Binding PreviewType}" Value="{x:Static l:SideElementType.WALL}"/>
+                </MultiDataTrigger.Conditions>
                 <Setter Property="Fill" Value="Blue"/>
                 <Setter Property="Opacity" Value="0.5"/>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding PreviewDoor}" Value="True">
+            </MultiDataTrigger>
+
+            <!-- Door preview -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Preview}" Value="True"/>
+                    <Condition Binding="{Binding PreviewType}" Value="{x:Static l:SideElementType.DOOR}"/>
+                </MultiDataTrigger.Conditions>
                 <Setter Property="Fill" Value="Orange"/>
                 <Setter Property="Opacity" Value="0.5"/>
-            </DataTrigger>
+            </MultiDataTrigger>
         </Style.Triggers>
     </Style>
     

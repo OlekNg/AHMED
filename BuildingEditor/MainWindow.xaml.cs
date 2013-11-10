@@ -34,7 +34,8 @@ namespace WPFTest
 
             ObservableCollection<Tool> toolbox = new ObservableCollection<Tool>();
             toolbox.Add(new FloorTool(_building));
-            toolbox.Add(new WallTool(_building));
+            toolbox.Add(new SideElementTool(_building, SideElementType.WALL, "Wall"));
+            toolbox.Add(new SideElementTool(_building, SideElementType.DOOR, "Door"));
 
             uxToolbox.ItemsSource = toolbox;
 

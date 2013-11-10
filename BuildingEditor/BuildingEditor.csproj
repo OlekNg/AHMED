@@ -76,8 +76,8 @@
     <Compile Include="Logic\Segment.cs" />
     <Compile Include="Logic\Enums.cs" />
     <Compile Include="Logic\SideElement.cs" />
+    <Compile Include="Logic\SideElementTool.cs" />
     <Compile Include="Logic\Tool.cs" />
-    <Compile Include="Logic\WallTool.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
