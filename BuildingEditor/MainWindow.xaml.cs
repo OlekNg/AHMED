@@ -10,6 +10,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -36,6 +37,7 @@ namespace WPFTest
             toolbox.Add(new FloorTool(_building));
             toolbox.Add(new SideElementTool(_building, SideElementType.WALL, "Wall"));
             toolbox.Add(new SideElementTool(_building, SideElementType.DOOR, "Door"));
+            toolbox.Add(new DragTool(uxWorkspace));
 
             uxToolbox.ItemsSource = toolbox;
 
@@ -44,7 +46,8 @@ namespace WPFTest
 
         private void Workspace_MouseLeave(object sender, MouseEventArgs e)
         {
-            // Cancel any action that is performing by selected tool.
+            Console.WriteLine("Workspace leave");
+            // Cancel any action that is being performed by selected tool.
             Tool selectedTool = (Tool)uxToolbox.SelectedItem;
             if (selectedTool != null)
                 selectedTool.CancelAction();
@@ -55,6 +58,7 @@ namespace WPFTest
             this.Close();
         }
 
+        #region Segment events handlers.
         private void Segment_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Tool selectedTool = (Tool)uxToolbox.SelectedItem;
@@ -93,6 +97,20 @@ namespace WPFTest
 
             if (selectedTool != null)
                 selectedTool.MouseLeave(sender, e);
+        }
+        #endregion
+
+        /// <summary>
+        /// Performs zoom in/out of the building.
+        /// </summary>
+        private void Workspace_MouseWHeel(object sender, MouseWheelEventArgs e)
+        {
+            TransformGroup group = (TransformGroup)uxWorkspace.RenderTransform;
+
+            var st = group.Children.OfType<ScaleTransform>().First();
+            double deltaScale = e.Delta > 0 ? 0.2 : -0.2;
+            st.ScaleX += deltaScale;
+            st.ScaleY += deltaScale;
         }
     }
 }

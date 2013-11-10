@@ -57,9 +57,9 @@
     <Grid>
         <!-- GRID DEFINITION -->
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="120"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="120"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
@@ -67,16 +67,22 @@
         </Grid.RowDefinitions>
 
         <!-- WORKSPACE -->
-        <ContentControl 
-            Grid.Column="1" Grid.Row="1"
-            Name="uxWorkspaceGrid"
-            MouseLeave="Workspace_MouseLeave">
-            <Border BorderBrush="LightGray" BorderThickness="1">
-                <Viewbox Stretch="Uniform" Margin="0,10,10,10">
+        <Border BorderBrush="LightGray" BorderThickness="1"
+                Grid.Column="1" Grid.Row="1">
+            <Canvas ClipToBounds="True"
+                MouseLeave="Workspace_MouseLeave"
+                MouseWheel="Workspace_MouseWHeel">
+                <Viewbox Name="uxWorkspace" Stretch="Uniform" Margin="10,10,10,10">
+                    <Viewbox.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Viewbox.RenderTransform>
                     <ItemsControl Name="lst" ItemTemplate="{DynamicResource SegmentRowTemplate}"/>
                 </Viewbox>
-            </Border>
-        </ContentControl>
+            </Canvas>
+        </Border>
 
         <!-- TOOLBOX -->
         <StackPanel Name="uxToolboxPanel" Grid.Column="2" Grid.Row="1">
@@ -89,7 +95,7 @@
                         <Setter Property="Height" Value="20"/>
                         <Style.Triggers>
                             <Trigger Property="IsSelected" Value="True">
-                                <Setter Property="Height" Value="50"/>
+                                <Setter Property="Height" Value="60"/>
                             </Trigger>
                         </Style.Triggers>
                     </Style>
@@ -99,6 +105,10 @@
                         <StackPanel>
                             <TextBlock Text="{Binding Name}" HorizontalAlignment="Center"/>
                             <CheckBox Content="Clear mode" IsChecked="{Binding Clear, Mode=TwoWay}"/>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Capacity:"/>
+                                <TextBox Text="{Binding Capacity, Mode=TwoWay}" Width="20" Height="20"/>
+                            </StackPanel>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -109,6 +119,15 @@
         <StackPanel Name="uxFloorsPanel" Grid.Column="0" Grid.Row="1">
             <Border BorderBrush="LightGray" BorderThickness="1,1,0,1">
                 <TextBlock Text="Floors" TextAlignment="Center" Margin="5"/>
+            </Border>
+            <!-- TESTING -->
+            <Border Background="Red"
+                    Width="50"
+                    Height="50">
+                <TextBlock Text="Hello"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontSize="20"/>
             </Border>
         </StackPanel>
 

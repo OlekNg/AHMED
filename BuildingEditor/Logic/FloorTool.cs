@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PropertyChanged;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,6 +8,7 @@ using System.Windows.Shapes;
 
 namespace WPFTest.Logic
 {
+    [ImplementPropertyChanged]
     public class FloorTool : Tool
     {
         private Building _building;
@@ -20,6 +22,8 @@ namespace WPFTest.Logic
             Name = "Floor";
             _selectedSegments = new List<Segment>();
         }
+
+        public int Capacity { get; set; }
 
         public override void CancelAction()
         {
