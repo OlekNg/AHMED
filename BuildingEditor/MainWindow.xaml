@@ -63,13 +63,14 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <!-- WORKSPACE -->
         <Border BorderBrush="LightGray" BorderThickness="1"
-                Grid.Column="1" Grid.Row="1" Grid.RowSpan="2">
+                Grid.Column="1" Grid.Row="2" Grid.RowSpan="2">
             <Canvas ClipToBounds="True"
                 MouseLeave="Workspace_MouseLeave"
                 MouseWheel="Workspace_MouseWHeel">
@@ -86,7 +87,7 @@
         </Border>
 
         <!-- TOOLBOX -->
-        <StackPanel Name="uxToolboxPanel" Grid.Column="2" Grid.Row="1">
+        <StackPanel Name="uxToolboxPanel" Grid.Column="2" Grid.Row="2">
             <Border BorderBrush="LightGray" BorderThickness="0,1,1,1">
                 <TextBlock Text="Toolbox" TextAlignment="Center" Margin="5"/>
             </Border>
@@ -101,7 +102,7 @@
         </StackPanel>
 
         <!-- TOOL DETAILS -->
-        <StackPanel Grid.Column="2" Grid.Row="2"
+        <StackPanel Grid.Column="2" Grid.Row="3"
                     DataContext="{Binding ElementName=uxToolbox, Path=SelectedItem}">
             <Border BorderBrush="LightGray" BorderThickness="0,1,1,1">
                 <TextBlock Text="Tool details" TextAlignment="Center" Margin="5"/>
@@ -117,7 +118,7 @@
 
 
         <!-- FLOORS -->
-        <StackPanel Name="uxFloorsPanel" Grid.Column="0" Grid.Row="1">
+        <StackPanel Name="uxFloorsPanel" Grid.Column="0" Grid.Row="2">
             <Border BorderBrush="LightGray" BorderThickness="1,1,0,1">
                 <TextBlock Text="Floors" TextAlignment="Center" Margin="5"/>
             </Border>
@@ -133,9 +134,9 @@
         </StackPanel>
 
         <!-- MODE -->
-        <StackPanel Name="uxModePanel" Grid.Column="1" Grid.Row="0"
-                    Grid.ColumnSpan="2" VerticalAlignment="Center"
-                    Orientation="Horizontal" HorizontalAlignment="Right">
+        <StackPanel Name="uxModePanel" Grid.Column="0" Grid.Row="1"
+                    Grid.ColumnSpan="3" VerticalAlignment="Center"
+                    Orientation="Horizontal" HorizontalAlignment="Left">
             <StackPanel.Resources>
                 <!-- Visually treat RadioButton as ToggleButton -->
                 <Style BasedOn="{StaticResource {x:Type ToggleButton}}"
@@ -147,6 +148,9 @@
             <TextBlock Text="Mode:" VerticalAlignment="Center" Padding="5,0"/>
             <RadioButton Content="Structure" GroupName="groupMode"/>
             <RadioButton Content="People" GroupName="groupMode"/>
+            <TextBlock Text="Building:" VerticalAlignment="Center" Padding="5,0"/>
+            <Button Content="Right" Width="50" Click="Right_Click"/>
+            <Button Content="Down" Width="50" Click="Down_Click"/>
         </StackPanel>
 
         <!-- MENU -->

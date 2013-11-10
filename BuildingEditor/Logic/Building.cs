@@ -16,17 +16,29 @@ namespace WPFTest.Logic
             {
                 ObservableCollection<Segment> row = new ObservableCollection<Segment>();
                 for (int j = 0; j < width; j++)
-                    row.Add(new Segment() { Row = i, Column = j });
+                    row.Add(new Segment());
 
                 Data.Add(row);
             }
 
             ConnectSegments();
-            Data[4][4].Type = SegmentType.NONE;
+            RecalculateIndexes();
             UpdateBuilding();
         }
 
         public ObservableCollection<ObservableCollection<Segment>> Data { get; set; }
+
+        private void RecalculateIndexes()
+        {
+            for (int row = 0; row < Data.Count; row++)
+            {
+                for (int col = 0; col < Data[row].Count; col++)
+                {
+                    Data[row][col].Row = row;
+                    Data[row][col].Column = col;
+                }
+            }
+        }
 
         private void ConnectSegments()
         {
@@ -68,6 +80,51 @@ namespace WPFTest.Logic
             for (int row = 0; row < Data.Count; row++)
                 for (int col = 0; col < Data[row].Count; col++)
                     Data[row][col].UpdateCorners();
+        }
+
+        public void AddRow(int index)
+        {
+            int cols = Data[0].Count;
+            ObservableCollection<Segment> row = new ObservableCollection<Segment>();
+            for (int j = 0; j < cols; j++)
+                row.Add(new Segment());
+
+            Data.Insert(index, row);
+            ConnectSegments();
+            RecalculateIndexes();
+        }
+
+        public void AddColumn(int index)
+        {
+            int rows = Data.Count;
+            for (int i = 0; i < rows; i++)
+                Data[i].Insert(index, new Segment());
+
+            ConnectSegments();
+            RecalculateIndexes();
+        }
+
+        public void Expand(Side side)
+        {
+            switch (side)
+            {
+                case Side.RIGHT:
+                    AddColumn(Data[0].Count);
+                    break;
+                case Side.BOTTOM:
+                    AddRow(Data.Count);
+                    break;
+                case Side.LEFT:
+                    AddColumn(0);
+                    break;
+                case Side.TOP:
+                    AddRow(0);
+                    break;
+                default:
+                    break;
+            }
+            
+            UpdateBuilding();
         }
     }
 }

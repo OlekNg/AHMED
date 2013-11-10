@@ -112,5 +112,16 @@ namespace WPFTest
             st.ScaleX += deltaScale;
             st.ScaleY += deltaScale;
         }
+
+        
+        private void Right_Click(object sender, RoutedEventArgs e)
+        {
+            _building.Expand(Side.RIGHT);
+        }
+
+        private void Down_Click(object sender, RoutedEventArgs e)
+        {
+            _building.Expand(Side.BOTTOM);
+        }
     }
 }
