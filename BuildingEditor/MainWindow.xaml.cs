@@ -34,12 +34,13 @@ namespace WPFTest
             uxFloors.DataContext = _building;
 
             ObservableCollection<Tool> toolbox = new ObservableCollection<Tool>();
+            toolbox.Add(new DragTool(uxWorkspace));
             toolbox.Add(new FloorTool(_building));
             toolbox.Add(new SideElementTool(_building, SideElementType.WALL, "Wall"));
             toolbox.Add(new SideElementTool(_building, SideElementType.DOOR, "Door"));
-            toolbox.Add(new DragTool(uxWorkspace));
 
             uxToolbox.ItemsSource = toolbox;
+            uxToolbox.SelectedIndex = 0;
 
             _randomizer = new Random();
         }
@@ -122,6 +123,11 @@ namespace WPFTest
         private void Down_Click(object sender, RoutedEventArgs e)
         {
             _building.Expand(Side.BOTTOM);
+        }
+
+        private void AddFloor_Click(object sender, RoutedEventArgs e)
+        {
+            _building.AddFloor();
         }
     }
 }

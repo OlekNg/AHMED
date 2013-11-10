@@ -96,6 +96,7 @@ namespace WPFTest.Logic
             Data.Insert(index, row);
             ConnectSegments();
             RecalculateIndexes();
+            UpdateRender();
         }
 
         public void AddColumn(int index)
@@ -106,6 +107,7 @@ namespace WPFTest.Logic
 
             ConnectSegments();
             RecalculateIndexes();
+            UpdateRender();
         }
     }
 }

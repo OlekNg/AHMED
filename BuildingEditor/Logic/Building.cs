@@ -19,12 +19,17 @@ namespace WPFTest.Logic
             _cols = cols;
 
             Floors = new ObservableCollection<Floor>();
-            Floors.Add(new Floor(0, _rows, _cols));
+            AddFloor();
         }
 
         public ObservableCollection<Floor> Floors { get; set; }
 
         public Floor CurrentFloor { get; set; }
+
+        public void AddFloor()
+        {
+            Floors.Insert(0, new Floor(Floors.Count, _rows, _cols));
+        }
 
         public void Expand(Side side)
         {
