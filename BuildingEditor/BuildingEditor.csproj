@@ -73,6 +73,7 @@
     </Compile>
     <Compile Include="Logic\Building.cs" />
     <Compile Include="Logic\DragTool.cs" />
+    <Compile Include="Logic\Floor.cs" />
     <Compile Include="Logic\FloorTool.cs" />
     <Compile Include="Logic\Segment.cs" />
     <Compile Include="Logic\Enums.cs" />

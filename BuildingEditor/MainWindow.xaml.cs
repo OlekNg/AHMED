@@ -31,7 +31,7 @@ namespace WPFTest
             InitializeComponent();
             _building = new Building();
 
-            lst.ItemsSource = _building.Data;
+            uxFloors.DataContext = _building;
 
             ObservableCollection<Tool> toolbox = new ObservableCollection<Tool>();
             toolbox.Add(new FloorTool(_building));

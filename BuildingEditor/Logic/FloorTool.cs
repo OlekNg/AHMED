@@ -106,7 +106,7 @@ namespace WPFTest.Logic
         {
             SegmentType value = ClearMode == true ?  SegmentType.NONE : SegmentType.FLOOR;
             _selectedSegments.ForEach(x => x.Type = value);
-            _building.UpdateBuilding();
+            _building.CurrentFloor.UpdateRender();
         }
 
         private void UpdateSelectionPreview()
@@ -132,7 +132,7 @@ namespace WPFTest.Logic
 
             for (int row = rowBegin; row <= rowEnd; row++)
                 for (int col = colBegin; col <= colEnd; col++)
-                    result.Add(_building.Data[row][col]);
+                    result.Add(_building.CurrentFloor.Data[row][col]);
 
             return result;
         }
