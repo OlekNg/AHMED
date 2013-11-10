@@ -12,8 +12,12 @@ namespace WPFTest.Logic
     [ImplementPropertyChanged]
     public class Segment
     {
+        protected List<SideElement> _outerWalls;
+
         public Segment(SegmentType type = SegmentType.FLOOR)
         {
+            _outerWalls = new List<SideElement>();
+
             Type = type;
             Capacity = 5;
 
@@ -157,6 +161,10 @@ namespace WPFTest.Logic
         /// </summary>
         public void UpdateOuterWalls()
         {
+            // Clear old outer walls to prevent them becoming as placed internal walls.
+            _outerWalls.ForEach(x => x.Type = SideElementType.NONE);
+            _outerWalls.Clear();
+
             // Clear walls if we are type none.
             if (Type == SegmentType.NONE)
             {
@@ -169,12 +177,15 @@ namespace WPFTest.Logic
                 return;
             }
 
-            // Set walls.
+            // Set walls and add them to curent outer walls list.
             foreach (Side s in typeof(Side).GetEnumValues())
             {
                 Segment segment = GetNeighbour(s);
-                if(segment == null || segment.Type == SegmentType.NONE)
+                if (segment == null || segment.Type == SegmentType.NONE)
+                {
                     SetSide(s, SideElementType.WALL);
+                    _outerWalls.Add(GetSideElement(s));
+                }
             }
         }
     }

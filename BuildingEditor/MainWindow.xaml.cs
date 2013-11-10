@@ -42,7 +42,6 @@ namespace WPFTest
             _randomizer = new Random();
         }
 
-
         private void Workspace_MouseLeave(object sender, MouseEventArgs e)
         {
             // Cancel any action that is performing by selected tool.
@@ -95,7 +94,5 @@ namespace WPFTest
             if (selectedTool != null)
                 selectedTool.MouseLeave(sender, e);
         }
-
-        
     }
 }
