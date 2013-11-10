@@ -3,6 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Shapes;
 
@@ -19,11 +22,12 @@ namespace WPFTest.Logic
         public FloorTool(Building b)
         {
             _building = b;
-            Name = "Floor";
             _selectedSegments = new List<Segment>();
+            Name = "Floor";
         }
 
         public int Capacity { get; set; }
+        public bool ClearMode { get; set; }
 
         public override void CancelAction()
         {
@@ -34,6 +38,7 @@ namespace WPFTest.Logic
             }
         }
 
+        #region Mouse event handlers
         public override void MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             Segment segment = SenderToSegment(sender);
@@ -76,10 +81,30 @@ namespace WPFTest.Logic
             Segment segment = SenderToSegment(sender);
             segment.Preview = false;
         }
+        #endregion
+
+        protected override FrameworkElement BuildConfiguration()
+        {
+            CheckBox clearMode = new CheckBox() { Content = "Clear mode" };
+            clearMode.SetBinding(CheckBox.IsCheckedProperty, new Binding("ClearMode"));
+
+            TextBox capacity = new TextBox() { Width = 20, Height = 20 };
+            capacity.SetBinding(TextBox.TextProperty, new Binding("Capacity"));
+
+            StackPanel capacityPanel = new StackPanel() { Orientation = Orientation.Horizontal };
+            capacityPanel.Children.Add(new Label() { Content = "Capacity" });
+            capacityPanel.Children.Add(capacity);
+
+            StackPanel panel = new StackPanel();
+            panel.Children.Add(clearMode);
+            panel.Children.Add(capacityPanel);
+
+            return panel;
+        }
 
         private void Apply()
         {
-            SegmentType value = Clear == true ?  SegmentType.NONE : SegmentType.FLOOR;
+            SegmentType value = ClearMode == true ?  SegmentType.NONE : SegmentType.FLOOR;
             _selectedSegments.ForEach(x => x.Type = value);
             _building.UpdateBuilding();
         }

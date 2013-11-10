@@ -30,6 +30,7 @@ namespace WPFTest.Logic
             _dragEnabled = false;
         }
 
+        #region Mouse event handlers
         public override void MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             _start = e.GetPosition(_element);
@@ -53,13 +54,6 @@ namespace WPFTest.Logic
         {
             _dragEnabled = false;
         }
-
-        public override void MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-        }
-
-        public override void MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-        }
+        #endregion
     }
 }

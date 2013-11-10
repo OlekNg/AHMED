@@ -21,15 +21,26 @@ namespace WPFTest.Logic
     [ImplementPropertyChanged]
     public abstract class Tool
     {
-        public string Name { get; set; }
-        public bool Clear { get; set; }
+        public Tool()
+        {
+            Name = "Tool";
+            Configuration = BuildConfiguration();
+        }
 
-        public abstract void CancelAction();
-        public abstract void MouseDown(object sender, MouseButtonEventArgs e);
-        public abstract void MouseMove(object sender, MouseEventArgs e);
-        public abstract void MouseUp(object sender, MouseButtonEventArgs e);
-        public abstract void MouseEnter(object sender, MouseEventArgs e);
-        public abstract void MouseLeave(object sender, MouseEventArgs e);
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Configuration that will appear in tool details section below toolbox.
+        /// To implement this for inherited tool override BuildConfiguration method.
+        /// </summary>
+        public FrameworkElement Configuration { get; set; }
+
+        public virtual void CancelAction() { }
+        public virtual void MouseDown(object sender, MouseButtonEventArgs e) { }
+        public virtual void MouseMove(object sender, MouseEventArgs e) { }
+        public virtual void MouseUp(object sender, MouseButtonEventArgs e) { }
+        public virtual void MouseEnter(object sender, MouseEventArgs e) { }
+        public virtual void MouseLeave(object sender, MouseEventArgs e) { }
 
         protected Segment SenderToSegment(object sender)
         {
@@ -39,6 +50,15 @@ namespace WPFTest.Logic
 
             Segment segment = element.Tag as Segment;
             return segment;
+        }
+
+        /// <summary>
+        /// Through this method you can expose an interface for additional
+        /// configuration of your tool.
+        /// </summary>
+        protected virtual FrameworkElement BuildConfiguration()
+        {
+            return null;
         }
     }
 }

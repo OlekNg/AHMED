@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Shapes;
 
@@ -36,6 +38,9 @@ namespace WPFTest.Logic
             Name = name;
         }
 
+        public int Capacity { get; set; }
+        public bool ClearMode { get; set; }
+
         public override void CancelAction()
         {
             if (_selectionStart != null)
@@ -45,6 +50,7 @@ namespace WPFTest.Logic
             }
         }
 
+        #region Mouse event handlers
         public override void MouseDown(object sender, MouseButtonEventArgs e)
         {
             SegmentSide segmentSide = ProcessEventArg(sender, e);
@@ -77,20 +83,32 @@ namespace WPFTest.Logic
             Apply();
             UpdateSelectionPreview();
         }
-
-        public override void MouseEnter(object sender, MouseEventArgs e)
-        {
-        }
-
-        public override void MouseLeave(object sender, MouseEventArgs e)
-        {
-        }
+        #endregion
 
         private void Apply()
         {
-            SideElementType value = Clear == true ? SideElementType.NONE : _elementType;
+            SideElementType value = ClearMode == true ? SideElementType.NONE : _elementType;
             _selectedSides.ForEach(x => x.Type = value);
             _building.UpdateBuilding();
+        }
+
+        protected override FrameworkElement BuildConfiguration()
+        {
+            CheckBox clearMode = new CheckBox() { Content = "Clear mode" };
+            clearMode.SetBinding(CheckBox.IsCheckedProperty, new Binding("ClearMode"));
+
+            TextBox capacity = new TextBox() { Width = 20, Height = 20 };
+            capacity.SetBinding(TextBox.TextProperty, new Binding("Capacity"));
+
+            StackPanel capacityPanel = new StackPanel() { Orientation = Orientation.Horizontal };
+            capacityPanel.Children.Add(new Label() { Content = "Capacity" });
+            capacityPanel.Children.Add(capacity);
+
+            StackPanel panel = new StackPanel();
+            panel.Children.Add(clearMode);
+            panel.Children.Add(capacityPanel);
+
+            return panel;
         }
 
         /// <summary>
