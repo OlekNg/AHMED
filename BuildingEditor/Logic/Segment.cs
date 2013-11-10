@@ -99,24 +99,10 @@ namespace WPFTest.Logic
             GetSideElement(side).Type = value;
         }
 
-        public void ToggleSide(Side side, SideElementType value)
-        {
-            SideElement element = GetSideElement(side);
-
-            if (element.Type == value)
-                element.Type = SideElementType.NONE;
-            else
-                element.Type = value;
-        }
-
-        public void ToggleFloor()
-        {
-            if (Type == SegmentType.FLOOR)
-                Type = SegmentType.NONE;
-            else
-                Type = SegmentType.FLOOR;
-        }
-
+        /// <summary>
+        /// Sets proper type for corners to render correctly (walls without gaps).
+        /// TODO: Optimize it (too much structural and repetitive code).
+        /// </summary>
         public void UpdateCorners()
         {
             // Top left corner.
