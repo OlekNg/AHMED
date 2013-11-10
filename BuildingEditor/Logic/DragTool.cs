@@ -14,10 +14,12 @@ namespace WPFTest.Logic
         private FrameworkElement _element;
         private TranslateTransform _transform;
         private Point _start;
+        private IInputElement _reference;
 
-        public DragTool(FrameworkElement element)
+        public DragTool(FrameworkElement element, IInputElement reference)
         {
             _element = element;
+            _reference = reference;
 
             TransformGroup group = (TransformGroup)_element.RenderTransform;
             _transform = group.Children.OfType<TranslateTransform>().First();
@@ -33,7 +35,7 @@ namespace WPFTest.Logic
         #region Mouse event handlers
         public override void MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            _start = e.GetPosition(_element);
+            _start = e.GetPosition(_reference);
             _dragEnabled = true;
         }
 
@@ -41,10 +43,12 @@ namespace WPFTest.Logic
         {
             if (!_dragEnabled) return;
 
-            Point pos = e.GetPosition(_element);
+            Point pos = e.GetPosition(_reference);
 
             double dX = pos.X - _start.X;
             double dY = pos.Y - _start.Y;
+
+            _start = pos;
 
             _transform.X += dX;
             _transform.Y += dY;

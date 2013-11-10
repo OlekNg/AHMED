@@ -34,7 +34,7 @@ namespace WPFTest
             uxFloors.DataContext = _building;
 
             ObservableCollection<Tool> toolbox = new ObservableCollection<Tool>();
-            toolbox.Add(new DragTool(uxWorkspace));
+            toolbox.Add(new DragTool(uxWorkspace, uxModePanel));
             toolbox.Add(new FloorTool(_building));
             toolbox.Add(new SideElementTool(_building, SideElementType.WALL, "Wall"));
             toolbox.Add(new SideElementTool(_building, SideElementType.DOOR, "Door"));
@@ -112,6 +112,7 @@ namespace WPFTest
             double deltaScale = e.Delta > 0 ? 0.2 : -0.2;
             st.ScaleX += deltaScale;
             st.ScaleY += deltaScale;
+            Console.WriteLine("Scale {0}", st.ScaleY);
         }
 
         
