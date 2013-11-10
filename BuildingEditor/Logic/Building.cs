@@ -59,7 +59,7 @@ namespace WPFTest.Logic
             }
         }
 
-        private void UpdateBuilding()
+        public void UpdateBuilding()
         {
             for (int row = 0; row < Data.Count; row++)
                 for (int col = 0; col < Data[row].Count; col++)

@@ -72,6 +72,7 @@ namespace WPFTest.Logic
         public override void MouseUp(object sender, MouseButtonEventArgs e)
         {
             _selectionStart = _selectionEnd = null;
+            Apply();
             UpdateSelectionPreview();
         }
 
@@ -81,6 +82,13 @@ namespace WPFTest.Logic
 
         public override void MouseLeave(object sender, MouseEventArgs e)
         {
+        }
+
+        private void Apply()
+        {
+            SideElementType value = Clear == true ? SideElementType.NONE : SideElementType.WALL;
+            _selectedWalls.ForEach(x => x.Type = value);
+            _building.UpdateBuilding();
         }
 
         /// <summary>

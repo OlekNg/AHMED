@@ -77,6 +77,7 @@ namespace WPFTest.Logic
         {
             SegmentType value = Clear == true ?  SegmentType.NONE : SegmentType.FLOOR;
             _selectedSegments.ForEach(x => x.Type = value);
+            _building.UpdateBuilding();
         }
 
         private void UpdateSelectionPreview()
