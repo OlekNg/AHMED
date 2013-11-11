@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PropertyChanged;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -6,68 +7,61 @@ using System.Text;
 
 namespace WPFTest.Logic
 {
+    [ImplementPropertyChanged]
     public class Building
     {
-        public Building(int width = 5, int height = 5)
+        private int _cols;
+        private int _rows;
+
+        public Building(int rows = 5, int cols = 5)
         {
-            Data = new ObservableCollection<ObservableCollection<Segment>>();
+            _rows = rows;
+            _cols = cols;
 
-            for (int i = 0; i < height; i++)
-            {
-                ObservableCollection<Segment> row = new ObservableCollection<Segment>();
-                for (int j = 0; j < width; j++)
-                    row.Add(new Segment() { Row = i, Column = j });
-
-                Data.Add(row);
-            }
-
-            ConnectSegments();
-            Data[4][4].Type = SegmentType.NONE;
-            UpdateBuilding();
+            Floors = new ObservableCollection<Floor>();
+            AddFloor();
         }
 
-        public ObservableCollection<ObservableCollection<Segment>> Data { get; set; }
+        public ObservableCollection<Floor> Floors { get; set; }
 
-        private void ConnectSegments()
+        public Floor CurrentFloor { get; set; }
+
+        public void AddFloor()
         {
-            for (int row = 0; row < Data.Count; row++)
+            Floors.Insert(0, new Floor(Floors.Count, _rows, _cols));
+        }
+
+        public void Expand(Side side)
+        {
+            switch (side)
             {
-                for (int col = 0; col < Data[row].Count; col++)
-                {
-                    var element = Data[row][col];
-
-                    if (row > 0)
-                    {
-                        // Connect side.
-                        element.TopSide = Data[row - 1][col].BottomSide;
-
-                        // Connect neighbours.
-                        element.TopSegment = Data[row - 1][col];
-                        Data[row - 1][col].BottomSegment = element;
-                    }
-
-                    if (col > 0)
-                    {
-                        // Connect side.
-                        Data[row][col].LeftSide = Data[row][col - 1].RightSide;
-
-                        // Connect neighbours.
-                        element.LeftSegment = Data[row][col - 1];
-                        Data[row][col - 1].RightSegment = element;
-                    }
-                }
+                case Side.RIGHT:
+                    AddColumn(_cols);
+                    break;
+                case Side.BOTTOM:
+                    AddRow(_rows);
+                    break;
+                case Side.LEFT:
+                    AddColumn(0);
+                    break;
+                case Side.TOP:
+                    AddRow(0);
+                    break;
+                default:
+                    break;
             }
         }
 
-        private void UpdateBuilding()
+        private void AddRow(int index)
         {
-            for (int row = 0; row < Data.Count; row++)
-                for (int col = 0; col < Data[row].Count; col++)
-                    Data[row][col].UpdateOuterWalls();
+            foreach (var floor in Floors)
+                floor.AddRow(index);
+        }
 
-            for (int row = 0; row < Data.Count; row++)
-                for (int col = 0; col < Data[row].Count; col++)
-                    Data[row][col].UpdateCorners();
+        private void AddColumn(int index)
+        {
+            foreach (var floor in Floors)
+                floor.AddColumn(index);
         }
     }
 }

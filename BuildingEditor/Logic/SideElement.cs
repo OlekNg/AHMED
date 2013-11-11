@@ -10,7 +10,7 @@ namespace WPFTest.Logic
     public enum SideElementType { NONE, WALL, DOOR }
 
     [ImplementPropertyChanged]
-    public class SideElement : ObservableObject
+    public class SideElement
     {
         public SideElement(SideElementType type = SideElementType.NONE)
         {
@@ -20,6 +20,9 @@ namespace WPFTest.Logic
         #region Properties
         public int Capacity { get; set; }
         public SideElementType Type { get; set; }
+
+        public SideElementType PreviewType { get; set; }
+        public bool Preview { get; set; }
         #endregion
     }
 }

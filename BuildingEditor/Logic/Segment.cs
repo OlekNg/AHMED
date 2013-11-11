@@ -12,8 +12,12 @@ namespace WPFTest.Logic
     [ImplementPropertyChanged]
     public class Segment
     {
+        protected List<SideElement> _outerWalls;
+
         public Segment(SegmentType type = SegmentType.FLOOR)
         {
+            _outerWalls = new List<SideElement>();
+
             Type = type;
             Capacity = 5;
 
@@ -31,6 +35,7 @@ namespace WPFTest.Logic
         #region Properties
         public int Row { get; set; }
         public int Column { get; set; }
+        public bool Preview { get; set; }
 
         public int Capacity { get; set; }
         public SegmentType Type { get; set; }
@@ -51,10 +56,57 @@ namespace WPFTest.Logic
         public SideElement BottomLeftCorner { get; set; }
         #endregion
 
+        public Segment GetNeighbour(Side side)
+        {
+            Segment result = null;
+
+            switch (side)
+            {
+                case Side.LEFT:
+                    result = LeftSegment; break;
+                case Side.TOP:
+                    result = TopSegment; break;
+                case Side.RIGHT:
+                    result = RightSegment; break;
+                case Side.BOTTOM:
+                    result = BottomSegment; break;
+            }
+
+            return result;
+        }
+
+        public SideElement GetSideElement(Side side)
+        {
+            SideElement result = null;
+
+            switch (side)
+            {
+                case Side.LEFT:
+                    result = LeftSide; break;
+                case Side.TOP:
+                    result = TopSide; break;
+                case Side.RIGHT:
+                    result = RightSide; break;
+                case Side.BOTTOM:
+                    result = BottomSide; break;
+            }
+
+            return result;
+        }
+
+        public void SetSide(Side side, SideElementType value)
+        {
+            GetSideElement(side).Type = value;
+        }
+
+        /// <summary>
+        /// Sets proper type for corners to render correctly (walls without gaps).
+        /// TODO: Optimize it (too much structural and repetitive code).
+        /// </summary>
         public void UpdateCorners()
         {
             // Top left corner.
-            if(LeftSide.Type == SideElementType.WALL ||
+            if (LeftSide.Type == SideElementType.WALL ||
                 TopSide.Type == SideElementType.WALL ||
                 (LeftSegment != null && LeftSegment.TopSide.Type == SideElementType.WALL) ||
                 (TopSegment != null && TopSegment.LeftSide.Type == SideElementType.WALL))
@@ -63,7 +115,7 @@ namespace WPFTest.Logic
                 TopLeftCorner.Type = SideElementType.NONE;
 
             // Top Right corner.
-            if(RightSide.Type == SideElementType.WALL ||
+            if (RightSide.Type == SideElementType.WALL ||
                 TopSide.Type == SideElementType.WALL ||
                 (RightSegment != null && RightSegment.TopSide.Type == SideElementType.WALL) ||
                 (TopSegment != null && TopSegment.RightSide.Type == SideElementType.WALL))
@@ -72,7 +124,7 @@ namespace WPFTest.Logic
                 TopRightCorner.Type = SideElementType.NONE;
 
             // Bottom Right corner.
-            if(RightSide.Type == SideElementType.WALL ||
+            if (RightSide.Type == SideElementType.WALL ||
                 BottomSide.Type == SideElementType.WALL ||
                 (RightSegment != null && RightSegment.BottomSide.Type == SideElementType.WALL) ||
                 (BottomSegment != null && BottomSegment.RightSide.Type == SideElementType.WALL))
@@ -81,7 +133,7 @@ namespace WPFTest.Logic
                 BottomRightCorner.Type = SideElementType.NONE;
 
             // Bottom left corner.
-            if(LeftSide.Type == SideElementType.WALL ||
+            if (LeftSide.Type == SideElementType.WALL ||
                 BottomSide.Type == SideElementType.WALL ||
                 (LeftSegment != null && LeftSegment.BottomSide.Type == SideElementType.WALL) ||
                 (BottomSegment != null && BottomSegment.LeftSide.Type == SideElementType.WALL))
@@ -95,35 +147,32 @@ namespace WPFTest.Logic
         /// </summary>
         public void UpdateOuterWalls()
         {
+            // Clear old outer walls to prevent them becoming as placed internal walls.
+            _outerWalls.ForEach(x => x.Type = SideElementType.NONE);
+            _outerWalls.Clear();
+
             // Clear walls if we are type none.
             if (Type == SegmentType.NONE)
             {
-                if (LeftSegment == null || LeftSegment.Type == SegmentType.NONE)
-                    LeftSide.Type = SideElementType.NONE;
-
-                if (TopSegment == null || TopSegment.Type == SegmentType.NONE)
-                    TopSide.Type = SideElementType.NONE;
-
-                if (RightSegment == null || RightSegment.Type == SegmentType.NONE)
-                    RightSide.Type = SideElementType.NONE;
-
-                if (BottomSegment == null || BottomSegment.Type == SegmentType.NONE)
-                    BottomSide.Type = SideElementType.NONE;
+                foreach (Side s in typeof(Side).GetEnumValues())
+                {
+                    Segment segment = GetNeighbour(s);
+                    if (segment == null || segment.Type == SegmentType.NONE)
+                        SetSide(s, SideElementType.NONE);
+                }
                 return;
             }
 
-            // Set walls.
-            if (LeftSegment == null || LeftSegment.Type == SegmentType.NONE)
-                LeftSide.Type = SideElementType.WALL;
-
-            if (TopSegment == null || TopSegment.Type == SegmentType.NONE)
-                TopSide.Type = SideElementType.WALL;
-
-            if (RightSegment == null || RightSegment.Type == SegmentType.NONE)
-                RightSide.Type = SideElementType.WALL;
-
-            if (BottomSegment == null || BottomSegment.Type == SegmentType.NONE)
-                BottomSide.Type = SideElementType.WALL;
+            // Set walls and add them to curent outer walls list.
+            foreach (Side s in typeof(Side).GetEnumValues())
+            {
+                Segment segment = GetNeighbour(s);
+                if (segment == null || segment.Type == SegmentType.NONE)
+                {
+                    SetSide(s, SideElementType.WALL);
+                    _outerWalls.Add(GetSideElement(s));
+                }
+            }
         }
     }
 }

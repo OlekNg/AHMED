@@ -3,6 +3,7 @@
                     xmlns:l="clr-namespace:WPFTest.Logic">
     
     <Style x:Key="SideElementStyle" TargetType="Rectangle">
+        <Setter Property="Fill" Value="White"/>
         <Style.Triggers>
             <DataTrigger Binding="{Binding Type}" Value="{x:Static l:SideElementType.WALL}">
                 <Setter Property="Fill" Value="Blue"/>
@@ -10,6 +11,25 @@
             <DataTrigger Binding="{Binding Type}" Value="{x:Static l:SideElementType.DOOR}">
                 <Setter Property="Fill" Value="Orange"/>
             </DataTrigger>
+            <!-- Wall preview -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Preview}" Value="True"/>
+                    <Condition Binding="{Binding PreviewType}" Value="{x:Static l:SideElementType.WALL}"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Fill" Value="Blue"/>
+                <Setter Property="Opacity" Value="0.5"/>
+            </MultiDataTrigger>
+
+            <!-- Door preview -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Preview}" Value="True"/>
+                    <Condition Binding="{Binding PreviewType}" Value="{x:Static l:SideElementType.DOOR}"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Fill" Value="Orange"/>
+                <Setter Property="Opacity" Value="0.5"/>
+            </MultiDataTrigger>
         </Style.Triggers>
     </Style>
     

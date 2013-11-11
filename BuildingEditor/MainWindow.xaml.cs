@@ -10,6 +10,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -30,19 +31,27 @@ namespace WPFTest
             InitializeComponent();
             _building = new Building();
 
-            lst.ItemsSource = _building.Data;
+            uxFloors.DataContext = _building;
 
             ObservableCollection<Tool> toolbox = new ObservableCollection<Tool>();
+            toolbox.Add(new DragTool(uxWorkspace, uxModePanel));
             toolbox.Add(new FloorTool(_building));
-            toolbox.Add(new WallTool(_building));
+            toolbox.Add(new SideElementTool(_building, SideElementType.WALL, "Wall"));
+            toolbox.Add(new SideElementTool(_building, SideElementType.DOOR, "Door"));
 
             uxToolbox.ItemsSource = toolbox;
+            uxToolbox.SelectedIndex = 0;
 
             _randomizer = new Random();
         }
 
-        private void uxWorkspaceGrid_MouseDown_1(object sender, MouseButtonEventArgs e)
+        private void Workspace_MouseLeave(object sender, MouseEventArgs e)
         {
+            Console.WriteLine("Workspace leave");
+            // Cancel any action that is being performed by selected tool.
+            Tool selectedTool = (Tool)uxToolbox.SelectedItem;
+            if (selectedTool != null)
+                selectedTool.CancelAction();
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
@@ -50,6 +59,7 @@ namespace WPFTest
             this.Close();
         }
 
+        #region Segment events handlers.
         private void Segment_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Tool selectedTool = (Tool)uxToolbox.SelectedItem;
@@ -71,7 +81,54 @@ namespace WPFTest
             Tool selectedTool = (Tool)uxToolbox.SelectedItem;
 
             if (selectedTool != null)
-                selectedTool.MouseMove(sender, e);
+                selectedTool.MouseUp(sender, e);
+        }
+
+        private void Segment_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Tool selectedTool = (Tool)uxToolbox.SelectedItem;
+
+            if (selectedTool != null)
+                selectedTool.MouseEnter(sender, e);
+        }
+
+        private void Segment_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Tool selectedTool = (Tool)uxToolbox.SelectedItem;
+
+            if (selectedTool != null)
+                selectedTool.MouseLeave(sender, e);
+        }
+        #endregion
+
+        /// <summary>
+        /// Performs zoom in/out of the building.
+        /// </summary>
+        private void Workspace_MouseWHeel(object sender, MouseWheelEventArgs e)
+        {
+            TransformGroup group = (TransformGroup)uxWorkspace.RenderTransform;
+
+            var st = group.Children.OfType<ScaleTransform>().First();
+            double deltaScale = e.Delta > 0 ? 0.2 : -0.2;
+            st.ScaleX += deltaScale;
+            st.ScaleY += deltaScale;
+            Console.WriteLine("Scale {0}", st.ScaleY);
+        }
+
+        
+        private void Right_Click(object sender, RoutedEventArgs e)
+        {
+            _building.Expand(Side.RIGHT);
+        }
+
+        private void Down_Click(object sender, RoutedEventArgs e)
+        {
+            _building.Expand(Side.BOTTOM);
+        }
+
+        private void AddFloor_Click(object sender, RoutedEventArgs e)
+        {
+            _building.AddFloor();
         }
     }
 }
