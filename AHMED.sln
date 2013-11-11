@@ -28,6 +28,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{64AE33
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GeneticAlgorithm", "GeneticAlgorithm", "{FF1639CE-73D2-4B21-874B-512808808B75}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneticAlgorithm", "GeneticAlgorithm\GeneticAlgorithm\GeneticAlgorithm.csproj", "{2F9368F3-05B9-4A87-9845-5AFAC662DE16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneticAlgorithmTest", "GeneticAlgorithm\GeneticAlgorithmTest\GeneticAlgorithmTest.csproj", "{64222020-EA56-4C57-92FA-03737CE4F448}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,8 +72,20 @@ Global
 		{BD97471A-48C6-48C2-83FD-75054045D0CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD97471A-48C6-48C2-83FD-75054045D0CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD97471A-48C6-48C2-83FD-75054045D0CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F9368F3-05B9-4A87-9845-5AFAC662DE16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F9368F3-05B9-4A87-9845-5AFAC662DE16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F9368F3-05B9-4A87-9845-5AFAC662DE16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F9368F3-05B9-4A87-9845-5AFAC662DE16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64222020-EA56-4C57-92FA-03737CE4F448}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64222020-EA56-4C57-92FA-03737CE4F448}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64222020-EA56-4C57-92FA-03737CE4F448}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64222020-EA56-4C57-92FA-03737CE4F448}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2F9368F3-05B9-4A87-9845-5AFAC662DE16} = {FF1639CE-73D2-4B21-874B-512808808B75}
+		{64222020-EA56-4C57-92FA-03737CE4F448} = {FF1639CE-73D2-4B21-874B-512808808B75}
 	EndGlobalSection
 EndGlobal

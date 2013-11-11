@@ -1,0 +1,3 @@
+[submodule "GeneticAlgorithm"]
+	path = GeneticAlgorithm
+	url = https://github.com/OlekWM/GeneticAlgorithm.git
