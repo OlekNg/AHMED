@@ -148,7 +148,7 @@ namespace WPFTest.Logic
         public void UpdateOuterWalls()
         {
             // Clear old outer walls to prevent them becoming as placed internal walls.
-            _outerWalls.ForEach(x => x.Type = SideElementType.NONE);
+            _outerWalls.ForEach(x => { if (x.Type == SideElementType.WALL) x.Type = SideElementType.NONE; });
             _outerWalls.Clear();
 
             // Clear walls if we are type none.
@@ -163,9 +163,12 @@ namespace WPFTest.Logic
                 return;
             }
 
-            // Set walls and add them to curent outer walls list.
+            // Set walls and add them to current outer walls list.
             foreach (Side s in typeof(Side).GetEnumValues())
             {
+                // We don't want to overwrite doors.
+                if (GetSideElement(s).Type == SideElementType.DOOR) continue;
+
                 Segment segment = GetNeighbour(s);
                 if (segment == null || segment.Type == SegmentType.NONE)
                 {

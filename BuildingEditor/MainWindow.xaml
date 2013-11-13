@@ -145,7 +145,7 @@
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock TextAlignment="Center"
-                                           Text="{Binding Number}"
+                                           Text="{Binding Level}"
                                            HorizontalAlignment="Center"/>
                             </DataTemplate>
                         </ListView.ItemTemplate>
