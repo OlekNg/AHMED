@@ -42,6 +42,31 @@ namespace WPFTest.Logic
         public int Level { get; set; }
 
         /// <summary>
+        /// Expands building in certain direction (adds row or column to all floors).
+        /// </summary>
+        /// <param name="side">Direction of expanding.</param>
+        public void Expand(Side side)
+        {
+            switch (side)
+            {
+                case Side.RIGHT:
+                    AddColumn(Data[0].Count);
+                    break;
+                case Side.BOTTOM:
+                    AddRow(Data.Count);
+                    break;
+                case Side.LEFT:
+                    AddColumn(0);
+                    break;
+                case Side.TOP:
+                    AddRow(0);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        /// <summary>
         /// Assigns to each segment proper Row and Column index. It is necessary for 
         /// most tools to work properly.
         /// Should be called after adding/deleting row/column.

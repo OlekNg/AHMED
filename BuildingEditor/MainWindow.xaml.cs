@@ -118,17 +118,23 @@ namespace WPFTest
         
         private void Right_Click(object sender, RoutedEventArgs e)
         {
-            _building.Expand(Side.RIGHT);
+            _building.CurrentFloor.Expand(Side.RIGHT);
         }
 
         private void Down_Click(object sender, RoutedEventArgs e)
         {
-            _building.Expand(Side.BOTTOM);
+            _building.CurrentFloor.Expand(Side.BOTTOM);
         }
 
         private void AddFloor_Click(object sender, RoutedEventArgs e)
         {
-            _building.AddFloor();
+            int rows, cols;
+            if (!Int32.TryParse(uxRows.Text, out rows)) return;
+            if (!Int32.TryParse(uxColumns.Text, out cols)) return;
+
+            if (rows < 1 || cols < 1) return;
+
+            _building.AddFloor(rows, cols);
         }
     }
 }

@@ -24,7 +24,7 @@ namespace WPFTest.Logic
             _cols = cols;
 
             Floors = new ObservableCollection<Floor>();
-            AddFloor();
+            AddFloor(7, 7);
         }
 
         /// <summary>
@@ -40,34 +40,9 @@ namespace WPFTest.Logic
         /// <summary>
         /// Adds new floor to building.
         /// </summary>
-        public void AddFloor()
+        public void AddFloor(int rows, int cols)
         {
-            Floors.Insert(0, new Floor(Floors.Count, _rows, _cols));
-        }
-
-        /// <summary>
-        /// Expands building in certain direction (adds row or column to all floors).
-        /// </summary>
-        /// <param name="side">Direction of expanding.</param>
-        public void Expand(Side side)
-        {
-            switch (side)
-            {
-                case Side.RIGHT:
-                    AddColumn(_cols);
-                    break;
-                case Side.BOTTOM:
-                    AddRow(_rows);
-                    break;
-                case Side.LEFT:
-                    AddColumn(0);
-                    break;
-                case Side.TOP:
-                    AddRow(0);
-                    break;
-                default:
-                    break;
-            }
+            Floors.Insert(0, new Floor(Floors.Count, rows, cols));
         }
 
         /// <summary>
