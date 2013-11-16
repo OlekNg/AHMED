@@ -37,7 +37,7 @@ namespace WPFTest
             toolbox.Add(new DragTool(uxWorkspaceViewbox, uxModePanel));
             toolbox.Add(new FloorTool(_building));
             toolbox.Add(new SideElementTool(_building, SideElementType.WALL, "Wall"));
-            toolbox.Add(new SideElementTool(_building, SideElementType.DOOR, "Door"));
+            toolbox.Add(new SideElementTool(_building, SideElementType.DOOR, "Door") { Capacity = 5 });
             toolbox.Add(new PeopleTool(_building));
 
             uxToolbox.ItemsSource = toolbox;
@@ -145,6 +145,18 @@ namespace WPFTest
         private void Workspace_MouseEnter(object sender, MouseEventArgs e)
         {
             uxWorkspaceCanvas.Focus();
+        }
+
+        private void Test_Click(object sender, RoutedEventArgs e)
+        {
+            TextBlock text = new TextBlock();
+            text.Text = "Test";
+            Binding b = new Binding("Canvas.Left");
+            b.Source = uxWorkspaceViewbox;
+            text.SetBinding(Canvas.LeftProperty, b);
+            uxWorkspaceCanvas.Children.Add(text);
+
+            
         }
     }
 }

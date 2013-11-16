@@ -88,7 +88,7 @@ namespace WPFTest.Logic
         private void Apply()
         {
             SideElementType value = ClearMode == true ? SideElementType.NONE : _elementType;
-            _selectedSides.ForEach(x => x.Type = value);
+            _selectedSides.ForEach(x => { x.Type = value; x.Capacity = Capacity; });
             _building.CurrentFloor.UpdateRender();
         }
 

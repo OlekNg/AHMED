@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:l="clr-namespace:WPFTest.Logic">
     
-    <Style x:Key="SegmentContentStyle" TargetType="TextBlock">
+    <Style x:Key="SegmentBasicStyle" TargetType="TextBlock">
         <Setter Property="Background" Value="White"/>
         <Setter Property="TextAlignment" Value="Center"/>
         <Setter Property="Padding" Value="0,10"/>

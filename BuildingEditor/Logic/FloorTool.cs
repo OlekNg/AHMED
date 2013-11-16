@@ -24,6 +24,7 @@ namespace WPFTest.Logic
             _building = b;
             _selectedSegments = new List<Segment>();
             Name = "Floor";
+            Capacity = 3;
         }
 
         public int Capacity { get; set; }

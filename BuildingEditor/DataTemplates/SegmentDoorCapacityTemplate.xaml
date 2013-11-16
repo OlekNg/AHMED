@@ -1,0 +1,15 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:l="clr-namespace:WPFTest.Logic">
+    
+    <DataTemplate x:Key="SegmentDoorCapacityTemplate">
+        <DockPanel Style="{StaticResource SegmentDoorCapacityStyle}">
+            <TextBlock DockPanel.Dock="Top" DataContext="{Binding TopSide}"/>
+            <TextBlock DockPanel.Dock="Bottom" DataContext="{Binding BottomSide}" Style="{StaticResource SegmentDoorCapacityBRStyle}"/>
+            <TextBlock DockPanel.Dock="Left" DataContext="{Binding LeftSide}"/>
+            <TextBlock DockPanel.Dock="Right" DataContext="{Binding RightSide}" Style="{StaticResource SegmentDoorCapacityBRStyle}"/>
+            <TextBlock/>
+        </DockPanel>
+    </DataTemplate>
+    
+</ResourceDictionary>
