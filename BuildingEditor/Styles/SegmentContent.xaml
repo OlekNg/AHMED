@@ -8,7 +8,11 @@
         <Setter Property="Padding" Value="0,10"/>
         <Setter Property="FontSize" Value="15"/>
         <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="Foreground" Value="Blue"/>
+        
+        <Style.Resources>
+            <l:NumberToBoolConverter x:Key="NumberToBoolConverter"/>
+        </Style.Resources>
+        
         <Style.Triggers>
             <DataTrigger Binding="{Binding Type}" Value="{x:Static l:SegmentType.FLOOR}">
                 <Setter Property="Background" Value="LightGray"/>
@@ -21,9 +25,20 @@
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
                     <Condition Binding="{Binding Type}" Value="{x:Static l:SegmentType.FLOOR}"/>
-                    <Condition Binding="{Binding ElementName=uxPreviewFloorCapacity, Path=IsChecked}" Value="True"/>
+                    <Condition Binding="{Binding ElementName=uxToolbox, Path=SelectedItem.Name}" Value="Floor"/>
                 </MultiDataTrigger.Conditions>
                 <Setter Property="Text" Value="{Binding Capacity}"/>
+            </MultiDataTrigger>
+
+            <!-- People count -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Type}" Value="{x:Static l:SegmentType.FLOOR}"/>
+                    <Condition Binding="{Binding ElementName=uxToolbox, Path=SelectedItem.Name}" Value="People"/>
+                    <Condition Binding="{Binding PeopleCount, Converter={StaticResource NumberToBoolConverter}}" Value="True"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Text" Value="{Binding PeopleCount}"/>
+                <Setter Property="Foreground" Value="Green"/>
             </MultiDataTrigger>
         </Style.Triggers>
     </Style>

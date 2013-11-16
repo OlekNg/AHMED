@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Windows.Data;
 
 namespace WPFTest.Logic
 {
@@ -38,6 +39,7 @@ namespace WPFTest.Logic
         public bool Preview { get; set; }
 
         public int Capacity { get; set; }
+        public int PeopleCount { get; set; }
         public SegmentType Type { get; set; }
 
         public Segment LeftSegment { get; set; }

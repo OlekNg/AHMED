@@ -38,6 +38,7 @@ namespace WPFTest
             toolbox.Add(new FloorTool(_building));
             toolbox.Add(new SideElementTool(_building, SideElementType.WALL, "Wall"));
             toolbox.Add(new SideElementTool(_building, SideElementType.DOOR, "Door"));
+            toolbox.Add(new PeopleTool(_building));
 
             uxToolbox.ItemsSource = toolbox;
             uxToolbox.SelectedIndex = 0;
@@ -115,6 +116,9 @@ namespace WPFTest
             Console.WriteLine("Scale {0}", st.ScaleY);
         }
 
+        /// <summary>
+        /// Adds new floor to the building.
+        /// </summary>
         private void AddFloor_Click(object sender, RoutedEventArgs e)
         {
             int rows, cols;
@@ -126,12 +130,18 @@ namespace WPFTest
             _building.AddFloor(rows, cols);
         }
 
+        /// <summary>
+        /// Expands current floor.
+        /// </summary>
         private void Expand_Click(object sender, RoutedEventArgs e)
         {
             Button b = sender as Button;
             _building.CurrentFloor.Expand((Side)b.Tag);
         }
 
+        /// <summary>
+        /// Prevents focus on capacity texbox.
+        /// </summary>
         private void Workspace_MouseEnter(object sender, MouseEventArgs e)
         {
             uxWorkspaceCanvas.Focus();
