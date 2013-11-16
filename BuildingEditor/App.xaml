@@ -6,8 +6,8 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <!-- Styles -->
-                <ResourceDictionary Source="Styles\SideElement.xaml"/>
-                <ResourceDictionary Source="Styles\SegmentContent.xaml"/>
+                <ResourceDictionary Source="Styles/SideElement.xaml"/>
+                <ResourceDictionary Source="Styles/SegmentContent.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

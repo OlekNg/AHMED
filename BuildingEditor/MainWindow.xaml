@@ -90,21 +90,25 @@
         <!-- WORKSPACE -->
         <Border BorderBrush="LightGray" BorderThickness="1"
                 Grid.Column="1" Grid.Row="2" Grid.RowSpan="2">
-            <Canvas ClipToBounds="True"
+            <DockPanel>
+                <Canvas
+                ClipToBounds="True"
                 MouseLeave="Workspace_MouseLeave"
                 MouseWheel="Workspace_MouseWHeel">
-                <Viewbox Name="uxWorkspace" Stretch="Uniform" Margin="10,10,10,10">
-                    <Viewbox.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </Viewbox.RenderTransform>
-                    <ItemsControl Name="uxDataFloor"
+                    <Viewbox Name="uxWorkspace" Stretch="Uniform" Margin="10,10,10,10">
+                        <Viewbox.RenderTransform>
+                            <TransformGroup>
+                                <!-- Dragging and zooming workspace. -->
+                                <ScaleTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Viewbox.RenderTransform>
+                        <ItemsControl Name="uxDataFloor"
                                   ItemTemplate="{DynamicResource SegmentRowTemplate}"
                                   ItemsSource="{Binding ElementName=uxFloors, Path=SelectedItem.Data, IsAsync=True}"/>
-                </Viewbox>
-            </Canvas>
+                    </Viewbox>
+                </Canvas>
+            </DockPanel>
         </Border>
 
         <!-- TOOLBOX -->
@@ -174,9 +178,12 @@
             <TextBlock Text="Mode:" VerticalAlignment="Center" Padding="5,0"/>
             <RadioButton Content="Structure" GroupName="groupMode"/>
             <RadioButton Content="People" GroupName="groupMode"/>
-            <TextBlock Text="Building:" VerticalAlignment="Center" Padding="5,0"/>
-            <Button Content="Right" Width="50" Click="Right_Click"/>
-            <Button Content="Down" Width="50" Click="Down_Click"/>
+            <!-- Building expanding -->
+            <TextBlock Text="Expand:" VerticalAlignment="Center" Padding="5,0"/>
+            <Button Content="&lt;" Width="20" Click="Expand_Click" Tag="{x:Static l:Side.LEFT}"/>
+            <Button Content=">" Width="20" Click="Expand_Click" Tag="{x:Static l:Side.RIGHT}"/>
+            <Button Content="v" Width="20" Click="Expand_Click" Tag="{x:Static l:Side.BOTTOM}"/>
+            <Button Content="^" Width="20" Click="Expand_Click" Tag="{x:Static l:Side.TOP}"/>
         </StackPanel>
 
         <!-- MENU -->

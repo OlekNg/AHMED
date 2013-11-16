@@ -115,17 +115,6 @@ namespace WPFTest
             Console.WriteLine("Scale {0}", st.ScaleY);
         }
 
-        
-        private void Right_Click(object sender, RoutedEventArgs e)
-        {
-            _building.CurrentFloor.Expand(Side.RIGHT);
-        }
-
-        private void Down_Click(object sender, RoutedEventArgs e)
-        {
-            _building.CurrentFloor.Expand(Side.BOTTOM);
-        }
-
         private void AddFloor_Click(object sender, RoutedEventArgs e)
         {
             int rows, cols;
@@ -135,6 +124,12 @@ namespace WPFTest
             if (rows < 1 || cols < 1) return;
 
             _building.AddFloor(rows, cols);
+        }
+
+        private void Expand_Click(object sender, RoutedEventArgs e)
+        {
+            Button b = sender as Button;
+            _building.CurrentFloor.Expand((Side)b.Tag);
         }
     }
 }
