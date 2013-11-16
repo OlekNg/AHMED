@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace Structure
 {
+    public enum WallElementType { WALL, DOOR, STAIR_ENTRY }
+
     /// <summary>
     /// Interface desctibing each wall element
     /// </summary>
@@ -19,11 +21,13 @@ namespace Structure
         /// <summary>
         /// Wall element efficiency (measured in number of people which can go through this wall element)
         /// </summary>
-        uint Capacity { get; }
+        uint Efficiency { get; }
 
         /// <summary>
         /// Should this element be drawn in visualiser
         /// </summary>
         bool Draw { get; }
+
+        WallElementType Type { get; }
     }
 }

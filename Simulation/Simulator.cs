@@ -117,7 +117,7 @@ namespace Simulation
                 //group finally evacuated, yeah
                 if (group.Passage.CanPassThrough)
                 {
-                    peopleCount = Math.Min(group.Passage.Capacity, group.PeopleQuantity);
+                    peopleCount = Math.Min(group.Passage.Efficiency, group.PeopleQuantity);
 
                     _escapedGroups.Add(new EscapedGroup(peopleCount, tick));
                     group.PeopleQuantity -= peopleCount;
@@ -143,7 +143,7 @@ namespace Simulation
             }
             if (group.Passage.CanPassThrough)
             {
-                peopleCount = Math.Min(peopleCount, group.Passage.Capacity);
+                peopleCount = Math.Min(peopleCount, group.Passage.Efficiency);
             }
             else
             {

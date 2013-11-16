@@ -328,7 +328,7 @@ namespace AHMED
                         }
                         else if (e.CanPassThrough)
                         {
-                            Console.Write(e.Capacity);
+                            Console.Write(e.Efficiency);
                         }
                         else if (!e.CanPassThrough)
                         {

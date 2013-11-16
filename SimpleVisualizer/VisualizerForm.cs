@@ -157,7 +157,7 @@ namespace SimpleVisualizer
 
                             g.DrawLine(doorPen, p1, p2);
                             PointF pf = new PointF(p1.X, p1.Y);
-                            g.DrawString(_bmap.Floor[i][j].GetSide(d).Capacity.ToString(), doorFont, doorStringBrush, pf);
+                            g.DrawString(_bmap.Floor[i][j].GetSide(d).Efficiency.ToString(), doorFont, doorStringBrush, pf);
                         }
                         else
                             // Draw wall
@@ -354,7 +354,7 @@ namespace SimpleVisualizer
 
                             g.DrawLine(doorPen, p1, p2);
                             PointF pf = new PointF(p1.X, p1.Y);
-                            g.DrawString(_bmap.Floor[i][j].GetSide(d).Capacity.ToString(), doorFont, doorStringBrush, pf);
+                            g.DrawString(_bmap.Floor[i][j].GetSide(d).Efficiency.ToString(), doorFont, doorStringBrush, pf);
                         }
                         else
                             // Draw wall
