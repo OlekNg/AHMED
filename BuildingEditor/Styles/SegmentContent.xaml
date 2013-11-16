@@ -2,16 +2,29 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:l="clr-namespace:WPFTest.Logic">
     
-    <Style x:Key="SegmentContentStyle" TargetType="Rectangle">
-        <Setter Property="Fill" Value="White"/>
+    <Style x:Key="SegmentContentStyle" TargetType="TextBlock">
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="TextAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="0,10"/>
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Foreground" Value="Blue"/>
         <Style.Triggers>
             <DataTrigger Binding="{Binding Type}" Value="{x:Static l:SegmentType.FLOOR}">
-                <Setter Property="Fill" Value="LightGray"/>
+                <Setter Property="Background" Value="LightGray"/>
             </DataTrigger>
             <DataTrigger Binding="{Binding Preview}" Value="True">
-                <Setter Property="Fill" Value="LightGray"/>
+                <Setter Property="Background" Value="LightGray"/>
                 <Setter Property="Opacity" Value="0.8"/>
             </DataTrigger>
+            <!-- Segment capacity -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Type}" Value="{x:Static l:SegmentType.FLOOR}"/>
+                    <Condition Binding="{Binding ElementName=uxPreviewFloorCapacity, Path=IsChecked}" Value="True"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Text" Value="{Binding Capacity}"/>
+            </MultiDataTrigger>
         </Style.Triggers>
     </Style>
     

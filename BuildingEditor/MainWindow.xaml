@@ -54,10 +54,10 @@
                 <Rectangle DataContext="{Binding BottomRightCorner}" Grid.Column="2" Grid.Row="2"/>
                 <Rectangle DataContext="{Binding BottomLeftCorner}" Grid.Column="0" Grid.Row="2"/>
 
-                <Rectangle Style="{StaticResource SegmentContentStyle}"
+                <TextBlock Style="{StaticResource SegmentContentStyle}"
                            Grid.Column="1"
                            Grid.Row="1">
-                </Rectangle>
+                </TextBlock>
             </Grid>
         </DataTemplate>
 
@@ -91,11 +91,13 @@
         <Border BorderBrush="LightGray" BorderThickness="1"
                 Grid.Column="1" Grid.Row="2" Grid.RowSpan="2">
             <DockPanel>
-                <Canvas
+                <Canvas Name="uxWorkspaceCanvas"
+                        Focusable="True"
                 ClipToBounds="True"
                 MouseLeave="Workspace_MouseLeave"
+                        MouseEnter="Workspace_MouseEnter"
                 MouseWheel="Workspace_MouseWHeel">
-                    <Viewbox Name="uxWorkspace" Stretch="Uniform" Margin="10,10,10,10">
+                    <Viewbox Name="uxWorkspaceViewbox" Stretch="Uniform" Margin="10,10,10,10">
                         <Viewbox.RenderTransform>
                             <TransformGroup>
                                 <!-- Dragging and zooming workspace. -->
@@ -167,17 +169,9 @@
         <StackPanel Name="uxModePanel" Grid.Column="0" Grid.Row="1"
                     Grid.ColumnSpan="3" VerticalAlignment="Center"
                     Orientation="Horizontal" HorizontalAlignment="Left">
-            <StackPanel.Resources>
-                <!-- Visually treat RadioButton as ToggleButton -->
-                <Style BasedOn="{StaticResource {x:Type ToggleButton}}"
-                       TargetType="{x:Type RadioButton}">
-                    <Setter Property="Margin" Value="5,0"/>
-                    <Setter Property="Width" Value="80"/>
-                </Style>
-            </StackPanel.Resources>
-            <TextBlock Text="Mode:" VerticalAlignment="Center" Padding="5,0"/>
-            <RadioButton Content="Structure" GroupName="groupMode"/>
-            <RadioButton Content="People" GroupName="groupMode"/>
+            <TextBlock Text="Preview:" VerticalAlignment="Center" Padding="5,0"/>
+            <ToggleButton Name="uxPreviewPeople" Content="People" Margin="5,0" Padding="5,0"/>
+            <ToggleButton Name="uxPreviewFloorCapacity" Content="Floor cap." Margin="5,0" Padding="5,0"/>
             <!-- Building expanding -->
             <TextBlock Text="Expand:" VerticalAlignment="Center" Padding="5,0"/>
             <Button Content="&lt;" Width="20" Click="Expand_Click" Tag="{x:Static l:Side.LEFT}"/>

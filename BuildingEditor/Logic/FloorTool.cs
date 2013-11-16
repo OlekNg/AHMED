@@ -105,7 +105,7 @@ namespace WPFTest.Logic
         private void Apply()
         {
             SegmentType value = ClearMode == true ?  SegmentType.NONE : SegmentType.FLOOR;
-            _selectedSegments.ForEach(x => x.Type = value);
+            _selectedSegments.ForEach(x => { x.Type = value; x.Capacity = Capacity; });
             _building.CurrentFloor.UpdateRender();
         }
 

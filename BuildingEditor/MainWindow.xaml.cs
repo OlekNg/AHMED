@@ -34,7 +34,7 @@ namespace WPFTest
             uxFloors.DataContext = _building;
 
             ObservableCollection<Tool> toolbox = new ObservableCollection<Tool>();
-            toolbox.Add(new DragTool(uxWorkspace, uxModePanel));
+            toolbox.Add(new DragTool(uxWorkspaceViewbox, uxModePanel));
             toolbox.Add(new FloorTool(_building));
             toolbox.Add(new SideElementTool(_building, SideElementType.WALL, "Wall"));
             toolbox.Add(new SideElementTool(_building, SideElementType.DOOR, "Door"));
@@ -106,7 +106,7 @@ namespace WPFTest
         /// </summary>
         private void Workspace_MouseWHeel(object sender, MouseWheelEventArgs e)
         {
-            TransformGroup group = (TransformGroup)uxWorkspace.RenderTransform;
+            TransformGroup group = (TransformGroup)uxWorkspaceViewbox.RenderTransform;
 
             var st = group.Children.OfType<ScaleTransform>().First();
             double deltaScale = e.Delta > 0 ? 0.2 : -0.2;
@@ -130,6 +130,11 @@ namespace WPFTest
         {
             Button b = sender as Button;
             _building.CurrentFloor.Expand((Side)b.Tag);
+        }
+
+        private void Workspace_MouseEnter(object sender, MouseEventArgs e)
+        {
+            uxWorkspaceCanvas.Focus();
         }
     }
 }
