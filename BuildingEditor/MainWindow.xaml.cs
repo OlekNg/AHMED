@@ -123,13 +123,7 @@ namespace WPFTest
         /// </summary>
         private void AddFloor_Click(object sender, RoutedEventArgs e)
         {
-            int rows, cols;
-            if (!Int32.TryParse(uxRows.Text, out rows)) return;
-            if (!Int32.TryParse(uxColumns.Text, out cols)) return;
-
-            if (rows < 1 || cols < 1) return;
-
-            _building.AddFloor(rows, cols);
+            _building.AddFloor();
         }
 
         /// <summary>
@@ -138,7 +132,7 @@ namespace WPFTest
         private void Expand_Click(object sender, RoutedEventArgs e)
         {
             Button b = sender as Button;
-            _building.CurrentFloor.Expand((Side)b.Tag);
+            _building.Expand((Side)b.Tag);
         }
 
         /// <summary>

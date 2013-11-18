@@ -19,7 +19,7 @@ namespace WPFTest.Logic
         {
             _building = buidling;
             _selectedSegments = new List<Segment>();
-            Name = "Reduce floor";
+            Name = "Reduce building";
             DeleteRow = true;
         }
 
@@ -69,9 +69,9 @@ namespace WPFTest.Logic
         private void Apply()
         {
             if (DeleteRow)
-                _building.CurrentFloor.RemoveRow(_mouseoverSegment.Row);
+                _building.RemoveRow(_mouseoverSegment.Row);
             else
-                _building.CurrentFloor.RemoveColumn(_mouseoverSegment.Column);
+                _building.RemoveColumn(_mouseoverSegment.Column);
         }
 
         private void UpdateSelectionPreview()

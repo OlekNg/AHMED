@@ -24,7 +24,7 @@ namespace WPFTest.Logic
             _cols = cols;
 
             Floors = new ObservableCollection<Floor>();
-            AddFloor(7, 7);
+            AddFloor();
         }
 
         /// <summary>
@@ -40,9 +40,20 @@ namespace WPFTest.Logic
         /// <summary>
         /// Adds new floor to building.
         /// </summary>
-        public void AddFloor(int rows, int cols)
+        public void AddFloor()
         {
-            Floors.Insert(0, new Floor(Floors.Count, rows, cols));
+            Floors.Insert(0, new Floor(Floors.Count, _rows, _cols));
+        }
+
+        public void Expand(Side side)
+        {
+            foreach (Floor f in Floors)
+            {
+                f.Expand(side);
+            }
+
+            _rows = Floors[0].Data.Count;
+            _cols = Floors[0].Data[0].Count;
         }
 
         /// <summary>
@@ -65,6 +76,18 @@ namespace WPFTest.Logic
         {
             foreach (var floor in Floors)
                 floor.AddColumn(index);
+        }
+
+        public void RemoveRow(int index)
+        {
+            foreach (var floor in Floors)
+                floor.RemoveRow(index);
+        }
+
+        public void RemoveColumn(int index)
+        {
+            foreach (var floor in Floors)
+                floor.RemoveRow(index);
         }
     }
 }
