@@ -130,6 +130,24 @@ namespace WPFTest.Logic
             UpdateRender();
         }
 
+        public void RemoveRow(int index)
+        {
+            Data.RemoveAt(index);
+            ConnectSegments();
+            RecalculateIndexes();
+            UpdateRender();
+        }
+
+        public void RemoveColumn(int index)
+        {
+            foreach (ObservableCollection<Segment> row in Data)
+                row.RemoveAt(index);
+
+            ConnectSegments();
+            RecalculateIndexes();
+            UpdateRender();
+        }
+
         /// <summary>
         /// Connects all adjacent segments and their sides.
         /// Top side is down side of top segment.
@@ -142,6 +160,11 @@ namespace WPFTest.Logic
                 for (int col = 0; col < Data[row].Count; col++)
                 {
                     var element = Data[row][col];
+
+                    element.LeftSegment = null;
+                    element.TopSegment = null;
+                    element.RightSegment = null;
+                    element.BottomSegment = null;
 
                     if (row > 0)
                     {

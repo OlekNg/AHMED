@@ -80,6 +80,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Logic\Building.cs" />
+    <Compile Include="Logic\DeleteTool.cs" />
     <Compile Include="Logic\DragTool.cs" />
     <Compile Include="Logic\Floor.cs" />
     <Compile Include="Logic\FloorTool.cs" />
