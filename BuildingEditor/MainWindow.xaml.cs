@@ -40,6 +40,7 @@ namespace WPFTest
             toolbox.Add(new SideElementTool(_building, SideElementType.DOOR, "Door") { Capacity = 5 });
             toolbox.Add(new PeopleTool(_building));
             toolbox.Add(new DeleteTool(_building));
+            toolbox.Add(new StairsTool(_building));
 
             uxToolbox.ItemsSource = toolbox;
             uxToolbox.SelectedIndex = 0;

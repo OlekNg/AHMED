@@ -8,7 +8,7 @@ using System.Windows.Data;
 
 namespace WPFTest.Logic
 {
-    public enum SegmentType { FLOOR, NONE }
+    public enum SegmentType { FLOOR, STAIRS, NONE }
 
     [ImplementPropertyChanged]
     public class Segment
