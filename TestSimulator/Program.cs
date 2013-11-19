@@ -20,15 +20,84 @@ namespace TestSimulator
     {
         static void Main(string[] args)
         {
+            TestStairsRouting();
+        }
+
+        static void TestStairsRouting()
+        {
+            BuildingMap map = new BuildingMap();
+            Stairs s = new Stairs(3, 2);
+            StairsEntry[] se = new StairsEntry[2];
+            WallElementPosition[] wep = new WallElementPosition[2];
+            Simulator sim = new Simulator();
+            List<List<Direction>> fenotype = new List<List<Direction>>();
+            PeopleMap pm = new PeopleMap();
+
+            pm.People.Add(new PeopleGroup(1, 0, 0, 3));
+
+            fenotype.Add(new List<Direction>());
+            fenotype.Add(new List<Direction>());
+
+            fenotype[0].Add(Direction.RIGHT);
+            fenotype[0].Add(Direction.RIGHT);
+            fenotype[0].Add(Direction.RIGHT);
+
+            fenotype[1].Add(Direction.RIGHT);
+            fenotype[1].Add(Direction.RIGHT);
+            fenotype[1].Add(Direction.RIGHT);
+
+            
+
+            Floor[] f = new Floor[2];
+            f[0] = new Floor();
+            f[1] = new Floor();
+
+            f[0].Setup(3, 1, 3);
+            f[1].Setup(3, 1, 3);
+
+            for (uint i = 0; i < 3; ++i)
+            {
+                f[0].SetFloor(0, i, 3);
+                f[1].SetFloor(0, i, 3);
+                f[0].SetWall(0, i, WallPlace.TOP);
+                f[0].SetWall(1, i, WallPlace.TOP);
+                f[1].SetWall(0, i, WallPlace.TOP);
+                f[1].SetWall(1, i, WallPlace.TOP);
+            }
+            f[0].SetDoor(0, 3, 3, WallPlace.LEFT);
+            f[1].SetWall(0, 0, WallPlace.LEFT);
+
+            map.AddFloor(f[0]);
+            map.AddFloor(f[1]);
+
+            wep[0] = new WallElementPosition(0, 0, 0, WallPlace.LEFT);
+            wep[1] = new WallElementPosition(1, 0, 3, WallPlace.LEFT);
+            se[0] = new StairsEntry(2, wep[0]);
+            se[1] = new StairsEntry(2, wep[1]);
+            s.SetEntries(se[0], se[1]);
+            
+            map.AddStairs(s);
+
+            sim.SetupSimulator(map, pm);
+            sim.MaximumTicks = 50;
+            List<EscapedGroup> eg = sim.Simulate(fenotype);
+
+            Console.WriteLine(eg.ToArray().ToString());
+            Console.ReadLine();
+        }
+
+        /*
+        static void OldTest()
+        {
             const uint w = 7;
             const uint h = 5;
             const uint capacity = 6;
             const uint doorCapacity = 3;
             const uint standardEff = 4;
-            BuildingMap map/* = new BuildingMap()*/;
-            PeopleMap pmap/* = new PeopleMap()*/;
-            Simulator sim = new Simulator();
-            XMLReader reader = new XMLReader();
+            BuildingMap map/* = new BuildingMap()*/
+            //PeopleMap pmap/* = new PeopleMap()*/;
+           // Simulator sim = new Simulator();
+            //XMLReader reader = new XMLReader();
 
             /*
             map.Setup(w, h, standardEff);
@@ -74,7 +143,7 @@ namespace TestSimulator
                 map.SetDoor(4, 1 + i, doorCapacity, WallPosition.TOP);
             */
 
-            map = reader.ReadBuildingMap("building_map.abm");
+            /*map = reader.ReadBuildingMap("building_map.abm");
 
             //show
             Console.WriteLine("Capacity[UP,DOWN,LEFT,RIGHT]");
@@ -107,7 +176,7 @@ namespace TestSimulator
                 }
                 Console.WriteLine();
             }
-            Console.ReadLine();
+            Console.ReadLine();*/
 
             //add people group
             /*
@@ -119,7 +188,7 @@ namespace TestSimulator
             pmap.People.Add(new PeopleGroup(4, 2, 1));
             pmap.People.Add(new PeopleGroup(4, 3, 1));
             */
-            pmap = reader.ReadPeopleMap("people_map.apm");
+            /*pmap = reader.ReadPeopleMap("people_map.apm");
             if (pmap == null)
             {
                 Console.WriteLine("Problem with reading people map.");
@@ -134,7 +203,7 @@ namespace TestSimulator
             Chromosome chr = new Chromosome("11010101010101" +
                                             "11010100000000" +
                                             "11011111111111" +
-                                            "00000000100000" + 
+                                            "00000000100000" +
                                             "11101010101010");
 
             List<EscapedGroup> escape = sim.Simulate(chr.Fenotype);
@@ -143,8 +212,8 @@ namespace TestSimulator
             {
                 Console.WriteLine("Escaped " + e.Quantity + " people in " + e.Ticks + " ticks");
             }
-            
-            Console.ReadLine();
-        }
+
+            Console.ReadLine();*/
+        //}
     }
 }
