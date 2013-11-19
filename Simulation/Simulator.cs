@@ -64,7 +64,7 @@ namespace Simulation
         /// </summary>
         /// <param name="fenotype">Fenotype</param>
         /// <returns>List of escaped groups</returns>
-        public List<EscapedGroup> Simulate(List<Direction> fenotype)
+        public List<EscapedGroup> Simulate(List<List<Direction>> fenotype)
         {
             _escapedGroups.Clear();
 
@@ -74,7 +74,7 @@ namespace Simulation
             foreach (PeopleGroup group in _peopleMap.People)
             {
                 _evacuationMap.SetPeopleGroup(group);
-                _evacuationGroups.Add(_evacuationMap.Get(group.Row, group.Col));
+                _evacuationGroups.Add(_evacuationMap.Get(group.Floor, group.Row, group.Col));
             }
             _evacuationMap.MapFenotype(fenotype);
 
@@ -86,10 +86,10 @@ namespace Simulation
 
                 for (int j = _evacuationGroups.Count - 1; j >= 0; --j)
                 {
-                    if (_evacuationGroups[j].PeopleQuantity == 0)
+                    _evacuationGroups[j].ResetProcessing();
+
+                    if (!_evacuationGroups[j].ContainsPeople())
                         _evacuationGroups.RemoveAt(j);
-                    else 
-                        _evacuationGroups[j].Processed = false;
                 }
 
             }
@@ -109,7 +109,7 @@ namespace Simulation
 
             if (group.Processed == true) return;
 
-            group.Processed = true;
+            group.StartProcessing();
             group.Ticks = tick;
 
             if (nextStep == null)
@@ -120,7 +120,7 @@ namespace Simulation
                     peopleCount = Math.Min(group.Passage.Efficiency, group.PeopleQuantity);
 
                     _escapedGroups.Add(new EscapedGroup(peopleCount, tick));
-                    group.PeopleQuantity -= peopleCount;
+                    group.RemovePeople(peopleCount);
                     
                     return;
                 }
@@ -152,11 +152,16 @@ namespace Simulation
             }
 
             peopleCount = Math.Min(peopleCount, group.PeopleQuantity);
-            nextStep.PeopleQuantity += peopleCount;
-            //TODO: maybe there is no need for this
-            nextStep.Processed = true;
-            group.PeopleQuantity -= peopleCount;
-            _evacuationGroups.Add(nextStep);
+            if (peopleCount != 0)
+            {
+                if(!nextStep.Processed)
+                    _evacuationGroups.Add(nextStep);
+
+                nextStep.AddPeople(peopleCount);
+                //TODO: maybe there is no need for this
+                //nextStep.Processed = true;
+                group.RemovePeople(peopleCount);
+            }
         }
     }
 }

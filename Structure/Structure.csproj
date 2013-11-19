@@ -42,12 +42,17 @@
     <Compile Include="BuildingMap.cs" />
     <Compile Include="Direction.cs" />
     <Compile Include="Door.cs" />
+    <Compile Include="Floor.cs" />
     <Compile Include="FloorSquare.cs" />
     <Compile Include="IWallElement.cs" />
     <Compile Include="PeopleGroup.cs" />
     <Compile Include="PeopleMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Stairs.cs" />
+    <Compile Include="StairsEntry.cs" />
     <Compile Include="Wall.cs" />
+    <Compile Include="WallElementPosition.cs" />
+    <Compile Include="WallPlace.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

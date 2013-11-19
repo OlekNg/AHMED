@@ -43,5 +43,13 @@ namespace Structure
                 return true;
             }
         }
+
+        public WallElementType Type 
+        {
+            get
+            {
+                return WallElementType.WALL;
+            }
+        }
     }
 }

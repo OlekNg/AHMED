@@ -7,11 +7,6 @@ using System.Threading.Tasks;
 namespace Structure
 {
     /// <summary>
-    /// Enum containing possible locations of wall element (door, wall) next to each floor square
-    /// </summary>
-    public enum WallPosition { TOP, LEFT }
-
-    /// <summary>
     /// Class containing informations about building structure
     /// </summary>
     public class BuildingMap
@@ -19,22 +14,68 @@ namespace Structure
         /// <summary>
         /// Height of the map
         /// </summary>
-        public uint Height { get; set; }
+        //public uint Height { get; set; }
 
         /// <summary>
         /// Width of the map
         /// </summary>
-        public uint Width { get; set; }
+        //public uint Width { get; set; }
         
         /// <summary>
         /// Efficiency for passages between floor squares (when there is no door set)
         /// </summary>
-        public uint StandardPassageEfficency { get; set; }
+        //public uint StandardPassageEfficency { get; set; }
 
         /// <summary>
         /// Floor (null when there is no floor set with coordinates)
         /// </summary>
         public FloorSquare[][] Floor { get; set; }
+
+        private List<Floor> _floors;
+
+        public List<Floor> Floors { get { return _floors; } }
+
+        private List<Stairs> _stairs;
+
+        public List<Stairs> Stairs { get { return _stairs; } }
+
+        public BuildingMap(){
+            _floors = new List<Floor>();
+            _stairs = new List<Stairs>();
+        }
+
+        public void AddFloor(Floor f)
+        {
+            _floors.Add(f);
+        }
+
+        public void RemoveFloor(int id)
+        {
+            _floors.RemoveAt(id);
+        }
+
+        public void AddStairs(Stairs s)
+        {
+            foreach (StairsEntry se in s.Entries)
+            {
+                _floors[(int) se.Position.Floor].SetStairsEntry(se.Position.Row, se.Position.Col, se.Position.Place, se);
+            }
+            _stairs.Add(s);
+        }
+
+        public void RemoveStairs(int id)
+        {
+            _stairs.RemoveAt(id);
+        }
+
+        public FloorSquare GetSquare(int floor, uint row, uint col)
+        {
+            return Floors[floor].Base[row][col];
+        }
+
+
+
+
 
         /// <summary>
         /// Initialize building map with given size and efficiency
@@ -42,7 +83,7 @@ namespace Structure
         /// <param name="w">Map width</param>
         /// <param name="h">Map height</param>
         /// <param name="standardPassageEfficency">Standard efficiency for not set passages</param>
-        public void Setup(uint w, uint h, uint standardPassageEfficency)
+        /*public void Setup(uint w, uint h, uint standardPassageEfficency)
         {
             Height = h;
             Width = w;
@@ -52,7 +93,7 @@ namespace Structure
             {
                 Floor[i] = new FloorSquare[w];
             }
-        }
+        }*/
 
         /// <summary>
         /// Set floor with given coordinates and capacity
@@ -60,14 +101,14 @@ namespace Structure
         /// <param name="row">Row</param>
         /// <param name="col">Column</param>
         /// <param name="capacity">Capacity</param>
-        public void SetFloor(uint row, uint col, uint capacity)
+        /*public void SetFloor(uint row, uint col, uint capacity)
         {
             Floor[row][col] = new FloorSquare(capacity);
             for(int i = 0; i < 4; ++i)
             {
                 Floor[row][col].Side[i] = new Door(StandardPassageEfficency, false);
             }
-        }
+        }*/
 
         /// <summary>
         /// Set wall oriented to floor square with given coordinates
@@ -75,10 +116,10 @@ namespace Structure
         /// <param name="row">Row</param>
         /// <param name="col">Column</param>
         /// <param name="position">Wall orientation</param>
-        public void SetWall(uint row, uint col, WallPosition position)
+        /*public void SetWall(uint row, uint col, WallPlace position)
         {
             SetWallElement(row, col, new Wall(), position);
-        }
+        }*/
 
         /// <summary>
         /// Set door with given efficiency oriented to floor square with given coordinates
@@ -87,10 +128,10 @@ namespace Structure
         /// <param name="col">Column</param>
         /// <param name="capacity">Door eficiency</param>
         /// <param name="position">Door orientation</param>
-        public void SetDoor(uint row, uint col, uint capacity, WallPosition position)
+        /*public void SetDoor(uint row, uint col, uint capacity, WallPlace position)
         {
             SetWallElement(row, col, new Door(capacity), position);
-        }
+        }*/
 
         /// <summary>
         /// Set given wall element oritented to floor eith given coordinations
@@ -99,9 +140,9 @@ namespace Structure
         /// <param name="col">Column</param>
         /// <param name="wallElement">Wall element</param>
         /// <param name="wallPosition">Wall element orientation</param>
-        private void SetWallElement(uint row, uint col, IWallElement wallElement, WallPosition wallPosition)
+        /*private void SetWallElement(uint row, uint col, IWallElement wallElement, WallPlace wallPosition)
         {
-            if (wallPosition == WallPosition.LEFT)
+            if (wallPosition == WallPlace.LEFT)
             {
                 if (col != 0)
                 {
@@ -135,6 +176,6 @@ namespace Structure
                         Floor[row][col].SetSide(Direction.UP, wallElement);
                 }
             }
-        }
+        }*/
     }
 }

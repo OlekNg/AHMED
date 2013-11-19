@@ -11,6 +11,8 @@ namespace Structure
     /// </summary>
     public class PeopleGroup
     {
+        public int Floor { get; set; }
+
         /// <summary>
         /// Group location - row
         /// </summary>
@@ -26,14 +28,17 @@ namespace Structure
         /// </summary>
         public uint Quantity { get; set; }
 
+        
+
         /// <summary>
         /// Initalize all properties
         /// </summary>
         /// <param name="row">Row</param>
         /// <param name="col">Column</param>
         /// <param name="quantity">Quantity</param>
-        public PeopleGroup(uint row, uint col, uint quantity)
+        public PeopleGroup(int floor, uint row, uint col, uint quantity)
         {
+            Floor = floor;
             Row = row;
             Col = col;
             Quantity = quantity;

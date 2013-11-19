@@ -52,5 +52,13 @@ namespace Structure
             Efficiency = c;
             Draw = d;
         }
+
+        public WallElementType Type
+        {
+            get
+            {
+                return WallElementType.DOOR;
+            }
+        }
     }
 }
