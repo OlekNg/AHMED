@@ -1,11 +1,12 @@
-﻿using System;
+﻿using BuildingEditor.Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace WPFTest.Logic
+namespace BuildingEditor.Tools.Logic
 {
     public class StairsTool : Tool
     {

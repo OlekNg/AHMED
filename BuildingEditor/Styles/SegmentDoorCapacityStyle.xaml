@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:l="clr-namespace:WPFTest.Logic">
+                    xmlns:l="clr-namespace:BuildingEditor.Logic">
     
     <Style x:Key="SegmentDoorCapacityStyle" TargetType="DockPanel">
         <Setter Property="Background" Value="White"/>

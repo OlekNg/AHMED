@@ -14,9 +14,10 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using WPFTest.Logic;
+using BuildingEditor.Logic;
+using BuildingEditor.Tools.Logic;
 
-namespace WPFTest
+namespace BuildingEditor
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

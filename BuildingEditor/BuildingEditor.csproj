@@ -7,8 +7,8 @@
     <ProjectGuid>{BD97471A-48C6-48C2-83FD-75054045D0CF}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WPFTest</RootNamespace>
-    <AssemblyName>WPFTest</AssemblyName>
+    <RootNamespace>BuildingEditor</RootNamespace>
+    <AssemblyName>BuildingEditor</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -83,18 +83,18 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Logic\Building.cs" />
-    <Compile Include="Logic\DeleteTool.cs" />
-    <Compile Include="Logic\DragTool.cs" />
+    <Compile Include="Logic\Tools\DeleteTool.cs" />
+    <Compile Include="Logic\Tools\DragTool.cs" />
     <Compile Include="Logic\Floor.cs" />
-    <Compile Include="Logic\FloorTool.cs" />
+    <Compile Include="Logic\Tools\FloorTool.cs" />
     <Compile Include="Logic\NumberToBoolConverter.cs" />
-    <Compile Include="Logic\PeopleTool.cs" />
+    <Compile Include="Logic\Tools\PeopleTool.cs" />
     <Compile Include="Logic\Segment.cs" />
     <Compile Include="Logic\Enums.cs" />
     <Compile Include="Logic\SideElement.cs" />
-    <Compile Include="Logic\SideElementTool.cs" />
-    <Compile Include="Logic\StairsTool.cs" />
-    <Compile Include="Logic\Tool.cs" />
+    <Compile Include="Logic\Tools\SideElementTool.cs" />
+    <Compile Include="Logic\Tools\StairsTool.cs" />
+    <Compile Include="Logic\Tools\Tool.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

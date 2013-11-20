@@ -1,4 +1,4 @@
-﻿<Window x:Class="WPFTest.RangeWindow"
+﻿<Window x:Class="BuildingEditor.RangeWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Choose stairs range." Height="120" Width="200"

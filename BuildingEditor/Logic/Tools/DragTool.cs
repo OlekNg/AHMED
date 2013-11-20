@@ -6,7 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace WPFTest.Logic
+namespace BuildingEditor.Tools.Logic
 {
     public class DragTool : Tool
     {

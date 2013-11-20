@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
-namespace WPFTest.Logic
+namespace BuildingEditor.Logic
 {
     public enum SideElementType { NONE, WALL, DOOR }
 

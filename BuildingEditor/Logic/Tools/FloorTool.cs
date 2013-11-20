@@ -1,4 +1,5 @@
-﻿using PropertyChanged;
+﻿using BuildingEditor.Logic;
+using PropertyChanged;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Shapes;
 
-namespace WPFTest.Logic
+namespace BuildingEditor.Tools.Logic
 {
     [ImplementPropertyChanged]
     public class FloorTool : Tool

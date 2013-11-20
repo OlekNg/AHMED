@@ -1,4 +1,5 @@
-﻿using PropertyChanged;
+﻿using BuildingEditor.Logic;
+using PropertyChanged;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Text;
 using System.Windows.Controls;
 using System.Windows.Data;
 
-namespace WPFTest.Logic
+namespace BuildingEditor.Tools.Logic
 {
     [ImplementPropertyChanged]
     public class DeleteTool : Tool

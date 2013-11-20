@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Data;
 
-namespace WPFTest.Logic
+namespace BuildingEditor.Logic
 {
     [ValueConversion(typeof(int), typeof(bool))]
     public class NumberToBoolConverter : IValueConverter

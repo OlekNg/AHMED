@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
-namespace WPFTest.Logic
+namespace BuildingEditor.Logic
 {
     [ImplementPropertyChanged]
     public class Building

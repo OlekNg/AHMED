@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Data;
 
-namespace WPFTest.Logic
+namespace BuildingEditor.Logic
 {
     public enum SegmentType { FLOOR, STAIRS, NONE }
 
