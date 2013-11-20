@@ -141,7 +141,13 @@
             <Border DockPanel.Dock="Top" BorderBrush="LightGray" BorderThickness="1,1,0,1">
                 <TextBlock Text="Floors" TextAlignment="Center" Margin="5"/>
             </Border>
-            <Button DockPanel.Dock="Top" Content=" + " Click="AddFloor_Click"/>
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                <TextBox Name="uxCols" Text="5" Width="30" Margin="5,0" TextAlignment="Center"/>
+                <TextBlock Text="x"/>
+                <TextBox Name="uxRows" Text="5" Width="30" Margin="5,0" TextAlignment="Center"/>
+                <Button DockPanel.Dock="Top" Content="  +  " Click="AddFloor_Click"/>
+            </StackPanel>
+            
             <DockPanel>
                 <ScrollViewer>
                     <ListView Name="uxFloors"
@@ -165,7 +171,7 @@
                     Orientation="Horizontal" HorizontalAlignment="Left">
             <Button Content="Test" Click="Test_Click"/>
             <!-- Building expanding -->
-            <TextBlock Text="Expand building:" VerticalAlignment="Center" Padding="5,0"/>
+            <TextBlock Text="Expand floor:" VerticalAlignment="Center" Padding="5,0"/>
             <Button Content="&lt;" Width="20" Click="Expand_Click" Tag="{x:Static l:Side.LEFT}"/>
             <Button Content=">" Width="20" Click="Expand_Click" Tag="{x:Static l:Side.RIGHT}"/>
             <Button Content="v" Width="20" Click="Expand_Click" Tag="{x:Static l:Side.BOTTOM}"/>
