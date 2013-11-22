@@ -45,7 +45,7 @@ namespace BuildingEditor.Tools.Logic
 
         private SideElementType _previewType { get { return ClearMode == true ? SideElementType.NONE : _elementType; } }
 
-        public override void CancelAction()
+        public override void ClearPreview()
         {
             if (_selectionStart != null)
             {

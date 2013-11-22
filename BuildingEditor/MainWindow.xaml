@@ -121,7 +121,7 @@
             <Border BorderBrush="LightGray" BorderThickness="0,1,1,1">
                 <TextBlock Text="Toolbox" TextAlignment="Center" Margin="5"/>
             </Border>
-            <ListView Name="uxToolbox">
+            <ListView Name="uxToolbox" SelectionChanged="Toolbox_Selected">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Name}" HorizontalAlignment="Center"/>
@@ -194,7 +194,6 @@
         <StackPanel Name="uxModePanel" Grid.Column="0" Grid.Row="1"
                     Grid.ColumnSpan="3" VerticalAlignment="Center"
                     Orientation="Horizontal" HorizontalAlignment="Left">
-            <Button Content="Test" Click="Test_Click"/>
             <!-- Building expanding -->
             <TextBlock Text="Expand floor:" VerticalAlignment="Center" Padding="5,0"/>
             <Button Content="&lt;" Width="20" Click="Expand_Click" Tag="{x:Static l:Side.LEFT}"/>

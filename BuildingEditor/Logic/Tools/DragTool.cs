@@ -29,7 +29,7 @@ namespace BuildingEditor.Tools.Logic
             Name = "Drag";
         }
 
-        public override void CancelAction()
+        public override void ClearPreview()
         {
             _dragEnabled = false;
         }

@@ -12,7 +12,7 @@ namespace BuildingEditor.Tools.Logic
 {
     public class StairsTool : Tool
     {
-        private Building _building;
+        private Building _building; 
         private ObservableCollection<StairsPair> _stairs;
         private Segment _previewSegment;
         private bool _firstStairs;
@@ -26,7 +26,7 @@ namespace BuildingEditor.Tools.Logic
             Name = "Stairs";
             Capacity = 3;
             Delay = 2;
-            Message = "Set first stairs.";
+            UpdateMessage();
         }
 
         public int Capacity { get; set; }
@@ -61,6 +61,19 @@ namespace BuildingEditor.Tools.Logic
         }
 
         public override void CancelAction()
+        {
+            // To abort action while waiting for second stairs,
+            // we have to remove first stairs.
+            if (!_firstStairs)
+            {
+                _stairsPair.First.AssignedSegment.Type = SegmentType.FLOOR;
+            }
+
+            _firstStairs = true;
+            UpdateMessage();
+        }
+
+        public override void ClearPreview()
         {
             if (_previewSegment != null)
             {
@@ -120,9 +133,14 @@ namespace BuildingEditor.Tools.Logic
             }
 
             _firstStairs = !_firstStairs;
-            Message = _firstStairs == true ? "Set first stairs." : "Set second stairs";
+            UpdateMessage();
 
             _building.CurrentFloor.UpdateRender();
+        }
+
+        private void UpdateMessage()
+        {
+            Message = _firstStairs == true ? "Set first stairs." : "Set second stairs";
         }
     }
 }

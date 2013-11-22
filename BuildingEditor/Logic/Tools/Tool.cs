@@ -32,6 +32,7 @@ namespace BuildingEditor.Tools.Logic
         public FrameworkElement GUIConfiguration { get; set; }
 
         public virtual void CancelAction() { }
+        public virtual void ClearPreview() { }
         public virtual void MouseDown(object sender, MouseButtonEventArgs e) { }
         public virtual void MouseMove(object sender, MouseEventArgs e) { }
         public virtual void MouseUp(object sender, MouseButtonEventArgs e) { }

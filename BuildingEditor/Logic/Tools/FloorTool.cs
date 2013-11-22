@@ -33,7 +33,7 @@ namespace BuildingEditor.Tools.Logic
 
         private SegmentType _previewType { get { return ClearMode == true ? SegmentType.NONE : SegmentType.FLOOR; } }
 
-        public override void CancelAction()
+        public override void ClearPreview()
         {
             if (_selectionStart != null)
             {

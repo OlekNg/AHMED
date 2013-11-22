@@ -25,6 +25,7 @@ namespace BuildingEditor
     public partial class MainWindow : Window
     {
         private Building _building;
+        private Tool _currentTool;
         private Random _randomizer;
 
         public MainWindow()
@@ -54,11 +55,10 @@ namespace BuildingEditor
 
         private void Workspace_MouseLeave(object sender, MouseEventArgs e)
         {
-            Console.WriteLine("Workspace leave");
-            // Cancel any action that is being performed by selected tool.
+            // Clear preview when out of workspace.
             Tool selectedTool = (Tool)uxToolbox.SelectedItem;
             if (selectedTool != null)
-                selectedTool.CancelAction();
+                selectedTool.ClearPreview();
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
@@ -150,16 +150,12 @@ namespace BuildingEditor
             uxWorkspaceCanvas.Focus();
         }
 
-        private void Test_Click(object sender, RoutedEventArgs e)
+        private void Toolbox_Selected(object sender, SelectionChangedEventArgs e)
         {
-            TextBlock text = new TextBlock();
-            text.Text = "Test";
-            Binding b = new Binding("Canvas.Left");
-            b.Source = uxWorkspaceViewbox;
-            text.SetBinding(Canvas.LeftProperty, b);
-            uxWorkspaceCanvas.Children.Add(text);
+            if (_currentTool != null)
+                _currentTool.CancelAction();
 
-            
+            _currentTool = (Tool)uxToolbox.SelectedItem;
         }
     }
 }
