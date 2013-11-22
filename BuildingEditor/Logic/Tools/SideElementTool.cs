@@ -87,6 +87,14 @@ namespace BuildingEditor.Tools.Logic
             Apply();
             UpdateSelectionPreview();
         }
+
+        public override void MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (e.Delta > 0)
+                Capacity++;
+            else if (Capacity > 1)
+                Capacity--;
+        }
         #endregion
 
         private void Apply()

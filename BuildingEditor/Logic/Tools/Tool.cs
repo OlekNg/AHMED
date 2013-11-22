@@ -37,6 +37,7 @@ namespace BuildingEditor.Tools.Logic
         public virtual void MouseUp(object sender, MouseButtonEventArgs e) { }
         public virtual void MouseEnter(object sender, MouseEventArgs e) { }
         public virtual void MouseLeave(object sender, MouseEventArgs e) { }
+        public virtual void MouseWheel(object sender, MouseWheelEventArgs e) { }
 
         protected Segment SenderToSegment(object sender)
         {
@@ -98,5 +99,7 @@ namespace BuildingEditor.Tools.Logic
         {
             return null;
         }
+
+        
     }
 }

@@ -89,6 +89,14 @@ namespace BuildingEditor.Tools.Logic
             Segment segment = SenderToSegment(sender);
             segment.Preview = false;
         }
+
+        public override void MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (e.Delta > 0)
+                Capacity++;
+            else if (Capacity > 1)
+                Capacity--;
+        }
         #endregion
 
         protected override FrameworkElement BuildGUIConfiguration()

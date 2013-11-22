@@ -41,5 +41,13 @@ namespace BuildingEditor.Tools.Logic
             var segment = SenderToSegment(sender);
             segment.PeopleCount = GroupCount;
         }
+
+        public override void MouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
+        {
+            if (e.Delta > 0)
+                GroupCount++;
+            else if (GroupCount > 0)
+                GroupCount--;
+        }
     }
 }

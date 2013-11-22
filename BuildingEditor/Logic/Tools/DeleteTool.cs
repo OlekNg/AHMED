@@ -67,6 +67,16 @@ namespace BuildingEditor.Tools.Logic
             UpdateSelectionPreview();
         }
 
+        public override void MouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
+        {
+            if (DeleteRow)
+                DeleteColumn = true;
+            else
+                DeleteRow = true;
+
+            UpdateSelectionPreview();
+        }
+
         private void Apply()
         {
             if (DeleteRow)

@@ -103,21 +103,20 @@ namespace BuildingEditor
             if (selectedTool != null)
                 selectedTool.MouseLeave(sender, e);
         }
-        #endregion
 
         /// <summary>
         /// Performs zoom in/out of the building.
         /// </summary>
         private void Workspace_MouseWHeel(object sender, MouseWheelEventArgs e)
         {
-            TransformGroup group = (TransformGroup)uxWorkspaceViewbox.RenderTransform;
+            Tool selectedTool = (Tool)uxToolbox.SelectedItem;
 
-            var st = group.Children.OfType<ScaleTransform>().First();
-            double deltaScale = e.Delta > 0 ? 0.2 : -0.2;
-            st.ScaleX += deltaScale;
-            st.ScaleY += deltaScale;
-            Console.WriteLine("Scale {0}", st.ScaleY);
+            if (selectedTool != null)
+                selectedTool.MouseWheel(sender, e);
         }
+        #endregion
+
+        
 
         /// <summary>
         /// Adds new floor to the building.
