@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace BuildingEditor.Tools.Logic
 {
@@ -17,6 +18,34 @@ namespace BuildingEditor.Tools.Logic
         {
             _building = building;
             Name = "Stairs";
+            Capacity = 3;
+            Delay = 2;
+        }
+
+        public int Capacity { get; set; }
+        public int Delay { get; set; }
+
+        protected override FrameworkElement BuildGUIConfiguration()
+        {
+            TextBox capacity = new TextBox() { Width = 20, Height = 20 };
+            capacity.SetBinding(TextBox.TextProperty, new Binding("Capacity"));
+
+            StackPanel capacityPanel = new StackPanel() { Orientation = Orientation.Horizontal };
+            capacityPanel.Children.Add(new Label() { Content = "Capacity" });
+            capacityPanel.Children.Add(capacity);
+
+            TextBox delay = new TextBox() { Width = 20, Height = 20 };
+            delay.SetBinding(TextBox.TextProperty, new Binding("Delay"));
+
+            StackPanel delayPanel = new StackPanel() { Orientation = Orientation.Horizontal };
+            delayPanel.Children.Add(new Label() { Content = "Delay" });
+            delayPanel.Children.Add(delay);
+
+            StackPanel panel = new StackPanel();
+            panel.Children.Add(capacityPanel);
+            panel.Children.Add(delayPanel);
+
+            return panel;
         }
 
         public override void CancelAction()

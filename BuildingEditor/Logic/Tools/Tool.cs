@@ -11,30 +11,25 @@ using System.Windows.Shapes;
 
 namespace BuildingEditor.Tools.Logic
 {
-    public class ToolSegmentArg
-    {
-        public int SegmentRow { get; set; }
-        public int SegmentCol { get; set; }
-        public Point MousePosition { get; set; }
-        public Point SegmentRenderedSize { get; set; }
-    }
-
     [ImplementPropertyChanged]
     public abstract class Tool
     {
         public Tool()
         {
             Name = "Tool";
-            Configuration = BuildConfiguration();
+            GUIConfiguration = BuildGUIConfiguration();
         }
 
+        /// <summary>
+        /// Tool name.
+        /// </summary>
         public string Name { get; set; }
 
         /// <summary>
         /// Configuration that will appear in tool details section below toolbox.
         /// To implement this for inherited tool override BuildConfiguration method.
         /// </summary>
-        public FrameworkElement Configuration { get; set; }
+        public FrameworkElement GUIConfiguration { get; set; }
 
         public virtual void CancelAction() { }
         public virtual void MouseDown(object sender, MouseButtonEventArgs e) { }
@@ -99,7 +94,7 @@ namespace BuildingEditor.Tools.Logic
         /// Through this method you can expose an interface for additional
         /// configuration of your tool.
         /// </summary>
-        protected virtual FrameworkElement BuildConfiguration()
+        protected virtual FrameworkElement BuildGUIConfiguration()
         {
             return null;
         }

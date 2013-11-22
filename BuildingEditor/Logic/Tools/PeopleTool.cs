@@ -24,7 +24,7 @@ namespace BuildingEditor.Tools.Logic
 
         public int GroupCount { get; set; }
 
-        protected override System.Windows.FrameworkElement BuildConfiguration()
+        protected override System.Windows.FrameworkElement BuildGUIConfiguration()
         {
             TextBox capacity = new TextBox() { Width = 20, Height = 20 };
             capacity.SetBinding(TextBox.TextProperty, new Binding("GroupCount"));

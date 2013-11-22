@@ -37,10 +37,13 @@ namespace BuildingEditor.Tools.Logic
             _building = b;
             _elementType = elementType;
             Name = name;
+            Capacity = 3;
         }
 
         public int Capacity { get; set; }
         public bool ClearMode { get; set; }
+
+        private SideElementType _previewType { get { return ClearMode == true ? SideElementType.NONE : _elementType; } }
 
         public override void CancelAction()
         {
@@ -93,7 +96,7 @@ namespace BuildingEditor.Tools.Logic
             _building.CurrentFloor.UpdateRender();
         }
 
-        protected override FrameworkElement BuildConfiguration()
+        protected override FrameworkElement BuildGUIConfiguration()
         {
             CheckBox clearMode = new CheckBox() { Content = "Clear mode" };
             clearMode.SetBinding(CheckBox.IsCheckedProperty, new Binding("ClearMode"));
@@ -121,7 +124,7 @@ namespace BuildingEditor.Tools.Logic
             List<SideElement> oldSelection = _selectedSides;
             _selectedSides = CalcualateAffectedSides();
             oldSelection.Except(_selectedSides).ToList().ForEach(x => x.Preview = false);
-            _selectedSides.ForEach(x => { x.PreviewType = _elementType; x.Preview = true; });
+            _selectedSides.ForEach(x => { x.PreviewType = _previewType; x.Preview = true; });
         }
 
         /// <summary>

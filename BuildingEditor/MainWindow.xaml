@@ -132,7 +132,7 @@
             <Border BorderBrush="LightGray" BorderThickness="0,1,1,1">
                 <TextBlock Text="Tool details" TextAlignment="Center" Margin="5"/>
             </Border>
-            <ContentControl Content="{Binding Configuration}"/>
+            <ContentControl Content="{Binding GUIConfiguration}"/>
         </StackPanel>
 
 

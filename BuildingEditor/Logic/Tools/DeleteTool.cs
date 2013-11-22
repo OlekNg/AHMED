@@ -27,7 +27,7 @@ namespace BuildingEditor.Tools.Logic
         public bool DeleteRow { get; set; }
         public bool DeleteColumn { get; set; }
 
-        protected override System.Windows.FrameworkElement BuildConfiguration()
+        protected override System.Windows.FrameworkElement BuildGUIConfiguration()
         {
             RadioButton r1 = new RadioButton()
             {
@@ -80,7 +80,7 @@ namespace BuildingEditor.Tools.Logic
             List<Segment> oldSelection = _selectedSegments;
             _selectedSegments = CalcualateAffectedSegments();
             oldSelection.Except(_selectedSegments).ToList().ForEach(x => x.Preview = false);
-            _selectedSegments.ForEach(x => x.Preview = true);
+            _selectedSegments.ForEach(x => { x.Preview = true; x.PreviewType = SegmentType.NONE; });
         }
 
         private List<Segment> CalcualateAffectedSegments()

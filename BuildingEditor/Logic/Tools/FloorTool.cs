@@ -31,6 +31,8 @@ namespace BuildingEditor.Tools.Logic
         public int Capacity { get; set; }
         public bool ClearMode { get; set; }
 
+        private SegmentType _previewType { get { return ClearMode == true ? SegmentType.NONE : SegmentType.FLOOR; } }
+
         public override void CancelAction()
         {
             if (_selectionStart != null)
@@ -57,7 +59,11 @@ namespace BuildingEditor.Tools.Logic
                 UpdateSelectionPreview();
             }
             else
-                SenderToSegment(sender).Preview = true;
+            {
+                var segment = SenderToSegment(sender);
+                segment.PreviewType = _previewType;
+                segment.Preview = true;
+            }
         }
 
         public override void MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -85,7 +91,7 @@ namespace BuildingEditor.Tools.Logic
         }
         #endregion
 
-        protected override FrameworkElement BuildConfiguration()
+        protected override FrameworkElement BuildGUIConfiguration()
         {
             CheckBox clearMode = new CheckBox() { Content = "Clear mode" };
             clearMode.SetBinding(CheckBox.IsCheckedProperty, new Binding("ClearMode"));
@@ -116,7 +122,7 @@ namespace BuildingEditor.Tools.Logic
             List<Segment> oldSelection = _selectedSegments;
             _selectedSegments = CalcualateAffectedSegments();
             oldSelection.Except(_selectedSegments).ToList().ForEach(x => x.Preview = false);
-            _selectedSegments.ForEach(x => x.Preview = true);
+            _selectedSegments.ForEach(x => { x.Preview = true; x.PreviewType = _previewType; });
         }
 
         private List<Segment> CalcualateAffectedSegments()
