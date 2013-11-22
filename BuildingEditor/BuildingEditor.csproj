@@ -63,6 +63,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DataModel\Building.cs" />
+    <Compile Include="DataModel\Floor.cs" />
+    <Compile Include="DataModel\Segment.cs" />
+    <Compile Include="DataModel\SideElement.cs" />
+    <Compile Include="DataModel\Stairs.cs" />
+    <Compile Include="DataModel\StairsPair.cs" />
     <Compile Include="Logic\OrientationToAngleConverter.cs" />
     <Compile Include="Logic\StairsPair.cs" />
     <Compile Include="RangeWindow.xaml.cs">

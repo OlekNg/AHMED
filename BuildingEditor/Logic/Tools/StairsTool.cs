@@ -18,10 +18,10 @@ namespace BuildingEditor.Tools.Logic
         private bool _firstStairs;
         private StairsPair _stairsPair;
 
-        public StairsTool(Building building, ObservableCollection<StairsPair> stairs)
+        public StairsTool(Building building)
         {
             _building = building;
-            _stairs = stairs;
+            _stairs = _building.Stairs;
             _firstStairs = true;
             Name = "Stairs";
             Capacity = 3;

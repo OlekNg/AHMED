@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BuildingEditor.Logic
 {
-    public enum Side { LEFT = 1, TOP = 2, RIGHT = 3, BOTTOM = 4 }
+    public enum Side { LEFT, TOP, RIGHT, BOTTOM }
     public enum Corner { TOP_LEFT = 1, TOP_RIGHT = 2, BOTTOM_RIGHT = 3, BOTTOM_LEFT = 4 }
 
     // SEGMENT

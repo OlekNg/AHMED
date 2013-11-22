@@ -205,8 +205,8 @@
         <!-- MENU -->
         <Menu Grid.Column="0" Grid.Row="0" Background="White">
             <MenuItem Header="File" Height="25">
-                <MenuItem Header="Open"/>
-                <MenuItem Header="Save"/>
+                <MenuItem Header="Open" Click="Open_Click"/>
+                <MenuItem Header="Save" Click="Save_Click"/>
                 <MenuItem Header="Exit" Click="Exit_Click"/>
             </MenuItem>
             <MenuItem Header="View" Height="25">

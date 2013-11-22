@@ -12,9 +12,20 @@ namespace BuildingEditor.Logic
     [ImplementPropertyChanged]
     public class SideElement
     {
+        public SideElement()
+        {
+            Type = SideElementType.NONE;
+        }
+
         public SideElement(SideElementType type = SideElementType.NONE)
         {
             Type = type;
+        }
+
+        public SideElement(DataModel.SideElement sideElement)
+        {
+            Type = sideElement.Type;
+            Capacity = sideElement.Capacity;
         }
 
         #region Properties

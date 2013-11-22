@@ -16,6 +16,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BuildingEditor.Logic;
 using BuildingEditor.Tools.Logic;
+using System.Xml.Serialization;
+using System.IO;
 
 namespace BuildingEditor
 {
@@ -31,14 +33,12 @@ namespace BuildingEditor
         public MainWindow()
         {
             InitializeComponent();
-            _building = new Building();
+            _building = new Building(5, 5);
 
             uxFloors.DataContext = _building;
             _building.CurrentFloor = _building.Floors[0];
             
-
-            ObservableCollection<StairsPair> stairs = new ObservableCollection<StairsPair>();
-            uxStairs.ItemsSource = stairs;
+            uxStairs.ItemsSource = _building.Stairs;
 
             ObservableCollection<Tool> toolbox = new ObservableCollection<Tool>();
             toolbox.Add(new DragTool(uxWorkspaceViewbox, uxModePanel));
@@ -47,7 +47,7 @@ namespace BuildingEditor
             toolbox.Add(new SideElementTool(_building, SideElementType.DOOR, "Door") { Capacity = 5 });
             toolbox.Add(new PeopleTool(_building));
             toolbox.Add(new DeleteTool(_building));
-            toolbox.Add(new StairsTool(_building, stairs));
+            toolbox.Add(new StairsTool(_building));
 
             uxToolbox.ItemsSource = toolbox;
             uxToolbox.SelectedIndex = 0;
@@ -158,6 +158,40 @@ namespace BuildingEditor
                 _currentTool.CancelAction();
 
             _currentTool = (Tool)uxToolbox.SelectedItem;
+        }
+
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            DataModel.Building building = new DataModel.Building(_building);
+            building.Save("pliczek.xml");
+        }
+
+        private void Open_Click(object sender, RoutedEventArgs e)
+        {
+            // Create OpenFileDialog 
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+
+            // Set filter for file extension and default file extension 
+            dlg.DefaultExt = ".xml";
+
+            // Display OpenFileDialog by calling ShowDialog method 
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Get the selected file name and display in a TextBox 
+            if (result == true)
+            {
+                // Open document 
+                string filename = dlg.FileName;
+                DataModel.Building building = new DataModel.Building();
+                building.Load("pliczek.xml");
+                Building viewModel = building.ToViewModel();
+
+
+                _building.Floors = viewModel.Floors;
+                _building.Stairs = viewModel.Stairs;
+                _building.CurrentFloor = _building.Floors[0];
+                uxStairs.ItemsSource = _building.Stairs;
+            }
         }
     }
 }

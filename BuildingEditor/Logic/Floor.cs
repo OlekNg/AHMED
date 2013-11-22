@@ -10,9 +10,16 @@ namespace BuildingEditor.Logic
     /// <summary>
     /// Represents single floor in the building.
     /// </summary>
+    [Serializable]
     [ImplementPropertyChanged]
     public class Floor
     {
+        public Floor()
+        {
+            Level = 0;
+            Data = new ObservableCollection<ObservableCollection<Segment>>();
+        }
+
         /// <summary>
         /// Floor constructor.
         /// </summary>
@@ -20,9 +27,9 @@ namespace BuildingEditor.Logic
         /// <param name="rows">Initial rows of floor.</param>
         /// <param name="cols">Initial cols of floor.</param>
         public Floor(int level, int rows = 5, int cols = 5)
+            : this()
         {
             Level = level;
-            Data = new ObservableCollection<ObservableCollection<Segment>>();
 
             for (int i = 0; i < rows; i++)
             {
@@ -31,6 +38,26 @@ namespace BuildingEditor.Logic
                     row.Add(new Segment());
 
                 Data.Add(row);
+            }
+
+            ConnectSegments();
+            RecalculateIndexes();
+            UpdateRender();
+        }
+
+        public Floor(DataModel.Floor floor)
+            : this()
+        {
+            Level = floor.Level;
+
+            for (int row = 0; row < floor.Segments.Count; row++)
+            {
+                ObservableCollection<Segment> segmentRow = new ObservableCollection<Segment>();
+                for (int col = 0; col < floor.Segments[row].Count; col++)
+                {
+                    segmentRow.Add(new Segment(floor.Segments[row][col]));
+                }
+                Data.Add(segmentRow);
             }
 
             ConnectSegments();

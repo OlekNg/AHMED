@@ -13,12 +13,9 @@ namespace BuildingEditor.Logic
     {
         protected List<SideElement> _outerWalls;
 
-        public Segment(SegmentType type = SegmentType.FLOOR)
+        public Segment()
         {
             _outerWalls = new List<SideElement>();
-
-            Type = type;
-            Capacity = 5;
 
             LeftSide = new SideElement();
             TopSide = new SideElement();
@@ -29,6 +26,29 @@ namespace BuildingEditor.Logic
             TopRightCorner = new SideElement();
             BottomRightCorner = new SideElement();
             BottomLeftCorner = new SideElement();
+
+            Type = SegmentType.FLOOR;
+        }
+
+        public Segment(SegmentType type = SegmentType.FLOOR)
+            : this()
+        {
+            Type = type;
+            Capacity = 5;
+        }
+
+        public Segment(DataModel.Segment segment)
+            : this()
+        {
+            Type = segment.Type;
+            Orientation = segment.Orientation;
+            Capacity = segment.Capacity;
+            PeopleCount = segment.PeopleCount;
+
+            LeftSide = new SideElement(segment.LeftSide);
+            TopSide = new SideElement(segment.TopSide);
+            RightSide = new SideElement(segment.RightSide);
+            BottomSide = new SideElement(segment.BottomSide);
         }
 
         #region Properties
