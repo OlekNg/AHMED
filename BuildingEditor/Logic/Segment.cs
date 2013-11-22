@@ -8,8 +8,6 @@ using System.Windows.Data;
 
 namespace BuildingEditor.Logic
 {
-    public enum SegmentType { FLOOR, STAIRS, NONE }
-
     [ImplementPropertyChanged]
     public class Segment
     {
@@ -36,11 +34,15 @@ namespace BuildingEditor.Logic
         #region Properties
         public int Row { get; set; }
         public int Column { get; set; }
+
         public bool Preview { get; set; }
+        public SegmentType PreviewType { get; set; }
+        public Side PreviewOrientation { get; set; }
 
         public int Capacity { get; set; }
         public int PeopleCount { get; set; }
         public SegmentType Type { get; set; }
+        public Side Orientation { get; set; }
 
         public Segment LeftSegment { get; set; }
         public Segment TopSegment { get; set; }

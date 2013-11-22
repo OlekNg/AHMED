@@ -11,6 +11,7 @@
 
         <Style.Resources>
             <l:NumberToBoolConverter x:Key="NumberToBoolConverter"/>
+            <l:OrientationToAngleConverter x:Key="OrientationToAngleConverter"/>
         </Style.Resources>
         <Style.Triggers>
             <DataTrigger Binding="{Binding Type}" Value="{x:Static l:SegmentType.FLOOR}">
@@ -19,14 +20,38 @@
             <DataTrigger Binding="{Binding Type}" Value="{x:Static l:SegmentType.STAIRS}">
                 <Setter Property="Background">
                     <Setter.Value>
-                        <ImageBrush ImageSource="../Images/stairs.png"/>
+                        <ImageBrush ImageSource="../Images/stairs.png">
+                            <ImageBrush.Transform>
+                                <RotateTransform Angle="{Binding Orientation, Converter={StaticResource OrientationToAngleConverter}}"  CenterX="25" CenterY="25"/>
+                            </ImageBrush.Transform>
+                        </ImageBrush>
                     </Setter.Value>
                 </Setter>
             </DataTrigger>
-            <DataTrigger Binding="{Binding Preview}" Value="True">
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Preview}" Value="True"/>
+                    <Condition Binding="{Binding PreviewType}" Value="{x:Static l:SegmentType.STAIRS}"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <ImageBrush ImageSource="../Images/stairs.png">
+                            <ImageBrush.Transform>
+                                <RotateTransform Angle="{Binding PreviewOrientation, Converter={StaticResource OrientationToAngleConverter}}" CenterX="25" CenterY="25"/>
+                            </ImageBrush.Transform>
+                        </ImageBrush>
+                    </Setter.Value>
+                </Setter>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Preview}" Value="True"/>
+                    <Condition Binding="{Binding PreviewType}" Value="{x:Static l:SegmentType.FLOOR}"/>
+                </MultiDataTrigger.Conditions>
                 <Setter Property="Background" Value="LightGray"/>
                 <Setter Property="Opacity" Value="0.8"/>
-            </DataTrigger>
+            </MultiDataTrigger>
             <!-- Segment capacity -->
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>

@@ -63,6 +63,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Logic\OrientationToAngleConverter.cs" />
     <Compile Include="RangeWindow.xaml.cs">
       <DependentUpon>RangeWindow.xaml</DependentUpon>
     </Compile>

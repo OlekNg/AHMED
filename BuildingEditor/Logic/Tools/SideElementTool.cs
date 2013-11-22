@@ -111,49 +111,7 @@ namespace BuildingEditor.Tools.Logic
 
             return panel;
         }
-
-        /// <summary>
-        /// Caluclates which side (triangle) of segment has been clicked.
-        /// </summary>
-        /// <param name="size">Size of segment (rendered width/height - assumption that segment is square).</param>
-        /// <param name="pos">Mouse click location relative to segment.</param>
-        /// <returns></returns>
-        private Side CalculateSegmentSide(double size, Point pos)
-        {
-            if (pos.X > pos.Y && pos.X < (size - pos.Y))
-                return Side.TOP;
-
-            if (pos.X > pos.Y && pos.X > (size - pos.Y))
-                return Side.RIGHT;
-
-            if (pos.X < pos.Y && pos.X < (size - pos.Y))
-                return Side.LEFT;
-
-            if (pos.X < pos.Y && pos.X > (size - pos.Y))
-                return Side.BOTTOM;
-
-            return Side.BOTTOM;
-        }
-
-        private SegmentSide ProcessEventArg(object sender, MouseEventArgs e)
-        {
-            FrameworkElement element = sender as FrameworkElement;
-            if (element == null) return null;
-
-            Segment segment = element.Tag as Segment;
-            if (segment == null) return null;
-
-            Point pos = e.GetPosition(element);
-            var size = element.ActualHeight;
-
-            Side side = CalculateSegmentSide(size, pos);
-
-            pos.X -= (size / 2);
-            pos.Y -= (size / 2);
-
-            return new SegmentSide { Segment = segment, Side = side, MousePosition = pos };
-        }
-
+        
         /// <summary>
         /// Calculates new affected walls by selection and applies
         /// difference between actual selection and selection before actual.

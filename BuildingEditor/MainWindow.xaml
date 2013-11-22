@@ -8,7 +8,7 @@
             <DataTemplate.Resources>
                 <Style BasedOn="{StaticResource SideElementStyle}" TargetType="Rectangle"/>
             </DataTemplate.Resources>
-            <Grid Width="50" Height="50"
+            <Grid 
                   MouseDown="Segment_MouseDown"
                   MouseMove="Segment_MouseMove"
                   MouseUp="Segment_MouseUp"
@@ -36,12 +36,12 @@
                 </Grid.Resources>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Style="{StaticResource Left}"/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="50"/>
                     <ColumnDefinition Width="4"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Style="{StaticResource Top}"/>
-                    <RowDefinition/>
+                    <RowDefinition Height="50"/>
                     <RowDefinition Height="4"/>
                 </Grid.RowDefinitions>
                 <Rectangle DataContext="{Binding LeftSide}" Grid.Column="0" Grid.Row="1"/>
