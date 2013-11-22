@@ -4,6 +4,10 @@
         xmlns:l="clr-namespace:BuildingEditor.Logic"
         Title="AHMED Building Editor" Height="500" Width="700" BorderThickness="0">
     <Window.Resources>
+        <Style TargetType="ListViewItem">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+        
         <DataTemplate x:Key="SegmentTemplate">
             <DataTemplate.Resources>
                 <Style BasedOn="{StaticResource SideElementStyle}" TargetType="Rectangle"/>
@@ -153,6 +157,27 @@
                     <ListView Name="uxFloors"
                       ItemsSource="{Binding Floors}"
                       SelectedItem="{Binding CurrentFloor}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Center"
+                                           Text="{Binding Level}"
+                                           HorizontalAlignment="Stretch"/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </ScrollViewer>
+            </DockPanel>
+        </DockPanel>
+
+        <!-- STAIRS -->
+        <DockPanel Name="uxStairsPanel" Grid.Column="0" Grid.Row="3">
+            <Border DockPanel.Dock="Top" BorderBrush="LightGray" BorderThickness="1,1,0,1">
+                <TextBlock Text="Stairs" TextAlignment="Center" Margin="5"/>
+            </Border>
+
+            <DockPanel>
+                <ScrollViewer>
+                    <ListView Name="uxStairs">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock TextAlignment="Center"

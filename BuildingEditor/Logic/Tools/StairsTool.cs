@@ -13,17 +13,21 @@ namespace BuildingEditor.Tools.Logic
     {
         private Building _building;
         private Segment _previewSegment;
+        private bool _firstStairs;
 
         public StairsTool(Building building)
         {
             _building = building;
+            _firstStairs = true;
             Name = "Stairs";
             Capacity = 3;
             Delay = 2;
+            Message = "Set first stairs.";
         }
 
         public int Capacity { get; set; }
         public int Delay { get; set; }
+        public string Message { get; set; }
 
         protected override FrameworkElement BuildGUIConfiguration()
         {
@@ -41,9 +45,13 @@ namespace BuildingEditor.Tools.Logic
             delayPanel.Children.Add(new Label() { Content = "Delay" });
             delayPanel.Children.Add(delay);
 
+            Label messageLabel = new Label();
+            messageLabel.SetBinding(Label.ContentProperty, new Binding("Message"));
+
             StackPanel panel = new StackPanel();
             panel.Children.Add(capacityPanel);
             panel.Children.Add(delayPanel);
+            panel.Children.Add(messageLabel);
 
             return panel;
         }
@@ -76,8 +84,15 @@ namespace BuildingEditor.Tools.Logic
             SegmentSide segmentSide = ProcessEventArg(sender, e);
 
             var segment = segmentSide.Segment;
+
+            // Do not override another stairs.
+            if (segment.Type == SegmentType.STAIRS) return;
+
             segment.Type = (segment.Type == SegmentType.STAIRS ? SegmentType.NONE : SegmentType.STAIRS);
             segment.Orientation = segmentSide.Side;
+
+            _firstStairs = !_firstStairs;
+            Message = _firstStairs == true ? "Set first stairs." : "Set second stairs";
 
             _building.CurrentFloor.UpdateRender();
         }
