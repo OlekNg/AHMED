@@ -64,6 +64,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Logic\OrientationToAngleConverter.cs" />
+    <Compile Include="Logic\StairsPair.cs" />
     <Compile Include="RangeWindow.xaml.cs">
       <DependentUpon>RangeWindow.xaml</DependentUpon>
     </Compile>

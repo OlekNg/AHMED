@@ -1,6 +1,7 @@
 ﻿using BuildingEditor.Logic;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -12,12 +13,15 @@ namespace BuildingEditor.Tools.Logic
     public class StairsTool : Tool
     {
         private Building _building;
+        private ObservableCollection<StairsPair> _stairs;
         private Segment _previewSegment;
         private bool _firstStairs;
+        private StairsPair _stairsPair;
 
-        public StairsTool(Building building)
+        public StairsTool(Building building, ObservableCollection<StairsPair> stairs)
         {
             _building = building;
+            _stairs = stairs;
             _firstStairs = true;
             Name = "Stairs";
             Capacity = 3;
@@ -90,6 +94,30 @@ namespace BuildingEditor.Tools.Logic
 
             segment.Type = (segment.Type == SegmentType.STAIRS ? SegmentType.NONE : SegmentType.STAIRS);
             segment.Orientation = segmentSide.Side;
+
+            if (_firstStairs)
+            {
+                _stairsPair = new StairsPair();
+                _stairsPair.First = new Stairs()
+                {
+                    AssignedSegment = segment,
+                    Capacity = Capacity,
+                    Delay = Delay,
+                    Level = _building.CurrentFloor.Level
+                };
+            }
+            else
+            {
+                _stairsPair.Second = new Stairs()
+                {
+                    AssignedSegment = segment,
+                    Capacity = Capacity,
+                    Delay = Delay,
+                    Level = _building.CurrentFloor.Level
+                };
+
+                _stairs.Add(_stairsPair);
+            }
 
             _firstStairs = !_firstStairs;
             Message = _firstStairs == true ? "Set first stairs." : "Set second stairs";

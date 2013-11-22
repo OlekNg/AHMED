@@ -34,6 +34,9 @@ namespace BuildingEditor
 
             uxFloors.DataContext = _building;
 
+            ObservableCollection<StairsPair> stairs = new ObservableCollection<StairsPair>();
+            uxStairs.ItemsSource = stairs;
+
             ObservableCollection<Tool> toolbox = new ObservableCollection<Tool>();
             toolbox.Add(new DragTool(uxWorkspaceViewbox, uxModePanel));
             toolbox.Add(new FloorTool(_building));
@@ -41,7 +44,7 @@ namespace BuildingEditor
             toolbox.Add(new SideElementTool(_building, SideElementType.DOOR, "Door") { Capacity = 5 });
             toolbox.Add(new PeopleTool(_building));
             toolbox.Add(new DeleteTool(_building));
-            toolbox.Add(new StairsTool(_building));
+            toolbox.Add(new StairsTool(_building, stairs));
 
             uxToolbox.ItemsSource = toolbox;
             uxToolbox.SelectedIndex = 0;
