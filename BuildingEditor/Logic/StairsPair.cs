@@ -1,6 +1,7 @@
 ﻿using PropertyChanged;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
@@ -19,6 +20,13 @@ namespace BuildingEditor.Logic
     [ImplementPropertyChanged]
     public class StairsPair
     {
+        private ObservableCollection<StairsPair> _stairs;
+
+        public StairsPair(ObservableCollection<StairsPair> stairs)
+        {
+            _stairs = stairs;
+        }
+
         public Stairs First { get; set; }
         public Stairs Second { get; set; }
 
@@ -28,6 +36,19 @@ namespace BuildingEditor.Logic
             {
                 return String.Format("{0} - {1}", First.Level, Second.Level);
             }
+        }
+
+        public void SetAdditionalData()
+        {
+            First.AssignedSegment.AdditionalData = this;
+            Second.AssignedSegment.AdditionalData = this;
+        }
+
+        public void Destroy()
+        {
+            First.AssignedSegment.Type = SegmentType.FLOOR;
+            Second.AssignedSegment.Type = SegmentType.FLOOR;
+            _stairs.Remove(this);
         }
     }
 }

@@ -110,7 +110,7 @@ namespace BuildingEditor.Tools.Logic
 
             if (_firstStairs)
             {
-                _stairsPair = new StairsPair();
+                _stairsPair = new StairsPair(_stairs);
                 _stairsPair.First = new Stairs()
                 {
                     AssignedSegment = segment,
@@ -129,6 +129,7 @@ namespace BuildingEditor.Tools.Logic
                     Level = _building.CurrentFloor.Level
                 };
 
+                _stairsPair.SetAdditionalData();
                 _stairs.Add(_stairsPair);
             }
 

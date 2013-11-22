@@ -34,6 +34,8 @@ namespace BuildingEditor
             _building = new Building();
 
             uxFloors.DataContext = _building;
+            _building.CurrentFloor = _building.Floors[0];
+            
 
             ObservableCollection<StairsPair> stairs = new ObservableCollection<StairsPair>();
             uxStairs.ItemsSource = stairs;

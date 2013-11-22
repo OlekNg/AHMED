@@ -39,6 +39,8 @@ namespace BuildingEditor.Logic
         public SegmentType PreviewType { get; set; }
         public Side PreviewOrientation { get; set; }
 
+        public object AdditionalData { get; set; }
+
         public int Capacity { get; set; }
         public int PeopleCount { get; set; }
         public SegmentType Type { get; set; }

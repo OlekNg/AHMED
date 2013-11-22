@@ -121,7 +121,12 @@ namespace BuildingEditor.Tools.Logic
         private void Apply()
         {
             SegmentType value = ClearMode == true ?  SegmentType.NONE : SegmentType.FLOOR;
-            _selectedSegments.ForEach(x => { x.Type = value; x.Capacity = Capacity; });
+            _selectedSegments.ForEach(x => {
+                if (x.Type == SegmentType.STAIRS)
+                    ((StairsPair)x.AdditionalData).Destroy();
+                x.Type = value;
+                x.Capacity = Capacity;
+            });
             _building.CurrentFloor.UpdateRender();
         }
 
