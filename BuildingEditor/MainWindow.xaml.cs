@@ -18,6 +18,7 @@ using BuildingEditor.Logic;
 using BuildingEditor.Tools.Logic;
 using System.Xml.Serialization;
 using System.IO;
+using Common.DataModel.Enums;
 
 namespace BuildingEditor
 {
@@ -180,7 +181,7 @@ namespace BuildingEditor
             {
                 string filename = dlg.FileName;
                 Console.WriteLine(filename);
-                DataModel.Building building = new DataModel.Building(_building);
+                Common.DataModel.Building building = _building.ToDataModel();
                 building.Save(filename);
             }
         }
@@ -202,9 +203,9 @@ namespace BuildingEditor
             {
                 // Open document 
                 string filename = dlg.FileName;
-                DataModel.Building building = new DataModel.Building();
+                Common.DataModel.Building building = new Common.DataModel.Building();
                 building.Load(filename);
-                Building viewModel = building.ToViewModel();
+                Building viewModel = new Building(building);
 
 
                 _building.Floors = viewModel.Floors;

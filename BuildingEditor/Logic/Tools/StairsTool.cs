@@ -1,4 +1,5 @@
 ﻿using BuildingEditor.Logic;
+using Common.DataModel.Enums;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

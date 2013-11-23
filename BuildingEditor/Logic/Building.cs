@@ -27,7 +27,7 @@ namespace BuildingEditor.Logic
             AddFloor(rows, cols);
         }
 
-        public Building(DataModel.Building building)
+        public Building(Common.DataModel.Building building)
             : this()
         {
             for (int i = 0; i < building.Floors.Count; i++)
@@ -42,8 +42,19 @@ namespace BuildingEditor.Logic
                 stairsPair.SetAdditionalData();
                 Stairs.Add(stairsPair);
             }
+        }
 
+        public Common.DataModel.Building ToDataModel()
+        {
+            Common.DataModel.Building result = new Common.DataModel.Building();
 
+            for (int i = 0; i < Floors.Count; i++)
+                result.Floors.Add(Floors[i].ToDataModel());
+
+            for (int i = 0; i < Stairs.Count; i++)
+                result.Stairs.Add(Stairs[i].ToDataModel());
+
+            return result;
         }
 
         /// <summary>

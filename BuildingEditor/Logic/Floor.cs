@@ -1,4 +1,5 @@
-﻿using PropertyChanged;
+﻿using Common.DataModel.Enums;
+using PropertyChanged;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -45,7 +46,7 @@ namespace BuildingEditor.Logic
             UpdateRender();
         }
 
-        public Floor(DataModel.Floor floor)
+        public Floor(Common.DataModel.Floor floor)
             : this()
         {
             Level = floor.Level;
@@ -214,6 +215,25 @@ namespace BuildingEditor.Logic
                     }
                 }
             }
+        }
+
+        public Common.DataModel.Floor ToDataModel()
+        {
+            Common.DataModel.Floor result = new Common.DataModel.Floor();
+
+            result.Level = Level;
+
+            for (int row = 0; row < Data.Count; row++)
+            {
+                List<Common.DataModel.Segment> segmentRow = new List<Common.DataModel.Segment>();
+                for (int col = 0; col < Data[row].Count; col++)
+                {
+                    segmentRow.Add(Data[row][col].ToDataModel());
+                }
+                result.Segments.Add(segmentRow);
+            }
+
+            return result;
         }
     }
 }

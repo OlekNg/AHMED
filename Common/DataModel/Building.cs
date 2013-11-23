@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
 
-namespace BuildingEditor.DataModel
+namespace Common.DataModel
 {
     [Serializable]
     public class Building
@@ -17,21 +17,6 @@ namespace BuildingEditor.DataModel
         {
             Floors = new List<Floor>();
             Stairs = new List<StairsPair>();
-        }
-
-        public Building(BuildingEditor.Logic.Building building)
-            : this()
-        {
-            for(int i = 0; i < building.Floors.Count; i++)
-                Floors.Add(new Floor(building.Floors[i]));
-
-            for (int i = 0; i < building.Stairs.Count; i++)
-                Stairs.Add(new StairsPair(building.Stairs[i]));
-        }
-
-        public BuildingEditor.Logic.Building ToViewModel()
-        {
-            return new BuildingEditor.Logic.Building(this);
         }
 
         public void Load(string path)

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace BuildingEditor.DataModel
+namespace Common.DataModel
 {
     [Serializable]
     public class Stairs
@@ -15,14 +15,5 @@ namespace BuildingEditor.DataModel
         public int Level;
 
         public Stairs() { }
-
-        public Stairs(Logic.Stairs stairs)
-        {
-            Capacity = stairs.Capacity;
-            Delay = stairs.Delay;
-            Level = stairs.Level;
-            Row = stairs.AssignedSegment.Row;
-            Col = stairs.AssignedSegment.Column;
-        }
     }
 }

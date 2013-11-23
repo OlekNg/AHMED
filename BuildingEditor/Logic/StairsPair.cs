@@ -1,4 +1,5 @@
-﻿using PropertyChanged;
+﻿using Common.DataModel.Enums;
+using PropertyChanged;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,7 +18,7 @@ namespace BuildingEditor.Logic
             Delay = 1;
         }
 
-        public Stairs(DataModel.Stairs stairs)
+        public Stairs(Common.DataModel.Stairs stairs)
         {
             Level = stairs.Level;
             Capacity = stairs.Capacity;
@@ -29,6 +30,19 @@ namespace BuildingEditor.Logic
         public int Delay { get; set; }
 
         public Segment AssignedSegment { get; set; }
+
+        public Common.DataModel.Stairs ToDataModel()
+        {
+            Common.DataModel.Stairs result = new Common.DataModel.Stairs();
+
+            result.Capacity = Capacity;
+            result.Delay = Delay;
+            result.Level = Level;
+            result.Row = AssignedSegment.Row;
+            result.Col = AssignedSegment.Column;
+
+            return result;
+        }
     }
 
     [ImplementPropertyChanged]
@@ -46,7 +60,7 @@ namespace BuildingEditor.Logic
             _stairs = stairs;
         }
 
-        public StairsPair(ObservableCollection<StairsPair> stairs, DataModel.StairsPair stairsPair)
+        public StairsPair(ObservableCollection<StairsPair> stairs, Common.DataModel.StairsPair stairsPair)
         {
             _stairs = stairs;
             First = new Stairs(stairsPair.First);
@@ -75,6 +89,16 @@ namespace BuildingEditor.Logic
             First.AssignedSegment.Type = SegmentType.FLOOR;
             Second.AssignedSegment.Type = SegmentType.FLOOR;
             _stairs.Remove(this);
+        }
+
+        internal Common.DataModel.StairsPair ToDataModel()
+        {
+            Common.DataModel.StairsPair result = new Common.DataModel.StairsPair();
+
+            result.First = First.ToDataModel();
+            result.Second = Second.ToDataModel();
+
+            return result;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using PropertyChanged;
+﻿using Common.DataModel.Enums;
+using PropertyChanged;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -37,7 +38,7 @@ namespace BuildingEditor.Logic
             Capacity = 5;
         }
 
-        public Segment(DataModel.Segment segment)
+        public Segment(Common.DataModel.Segment segment)
             : this()
         {
             Type = segment.Type;
@@ -202,6 +203,23 @@ namespace BuildingEditor.Logic
                     _outerWalls.Add(GetSideElement(s));
                 }
             }
+        }
+
+        public Common.DataModel.Segment ToDataModel()
+        {
+            Common.DataModel.Segment result = new Common.DataModel.Segment();
+
+            result.Capacity = Capacity;
+            result.Type = Type;
+            result.Orientation = Orientation;
+            result.PeopleCount = PeopleCount;
+
+            result.LeftSide = LeftSide.ToDataModel(); 
+            result.TopSide = TopSide.ToDataModel();
+            result.RightSide = RightSide.ToDataModel();
+            result.BottomSide = BottomSide.ToDataModel();
+
+            return result;
         }
     }
 }

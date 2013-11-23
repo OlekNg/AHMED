@@ -1,4 +1,5 @@
-﻿using PropertyChanged;
+﻿using Common.DataModel.Enums;
+using PropertyChanged;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,8 +8,6 @@ using System.Text;
 
 namespace BuildingEditor.Logic
 {
-    public enum SideElementType { NONE, WALL, DOOR }
-
     [ImplementPropertyChanged]
     public class SideElement
     {
@@ -22,7 +21,7 @@ namespace BuildingEditor.Logic
             Type = type;
         }
 
-        public SideElement(DataModel.SideElement sideElement)
+        public SideElement(Common.DataModel.SideElement sideElement)
         {
             Type = sideElement.Type;
             Capacity = sideElement.Capacity;
@@ -35,5 +34,15 @@ namespace BuildingEditor.Logic
         public SideElementType PreviewType { get; set; }
         public bool Preview { get; set; }
         #endregion
+
+        public Common.DataModel.SideElement ToDataModel()
+        {
+            Common.DataModel.SideElement result = new Common.DataModel.SideElement();
+
+            result.Type = Type;
+            result.Capacity = Capacity;
+
+            return result;
+        }
     }
 }
