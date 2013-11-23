@@ -41,7 +41,7 @@
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
                     <Condition Binding="{Binding Type}" Value="{x:Static l:SegmentType.FLOOR}"/>
-                    <Condition Binding="{Binding ElementName=uxToolbox, Path=SelectedItem.Name}" Value="Floor"/>
+                    <Condition Binding="{Binding Path=DataContext.ViewMode, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Viewbox}}}" Value="Floor"/>
                 </MultiDataTrigger.Conditions>
                 <Setter Property="Text" Value="{Binding Capacity}"/>
             </MultiDataTrigger>
@@ -50,7 +50,7 @@
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
                     <Condition Binding="{Binding Type}" Value="{x:Static l:SegmentType.FLOOR}"/>
-                    <Condition Binding="{Binding ElementName=uxToolbox, Path=SelectedItem.Name}" Value="People"/>
+                    <Condition Binding="{Binding Path=DataContext.ViewMode, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Viewbox}}}" Value="People"/>
                     <Condition Binding="{Binding PeopleCount, Converter={StaticResource NumberToBoolConverter}}" Value="True"/>
                 </MultiDataTrigger.Conditions>
                 <Setter Property="Text" Value="{Binding PeopleCount}"/>

@@ -24,7 +24,7 @@ namespace BuildingEditor
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, ISegmentEventHandler
     {
         private Building _building;
         private Tool _currentTool;
@@ -34,6 +34,8 @@ namespace BuildingEditor
         {
             InitializeComponent();
             _building = new Building(5, 5);
+
+            uxWorkspaceViewbox.DataContext = _building;
 
             uxFloors.DataContext = _building;
             _building.CurrentFloor = _building.Floors[0];
@@ -53,6 +55,8 @@ namespace BuildingEditor
             uxToolbox.SelectedIndex = 0;
 
             _randomizer = new Random();
+
+            SegmentEventHandler.Register(this);
         }
 
         private void Workspace_MouseLeave(object sender, MouseEventArgs e)
@@ -69,7 +73,7 @@ namespace BuildingEditor
         }
 
         #region Segment events handlers.
-        private void Segment_MouseDown(object sender, MouseButtonEventArgs e)
+        public void Segment_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Tool selectedTool = (Tool)uxToolbox.SelectedItem;
 
@@ -77,7 +81,7 @@ namespace BuildingEditor
                 selectedTool.MouseDown(sender, e);
         }
 
-        private void Segment_MouseMove(object sender, MouseEventArgs e)
+        public void Segment_MouseMove(object sender, MouseEventArgs e)
         {
             Tool selectedTool = (Tool)uxToolbox.SelectedItem;
 
@@ -85,7 +89,7 @@ namespace BuildingEditor
                 selectedTool.MouseMove(sender, e);
         }
 
-        private void Segment_MouseUp(object sender, MouseButtonEventArgs e)
+        public void Segment_MouseUp(object sender, MouseButtonEventArgs e)
         {
             Tool selectedTool = (Tool)uxToolbox.SelectedItem;
 
@@ -93,7 +97,7 @@ namespace BuildingEditor
                 selectedTool.MouseUp(sender, e);
         }
 
-        private void Segment_MouseEnter(object sender, MouseEventArgs e)
+        public void Segment_MouseEnter(object sender, MouseEventArgs e)
         {
             Tool selectedTool = (Tool)uxToolbox.SelectedItem;
 
@@ -101,7 +105,7 @@ namespace BuildingEditor
                 selectedTool.MouseEnter(sender, e);
         }
 
-        private void Segment_MouseLeave(object sender, MouseEventArgs e)
+        public void Segment_MouseLeave(object sender, MouseEventArgs e)
         {
             Tool selectedTool = (Tool)uxToolbox.SelectedItem;
 
@@ -120,8 +124,6 @@ namespace BuildingEditor
                 selectedTool.MouseWheel(sender, e);
         }
         #endregion
-
-        
 
         /// <summary>
         /// Adds new floor to the building.
@@ -158,6 +160,7 @@ namespace BuildingEditor
                 _currentTool.CancelAction();
 
             _currentTool = (Tool)uxToolbox.SelectedItem;
+            _building.ViewMode = _currentTool.Name;
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)

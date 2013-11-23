@@ -70,6 +70,7 @@
     <Compile Include="DataModel\Stairs.cs" />
     <Compile Include="DataModel\StairsPair.cs" />
     <Compile Include="Logic\OrientationToAngleConverter.cs" />
+    <Compile Include="Logic\SegmentEventHandler.cs" />
     <Compile Include="Logic\StairsPair.cs" />
     <Compile Include="RangeWindow.xaml.cs">
       <DependentUpon>RangeWindow.xaml</DependentUpon>
@@ -81,6 +82,14 @@
     <Page Include="DataTemplates\SegmentDoorCapacityTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataTemplates\SegmentRowTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DataTemplates\SegmentTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

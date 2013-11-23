@@ -5,13 +5,15 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <!-- Styles -->
                 <ResourceDictionary Source="Styles/SegmentBasicStyle.xaml"/>
                 <ResourceDictionary Source="Styles/SegmentDoorCapacityStyle.xaml"/>
                 <ResourceDictionary Source="Styles/SideElementStyle.xaml"/>
+
                 <ResourceDictionary Source="DataTemplates/SegmentBasicTemplate.xaml"/>
                 <ResourceDictionary Source="DataTemplates/SegmentDoorCapacityTemplate.xaml"/>
                 <ResourceDictionary Source="Styles/SegmentContentStyle.xaml"/>
+                <ResourceDictionary Source="DataTemplates/SegmentTemplate.xaml"/>
+                <ResourceDictionary Source="DataTemplates/SegmentRowTemplate.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -7,7 +7,6 @@ using System.Text;
 
 namespace BuildingEditor.Logic
 {
-    [Serializable]
     [ImplementPropertyChanged]
     public class Building
     {
@@ -53,6 +52,8 @@ namespace BuildingEditor.Logic
         public ObservableCollection<Floor> Floors { get; set; }
 
         public ObservableCollection<StairsPair> Stairs { get; set; }
+
+        public string ViewMode { get; set; }
 
         /// <summary>
         /// Currently selected floor in editor.
