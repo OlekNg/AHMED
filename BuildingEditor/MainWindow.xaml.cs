@@ -14,44 +14,57 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using WPFTest.Logic;
+using BuildingEditor.Logic;
+using BuildingEditor.Tools.Logic;
+using System.Xml.Serialization;
+using System.IO;
 
-namespace WPFTest
+namespace BuildingEditor
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, ISegmentEventHandler
     {
         private Building _building;
+        private Tool _currentTool;
         private Random _randomizer;
 
         public MainWindow()
         {
             InitializeComponent();
-            _building = new Building();
+            _building = new Building(5, 5);
+
+            uxWorkspaceViewbox.DataContext = _building;
 
             uxFloors.DataContext = _building;
+            _building.CurrentFloor = _building.Floors[0];
+            
+            uxStairs.ItemsSource = _building.Stairs;
 
             ObservableCollection<Tool> toolbox = new ObservableCollection<Tool>();
-            toolbox.Add(new DragTool(uxWorkspace, uxModePanel));
+            toolbox.Add(new DragTool(uxWorkspaceViewbox, uxModePanel));
             toolbox.Add(new FloorTool(_building));
             toolbox.Add(new SideElementTool(_building, SideElementType.WALL, "Wall"));
-            toolbox.Add(new SideElementTool(_building, SideElementType.DOOR, "Door"));
+            toolbox.Add(new SideElementTool(_building, SideElementType.DOOR, "Door") { Capacity = 5 });
+            toolbox.Add(new PeopleTool(_building));
+            toolbox.Add(new DeleteTool(_building));
+            toolbox.Add(new StairsTool(_building));
 
             uxToolbox.ItemsSource = toolbox;
             uxToolbox.SelectedIndex = 0;
 
             _randomizer = new Random();
+
+            SegmentEventHandler.Register(this);
         }
 
         private void Workspace_MouseLeave(object sender, MouseEventArgs e)
         {
-            Console.WriteLine("Workspace leave");
-            // Cancel any action that is being performed by selected tool.
+            // Clear preview when out of workspace.
             Tool selectedTool = (Tool)uxToolbox.SelectedItem;
             if (selectedTool != null)
-                selectedTool.CancelAction();
+                selectedTool.ClearPreview();
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
@@ -60,7 +73,7 @@ namespace WPFTest
         }
 
         #region Segment events handlers.
-        private void Segment_MouseDown(object sender, MouseButtonEventArgs e)
+        public void Segment_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Tool selectedTool = (Tool)uxToolbox.SelectedItem;
 
@@ -68,7 +81,7 @@ namespace WPFTest
                 selectedTool.MouseDown(sender, e);
         }
 
-        private void Segment_MouseMove(object sender, MouseEventArgs e)
+        public void Segment_MouseMove(object sender, MouseEventArgs e)
         {
             Tool selectedTool = (Tool)uxToolbox.SelectedItem;
 
@@ -76,7 +89,7 @@ namespace WPFTest
                 selectedTool.MouseMove(sender, e);
         }
 
-        private void Segment_MouseUp(object sender, MouseButtonEventArgs e)
+        public void Segment_MouseUp(object sender, MouseButtonEventArgs e)
         {
             Tool selectedTool = (Tool)uxToolbox.SelectedItem;
 
@@ -84,7 +97,7 @@ namespace WPFTest
                 selectedTool.MouseUp(sender, e);
         }
 
-        private void Segment_MouseEnter(object sender, MouseEventArgs e)
+        public void Segment_MouseEnter(object sender, MouseEventArgs e)
         {
             Tool selectedTool = (Tool)uxToolbox.SelectedItem;
 
@@ -92,43 +105,113 @@ namespace WPFTest
                 selectedTool.MouseEnter(sender, e);
         }
 
-        private void Segment_MouseLeave(object sender, MouseEventArgs e)
+        public void Segment_MouseLeave(object sender, MouseEventArgs e)
         {
             Tool selectedTool = (Tool)uxToolbox.SelectedItem;
 
             if (selectedTool != null)
                 selectedTool.MouseLeave(sender, e);
         }
-        #endregion
 
         /// <summary>
         /// Performs zoom in/out of the building.
         /// </summary>
         private void Workspace_MouseWHeel(object sender, MouseWheelEventArgs e)
         {
-            TransformGroup group = (TransformGroup)uxWorkspace.RenderTransform;
+            Tool selectedTool = (Tool)uxToolbox.SelectedItem;
 
-            var st = group.Children.OfType<ScaleTransform>().First();
-            double deltaScale = e.Delta > 0 ? 0.2 : -0.2;
-            st.ScaleX += deltaScale;
-            st.ScaleY += deltaScale;
-            Console.WriteLine("Scale {0}", st.ScaleY);
+            if (selectedTool != null)
+                selectedTool.MouseWheel(sender, e);
         }
+        #endregion
 
-        
-        private void Right_Click(object sender, RoutedEventArgs e)
-        {
-            _building.Expand(Side.RIGHT);
-        }
-
-        private void Down_Click(object sender, RoutedEventArgs e)
-        {
-            _building.Expand(Side.BOTTOM);
-        }
-
+        /// <summary>
+        /// Adds new floor to the building.
+        /// </summary>
         private void AddFloor_Click(object sender, RoutedEventArgs e)
         {
-            _building.AddFloor();
+            int rows, cols;
+            if (!Int32.TryParse(uxCols.Text, out cols)) return;
+            if (!Int32.TryParse(uxRows.Text, out rows)) return;
+
+            _building.AddFloor(rows, cols);
+        }
+
+        /// <summary>
+        /// Expands current floor.
+        /// </summary>
+        private void Expand_Click(object sender, RoutedEventArgs e)
+        {
+            Button b = sender as Button;
+            _building.CurrentFloor.Expand((Side)b.Tag);
+        }
+
+        /// <summary>
+        /// Prevents focus on capacity texbox.
+        /// </summary>
+        private void Workspace_MouseEnter(object sender, MouseEventArgs e)
+        {
+            uxWorkspaceCanvas.Focus();
+        }
+
+        private void Toolbox_Selected(object sender, SelectionChangedEventArgs e)
+        {
+            if (_currentTool != null)
+                _currentTool.CancelAction();
+
+            _currentTool = (Tool)uxToolbox.SelectedItem;
+            _building.ViewMode = _currentTool.Name;
+        }
+
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            // Create OpenFileDialog 
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+
+            // Set filter for file extension and default file extension 
+            dlg.DefaultExt = ".xml";
+            dlg.Filter = "Building definition file|*.xml";
+
+            // Display SaveFileDialog by calling ShowDialog method 
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Get the selected file name and display in a TextBox 
+            if (result == true)
+            {
+                string filename = dlg.FileName;
+                Console.WriteLine(filename);
+                DataModel.Building building = new DataModel.Building(_building);
+                building.Save(filename);
+            }
+        }
+
+        private void Open_Click(object sender, RoutedEventArgs e)
+        {
+            // Create OpenFileDialog 
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+
+            // Set filter for file extension and default file extension 
+            dlg.DefaultExt = ".xml";
+            dlg.Filter = "Building definition file|*.xml";
+
+            // Display OpenFileDialog by calling ShowDialog method 
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Get the selected file name and display in a TextBox 
+            if (result == true)
+            {
+                // Open document 
+                string filename = dlg.FileName;
+                DataModel.Building building = new DataModel.Building();
+                building.Load(filename);
+                Building viewModel = building.ToViewModel();
+
+
+                _building.Floors = viewModel.Floors;
+                _building.Stairs = viewModel.Stairs;
+                _building.CurrentFloor = _building.Floors[0];
+                uxStairs.ItemsSource = _building.Stairs;
+            }
         }
     }
 }

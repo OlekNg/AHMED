@@ -7,8 +7,8 @@
     <ProjectGuid>{BD97471A-48C6-48C2-83FD-75054045D0CF}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WPFTest</RootNamespace>
-    <AssemblyName>WPFTest</AssemblyName>
+    <RootNamespace>BuildingEditor</RootNamespace>
+    <AssemblyName>BuildingEditor</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -63,6 +63,31 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DataModel\Building.cs" />
+    <Compile Include="DataModel\Floor.cs" />
+    <Compile Include="DataModel\Segment.cs" />
+    <Compile Include="DataModel\SideElement.cs" />
+    <Compile Include="DataModel\Stairs.cs" />
+    <Compile Include="DataModel\StairsPair.cs" />
+    <Compile Include="Logic\OrientationToAngleConverter.cs" />
+    <Compile Include="Logic\SegmentEventHandler.cs" />
+    <Compile Include="Logic\StairsPair.cs" />
+    <Page Include="DataTemplates\SegmentBasicTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataTemplates\SegmentDoorCapacityTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataTemplates\SegmentRowTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DataTemplates\SegmentTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -72,23 +97,35 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Logic\Building.cs" />
-    <Compile Include="Logic\DragTool.cs" />
+    <Compile Include="Logic\Tools\DeleteTool.cs" />
+    <Compile Include="Logic\Tools\DragTool.cs" />
     <Compile Include="Logic\Floor.cs" />
-    <Compile Include="Logic\FloorTool.cs" />
+    <Compile Include="Logic\Tools\FloorTool.cs" />
+    <Compile Include="Logic\NumberToBoolConverter.cs" />
+    <Compile Include="Logic\Tools\PeopleTool.cs" />
     <Compile Include="Logic\Segment.cs" />
     <Compile Include="Logic\Enums.cs" />
     <Compile Include="Logic\SideElement.cs" />
-    <Compile Include="Logic\SideElementTool.cs" />
-    <Compile Include="Logic\Tool.cs" />
+    <Compile Include="Logic\Tools\SideElementTool.cs" />
+    <Compile Include="Logic\Tools\StairsTool.cs" />
+    <Compile Include="Logic\Tools\Tool.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Styles\SegmentContent.xaml">
+    <Page Include="Styles\SegmentDoorCapacityStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\SegmentBasicStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\SegmentContentStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Styles\SideElement.xaml">
+    <Page Include="Styles\SideElementStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -122,7 +159,11 @@
   <ItemGroup>
     <Resource Include="FodyWeavers.xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\stairs.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="Fody.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

@@ -1,13 +1,19 @@
-﻿<Application x:Class="WPFTest.App"
+﻿<Application x:Class="BuildingEditor.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <!-- Styles -->
-                <ResourceDictionary Source="Styles\SideElement.xaml"/>
-                <ResourceDictionary Source="Styles\SegmentContent.xaml"/>
+                <ResourceDictionary Source="Styles/SegmentBasicStyle.xaml"/>
+                <ResourceDictionary Source="Styles/SegmentDoorCapacityStyle.xaml"/>
+                <ResourceDictionary Source="Styles/SideElementStyle.xaml"/>
+
+                <ResourceDictionary Source="DataTemplates/SegmentBasicTemplate.xaml"/>
+                <ResourceDictionary Source="DataTemplates/SegmentDoorCapacityTemplate.xaml"/>
+                <ResourceDictionary Source="Styles/SegmentContentStyle.xaml"/>
+                <ResourceDictionary Source="DataTemplates/SegmentTemplate.xaml"/>
+                <ResourceDictionary Source="DataTemplates/SegmentRowTemplate.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -6,13 +6,14 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace WPFTest.Logic
+namespace BuildingEditor.Tools.Logic
 {
     public class DragTool : Tool
     {
         private bool _dragEnabled;
         private FrameworkElement _element;
         private TranslateTransform _transform;
+        private ScaleTransform _scale;
         private Point _start;
         private IInputElement _reference;
 
@@ -23,11 +24,12 @@ namespace WPFTest.Logic
 
             TransformGroup group = (TransformGroup)_element.RenderTransform;
             _transform = group.Children.OfType<TranslateTransform>().First();
+            _scale = group.Children.OfType<ScaleTransform>().First();
 
             Name = "Drag";
         }
 
-        public override void CancelAction()
+        public override void ClearPreview()
         {
             _dragEnabled = false;
         }
@@ -57,6 +59,16 @@ namespace WPFTest.Logic
         public override void MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             _dragEnabled = false;
+        }
+
+        public override void MouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
+        {
+            double delta = e.Delta > 0 ? 0.1 : -0.1;
+
+            if (e.Delta < 0 && _scale.ScaleX <= 0.25) return;
+
+            _scale.ScaleX += delta;
+            _scale.ScaleY += delta;
         }
         #endregion
     }

@@ -5,16 +5,27 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
-namespace WPFTest.Logic
+namespace BuildingEditor.Logic
 {
     public enum SideElementType { NONE, WALL, DOOR }
 
     [ImplementPropertyChanged]
     public class SideElement
     {
+        public SideElement()
+        {
+            Type = SideElementType.NONE;
+        }
+
         public SideElement(SideElementType type = SideElementType.NONE)
         {
             Type = type;
+        }
+
+        public SideElement(DataModel.SideElement sideElement)
+        {
+            Type = sideElement.Type;
+            Capacity = sideElement.Capacity;
         }
 
         #region Properties

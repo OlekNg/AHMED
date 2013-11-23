@@ -5,63 +5,67 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
-namespace WPFTest.Logic
+namespace BuildingEditor.Logic
 {
     [ImplementPropertyChanged]
     public class Building
     {
-        private int _cols;
-        private int _rows;
-
-        public Building(int rows = 5, int cols = 5)
+        public Building()
         {
-            _rows = rows;
-            _cols = cols;
-
             Floors = new ObservableCollection<Floor>();
-            AddFloor();
+            Stairs = new ObservableCollection<StairsPair>();
         }
 
+        /// <summary>
+        /// Creates building with one floor.
+        /// </summary>
+        /// <param name="rows">Initial rows of building.</param>
+        /// <param name="cols">Initial columns of building.</param>
+        public Building(int rows = 5, int cols = 5)
+            : this()
+        {
+            AddFloor(rows, cols);
+        }
+
+        public Building(DataModel.Building building)
+            : this()
+        {
+            for (int i = 0; i < building.Floors.Count; i++)
+                Floors.Add(new Floor(building.Floors[i]));
+
+            for (int i = 0; i < building.Stairs.Count; i++)
+            {
+                var temp = building.Stairs[i];
+                var stairsPair = new StairsPair(Stairs, temp);
+                stairsPair.First.AssignedSegment = Floors.Where(x => x.Level == temp.First.Level).First().Data[temp.First.Row][temp.First.Col];
+                stairsPair.Second.AssignedSegment = Floors.Where(x => x.Level == temp.Second.Level).First().Data[temp.Second.Row][temp.Second.Col];
+                stairsPair.SetAdditionalData();
+                Stairs.Add(stairsPair);
+            }
+
+
+        }
+
+        /// <summary>
+        /// Floors in the building.
+        /// </summary>
         public ObservableCollection<Floor> Floors { get; set; }
 
+        public ObservableCollection<StairsPair> Stairs { get; set; }
+
+        public string ViewMode { get; set; }
+
+        /// <summary>
+        /// Currently selected floor in editor.
+        /// </summary>
         public Floor CurrentFloor { get; set; }
 
-        public void AddFloor()
+        /// <summary>
+        /// Adds new floor to building.
+        /// </summary>
+        public void AddFloor(int rows, int cols)
         {
-            Floors.Insert(0, new Floor(Floors.Count, _rows, _cols));
-        }
-
-        public void Expand(Side side)
-        {
-            switch (side)
-            {
-                case Side.RIGHT:
-                    AddColumn(_cols);
-                    break;
-                case Side.BOTTOM:
-                    AddRow(_rows);
-                    break;
-                case Side.LEFT:
-                    AddColumn(0);
-                    break;
-                case Side.TOP:
-                    AddRow(0);
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        private void AddRow(int index)
-        {
-            foreach (var floor in Floors)
-                floor.AddRow(index);
-        }
-
-        private void AddColumn(int index)
-        {
-            foreach (var floor in Floors)
-                floor.AddColumn(index);
+            Floors.Insert(0, new Floor(Floors.Count, rows, cols));
         }
     }
 }

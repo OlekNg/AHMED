@@ -1,4 +1,5 @@
-﻿using PropertyChanged;
+﻿using BuildingEditor.Logic;
+using PropertyChanged;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Shapes;
 
-namespace WPFTest.Logic
+namespace BuildingEditor.Tools.Logic
 {
     [ImplementPropertyChanged]
     public class FloorTool : Tool
@@ -24,12 +25,15 @@ namespace WPFTest.Logic
             _building = b;
             _selectedSegments = new List<Segment>();
             Name = "Floor";
+            Capacity = 3;
         }
 
         public int Capacity { get; set; }
         public bool ClearMode { get; set; }
 
-        public override void CancelAction()
+        private SegmentType _previewType { get { return ClearMode == true ? SegmentType.NONE : SegmentType.FLOOR; } }
+
+        public override void ClearPreview()
         {
             if (_selectionStart != null)
             {
@@ -55,7 +59,11 @@ namespace WPFTest.Logic
                 UpdateSelectionPreview();
             }
             else
-                SenderToSegment(sender).Preview = true;
+            {
+                var segment = SenderToSegment(sender);
+                segment.PreviewType = _previewType;
+                segment.Preview = true;
+            }
         }
 
         public override void MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -81,9 +89,17 @@ namespace WPFTest.Logic
             Segment segment = SenderToSegment(sender);
             segment.Preview = false;
         }
+
+        public override void MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (e.Delta > 0)
+                Capacity++;
+            else if (Capacity > 1)
+                Capacity--;
+        }
         #endregion
 
-        protected override FrameworkElement BuildConfiguration()
+        protected override FrameworkElement BuildGUIConfiguration()
         {
             CheckBox clearMode = new CheckBox() { Content = "Clear mode" };
             clearMode.SetBinding(CheckBox.IsCheckedProperty, new Binding("ClearMode"));
@@ -105,7 +121,12 @@ namespace WPFTest.Logic
         private void Apply()
         {
             SegmentType value = ClearMode == true ?  SegmentType.NONE : SegmentType.FLOOR;
-            _selectedSegments.ForEach(x => x.Type = value);
+            _selectedSegments.ForEach(x => {
+                if (x.Type == SegmentType.STAIRS)
+                    ((StairsPair)x.AdditionalData).Destroy();
+                x.Type = value;
+                x.Capacity = Capacity;
+            });
             _building.CurrentFloor.UpdateRender();
         }
 
@@ -114,7 +135,7 @@ namespace WPFTest.Logic
             List<Segment> oldSelection = _selectedSegments;
             _selectedSegments = CalcualateAffectedSegments();
             oldSelection.Except(_selectedSegments).ToList().ForEach(x => x.Preview = false);
-            _selectedSegments.ForEach(x => x.Preview = true);
+            _selectedSegments.ForEach(x => { x.Preview = true; x.PreviewType = _previewType; });
         }
 
         private List<Segment> CalcualateAffectedSegments()

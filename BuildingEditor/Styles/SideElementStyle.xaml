@@ -1,16 +1,19 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:l="clr-namespace:WPFTest.Logic">
+                    xmlns:l="clr-namespace:BuildingEditor.Logic">
     
     <Style x:Key="SideElementStyle" TargetType="Rectangle">
         <Setter Property="Fill" Value="White"/>
         <Style.Triggers>
+            <!-- SIDE ELEMENT TRIGGERS -->
             <DataTrigger Binding="{Binding Type}" Value="{x:Static l:SideElementType.WALL}">
                 <Setter Property="Fill" Value="Blue"/>
             </DataTrigger>
             <DataTrigger Binding="{Binding Type}" Value="{x:Static l:SideElementType.DOOR}">
                 <Setter Property="Fill" Value="Orange"/>
             </DataTrigger>
+            
+            <!-- PREVIEW TRIGGERS -->
             <!-- Wall preview -->
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
@@ -29,6 +32,15 @@
                 </MultiDataTrigger.Conditions>
                 <Setter Property="Fill" Value="Orange"/>
                 <Setter Property="Opacity" Value="0.5"/>
+            </MultiDataTrigger>
+            
+            <!-- None preview -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Preview}" Value="True"/>
+                    <Condition Binding="{Binding PreviewType}" Value="{x:Static l:SideElementType.NONE}"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Fill" Value="White"/>
             </MultiDataTrigger>
         </Style.Triggers>
     </Style>

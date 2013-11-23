@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BuildingEditor.Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Shapes;
 
-namespace WPFTest.Logic
+namespace BuildingEditor.Tools.Logic
 {
     public class SegmentSide
     {
@@ -36,12 +37,15 @@ namespace WPFTest.Logic
             _building = b;
             _elementType = elementType;
             Name = name;
+            Capacity = 3;
         }
 
         public int Capacity { get; set; }
         public bool ClearMode { get; set; }
 
-        public override void CancelAction()
+        private SideElementType _previewType { get { return ClearMode == true ? SideElementType.NONE : _elementType; } }
+
+        public override void ClearPreview()
         {
             if (_selectionStart != null)
             {
@@ -83,16 +87,24 @@ namespace WPFTest.Logic
             Apply();
             UpdateSelectionPreview();
         }
+
+        public override void MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (e.Delta > 0)
+                Capacity++;
+            else if (Capacity > 1)
+                Capacity--;
+        }
         #endregion
 
         private void Apply()
         {
             SideElementType value = ClearMode == true ? SideElementType.NONE : _elementType;
-            _selectedSides.ForEach(x => x.Type = value);
+            _selectedSides.ForEach(x => { x.Type = value; x.Capacity = Capacity; });
             _building.CurrentFloor.UpdateRender();
         }
 
-        protected override FrameworkElement BuildConfiguration()
+        protected override FrameworkElement BuildGUIConfiguration()
         {
             CheckBox clearMode = new CheckBox() { Content = "Clear mode" };
             clearMode.SetBinding(CheckBox.IsCheckedProperty, new Binding("ClearMode"));
@@ -110,49 +122,7 @@ namespace WPFTest.Logic
 
             return panel;
         }
-
-        /// <summary>
-        /// Caluclates which side (triangle) of segment has been clicked.
-        /// </summary>
-        /// <param name="size">Size of segment (rendered width/height - assumption that segment is square).</param>
-        /// <param name="pos">Mouse click location relative to segment.</param>
-        /// <returns></returns>
-        private Side CalculateSegmentSide(double size, Point pos)
-        {
-            if (pos.X > pos.Y && pos.X < (size - pos.Y))
-                return Side.TOP;
-
-            if (pos.X > pos.Y && pos.X > (size - pos.Y))
-                return Side.RIGHT;
-
-            if (pos.X < pos.Y && pos.X < (size - pos.Y))
-                return Side.LEFT;
-
-            if (pos.X < pos.Y && pos.X > (size - pos.Y))
-                return Side.BOTTOM;
-
-            return Side.BOTTOM;
-        }
-
-        private SegmentSide ProcessEventArg(object sender, MouseEventArgs e)
-        {
-            FrameworkElement element = sender as FrameworkElement;
-            if (element == null) return null;
-
-            Segment segment = element.Tag as Segment;
-            if (segment == null) return null;
-
-            Point pos = e.GetPosition(element);
-            var size = element.ActualHeight;
-
-            Side side = CalculateSegmentSide(size, pos);
-
-            pos.X -= (size / 2);
-            pos.Y -= (size / 2);
-
-            return new SegmentSide { Segment = segment, Side = side, MousePosition = pos };
-        }
-
+        
         /// <summary>
         /// Calculates new affected walls by selection and applies
         /// difference between actual selection and selection before actual.
@@ -162,7 +132,7 @@ namespace WPFTest.Logic
             List<SideElement> oldSelection = _selectedSides;
             _selectedSides = CalcualateAffectedSides();
             oldSelection.Except(_selectedSides).ToList().ForEach(x => x.Preview = false);
-            _selectedSides.ForEach(x => { x.PreviewType = _elementType; x.Preview = true; });
+            _selectedSides.ForEach(x => { x.PreviewType = _previewType; x.Preview = true; });
         }
 
         /// <summary>
