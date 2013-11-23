@@ -5,8 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Simulation;
 using Structure;
-using Genetics;
-using Readers;
 
 namespace TestSimulator
 {

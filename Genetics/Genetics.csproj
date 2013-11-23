@@ -39,38 +39,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Chromosome.cs" />
-    <Compile Include="Crossovers\CrossoverException.cs" />
-    <Compile Include="Crossovers\ICrossoverOperator.cs" />
-    <Compile Include="Crossovers\OnePointCrossover.cs" />
     <Compile Include="Evaluators\AHMEDEvaluator.cs" />
-    <Compile Include="Evaluators\EvaluatorException.cs" />
-    <Compile Include="Evaluators\IEvaluator.cs" />
-    <Compile Include="Evaluators\TestEvaluator.cs" />
-    <Compile Include="Generation.cs" />
     <Compile Include="ISimulationResult.cs" />
-    <Compile Include="Mutations\ClassicMutation.cs" />
-    <Compile Include="Mutations\IMutationOperator.cs" />
-    <Compile Include="Mutations\MutationException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repairers\AHMEDSimpleRepairer.cs" />
     <Compile Include="Repairers\AHMEDAdvancedRepairer.cs" />
-    <Compile Include="Repairers\IRepairer.cs" />
-    <Compile Include="Repairers\RepairerException.cs" />
-    <Compile Include="Selectors\ISelector.cs" />
-    <Compile Include="Selectors\RouletteSelector.cs" />
-    <Compile Include="Selectors\SelectorException.cs" />
-    <Compile Include="Selectors\TournamentSelector.cs" />
     <Compile Include="TestSimulationResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Simulation\Simulation.csproj">
       <Project>{a479bfb8-948e-4cfb-b9af-a8d1acc4af44}</Project>
       <Name>Simulation</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Structure\Structure.csproj">
-      <Project>{fe48dff8-eacb-4778-9df0-5d71a664927a}</Project>
-      <Name>Structure</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -4,16 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Genetics;
-using Genetics.Mutations;
-using Genetics.Crossovers;
-using Genetics.Evaluators;
-using Genetics.Selectors;
 using Structure;
 using Simulation;
-using Genetics.Repairers;
 using System.Diagnostics;
-using SimpleVisualizer;
-using Readers;
 
 namespace AHMED
 {
@@ -33,17 +26,17 @@ namespace AHMED
                 return;
             }
 
-            if (args[0] == "-p")
-            {
-                PreviewMap(args[1]);
-            }
-            else
-            {
-                Final(args[0], args[1]);
-            }
+            //if (args[0] == "-p")
+            //{
+            //    PreviewMap(args[1]);
+            //}
+            //else
+            //{
+            //    Final(args[0], args[1]);
+            //}
 
         }
-
+        /*
         static void PreviewMap(string filename)
         {
             XMLReader reader = new XMLReader();
@@ -468,5 +461,6 @@ namespace AHMED
             VisualizerForm form = new VisualizerForm(map, pmap, chr.Fenotype);
             form.ShowDialog();
         }
+        */
     }
 }

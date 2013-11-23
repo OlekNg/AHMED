@@ -29,9 +29,10 @@ namespace Readers
                 var peopleGroups = doc.Descendants("group");
                 foreach (var group in peopleGroups)
                 {
+                    /*
                     result.People.Add(new PeopleGroup(uint.Parse(group.Attribute("row").Value),
                                                       uint.Parse(group.Attribute("col").Value),
-                                                      uint.Parse(group.Attribute("quantity").Value)));
+                                                      uint.Parse(group.Attribute("quantity").Value)));*/
                 }
             }
             catch (Exception)
@@ -52,7 +53,7 @@ namespace Readers
         {
             BuildingMap result = new BuildingMap();
             XDocument doc;
-
+            /*
             try
             {
                 doc = XDocument.Load(filepath);
@@ -101,7 +102,7 @@ namespace Readers
             {
                 return null;
             }
-
+            */
 
             return result;
         }

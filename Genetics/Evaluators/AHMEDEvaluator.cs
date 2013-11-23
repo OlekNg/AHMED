@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Simulation;
-using Structure;
 
 namespace Genetics.Evaluators
 {
+    /*
     public class AHMEDEvaluator : IEvaluator
     {
         /// <summary>
@@ -55,5 +55,5 @@ namespace Genetics.Evaluators
 
             return (double)peopleEscaped + avg;
         }
-    }
+    }*/
 }

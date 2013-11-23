@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Structure;
 
 namespace Genetics.Repairers
 {
     /// <summary>
     /// Repaires only directing walls.
     /// </summary>
+    /*
     public class AHMEDSimpleRepairer : IRepairer
     {
         private BuildingMap _bmap;
@@ -61,14 +61,14 @@ namespace Genetics.Repairers
 
                     // Set new direction choosing one of available randomly.
                     c.SetFenotype(fenotypeIndex, availableDirections[_randomizer.Next(0, availableDirections.Count)]);
-/*                    Console.WriteLine("Changed to: {0}", c.Fenotype[fenotypeIndex]);*/
+/*                    Console.WriteLine("Changed to: {0}", c.Fenotype[fenotypeIndex]);*//*
                 }
             }
-        }
-
+        }*/
+/*
         public Chromosome RepairAndCreate(Chromosome c)
         {
             throw new NotImplementedException();
         }
-    }
+    }*/
 }

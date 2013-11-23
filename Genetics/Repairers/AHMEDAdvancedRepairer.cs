@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Structure;
 
 namespace Genetics.Repairers
-{
+{/*
     /// <summary>
     /// Repairs small loops (neighbouring tiles).
     /// </summary>
@@ -279,5 +278,5 @@ namespace Genetics.Repairers
             for (int i = 0; i < _fixedTiles.Length; i++)
                 _fixedTiles[i] = false;
         }
-    }
+    }*/
 }

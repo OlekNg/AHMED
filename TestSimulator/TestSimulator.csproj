@@ -48,14 +48,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Genetics\Genetics.csproj">
-      <Project>{b9d02f16-015b-4640-aed3-f850ae382a32}</Project>
-      <Name>Genetics</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Readers\Readers.csproj">
-      <Project>{48f90f3f-81c4-4644-a392-d9e6a2052791}</Project>
-      <Name>Readers</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Simulation\Simulation.csproj">
       <Project>{a479bfb8-948e-4cfb-b9af-a8d1acc4af44}</Project>
       <Name>Simulation</Name>
