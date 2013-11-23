@@ -20,5 +20,17 @@ namespace Common.DataModel
         public SideElement BottomSide;
 
         public Segment() { }
+
+        public Dictionary<Side, SideElement> GetSideElements()
+        {
+            Dictionary<Side, SideElement> result = new Dictionary<Side, SideElement>();
+
+            result.Add(Side.LEFT, LeftSide);
+            result.Add(Side.TOP, TopSide);
+            result.Add(Side.RIGHT, RightSide);
+            result.Add(Side.BOTTOM, BottomSide);
+
+            return result;
+        }
     }
 }
