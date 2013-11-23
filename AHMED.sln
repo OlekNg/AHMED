@@ -34,6 +34,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneticAlgorithmTest", "Gen
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{20218B54-B87A-4315-91E2-30CADA45CB93}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Main", "Main\Main.csproj", "{C3A4AE1F-BE34-4D55-9BC1-7DCFCB507E7B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -80,6 +82,10 @@ Global
 		{20218B54-B87A-4315-91E2-30CADA45CB93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{20218B54-B87A-4315-91E2-30CADA45CB93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{20218B54-B87A-4315-91E2-30CADA45CB93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3A4AE1F-BE34-4D55-9BC1-7DCFCB507E7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3A4AE1F-BE34-4D55-9BC1-7DCFCB507E7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3A4AE1F-BE34-4D55-9BC1-7DCFCB507E7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3A4AE1F-BE34-4D55-9BC1-7DCFCB507E7B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
