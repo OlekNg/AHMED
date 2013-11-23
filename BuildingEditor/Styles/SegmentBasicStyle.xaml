@@ -62,9 +62,26 @@
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
                     <Condition Binding="{Binding Type}" Value="{x:Static enum:SegmentType.FLOOR}"/>
-                    <Condition Binding="{Binding Path=DataContext.ViewMode, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Viewbox}}}" Value="Solution"/>
+                    <Condition Binding="{Binding Path=DataContext.ViewMode, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Viewbox}}}" Value="Genotype"/>
                 </MultiDataTrigger.Conditions>
                 <Setter Property="Text" Value="{Binding GenotypeText}"/>
+            </MultiDataTrigger>
+            
+            <!-- Fenotype -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Type}" Value="{x:Static enum:SegmentType.FLOOR}"/>
+                    <Condition Binding="{Binding Path=DataContext.ViewMode, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Viewbox}}}" Value="Solution"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <ImageBrush ImageSource="../Images/arrow.png">
+                            <ImageBrush.Transform>
+                                <RotateTransform Angle="{Binding Fenotype, Converter={StaticResource OrientationToAngleConverter}}"  CenterX="25" CenterY="25"/>
+                            </ImageBrush.Transform>
+                        </ImageBrush>
+                    </Setter.Value>
+                </Setter>
             </MultiDataTrigger>
 
             <!-- PREVIEW TRIGGERS -->
