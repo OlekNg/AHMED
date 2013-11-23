@@ -165,8 +165,24 @@ namespace BuildingEditor
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            DataModel.Building building = new DataModel.Building(_building);
-            building.Save("pliczek.xml");
+            // Create OpenFileDialog 
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+
+            // Set filter for file extension and default file extension 
+            dlg.DefaultExt = ".xml";
+            dlg.Filter = "Building definition file|*.xml";
+
+            // Display SaveFileDialog by calling ShowDialog method 
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Get the selected file name and display in a TextBox 
+            if (result == true)
+            {
+                string filename = dlg.FileName;
+                Console.WriteLine(filename);
+                DataModel.Building building = new DataModel.Building(_building);
+                building.Save(filename);
+            }
         }
 
         private void Open_Click(object sender, RoutedEventArgs e)
@@ -176,6 +192,7 @@ namespace BuildingEditor
 
             // Set filter for file extension and default file extension 
             dlg.DefaultExt = ".xml";
+            dlg.Filter = "Building definition file|*.xml";
 
             // Display OpenFileDialog by calling ShowDialog method 
             Nullable<bool> result = dlg.ShowDialog();
@@ -186,7 +203,7 @@ namespace BuildingEditor
                 // Open document 
                 string filename = dlg.FileName;
                 DataModel.Building building = new DataModel.Building();
-                building.Load("pliczek.xml");
+                building.Load(filename);
                 Building viewModel = building.ToViewModel();
 
 
