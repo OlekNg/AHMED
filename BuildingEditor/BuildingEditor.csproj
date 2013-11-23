@@ -72,9 +72,6 @@
     <Compile Include="Logic\OrientationToAngleConverter.cs" />
     <Compile Include="Logic\SegmentEventHandler.cs" />
     <Compile Include="Logic\StairsPair.cs" />
-    <Compile Include="RangeWindow.xaml.cs">
-      <DependentUpon>RangeWindow.xaml</DependentUpon>
-    </Compile>
     <Page Include="DataTemplates\SegmentBasicTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -116,10 +113,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="RangeWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Styles\SegmentDoorCapacityStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
