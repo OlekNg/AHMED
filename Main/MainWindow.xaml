@@ -39,7 +39,7 @@
                         </Viewbox.RenderTransform>
                         <ItemsControl Name="uxDataFloor"
                                   ItemTemplate="{StaticResource SegmentRowTemplate}"
-                                  ItemsSource="{Binding CurrentFloor.Data, IsAsync=True}"/>
+                                  ItemsSource="{Binding CurrentFloor.Segments, IsAsync=True}"/>
                     </Viewbox>
                 </Canvas>
             </DockPanel>
@@ -50,7 +50,7 @@
             <Border BorderBrush="LightGray" BorderThickness="0,1,1,1">
                 <TextBlock Text="View" TextAlignment="Center" Margin="5"/>
             </Border>
-            <RadioButton Tag="None" Content="None" GroupName="ViewMode" Click="ViewMode_Clicked"/>
+            <RadioButton Tag="None" Content="None" GroupName="ViewMode" Click="ViewMode_Clicked" IsChecked="True"/>
             <RadioButton Tag="People" Content="People" GroupName="ViewMode" Click="ViewMode_Clicked"/>
             <RadioButton Tag="Floor" Content="Floor capacity" GroupName="ViewMode" Click="ViewMode_Clicked"/>
             <RadioButton Tag="Door" Content="Door capacity" GroupName="ViewMode" Click="ViewMode_Clicked"/>
@@ -83,8 +83,12 @@
         <!-- MENU -->
         <Menu Grid.Column="0" Grid.Row="0" Background="White">
             <MenuItem Header="File" Height="25">
+                <MenuItem Header="Test" Click="Test_Click"/>
                 <MenuItem Header="Open" Click="Open_Click"/>
                 <MenuItem Header="Exit" Click="Exit_Click"/>
+            </MenuItem>
+            <MenuItem Header="Process" Height="25">
+                <MenuItem Header="Run" Click="ProcessRun_Click"/>
             </MenuItem>
         </Menu>
     </Grid>

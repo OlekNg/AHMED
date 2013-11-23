@@ -56,6 +56,27 @@ namespace BuildingEditor.Logic
         public int Row { get; set; }
         public int Column { get; set; }
 
+        public Side Fenotype { get; set; }
+        public string GenotypeText
+        {
+            get
+            {
+                switch (Fenotype)
+                {
+                    case Side.LEFT:
+                        return "00";
+                    case Side.TOP:
+                        return "10";
+                    case Side.RIGHT:
+                        return "11";
+                    case Side.BOTTOM:
+                        return "01";  
+                }
+
+                return "";
+            }
+        }
+
         public bool Preview { get; set; }
         public SegmentType PreviewType { get; set; }
         public Side PreviewOrientation { get; set; }

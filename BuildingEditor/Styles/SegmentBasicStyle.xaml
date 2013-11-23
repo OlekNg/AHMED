@@ -57,6 +57,15 @@
                 <Setter Property="Text" Value="{Binding PeopleCount}"/>
                 <Setter Property="Foreground" Value="Green"/>
             </MultiDataTrigger>
+            
+            <!-- Genotype text -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Type}" Value="{x:Static enum:SegmentType.FLOOR}"/>
+                    <Condition Binding="{Binding Path=DataContext.ViewMode, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Viewbox}}}" Value="Solution"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Text" Value="{Binding GenotypeText}"/>
+            </MultiDataTrigger>
 
             <!-- PREVIEW TRIGGERS -->
             <!-- Stairs preview -->

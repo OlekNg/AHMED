@@ -164,14 +164,14 @@ namespace BuildingEditor.Tools.Logic
                 // Vertical line
                 Side s = GetHorizontalRelation();
                 for (int row = rowBegin; row <= rowEnd; row++)
-                    result.Add(_building.CurrentFloor.Data[row][_selectionStart.Segment.Column].GetSideElement(s));
+                    result.Add(_building.CurrentFloor.Segments[row][_selectionStart.Segment.Column].GetSideElement(s));
             }
             else
             {
                 // Horizontal line
                 Side s = GetVerticalRelation();
                 for (int col = colBegin; col <= colEnd; col++)
-                    result.Add(_building.CurrentFloor.Data[_selectionStart.Segment.Row][col].GetSideElement(s));
+                    result.Add(_building.CurrentFloor.Segments[_selectionStart.Segment.Row][col].GetSideElement(s));
 
             }
 

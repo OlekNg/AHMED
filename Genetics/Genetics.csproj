@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Evaluators\AHMEDEvaluator.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="ISimulationResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repairers\AHMEDSimpleRepairer.cs" />
@@ -48,6 +49,14 @@
     <Compile Include="TestSimulationResult.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{20218b54-b87a-4315-91e2-30cada45cb93}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GeneticAlgorithm\GeneticAlgorithm\GeneticAlgorithm.csproj">
+      <Project>{2f9368f3-05b9-4a87-9845-5afac662de16}</Project>
+      <Name>GeneticAlgorithm %28GeneticAlgorithm\GeneticAlgorithm%29</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Simulation\Simulation.csproj">
       <Project>{a479bfb8-948e-4cfb-b9af-a8d1acc4af44}</Project>
       <Name>Simulation</Name>

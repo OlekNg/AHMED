@@ -18,7 +18,7 @@ namespace BuildingEditor.Logic
         public Floor()
         {
             Level = 0;
-            Data = new ObservableCollection<ObservableCollection<Segment>>();
+            Segments = new ObservableCollection<ObservableCollection<Segment>>();
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace BuildingEditor.Logic
                 for (int j = 0; j < cols; j++)
                     row.Add(new Segment());
 
-                Data.Add(row);
+                Segments.Add(row);
             }
 
             ConnectSegments();
@@ -58,7 +58,7 @@ namespace BuildingEditor.Logic
                 {
                     segmentRow.Add(new Segment(floor.Segments[row][col]));
                 }
-                Data.Add(segmentRow);
+                Segments.Add(segmentRow);
             }
 
             ConnectSegments();
@@ -66,8 +66,22 @@ namespace BuildingEditor.Logic
             UpdateRender();
         }        
 
-        public ObservableCollection<ObservableCollection<Segment>> Data { get; set; }
+        public ObservableCollection<ObservableCollection<Segment>> Segments { get; set; }
         public int Level { get; set; }
+
+        /// <summary>
+        /// Calculates number of floor type segments (available to genotype).
+        /// </summary>
+        public int GetFloorCount()
+        {
+            int result = 0;
+
+            foreach (var row in Segments)
+                foreach (var segment in row)
+                    if (segment.Type == SegmentType.FLOOR) result++;
+
+            return result;
+        }
 
         /// <summary>
         /// Expands building in certain direction (adds row or column to all floors).
@@ -78,10 +92,10 @@ namespace BuildingEditor.Logic
             switch (side)
             {
                 case Side.RIGHT:
-                    AddColumn(Data[0].Count);
+                    AddColumn(Segments[0].Count);
                     break;
                 case Side.BOTTOM:
-                    AddRow(Data.Count);
+                    AddRow(Segments.Count);
                     break;
                 case Side.LEFT:
                     AddColumn(0);
@@ -101,12 +115,12 @@ namespace BuildingEditor.Logic
         /// </summary>
         private void RecalculateIndexes()
         {
-            for (int row = 0; row < Data.Count; row++)
+            for (int row = 0; row < Segments.Count; row++)
             {
-                for (int col = 0; col < Data[row].Count; col++)
+                for (int col = 0; col < Segments[row].Count; col++)
                 {
-                    Data[row][col].Row = row;
-                    Data[row][col].Column = col;
+                    Segments[row][col].Row = row;
+                    Segments[row][col].Column = col;
                 }
             }
         }
@@ -117,13 +131,13 @@ namespace BuildingEditor.Logic
         /// </summary>
         public void UpdateRender()
         {
-            for (int row = 0; row < Data.Count; row++)
-                for (int col = 0; col < Data[row].Count; col++)
-                    Data[row][col].UpdateOuterWalls();
+            for (int row = 0; row < Segments.Count; row++)
+                for (int col = 0; col < Segments[row].Count; col++)
+                    Segments[row][col].UpdateOuterWalls();
 
-            for (int row = 0; row < Data.Count; row++)
-                for (int col = 0; col < Data[row].Count; col++)
-                    Data[row][col].UpdateCorners();
+            for (int row = 0; row < Segments.Count; row++)
+                for (int col = 0; col < Segments[row].Count; col++)
+                    Segments[row][col].UpdateCorners();
         }
 
         /// <summary>
@@ -132,12 +146,12 @@ namespace BuildingEditor.Logic
         /// <param name="index">New row position.</param>
         public void AddRow(int index)
         {
-            int cols = Data[0].Count;
+            int cols = Segments[0].Count;
             ObservableCollection<Segment> row = new ObservableCollection<Segment>();
             for (int j = 0; j < cols; j++)
                 row.Add(new Segment());
 
-            Data.Insert(index, row);
+            Segments.Insert(index, row);
             ConnectSegments();
             RecalculateIndexes();
             UpdateRender();
@@ -149,9 +163,9 @@ namespace BuildingEditor.Logic
         /// <param name="index">New column position.</param>
         public void AddColumn(int index)
         {
-            int rows = Data.Count;
+            int rows = Segments.Count;
             for (int i = 0; i < rows; i++)
-                Data[i].Insert(index, new Segment());
+                Segments[i].Insert(index, new Segment());
 
             ConnectSegments();
             RecalculateIndexes();
@@ -160,7 +174,7 @@ namespace BuildingEditor.Logic
 
         public void RemoveRow(int index)
         {
-            Data.RemoveAt(index);
+            Segments.RemoveAt(index);
             ConnectSegments();
             RecalculateIndexes();
             UpdateRender();
@@ -168,7 +182,7 @@ namespace BuildingEditor.Logic
 
         public void RemoveColumn(int index)
         {
-            foreach (ObservableCollection<Segment> row in Data)
+            foreach (ObservableCollection<Segment> row in Segments)
                 row.RemoveAt(index);
 
             ConnectSegments();
@@ -183,11 +197,11 @@ namespace BuildingEditor.Logic
         /// </summary>
         private void ConnectSegments()
         {
-            for (int row = 0; row < Data.Count; row++)
+            for (int row = 0; row < Segments.Count; row++)
             {
-                for (int col = 0; col < Data[row].Count; col++)
+                for (int col = 0; col < Segments[row].Count; col++)
                 {
-                    var element = Data[row][col];
+                    var element = Segments[row][col];
 
                     element.LeftSegment = null;
                     element.TopSegment = null;
@@ -197,21 +211,21 @@ namespace BuildingEditor.Logic
                     if (row > 0)
                     {
                         // Connect side.
-                        element.TopSide = Data[row - 1][col].BottomSide;
+                        element.TopSide = Segments[row - 1][col].BottomSide;
 
                         // Connect adjacent segment.
-                        element.TopSegment = Data[row - 1][col];
-                        Data[row - 1][col].BottomSegment = element;
+                        element.TopSegment = Segments[row - 1][col];
+                        Segments[row - 1][col].BottomSegment = element;
                     }
 
                     if (col > 0)
                     {
                         // Connect side.
-                        Data[row][col].LeftSide = Data[row][col - 1].RightSide;
+                        Segments[row][col].LeftSide = Segments[row][col - 1].RightSide;
 
                         // Connect adjacent segment.
-                        element.LeftSegment = Data[row][col - 1];
-                        Data[row][col - 1].RightSegment = element;
+                        element.LeftSegment = Segments[row][col - 1];
+                        Segments[row][col - 1].RightSegment = element;
                     }
                 }
             }
@@ -223,12 +237,12 @@ namespace BuildingEditor.Logic
 
             result.Level = Level;
 
-            for (int row = 0; row < Data.Count; row++)
+            for (int row = 0; row < Segments.Count; row++)
             {
                 List<Common.DataModel.Segment> segmentRow = new List<Common.DataModel.Segment>();
-                for (int col = 0; col < Data[row].Count; col++)
+                for (int col = 0; col < Segments[row].Count; col++)
                 {
-                    segmentRow.Add(Data[row][col].ToDataModel());
+                    segmentRow.Add(Segments[row][col].ToDataModel());
                 }
                 result.Segments.Add(segmentRow);
             }

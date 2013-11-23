@@ -154,7 +154,7 @@ namespace BuildingEditor.Tools.Logic
 
             for (int row = rowBegin; row <= rowEnd; row++)
                 for (int col = colBegin; col <= colEnd; col++)
-                    result.Add(_building.CurrentFloor.Data[row][col]);
+                    result.Add(_building.CurrentFloor.Segments[row][col]);
 
             return result;
         }

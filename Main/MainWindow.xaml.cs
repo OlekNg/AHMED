@@ -1,4 +1,5 @@
 ﻿using BuildingEditor.Logic;
+using Common.DataModel.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,15 @@ namespace Main
         {
             InitializeComponent();
             _building = new Building();
+
+            Common.DataModel.Building building = new Common.DataModel.Building();
+            building.Load("test.xml");
+            Building viewModel = new Building(building);
+
+
+            _building.Floors = viewModel.Floors;
+            _building.Stairs = viewModel.Stairs;
+            _building.CurrentFloor = _building.Floors[0];
 
             uxWorkspaceViewbox.DataContext = _building;
             uxFloors.DataContext = _building;
@@ -74,6 +84,17 @@ namespace Main
 
             if (mode != null)
                 _building.ViewMode = mode;
+        }
+
+        private void ProcessRun_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Test_Click(object sender, RoutedEventArgs e)
+        {
+            List<Side> fenotype = new List<Side>() { Side.LEFT, Side.TOP, Side.RIGHT, Side.LEFT, Side.BOTTOM, Side.RIGHT };
+            _building.SetFenotype(fenotype);
         }
     }
 }

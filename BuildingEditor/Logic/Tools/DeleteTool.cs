@@ -103,11 +103,11 @@ namespace BuildingEditor.Tools.Logic
 
             if (DeleteRow)
             {
-                result = _building.CurrentFloor.Data[_mouseoverSegment.Row].ToList();
+                result = _building.CurrentFloor.Segments[_mouseoverSegment.Row].ToList();
             }
             else
             {
-                result = _building.CurrentFloor.Data.Select(x => x.Where(y => y.Column == _mouseoverSegment.Column).First()).ToList();
+                result = _building.CurrentFloor.Segments.Select(x => x.Where(y => y.Column == _mouseoverSegment.Column).First()).ToList();
             }
 
             return result;

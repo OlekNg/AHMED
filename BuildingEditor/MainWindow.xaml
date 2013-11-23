@@ -43,7 +43,7 @@
                         </Viewbox.RenderTransform>
                         <ItemsControl Name="uxDataFloor"
                                   ItemTemplate="{StaticResource SegmentRowTemplate}"
-                                  ItemsSource="{Binding CurrentFloor.Data, IsAsync=True}"/>
+                                  ItemsSource="{Binding CurrentFloor.Segments, IsAsync=True}"/>
                     </Viewbox>
                 </Canvas>
             </DockPanel>

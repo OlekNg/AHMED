@@ -1,4 +1,5 @@
-﻿using PropertyChanged;
+﻿using Common.DataModel.Enums;
+using PropertyChanged;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -37,11 +38,41 @@ namespace BuildingEditor.Logic
             {
                 var temp = building.Stairs[i];
                 var stairsPair = new StairsPair(Stairs, temp);
-                stairsPair.First.AssignedSegment = Floors.Where(x => x.Level == temp.First.Level).First().Data[temp.First.Row][temp.First.Col];
-                stairsPair.Second.AssignedSegment = Floors.Where(x => x.Level == temp.Second.Level).First().Data[temp.Second.Row][temp.Second.Col];
+                stairsPair.First.AssignedSegment = Floors.Where(x => x.Level == temp.First.Level).First().Segments[temp.First.Row][temp.First.Col];
+                stairsPair.Second.AssignedSegment = Floors.Where(x => x.Level == temp.Second.Level).First().Segments[temp.Second.Row][temp.Second.Col];
                 stairsPair.SetAdditionalData();
                 Stairs.Add(stairsPair);
             }
+        }
+
+        public int GetFloorCount()
+        {
+            int result = 0;
+
+            foreach (var f in Floors)
+                result += f.GetFloorCount();
+
+            return result;
+        }
+
+        public void SetFenotype(List<Side> fenotype)
+        {
+            int expectedLength = GetFloorCount();
+
+            if (fenotype.Count != expectedLength)
+                throw new Exception("Invalid fenotype to set.");
+
+            List<Floor> floors = Floors.Reverse().ToList();
+
+            int index = 0;
+            foreach(var f in floors)
+                foreach(var row in f.Segments)
+                    foreach(var segment in row)
+                        if (segment.Type == SegmentType.FLOOR)
+                        {
+                            segment.Fenotype = fenotype[index];
+                            index++;
+                        }
         }
 
         public Common.DataModel.Building ToDataModel()
