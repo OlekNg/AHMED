@@ -40,6 +40,7 @@ namespace BuildingEditor.Logic
             result.Level = Level;
             result.Row = AssignedSegment.Row;
             result.Col = AssignedSegment.Column;
+            result.Orientation = AssignedSegment.Orientation;
 
             return result;
         }

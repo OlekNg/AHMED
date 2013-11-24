@@ -75,7 +75,7 @@ namespace TestSimulator
             s.SetEntries(se[0], se[1]);
             
             map.AddStairs(s);
-
+            
             sim.SetupSimulator(map, pm);
             sim.MaximumTicks = 50;
             List<EscapedGroup> eg = sim.Simulate(fenotype);

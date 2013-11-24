@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common.DataModel.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,7 @@ namespace Common.DataModel
         public int Row;
         public int Col;
         public int Level;
+        public Side Orientation;
 
         public Stairs() { }
     }
