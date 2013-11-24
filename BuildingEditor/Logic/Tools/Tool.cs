@@ -57,21 +57,21 @@ namespace BuildingEditor.Tools.Logic
         /// <param name="size">Size of segment (rendered width/height - assumption that segment is square).</param>
         /// <param name="pos">Mouse click location relative to segment.</param>
         /// <returns></returns>
-        protected Side CalculateSegmentSide(double size, Point pos)
+        protected Direction CalculateSegmentSide(double size, Point pos)
         {
             if (pos.X > pos.Y && pos.X < (size - pos.Y))
-                return Side.TOP;
+                return Direction.UP;
 
             if (pos.X > pos.Y && pos.X > (size - pos.Y))
-                return Side.RIGHT;
+                return Direction.RIGHT;
 
             if (pos.X < pos.Y && pos.X < (size - pos.Y))
-                return Side.LEFT;
+                return Direction.LEFT;
 
             if (pos.X < pos.Y && pos.X > (size - pos.Y))
-                return Side.BOTTOM;
+                return Direction.DOWN;
 
-            return Side.BOTTOM;
+            return Direction.DOWN;
         }
 
         protected SegmentSide ProcessEventArg(object sender, MouseEventArgs e)
@@ -85,7 +85,7 @@ namespace BuildingEditor.Tools.Logic
             Point pos = e.GetPosition(element);
             var size = element.ActualHeight;
 
-            Side side = CalculateSegmentSide(size, pos);
+            Direction side = CalculateSegmentSide(size, pos);
 
             pos.X -= (size / 2);
             pos.Y -= (size / 2);

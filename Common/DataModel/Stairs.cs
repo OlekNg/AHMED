@@ -14,7 +14,7 @@ namespace Common.DataModel
         public int Row;
         public int Col;
         public int Level;
-        public Side Orientation;
+        public Direction Orientation;
 
         public Stairs() { }
     }

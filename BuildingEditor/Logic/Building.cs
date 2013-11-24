@@ -55,7 +55,7 @@ namespace BuildingEditor.Logic
             return result;
         }
 
-        public void SetFenotype(List<Side> fenotype)
+        public void SetFenotype(List<Direction> fenotype)
         {
             int expectedLength = GetFloorCount();
 

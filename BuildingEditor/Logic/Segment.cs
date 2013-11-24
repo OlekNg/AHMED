@@ -56,20 +56,20 @@ namespace BuildingEditor.Logic
         public int Row { get; set; }
         public int Column { get; set; }
 
-        public Side Fenotype { get; set; }
+        public Direction Fenotype { get; set; }
         public string GenotypeText
         {
             get
             {
                 switch (Fenotype)
                 {
-                    case Side.LEFT:
+                    case Direction.LEFT:
                         return "00";
-                    case Side.TOP:
+                    case Direction.UP:
                         return "10";
-                    case Side.RIGHT:
+                    case Direction.RIGHT:
                         return "11";
-                    case Side.BOTTOM:
+                    case Direction.DOWN:
                         return "01";  
                 }
 
@@ -79,14 +79,14 @@ namespace BuildingEditor.Logic
 
         public bool Preview { get; set; }
         public SegmentType PreviewType { get; set; }
-        public Side PreviewOrientation { get; set; }
+        public Direction PreviewOrientation { get; set; }
 
         public object AdditionalData { get; set; }
 
         public int Capacity { get; set; }
         public int PeopleCount { get; set; }
         public SegmentType Type { get; set; }
-        public Side Orientation { get; set; }
+        public Direction Orientation { get; set; }
 
         public Segment LeftSegment { get; set; }
         public Segment TopSegment { get; set; }
@@ -104,45 +104,45 @@ namespace BuildingEditor.Logic
         public SideElement BottomLeftCorner { get; set; }
         #endregion
 
-        public Segment GetNeighbour(Side side)
+        public Segment GetNeighbour(Direction side)
         {
             Segment result = null;
 
             switch (side)
             {
-                case Side.LEFT:
+                case Direction.LEFT:
                     result = LeftSegment; break;
-                case Side.TOP:
+                case Direction.UP:
                     result = TopSegment; break;
-                case Side.RIGHT:
+                case Direction.RIGHT:
                     result = RightSegment; break;
-                case Side.BOTTOM:
+                case Direction.DOWN:
                     result = BottomSegment; break;
             }
 
             return result;
         }
 
-        public SideElement GetSideElement(Side side)
+        public SideElement GetSideElement(Direction side)
         {
             SideElement result = null;
 
             switch (side)
             {
-                case Side.LEFT:
+                case Direction.LEFT:
                     result = LeftSide; break;
-                case Side.TOP:
+                case Direction.UP:
                     result = TopSide; break;
-                case Side.RIGHT:
+                case Direction.RIGHT:
                     result = RightSide; break;
-                case Side.BOTTOM:
+                case Direction.DOWN:
                     result = BottomSide; break;
             }
 
             return result;
         }
 
-        public void SetSide(Side side, SideElementType value)
+        public void SetSide(Direction side, SideElementType value)
         {
             GetSideElement(side).Type = value;
         }
@@ -202,7 +202,7 @@ namespace BuildingEditor.Logic
             // Clear walls if we are type none.
             if (Type == SegmentType.NONE)
             {
-                foreach (Side s in typeof(Side).GetEnumValues())
+                foreach (Direction s in typeof(Direction).GetEnumValues())
                 {
                     Segment segment = GetNeighbour(s);
                     if (segment == null || segment.Type == SegmentType.NONE)
@@ -212,7 +212,7 @@ namespace BuildingEditor.Logic
             }
 
             // Set walls and add them to current outer walls list.
-            foreach (Side s in typeof(Side).GetEnumValues())
+            foreach (Direction s in typeof(Direction).GetEnumValues())
             {
                 // We don't want to overwrite doors.
                 if (GetSideElement(s).Type == SideElementType.DOOR) continue;

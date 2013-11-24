@@ -49,12 +49,12 @@ namespace Main
 
                         var sides = segment.GetSideElements();
 
-                        foreach (Side s in typeof(Side).GetEnumValues())
+                        foreach (Direction s in typeof(Direction).GetEnumValues())
                         {
                             var sideElement = sides[s];
-                            int r = (s == Side.BOTTOM) ? row + 1 : row;
-                            int c = (s == Side.RIGHT) ? col + 1 : col;
-                            Structure.WallPlace place = (s == Side.TOP || s == Side.BOTTOM) ? Structure.WallPlace.TOP : Structure.WallPlace.LEFT;
+                            int r = (s == Direction.DOWN) ? row + 1 : row;
+                            int c = (s == Direction.RIGHT) ? col + 1 : col;
+                            Structure.WallPlace place = (s == Direction.UP || s == Direction.DOWN) ? Structure.WallPlace.TOP : Structure.WallPlace.LEFT;
 
                             if (sideElement.Type == SideElementType.WALL)
                                 floor.SetWall((uint)r, (uint)c, place);
@@ -80,9 +80,9 @@ namespace Main
                 // First stairs entry.
                 var first = stairsPair.First;
                 f = first.Level;
-                r = first.Orientation == Side.BOTTOM ? first.Row + 1 : first.Row;
-                c = first.Orientation == Side.RIGHT ? first.Col + 1 : first.Col;
-                pos = (first.Orientation == Side.LEFT || first.Orientation == Side.RIGHT) ? Structure.WallPlace.LEFT : Structure.WallPlace.TOP;
+                r = first.Orientation == Direction.DOWN ? first.Row + 1 : first.Row;
+                c = first.Orientation == Direction.RIGHT ? first.Col + 1 : first.Col;
+                pos = (first.Orientation == Direction.LEFT || first.Orientation == Direction.RIGHT) ? Structure.WallPlace.LEFT : Structure.WallPlace.TOP;
 
                 Structure.WallElementPosition wep1 = new Structure.WallElementPosition((uint)f, (uint)r, (uint)c, pos);
                 Structure.StairsEntry se1 = new Structure.StairsEntry((uint)first.Capacity, wep1);
@@ -90,9 +90,9 @@ namespace Main
                 // Second stairs entry.
                 var second = stairsPair.Second;
                 f = second.Level;
-                r = second.Orientation == Side.BOTTOM ? second.Row + 1 : second.Row;
-                c = second.Orientation == Side.RIGHT ? second.Col + 1 : second.Col;
-                pos = (second.Orientation == Side.LEFT || second.Orientation == Side.RIGHT) ? Structure.WallPlace.LEFT : Structure.WallPlace.TOP;
+                r = second.Orientation == Direction.DOWN ? second.Row + 1 : second.Row;
+                c = second.Orientation == Direction.RIGHT ? second.Col + 1 : second.Col;
+                pos = (second.Orientation == Direction.LEFT || second.Orientation == Direction.RIGHT) ? Structure.WallPlace.LEFT : Structure.WallPlace.TOP;
 
                 Structure.WallElementPosition wep2 = new Structure.WallElementPosition((uint)f, (uint)r, (uint)c, pos);
                 Structure.StairsEntry se2 = new Structure.StairsEntry((uint)second.Capacity, wep2);

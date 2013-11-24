@@ -10,7 +10,7 @@ namespace Common.DataModel
     public class Segment
     {
         public SegmentType Type;
-        public Side Orientation;
+        public Direction Orientation;
         public int Capacity;
         public int PeopleCount;
 
@@ -21,14 +21,14 @@ namespace Common.DataModel
 
         public Segment() { }
 
-        public Dictionary<Side, SideElement> GetSideElements()
+        public Dictionary<Direction, SideElement> GetSideElements()
         {
-            Dictionary<Side, SideElement> result = new Dictionary<Side, SideElement>();
+            Dictionary<Direction, SideElement> result = new Dictionary<Direction, SideElement>();
 
-            result.Add(Side.LEFT, LeftSide);
-            result.Add(Side.TOP, TopSide);
-            result.Add(Side.RIGHT, RightSide);
-            result.Add(Side.BOTTOM, BottomSide);
+            result.Add(Direction.LEFT, LeftSide);
+            result.Add(Direction.UP, TopSide);
+            result.Add(Direction.RIGHT, RightSide);
+            result.Add(Direction.DOWN, BottomSide);
 
             return result;
         }

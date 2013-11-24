@@ -129,10 +129,10 @@
                     Orientation="Horizontal" HorizontalAlignment="Left">
             <!-- Building expanding -->
             <TextBlock Text="Expand floor:" VerticalAlignment="Center" Padding="5,0"/>
-            <Button Content="&lt;" Width="20" Click="Expand_Click" Tag="{x:Static enum:Side.LEFT}"/>
-            <Button Content=">" Width="20" Click="Expand_Click" Tag="{x:Static enum:Side.RIGHT}"/>
-            <Button Content="v" Width="20" Click="Expand_Click" Tag="{x:Static enum:Side.BOTTOM}"/>
-            <Button Content="^" Width="20" Click="Expand_Click" Tag="{x:Static enum:Side.TOP}"/>
+            <Button Content="&lt;" Width="20" Click="Expand_Click" Tag="{x:Static enum:Direction.LEFT}"/>
+            <Button Content=">" Width="20" Click="Expand_Click" Tag="{x:Static enum:Direction.RIGHT}"/>
+            <Button Content="v" Width="20" Click="Expand_Click" Tag="{x:Static enum:Direction.DOWN}"/>
+            <Button Content="^" Width="20" Click="Expand_Click" Tag="{x:Static enum:Direction.UP}"/>
         </StackPanel>
 
         <!-- MENU -->

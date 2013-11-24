@@ -87,20 +87,20 @@ namespace BuildingEditor.Logic
         /// Expands building in certain direction (adds row or column to all floors).
         /// </summary>
         /// <param name="side">Direction of expanding.</param>
-        public void Expand(Side side)
+        public void Expand(Direction side)
         {
             switch (side)
             {
-                case Side.RIGHT:
+                case Direction.RIGHT:
                     AddColumn(Segments[0].Count);
                     break;
-                case Side.BOTTOM:
+                case Direction.DOWN:
                     AddRow(Segments.Count);
                     break;
-                case Side.LEFT:
+                case Direction.LEFT:
                     AddColumn(0);
                     break;
-                case Side.TOP:
+                case Direction.UP:
                     AddRow(0);
                     break;
                 default:

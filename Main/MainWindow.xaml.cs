@@ -93,7 +93,7 @@ namespace Main
 
         private void Test_Click(object sender, RoutedEventArgs e)
         {
-            List<Side> fenotype = new List<Side>() { Side.LEFT, Side.TOP, Side.RIGHT, Side.LEFT, Side.BOTTOM, Side.RIGHT };
+            List<Direction> fenotype = new List<Direction>() { Direction.LEFT, Direction.UP, Direction.RIGHT, Direction.LEFT, Direction.DOWN, Direction.RIGHT };
             _building.SetFenotype(fenotype);
         }
     }

@@ -144,7 +144,7 @@ namespace BuildingEditor
         private void Expand_Click(object sender, RoutedEventArgs e)
         {
             Button b = sender as Button;
-            _building.CurrentFloor.Expand((Side)b.Tag);
+            _building.CurrentFloor.Expand((Direction)b.Tag);
         }
 
         /// <summary>

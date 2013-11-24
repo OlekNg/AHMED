@@ -15,7 +15,7 @@ namespace BuildingEditor.Tools.Logic
     public class SegmentSide
     {
         public Segment Segment { get; set; }
-        public Side Side { get; set; }
+        public Direction Side { get; set; }
         public Point MousePosition { get; set; }
         public SideElement SideElement { get { return Segment.GetSideElement(Side); } }
 
@@ -162,14 +162,14 @@ namespace BuildingEditor.Tools.Logic
             if (Math.Abs(rowEnd - rowBegin) > Math.Abs(colEnd - colBegin))
             {
                 // Vertical line
-                Side s = GetHorizontalRelation();
+                Direction s = GetHorizontalRelation();
                 for (int row = rowBegin; row <= rowEnd; row++)
                     result.Add(_building.CurrentFloor.Segments[row][_selectionStart.Segment.Column].GetSideElement(s));
             }
             else
             {
                 // Horizontal line
-                Side s = GetVerticalRelation();
+                Direction s = GetVerticalRelation();
                 for (int col = colBegin; col <= colEnd; col++)
                     result.Add(_building.CurrentFloor.Segments[_selectionStart.Segment.Row][col].GetSideElement(s));
 
@@ -178,28 +178,28 @@ namespace BuildingEditor.Tools.Logic
             return result;
         }
 
-        private Side GetVerticalRelation()
+        private Direction GetVerticalRelation()
         {
             Point pos = _selectionEnd.MousePosition;
             int startRow = _selectionStart.Segment.Row;
             int endRow = _selectionEnd.Segment.Row;
 
             if (startRow == endRow)
-                return pos.Y < 0 ? Side.TOP : Side.BOTTOM;
+                return pos.Y < 0 ? Direction.UP : Direction.DOWN;
             else
-                return startRow > endRow ? Side.TOP : Side.BOTTOM;
+                return startRow > endRow ? Direction.UP : Direction.DOWN;
         }
 
-        private Side GetHorizontalRelation()
+        private Direction GetHorizontalRelation()
         {
             Point pos = _selectionEnd.MousePosition;
             int startCol = _selectionStart.Segment.Column;
             int endCol = _selectionEnd.Segment.Column;
 
             if (startCol == endCol)
-                return pos.X < 0 ? Side.LEFT : Side.RIGHT;
+                return pos.X < 0 ? Direction.LEFT : Direction.RIGHT;
             else
-                return startCol > endCol ? Side.LEFT : Side.RIGHT;
+                return startCol > endCol ? Direction.LEFT : Direction.RIGHT;
         }
     }
 }
