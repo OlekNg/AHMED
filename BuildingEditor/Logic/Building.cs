@@ -8,6 +8,9 @@ using System.Text;
 
 namespace BuildingEditor.Logic
 {
+    /// <summary>
+    /// Represents view model of building that can be used in wpf gui applications.
+    /// </summary>
     [ImplementPropertyChanged]
     public class Building
     {
@@ -45,6 +48,10 @@ namespace BuildingEditor.Logic
             }
         }
 
+        /// <summary>
+        /// Counts all segments of type floor.
+        /// </summary>
+        /// <returns>Number of floor type segments.</returns>
         public int GetFloorCount()
         {
             int result = 0;
@@ -55,6 +62,48 @@ namespace BuildingEditor.Logic
             return result;
         }
 
+
+
+        /// <summary>
+        /// Creates fenotype for simulator which requires all segments (even of type NONE)
+        /// to be covered by fenotype.
+        /// 
+        /// If you didn't set normal fenotype (for floor segments only) for building use function variant with parameter.
+        /// </summary>
+        /// <returns>Fenotype for simulator.</returns>
+        public List<Direction> GetSimulatorFenotype()
+        {
+            List<Direction> result = new List<Direction>();
+
+            // Order floors by level to make sure we are creating fenotype
+            // from bottom to top level of building.
+            List<Floor> floors = Floors.OrderBy(x => x.Level).ToList();
+
+            // Add fenotype from all segments (type of segment doesn't matter).
+            foreach (var floor in floors)
+                foreach (var row in floor.Segments)
+                    foreach (var segment in row)
+                        result.Add(segment.Fenotype);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Sets fenotype for building view model. And calls GetSimulatorFenotype().
+        /// </summary>
+        /// <param name="fenotype">Fenotype that covers only segments of type floor.</param>
+        /// <returns>Fenotype for simulator.</returns>
+        public List<Direction> GetSimulatorFenotype(List<Direction> fenotype)
+        {
+            SetFenotype(fenotype);
+            return GetSimulatorFenotype();
+        }
+
+        /// <summary>
+        /// Sets fenotype for this building.
+        /// </summary>
+        /// <param name="fenotype">Fenotype that covers only floor type segments.</param>
+        /// <see cref="GetFloorCount"/>
         public void SetFenotype(List<Direction> fenotype)
         {
             int expectedLength = GetFloorCount();
@@ -75,6 +124,10 @@ namespace BuildingEditor.Logic
                         }
         }
 
+        /// <summary>
+        /// Converts building view model to data model that can be stored in xml file.
+        /// </summary>
+        /// <see cref="Common.DataModel.Building"/>
         public Common.DataModel.Building ToDataModel()
         {
             Common.DataModel.Building result = new Common.DataModel.Building();
@@ -93,6 +146,9 @@ namespace BuildingEditor.Logic
         /// </summary>
         public ObservableCollection<Floor> Floors { get; set; }
 
+        /// <summary>
+        /// Paired stairs in the building.
+        /// </summary>
         public ObservableCollection<StairsPair> Stairs { get; set; }
 
         public string ViewMode { get; set; }
