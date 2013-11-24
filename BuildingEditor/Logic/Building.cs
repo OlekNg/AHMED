@@ -171,5 +171,32 @@ namespace BuildingEditor.Logic
         {
             Floors.Insert(0, new Floor(Floors.Count, rows, cols));
         }
+
+        /// <summary>
+        /// Removes floor from building.
+        /// </summary>
+        /// <param name="level">Level to remove.</param>
+        internal void RemoveFloor(int level)
+        {
+            Floor f = Floors.Where(x => x.Level == level).First();
+            Floors.Remove(f);
+
+            // Update higher floors level number.
+            Floors.Where(x => x.Level > f.Level).ToList().ForEach(x => x.Level--);
+
+            // Delete all stairs that were in floor that has been deleted.
+            var stairsToDelete = Stairs.Where(x => x.First.Level == f.Level || x.Second.Level == f.Level).ToList();
+            stairsToDelete.ForEach(x => x.Destroy());
+
+            // Update stairs levels.
+            Stairs.ToList().ForEach(x =>
+            {
+                if (x.First.Level > level)
+                    x.First.Level--;
+
+                if (x.Second.Level > level)
+                    x.Second.Level--;
+            });
+        }
     }
 }

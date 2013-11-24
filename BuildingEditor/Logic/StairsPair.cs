@@ -71,14 +71,6 @@ namespace BuildingEditor.Logic
         public Stairs First { get; set; }
         public Stairs Second { get; set; }
 
-        public string Text
-        {
-            get
-            {
-                return String.Format("{0} <-> {1}", First.Level, Second.Level);
-            }
-        }
-
         public void SetAdditionalData()
         {
             First.AssignedSegment.AdditionalData = this;

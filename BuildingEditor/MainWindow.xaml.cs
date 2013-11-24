@@ -214,5 +214,12 @@ namespace BuildingEditor
                 uxStairs.ItemsSource = _building.Stairs;
             }
         }
+
+        private void RemoveFloor_Click(object sender, RoutedEventArgs e)
+        {
+            Button b = sender as Button;
+
+            _building.RemoveFloor((int)b.Tag);
+        }
     }
 }

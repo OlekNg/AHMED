@@ -84,22 +84,27 @@
                 <TextBox Name="uxRows" Text="5" Width="30" Margin="5,0" TextAlignment="Center"/>
                 <Button DockPanel.Dock="Top" Content="  +  " Click="AddFloor_Click"/>
             </StackPanel>
-            
-            <DockPanel>
-                <ScrollViewer>
-                    <ListView Name="uxFloors"
+
+            <ScrollViewer>
+                <ListView Name="uxFloors"
                       ItemsSource="{Binding Floors}"
                       SelectedItem="{Binding CurrentFloor}">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <DockPanel>
                                 <TextBlock TextAlignment="Center"
                                            Text="{Binding Level}"
-                                           HorizontalAlignment="Stretch"/>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </ScrollViewer>
-            </DockPanel>
+                                           Width="60"/>
+                                <Button DockPanel.Dock="Right"
+                                        Content="-"
+                                        Tag="{Binding Level}"
+                                        Width="20"
+                                        Click="RemoveFloor_Click"/>
+                            </DockPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </ScrollViewer>
         </DockPanel>
 
         <!-- STAIRS -->
@@ -114,8 +119,14 @@
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock TextAlignment="Center"
-                                           Text="{Binding Text}"
-                                           HorizontalAlignment="Center"/>
+                                           HorizontalAlignment="Center">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} &lt;-> {1}">
+                                            <Binding Path="First.Level"/>
+                                            <Binding Path="Second.Level"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
