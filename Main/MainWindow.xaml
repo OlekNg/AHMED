@@ -82,7 +82,7 @@
         </DockPanel>
 
         <!-- MENU -->
-        <Menu Grid.Column="0" Grid.Row="0" Background="White">
+        <Menu Grid.Column="0" Grid.Row="0" Background="White" Grid.ColumnSpan="2">
             <MenuItem Header="File" Height="25">
                 <MenuItem Header="Test" Click="Test_Click"/>
                 <MenuItem Header="Open" Click="Open_Click"/>
@@ -90,6 +90,9 @@
             </MenuItem>
             <MenuItem Header="Process" Height="25">
                 <MenuItem Header="Run" Click="ProcessRun_Click"/>
+            </MenuItem>
+            <MenuItem Header="Tools" Height="25">
+                <MenuItem Header="Editor" Click="ToolsEditor_Click"/>
             </MenuItem>
         </Menu>
     </Grid>

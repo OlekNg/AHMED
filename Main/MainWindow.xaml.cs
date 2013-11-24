@@ -1,5 +1,6 @@
 ﻿using BuildingEditor.Logic;
 using Common.DataModel.Enums;
+using Simulation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -93,8 +94,25 @@ namespace Main
 
         private void Test_Click(object sender, RoutedEventArgs e)
         {
-            List<Direction> fenotype = new List<Direction>() { Direction.LEFT, Direction.UP, Direction.RIGHT, Direction.LEFT, Direction.DOWN, Direction.RIGHT };
+            List<Direction> fenotype = new List<Direction>() { Direction.DOWN, Direction.LEFT, Direction.LEFT, Direction.RIGHT, Direction.RIGHT, Direction.DOWN };
             _building.SetFenotype(fenotype);
+
+            MapBuilder mapBuilder = new MapBuilder(_building.ToDataModel());
+            Simulator sim = new Simulator();
+
+            sim.MaximumTicks = 50;
+            sim.SetupSimulator(mapBuilder.BuildBuildingMap(), mapBuilder.BuildPeopleMap());
+            var result = sim.Simulate(_building.GetSimulatorFenotype());
+
+            foreach (var group in result)
+            {
+                Console.WriteLine("Escaped group: quantity {0}, ticks {1}", group.Quantity, group.Ticks);
+            }
+        }
+
+        private void ToolsEditor_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(typeof(BuildingEditor.App).Assembly.Location);
         }
     }
 }

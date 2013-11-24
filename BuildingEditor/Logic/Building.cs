@@ -71,9 +71,9 @@ namespace BuildingEditor.Logic
         /// If you didn't set normal fenotype (for floor segments only) for building use function variant with parameter.
         /// </summary>
         /// <returns>Fenotype for simulator.</returns>
-        public List<Direction> GetSimulatorFenotype()
+        public List<List<Direction>> GetSimulatorFenotype()
         {
-            List<Direction> result = new List<Direction>();
+            List<List<Direction>> result = new List<List<Direction>>();
 
             // Order floors by level to make sure we are creating fenotype
             // from bottom to top level of building.
@@ -81,9 +81,15 @@ namespace BuildingEditor.Logic
 
             // Add fenotype from all segments (type of segment doesn't matter).
             foreach (var floor in floors)
+            {
+                List<Direction> floorFenotype = new List<Direction>();
+
                 foreach (var row in floor.Segments)
                     foreach (var segment in row)
-                        result.Add(segment.Fenotype);
+                        floorFenotype.Add(segment.Fenotype);
+
+                result.Add(floorFenotype);
+            }
 
             return result;
         }
@@ -93,7 +99,7 @@ namespace BuildingEditor.Logic
         /// </summary>
         /// <param name="fenotype">Fenotype that covers only segments of type floor.</param>
         /// <returns>Fenotype for simulator.</returns>
-        public List<Direction> GetSimulatorFenotype(List<Direction> fenotype)
+        public List<List<Direction>> GetSimulatorFenotype(List<Direction> fenotype)
         {
             SetFenotype(fenotype);
             return GetSimulatorFenotype();
