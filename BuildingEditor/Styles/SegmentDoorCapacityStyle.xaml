@@ -38,6 +38,7 @@
         <Style.Triggers>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=DataContext.Row, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContentControl}}}" Value="0"/>
                     <Condition Binding="{Binding Type}" Value="{x:Static enum:SideElementType.DOOR}"/>
                     <Condition Binding="{Binding Capacity, Converter={StaticResource NumberToBoolConverter}}" Value="True"/>
                 </MultiDataTrigger.Conditions>
@@ -55,6 +56,7 @@
         <Style.Triggers>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=DataContext.Column, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContentControl}}}" Value="0"/>
                     <Condition Binding="{Binding Type}" Value="{x:Static enum:SideElementType.DOOR}"/>
                     <Condition Binding="{Binding Capacity, Converter={StaticResource NumberToBoolConverter}}" Value="True"/>
                 </MultiDataTrigger.Conditions>

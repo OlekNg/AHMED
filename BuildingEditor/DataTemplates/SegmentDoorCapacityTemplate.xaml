@@ -4,9 +4,9 @@
     
     <DataTemplate x:Key="SegmentDoorCapacityTemplate">
         <DockPanel Style="{StaticResource SegmentDoorCapacityStyle}">
-            <TextBlock DockPanel.Dock="Top" DataContext="{Binding TopSide}"/>
+            <TextBlock DockPanel.Dock="Top" DataContext="{Binding TopSide}" Style="{StaticResource SegmentDoorCapacityTStyle}"/>
             <TextBlock DockPanel.Dock="Bottom" DataContext="{Binding BottomSide}" Style="{StaticResource SegmentDoorCapacityBRStyle}"/>
-            <TextBlock DockPanel.Dock="Left" DataContext="{Binding LeftSide}"/>
+            <TextBlock DockPanel.Dock="Left" DataContext="{Binding LeftSide}" Style="{StaticResource SegmentDoorCapacityLStyle}"/>
             <TextBlock DockPanel.Dock="Right" DataContext="{Binding RightSide}" Style="{StaticResource SegmentDoorCapacityBRStyle}"/>
             <TextBlock/>
         </DockPanel>
