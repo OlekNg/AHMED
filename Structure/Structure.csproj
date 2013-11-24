@@ -41,7 +41,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BuildingMap.cs" />
-    <Compile Include="Direction.cs" />
     <Compile Include="Door.cs" />
     <Compile Include="Floor.cs" />
     <Compile Include="FloorSquare.cs" />
@@ -54,6 +53,12 @@
     <Compile Include="Wall.cs" />
     <Compile Include="WallElementPosition.cs" />
     <Compile Include="WallPlace.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{20218b54-b87a-4315-91e2-30cada45cb93}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

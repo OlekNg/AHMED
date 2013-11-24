@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Structure;
 using Simulation.Exceptions;
+using Common.DataModel.Enums;
 
 namespace Simulation
 {

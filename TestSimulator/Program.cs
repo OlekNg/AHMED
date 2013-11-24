@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Simulation;
 using Structure;
+using Common.DataModel.Enums;
 
 namespace TestSimulator
 {

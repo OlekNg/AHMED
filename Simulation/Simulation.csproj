@@ -51,6 +51,10 @@
     <Compile Include="StairsEvacuationElement.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{20218b54-b87a-4315-91e2-30cada45cb93}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Structure\Structure.csproj">
       <Project>{fe48dff8-eacb-4778-9df0-5d71a664927a}</Project>
       <Name>Structure</Name>

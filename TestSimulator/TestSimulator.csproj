@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Direction.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -49,6 +50,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{20218b54-b87a-4315-91e2-30cada45cb93}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Simulation\Simulation.csproj">
       <Project>{a479bfb8-948e-4cfb-b9af-a8d1acc4af44}</Project>
       <Name>Simulation</Name>
