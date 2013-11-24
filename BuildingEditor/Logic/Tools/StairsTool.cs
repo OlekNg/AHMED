@@ -14,7 +14,6 @@ namespace BuildingEditor.Tools.Logic
     public class StairsTool : Tool
     {
         private Building _building; 
-        private ObservableCollection<StairsPair> _stairs;
         private Segment _previewSegment;
         private bool _firstStairs;
         private StairsPair _stairsPair;
@@ -22,7 +21,6 @@ namespace BuildingEditor.Tools.Logic
         public StairsTool(Building building)
         {
             _building = building;
-            _stairs = _building.Stairs;
             _firstStairs = true;
             Name = "Stairs";
             Capacity = 3;
@@ -111,7 +109,7 @@ namespace BuildingEditor.Tools.Logic
 
             if (_firstStairs)
             {
-                _stairsPair = new StairsPair(_stairs);
+                _stairsPair = new StairsPair(_building.Stairs);
                 _stairsPair.First = new Stairs()
                 {
                     AssignedSegment = segment,
@@ -131,7 +129,7 @@ namespace BuildingEditor.Tools.Logic
                 };
 
                 _stairsPair.SetAdditionalData();
-                _stairs.Add(_stairsPair);
+                _building.Stairs.Add(_stairsPair);
             }
 
             _firstStairs = !_firstStairs;
