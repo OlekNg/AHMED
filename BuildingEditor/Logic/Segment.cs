@@ -123,6 +123,18 @@ namespace BuildingEditor.Logic
             return result;
         }
 
+        public Dictionary<Direction, Segment> GetNeighbours()
+        {
+            Dictionary<Direction, Segment> result = new Dictionary<Direction, Segment>();
+
+            result.Add(Direction.LEFT, LeftSegment);
+            result.Add(Direction.UP, TopSegment);
+            result.Add(Direction.RIGHT, RightSegment);
+            result.Add(Direction.DOWN, BottomSegment);
+
+            return result;
+        }
+
         public SideElement GetSideElement(Direction side)
         {
             SideElement result = null;
@@ -138,6 +150,18 @@ namespace BuildingEditor.Logic
                 case Direction.DOWN:
                     result = BottomSide; break;
             }
+
+            return result;
+        }
+
+        public Dictionary<Direction, SideElement> GetSideElements()
+        {
+            Dictionary<Direction, SideElement> result = new Dictionary<Direction, SideElement>();
+
+            result.Add(Direction.LEFT, LeftSide);
+            result.Add(Direction.UP, TopSide);
+            result.Add(Direction.RIGHT, RightSide);
+            result.Add(Direction.DOWN, BottomSide);
 
             return result;
         }
