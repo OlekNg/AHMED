@@ -93,8 +93,8 @@ namespace Simulation
                         if ((fs = bm.GetSquare(i, j, k)) != null)
                             temp[j][k] = new EvacuationElement(fs);
                     }
-                    _map.Add(temp);
                 }
+                _map.Add(temp);
             }
 
             /*
@@ -136,7 +136,9 @@ namespace Simulation
                     {
                         //element.PeopleQuantity = 0;
                         //;element.Processed = false;
-                        element.Setup(0);
+
+                        if(element != null)
+                            element.Setup(0);
                     }
         }
 
@@ -158,12 +160,12 @@ namespace Simulation
                     {
                         EvacuationElement element = Get(i, j, k);
 
-                        if (element == null) continue;
-
                         if (!fenotypeEnumerator.MoveNext())
                         {
                             throw new BadFenotypeLengthException();
                         }
+
+                        if (element == null) continue;
 
                         Direction direction = fenotypeEnumerator.Current;
 
