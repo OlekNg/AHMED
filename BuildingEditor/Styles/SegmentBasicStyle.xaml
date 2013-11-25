@@ -71,6 +71,24 @@
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
                     <Condition Binding="{Binding Type}" Value="{x:Static enum:SegmentType.FLOOR}"/>
+                    <Condition Binding="{Binding Path=DataContext.ViewMode, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Viewbox}}}" Value="Fenotype"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <ImageBrush ImageSource="../Images/arrow.png">
+                            <ImageBrush.Transform>
+                                <RotateTransform Angle="{Binding Fenotype, Converter={StaticResource OrientationToAngleConverter}}"  CenterX="25" CenterY="25"/>
+                            </ImageBrush.Transform>
+                        </ImageBrush>
+                    </Setter.Value>
+                </Setter>
+            </MultiDataTrigger>
+
+            <!-- Solution -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Type}" Value="{x:Static enum:SegmentType.FLOOR}"/>
+                    <Condition Binding="{Binding Solution}" Value="True"/>
                     <Condition Binding="{Binding Path=DataContext.ViewMode, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Viewbox}}}" Value="Solution"/>
                 </MultiDataTrigger.Conditions>
                 <Setter Property="Background">

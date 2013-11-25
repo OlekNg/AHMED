@@ -55,6 +55,7 @@
             <RadioButton Tag="Floor" Content="Floor capacity" GroupName="ViewMode" Click="ViewMode_Clicked"/>
             <RadioButton Tag="Door" Content="Door capacity" GroupName="ViewMode" Click="ViewMode_Clicked"/>
             <RadioButton Tag="Genotype" Content="Genotype" GroupName="ViewMode" Click="ViewMode_Clicked"/>
+            <RadioButton Tag="Fenotype" Content="Fenotype" GroupName="ViewMode" Click="ViewMode_Clicked"/>
             <RadioButton Tag="Solution" Content="Solution" GroupName="ViewMode" Click="ViewMode_Clicked"/>
         </StackPanel>
 

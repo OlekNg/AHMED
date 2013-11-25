@@ -49,6 +49,33 @@ namespace BuildingEditor.Logic
         }
 
         /// <summary>
+        /// Sets Solution to true only in segments which are used by people to escape.
+        /// </summary>
+        public void DrawSolution()
+        {
+            // Clear old solution.
+            foreach (var floor in Floors)
+                foreach (var row in floor.Segments)
+                    foreach (var segment in row)
+                        segment.Solution = false;
+
+            foreach (var floor in Floors)
+                foreach (var row in floor.Segments)
+                    foreach (var segment in row)
+                        if (segment.Type == SegmentType.FLOOR && segment.PeopleCount > 0)
+                            DrawSolutionPath(segment);
+        }
+
+        protected void DrawSolutionPath(Segment segment)
+        {
+            while (segment != null && segment.Solution == false)
+            {
+                segment.Solution = true;
+                segment = segment.GetNeighbour(segment.Fenotype);
+            }
+        }
+
+        /// <summary>
         /// Counts all segments of type floor.
         /// </summary>
         /// <returns>Number of floor type segments.</returns>

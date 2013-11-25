@@ -77,6 +77,8 @@ namespace BuildingEditor.Logic
             }
         }
 
+        public bool Solution { get; set; }
+
         public bool Preview { get; set; }
         public SegmentType PreviewType { get; set; }
         public Direction PreviewOrientation { get; set; }
