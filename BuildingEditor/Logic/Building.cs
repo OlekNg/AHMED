@@ -80,6 +80,7 @@ namespace BuildingEditor.Logic
                         segment = pair.First.AssignedSegment;
 
                     // Stairs have no fenotype, so we have to use orientation.
+                    segment.Solution = true;
                     segment = segment.GetNeighbour(segment.Orientation);
                 }
 

@@ -237,6 +237,17 @@ namespace BuildingEditor.Logic
                 return;
             }
 
+            // Set walls around stairs except entry
+            if (Type == SegmentType.STAIRS)
+            {
+
+                foreach (Direction s in typeof(Direction).GetEnumValues())
+                    if (s != Orientation)
+                        SetSide(s, SideElementType.WALL);
+
+                return;
+            }
+
             // Set walls and add them to current outer walls list.
             foreach (Direction s in typeof(Direction).GetEnumValues())
             {
