@@ -120,8 +120,11 @@ namespace Simulation
                 {
                     peopleCount = Math.Min(group.Passage.Efficiency, group.PeopleQuantity);
 
-                    _escapedGroups.Add(new EscapedGroup(peopleCount, tick));
-                    group.RemovePeople(peopleCount);
+                    if (peopleCount > 0)
+                    {
+                        _escapedGroups.Add(new EscapedGroup(peopleCount, tick));
+                        group.RemovePeople(peopleCount);
+                    }
                     
                     return;
                 }
