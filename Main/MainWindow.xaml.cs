@@ -41,10 +41,6 @@ namespace Main
 
             uxWorkspaceViewbox.DataContext = _building;
             uxFloors.DataContext = _building;
-
-            List<Direction> fenotype = new List<Direction>() { Direction.DOWN, Direction.LEFT, Direction.RIGHT, Direction.RIGHT, Direction.DOWN,
-                                                               Direction.DOWN, Direction.LEFT, Direction.RIGHT, Direction.RIGHT, Direction.UP };
-            _building.SetFenotype(fenotype);
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
@@ -98,7 +94,10 @@ namespace Main
 
         private void Test_Click(object sender, RoutedEventArgs e)
         {
-            
+            List<Direction> fenotype = new List<Direction>() { Direction.DOWN, Direction.LEFT, Direction.RIGHT, Direction.RIGHT, Direction.DOWN,
+                                                               Direction.DOWN, Direction.LEFT, Direction.RIGHT, Direction.RIGHT, Direction.UP };
+            _building.SetFenotype(fenotype);
+            _building.DrawSolution();
 
             MapBuilder mapBuilder = new MapBuilder(_building.ToDataModel());
             Simulator sim = new Simulator();
@@ -113,9 +112,22 @@ namespace Main
             }
         }
 
+        private void Test2_Click(object sender, RoutedEventArgs e)
+        {
+            List<Direction> fenotype = new List<Direction>() { Direction.DOWN, Direction.LEFT, Direction.RIGHT, Direction.RIGHT, Direction.DOWN,
+                                                               Direction.DOWN, Direction.LEFT, Direction.RIGHT, Direction.RIGHT, Direction.DOWN,
+                                                               Direction.DOWN, Direction.LEFT, Direction.RIGHT, Direction.RIGHT, Direction.DOWN,
+                                                               Direction.DOWN, Direction.LEFT, Direction.RIGHT, Direction.RIGHT, Direction.DOWN,
+                                                               Direction.RIGHT, Direction.RIGHT, Direction.DOWN, Direction.LEFT, Direction.LEFT };
+            _building.SetFenotype(fenotype);
+            _building.DrawSolution();
+        }
+
         private void ToolsEditor_Click(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Process.Start(typeof(BuildingEditor.App).Assembly.Location);
         }
+
+        
     }
 }

@@ -70,6 +70,19 @@ namespace BuildingEditor.Logic
         {
             while (segment != null && segment.Solution == false)
             {
+                // If encountered stairs, then move to segment where are second stairs from pair.
+                if (segment.Type == SegmentType.STAIRS)
+                {
+                    StairsPair pair = segment.AdditionalData as StairsPair;
+                    if (segment == pair.First.AssignedSegment)
+                        segment = pair.Second.AssignedSegment;
+                    else
+                        segment = pair.First.AssignedSegment;
+
+                    // Stairs have no fenotype, so we have to use orientation.
+                    segment = segment.GetNeighbour(segment.Orientation);
+                }
+
                 segment.Solution = true;
                 segment = segment.GetNeighbour(segment.Fenotype);
             }
