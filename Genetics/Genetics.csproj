@@ -49,6 +49,10 @@
     <Compile Include="TestSimulationResult.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BuildingEditor\BuildingEditor.csproj">
+      <Project>{bd97471a-48c6-48c2-83fd-75054045d0cf}</Project>
+      <Name>BuildingEditor</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{20218b54-b87a-4315-91e2-30cada45cb93}</Project>
       <Name>Common</Name>

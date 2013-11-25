@@ -31,7 +31,7 @@ namespace Main
             _building = new Building();
 
             Common.DataModel.Building building = new Common.DataModel.Building();
-            building.Load("test.xml");
+            building.Load("officialtest.xml");
             Building viewModel = new Building(building);
 
 
@@ -41,6 +41,10 @@ namespace Main
 
             uxWorkspaceViewbox.DataContext = _building;
             uxFloors.DataContext = _building;
+
+            List<Direction> fenotype = new List<Direction>() { Direction.DOWN, Direction.LEFT, Direction.RIGHT, Direction.RIGHT, Direction.DOWN,
+                                                               Direction.DOWN, Direction.LEFT, Direction.RIGHT, Direction.RIGHT, Direction.UP };
+            _building.SetFenotype(fenotype);
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
@@ -94,8 +98,7 @@ namespace Main
 
         private void Test_Click(object sender, RoutedEventArgs e)
         {
-            List<Direction> fenotype = new List<Direction>() { Direction.DOWN, Direction.LEFT, Direction.LEFT, Direction.RIGHT, Direction.RIGHT, Direction.DOWN };
-            _building.SetFenotype(fenotype);
+            
 
             MapBuilder mapBuilder = new MapBuilder(_building.ToDataModel());
             Simulator sim = new Simulator();

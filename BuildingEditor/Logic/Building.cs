@@ -62,7 +62,29 @@ namespace BuildingEditor.Logic
             return result;
         }
 
+        /// <summary>
+        /// Calculates normal fenotype of building (only floor-type segments).
+        /// </summary>
+        /// <returns>Fenotype.</returns>
+        public List<Direction> GetFenotype()
+        {
+            List<Direction> result = new List<Direction>();
 
+            // Order floors by level to make sure we are creating fenotype
+            // from bottom to top level of building.
+            List<Floor> floors = Floors.OrderBy(x => x.Level).ToList();
+
+            // Add fenotype from all segments of type floor.
+            foreach (var floor in floors)
+            {
+                foreach (var row in floor.Segments)
+                    foreach (var segment in row)
+                        if(segment.Type == SegmentType.FLOOR)
+                            result.Add(segment.Fenotype);
+            }
+
+            return result;
+        }
 
         /// <summary>
         /// Creates fenotype for simulator which requires all segments (even of type NONE)

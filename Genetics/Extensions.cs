@@ -35,5 +35,35 @@ namespace Genetics
 
             return result;
         }
+
+        public static List<bool> ToGenotype(this List<Direction> fenotype)
+        {
+            List<bool> result = new List<bool>();
+
+            foreach (var f in fenotype)
+            {
+                switch (f)
+                {
+                    case Direction.LEFT:
+                        result.Add(false);
+                        result.Add(false);
+                        break;
+                    case Direction.UP:
+                        result.Add(true);
+                        result.Add(false);
+                        break;
+                    case Direction.RIGHT:
+                        result.Add(true);
+                        result.Add(true);
+                        break;
+                    case Direction.DOWN:
+                        result.Add(false);
+                        result.Add(true);
+                        break;
+                }
+            }
+
+            return result;
+        }
     }
 }
