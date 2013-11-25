@@ -1,5 +1,9 @@
 ﻿using BuildingEditor.Logic;
 using Common.DataModel.Enums;
+using Genetics;
+using Genetics.Evaluators;
+using Genetics.Repairers;
+using Genetics.Specialized;
 using Simulation;
 using System;
 using System.Collections.Generic;
@@ -89,7 +93,41 @@ namespace Main
 
         private void ProcessRun_Click(object sender, RoutedEventArgs e)
         {
+            AdvancedRepairer r = new AdvancedRepairer(new Building(_building.ToDataModel()));
 
+            MapBuilder mapBuilder = new MapBuilder(_building.ToDataModel());
+            Simulator sim = new Simulator();
+
+            sim.MaximumTicks = 50;
+            sim.SetupSimulator(mapBuilder.BuildBuildingMap(), mapBuilder.BuildPeopleMap());
+            AHMEDEvaluator evaluator = new AHMEDEvaluator(sim, new Building(_building.ToDataModel()));
+
+            BinaryChromosome.CrossoverOperator = new OnePointCrossover();
+            BinaryChromosome.MutationOperator = new ClassicMutation(0.5);
+            BinaryChromosome.Evaluator = evaluator;
+            BinaryChromosome.Repairer = r;
+            GeneticAlgorithm ga = new GeneticAlgorithm(new BinaryChromosomeFactory(_building.GetFloorCount() * 2));
+            ga.Selector = new TournamentSelector();
+            ga.MaxIterations = 500;
+            ga.ReportStatus += AlgorithmStatus;
+            ga.Start();
+            _building.SetFenotype(((BinaryChromosome)ga.BestChromosome).Genotype.ToFenotype());
+            _building.DrawSolution();
+        }
+
+        private void AlgorithmStatus(GeneticAlgorithmStatus status)
+        {
+            Console.CursorTop = 0;
+            Console.CursorLeft = 0;
+            Console.WriteLine("Iteration: {0}", status.IterationNumber);
+            Console.WriteLine("Crossover overhead: {0:0.000}", status.CrossoverOverhead);
+            Console.WriteLine("Evaluation overhead: {0:0.000}", status.EvaluationOverhead);
+            Console.WriteLine("Mutation overhead: {0:0.000}", status.MutationOverhead);
+            Console.WriteLine("Repair overhead: {0:0.000}", status.RepairOverhead);
+            Console.WriteLine("Population fitness: {0:0.000}", status.CurrentPopulation.Fitness);
+            Console.WriteLine("Population avg fitness: {0:0.000}", status.CurrentPopulation.AvgFitness);
+            Console.WriteLine("Best population chromosome value: {0:0.000}", status.CurrentPopulation.BestChromosome.Value);
+            Console.WriteLine("Best algorithm chromosome value: {0:0.000}", status.BestChromosome.Value);
         }
 
         private void Test_Click(object sender, RoutedEventArgs e)

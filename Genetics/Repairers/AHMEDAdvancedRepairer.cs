@@ -117,6 +117,9 @@ namespace Genetics.Repairers
             var neighbours = segment.GetNeighbours();
             foreach (Direction side in typeof(Direction).GetEnumValues())
             {
+                if (sideElements[side].Type == SideElementType.DOOR)
+                    continue;
+
                 if (sideElements[side].Type == SideElementType.WALL)
                 {
                     result.Remove(side);
