@@ -16,17 +16,17 @@ namespace Structure
         /// <summary>
         /// Group location - row
         /// </summary>
-        public uint Row { get; set; }
+        public int Row { get; set; }
 
         /// <summary>
         /// Group location - column
         /// </summary>
-        public uint Col { get; set; }
+        public int Col { get; set; }
 
         /// <summary>
         /// Group quantity
         /// </summary>
-        public uint Quantity { get; set; }
+        public int Quantity { get; set; }
 
         
 
@@ -36,7 +36,7 @@ namespace Structure
         /// <param name="row">Row</param>
         /// <param name="col">Column</param>
         /// <param name="quantity">Quantity</param>
-        public PeopleGroup(int floor, uint row, uint col, uint quantity)
+        public PeopleGroup(int floor, int row, int col, int quantity)
         {
             Floor = floor;
             Row = row;

@@ -21,7 +21,7 @@ namespace Structure
         /// <summary>
         /// Wall element efficiency (measured in number of people which can go through this wall element)
         /// </summary>
-        uint Efficiency { get; }
+        int Efficiency { get; }
 
         /// <summary>
         /// Should this element be drawn in visualiser

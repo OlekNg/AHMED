@@ -8,23 +8,23 @@ namespace Structure
 {
     public class WallElementPosition
     {
-        private uint _floor;
+        private int _floor;
 
-        private uint _row;
+        private int _row;
 
-        private uint _col;
+        private int _col;
 
         private WallPlace _place;
 
-        public uint Floor { get { return _floor; } }
+        public int Floor { get { return _floor; } }
 
-        public uint Row { get { return _row; } }
+        public int Row { get { return _row; } }
 
-        public uint Col { get { return _col; } }
+        public int Col { get { return _col; } }
 
         public WallPlace Place { get { return _place; } }
 
-        public WallElementPosition(uint f, uint r, uint c, WallPlace wp)
+        public WallElementPosition(int f, int r, int c, WallPlace wp)
         {
             _floor = f;
             _row = r;

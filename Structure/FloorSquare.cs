@@ -15,7 +15,7 @@ namespace Structure
         /// <summary>
         /// Capacity of the floor tile
         /// </summary>
-        public uint Capacity { get; set; }
+        public int Capacity { get; set; }
 
         /// <summary>
         /// Wall elements sorrounding this floor tile
@@ -26,7 +26,7 @@ namespace Structure
         /// Initalize floor square with given capacity
         /// </summary>
         /// <param name="c">Capacity</param>
-        public FloorSquare(uint c)
+        public FloorSquare(int c)
         {
             Capacity = c;
             Side = new IWallElement[4];

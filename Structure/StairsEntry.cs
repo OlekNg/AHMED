@@ -8,11 +8,11 @@ namespace Structure
 {
     public class StairsEntry : IWallElement
     {
-        private uint _efficiency;
+        private int _efficiency;
 
         public bool CanPassThrough { get { return true; } }
 
-        public uint Efficiency { get { return _efficiency; } }
+        public int Efficiency { get { return _efficiency; } }
 
         public bool Draw { get { return true; } }
 
@@ -28,7 +28,7 @@ namespace Structure
 
         public WallElementPosition Position { get; set; }
 
-        public StairsEntry(uint e, WallElementPosition wep)
+        public StairsEntry(int e, WallElementPosition wep)
         {
             _efficiency = e;
             Position = wep;

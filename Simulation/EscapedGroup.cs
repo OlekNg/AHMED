@@ -14,19 +14,19 @@ namespace Simulation
         /// <summary>
         /// People count
         /// </summary>
-        public uint Quantity { get; set; }
+        public int Quantity { get; set; }
 
         /// <summary>
         /// How many ticks took escape?
         /// </summary>
-        public uint Ticks { get; set; }
+        public int Ticks { get; set; }
 
         /// <summary>
         /// Simple constructor
         /// </summary>
         /// <param name="q">People quantity</param>
         /// <param name="t">Ticks count</param>
-        public EscapedGroup(uint q, uint t)
+        public EscapedGroup(int q, int t)
         {
             Quantity = q;
             Ticks = t;

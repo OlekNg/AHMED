@@ -27,7 +27,7 @@ namespace Simulation
         /// <summary>
         /// Maximum ticks for simulation
         /// </summary>
-        public uint MaximumTicks { get; set; }
+        public int MaximumTicks { get; set; }
 
         /// <summary>
         /// Evacuation map
@@ -80,7 +80,7 @@ namespace Simulation
             _evacuationMap.MapFenotype(fenotype);
 
             //start simulation
-            for (uint i = 1; i <= MaximumTicks; ++i)
+            for (int i = 1; i <= MaximumTicks; ++i)
             {
                 for (int j = _evacuationGroups.Count - 1; j >= 0; --j)
                     Process(_evacuationGroups[j], i);
@@ -103,9 +103,9 @@ namespace Simulation
         /// </summary>
         /// <param name="group">Evacuation element to process</param>
         /// <param name="tick">Process goven element with this tick</param>
-        private void Process(EvacuationElement group, uint tick)
+        private void Process(EvacuationElement group, int tick)
         {
-            uint peopleCount;
+            int peopleCount;
             EvacuationElement nextStep = group.NextStep;
 
             if (group.Processed == true) return;

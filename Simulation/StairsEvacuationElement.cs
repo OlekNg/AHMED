@@ -9,13 +9,13 @@ namespace Simulation
 {
     public class StairsEvacuationElement : EvacuationElement
     {
-        private List<KeyValuePair<uint, uint>> _groups;
+        private List<KeyValuePair<int, int>> _groups;
 
-        private uint _totalPeople;
+        private int _totalPeople;
 
-        private uint _startingDelay;
+        private int _startingDelay;
 
-        public override uint PeopleQuantityLeft
+        public override int PeopleQuantityLeft
         {
             get
             {
@@ -26,7 +26,7 @@ namespace Simulation
         public StairsEvacuationElement(StairsEntry se, EvacuationMap em) : base(new Structure.FloorSquare(se.ConnectedStairs.Capacity))
         {
             _startingDelay = se.ConnectedStairs.Delay;
-            _groups = new List<KeyValuePair<uint, uint>>();
+            _groups = new List<KeyValuePair<int, int>>();
 
             DetermineNextStep(se, em);
             Passage = se;
@@ -49,8 +49,8 @@ namespace Simulation
 
         public override void StartProcessing()
         {
-            uint newDelay;
-            List<KeyValuePair<uint, uint>> newList = new List<KeyValuePair<uint, uint>>();
+            int newDelay;
+            List<KeyValuePair<int, int>> newList = new List<KeyValuePair<int, int>>();
 
             base.StartProcessing();
             for (int i = 0; i < _groups.Count; ++i)
@@ -62,7 +62,7 @@ namespace Simulation
                 }
                 else
                 {
-                    newList.Add(new KeyValuePair<uint, uint>(newDelay, _groups[i].Value));
+                    newList.Add(new KeyValuePair<int, int>(newDelay, _groups[i].Value));
                 }                
             }
             _groups = newList;
@@ -75,13 +75,13 @@ namespace Simulation
             _totalPeople = 0;
         }*/
 
-        public override void AddPeople(uint quantity)
+        public override void AddPeople(int quantity)
         {
             _totalPeople += quantity;
-            _groups.Add(new KeyValuePair<uint, uint>(_startingDelay, quantity));
+            _groups.Add(new KeyValuePair<int, int>(_startingDelay, quantity));
         }
 
-        public override void RemovePeople(uint quantity)
+        public override void RemovePeople(int quantity)
         {
             base.RemovePeople(quantity);
             _totalPeople -= quantity;

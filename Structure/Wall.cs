@@ -25,7 +25,7 @@ namespace Structure
         /// <summary>
         /// No one can pass through the wall
         /// </summary>
-        public uint Efficiency
+        public int Efficiency
         {
             get
             {
