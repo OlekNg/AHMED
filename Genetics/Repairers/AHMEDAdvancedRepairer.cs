@@ -27,8 +27,9 @@ namespace Genetics.Repairers
             _oppositeDirections.Add(Direction.RIGHT, Direction.LEFT);
         }
 
-        public List<bool> Repair(List<bool> genotype)
+        public List<bool> Repair(Chromosome<List<bool>> c)
         {
+            var genotype = c.Genotype;
             // Set fenotype to building that we can analyze fenotype on actual building.
             _building.SetFenotype(genotype.ToFenotype());
 
