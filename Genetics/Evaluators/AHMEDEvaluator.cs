@@ -25,12 +25,15 @@ namespace Genetics.Evaluators
         private Simulator _simulator;
         private Building _building;
 
+        private List<Segment> _peopleGroups;
+
         public AHMEDEvaluator(Simulator simulator, Building building)
         {
             _simulator = simulator;
             _building = building;
-            _peopleCount = building.GetPeopleCount();
             _maxAvgEscapeTime = building.GetFloorCount() * 1.5;
+            _peopleCount = building.GetPeopleCount();
+            _peopleGroups = building.GetPeopleGroups();
             CreateBuildingFlow();
         }
 
@@ -48,19 +51,27 @@ namespace Genetics.Evaluators
             foreach (EscapedGroup g in result)
             {
                 sum += g.Quantity * g.Ticks;
-                sumTicks += (int)g.Ticks;
-                peopleEscaped += (int)g.Quantity;
+                sumTicks += g.Ticks;
+                peopleEscaped += g.Quantity;
             }
 
-            double avg;
-            if (peopleEscaped != _peopleCount)
-                avg = 0;
-            else
-            {
-                avg = _maxAvgEscapeTime - (sum / (double)_peopleCount);
-            }
+            double value = 0;
+            value += peopleEscaped;
 
-            return (double)peopleEscaped + avg;
+            foreach (var group in _peopleGroups)
+                value -= GetPeopleGroupFlowValue(group);
+
+            return value;
+
+            //double avg;
+            //if (peopleEscaped != _peopleCount)
+            //    avg = 0;
+            //else
+            //{
+            //    avg = _maxAvgEscapeTime - (sum / (double)_peopleCount);
+            //}
+
+            //return (double)peopleEscaped + avg;
         }
 
         public void CreateBuildingFlow()
@@ -121,6 +132,25 @@ namespace Genetics.Evaluators
                 if (next != null)
                     Flood(value + 1, next);
             }
+        }
+
+        protected int GetPeopleGroupFlowValue(Segment segment)
+        {
+            // We need to stop if we will be again in already visited segment.
+            List<Segment> history = new List<Segment>();
+
+            // Follow fenotype until null segment or loop detected.
+            int bestValue = segment.FlowValue;
+            while (segment != null && !history.Contains(segment))
+            {
+                if (segment.FlowValue < bestValue)
+                    bestValue = segment.FlowValue;
+
+                history.Add(segment);
+                segment = segment.GetNextSegment();
+            }
+
+            return bestValue;
         }
     }
 }

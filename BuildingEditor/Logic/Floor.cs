@@ -260,5 +260,17 @@ namespace BuildingEditor.Logic
 
             return result;
         }
+
+        public List<Segment> GetPeopleGroups()
+        {
+            List<Segment> result = new List<Segment>();
+
+            foreach (var row in Segments)
+                foreach (var segment in row)
+                    if (segment.PeopleCount > 0)
+                        result.Add(segment);
+
+            return result;
+        }
     }
 }

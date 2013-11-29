@@ -131,6 +131,16 @@ namespace BuildingEditor.Logic
             return result;
         }
 
+        public List<Segment> GetPeopleGroups()
+        {
+            List<Segment> result = new List<Segment>();
+
+            foreach (var floor in Floors)
+                result.AddRange(floor.GetPeopleGroups());
+
+            return result;
+        }
+
         /// <summary>
         /// Creates fenotype for simulator which requires all segments (even of type NONE)
         /// to be covered by fenotype.

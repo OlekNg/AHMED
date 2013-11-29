@@ -105,11 +105,11 @@ namespace Main
             //AHMEDEvaluator evaluator = new AHMEDEvaluator(sim, _building); // works on actual building
 
             //BinaryChromosome.CrossoverOperator = new FloorByFloorCrossover(_building);
-            BinaryChromosome.CrossoverOperator = new MultiPointCrossover(2);
+            BinaryChromosome.CrossoverOperator = new MultiPointCrossover();
             BinaryChromosome.MutationOperator = new ClassicMutation();
             BinaryChromosome.Evaluator = evaluator;
             BinaryChromosome.Repairer = r;
-            GeneticAlgorithm ga = new GeneticAlgorithm(new BinaryChromosomeFactory(_building.GetFloorCount() * 2));
+            GeneticAlgorithm ga = new GeneticAlgorithm(new BinaryChromosomeFactory(_building.GetFloorCount() * 2), 100);
             ga.Selector = new TournamentSelector();
             //ga.Selector = new RankSelector();
             //ga.Selector = new RouletteSelector();
