@@ -31,6 +31,10 @@ namespace BuildingEditor.Logic
             AddFloor(rows, cols);
         }
 
+        /// <summary>
+        /// Creates building from data model.
+        /// </summary>
+        /// <param name="building">Data model building.</param>
         public Building(Common.DataModel.Building building)
             : this()
         {

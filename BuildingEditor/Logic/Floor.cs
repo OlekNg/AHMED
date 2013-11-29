@@ -11,7 +11,6 @@ namespace BuildingEditor.Logic
     /// <summary>
     /// Represents single floor in the building.
     /// </summary>
-    [Serializable]
     [ImplementPropertyChanged]
     public class Floor
     {
@@ -36,7 +35,7 @@ namespace BuildingEditor.Logic
             {
                 ObservableCollection<Segment> row = new ObservableCollection<Segment>();
                 for (int j = 0; j < cols; j++)
-                    row.Add(new Segment());
+                    row.Add(new Segment(this));
 
                 Segments.Add(row);
             }
@@ -56,7 +55,7 @@ namespace BuildingEditor.Logic
                 ObservableCollection<Segment> segmentRow = new ObservableCollection<Segment>();
                 for (int col = 0; col < floor.Segments[row].Count; col++)
                 {
-                    segmentRow.Add(new Segment(floor.Segments[row][col]));
+                    segmentRow.Add(new Segment(this, floor.Segments[row][col]));
                 }
                 Segments.Add(segmentRow);
             }
@@ -149,7 +148,7 @@ namespace BuildingEditor.Logic
             int cols = Segments[0].Count;
             ObservableCollection<Segment> row = new ObservableCollection<Segment>();
             for (int j = 0; j < cols; j++)
-                row.Add(new Segment());
+                row.Add(new Segment(this));
 
             Segments.Insert(index, row);
             ConnectSegments();
@@ -165,7 +164,7 @@ namespace BuildingEditor.Logic
         {
             int rows = Segments.Count;
             for (int i = 0; i < rows; i++)
-                Segments[i].Insert(index, new Segment());
+                Segments[i].Insert(index, new Segment(this));
 
             ConnectSegments();
             RecalculateIndexes();

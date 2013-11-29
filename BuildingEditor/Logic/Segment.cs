@@ -13,9 +13,11 @@ namespace BuildingEditor.Logic
     public class Segment
     {
         protected List<SideElement> _outerWalls;
+        private Floor _floor;
 
-        public Segment()
+        public Segment(Floor owner)
         {
+            _floor = owner;
             _outerWalls = new List<SideElement>();
 
             LeftSide = new SideElement();
@@ -28,19 +30,15 @@ namespace BuildingEditor.Logic
             BottomRightCorner = new SideElement();
             BottomLeftCorner = new SideElement();
 
+            // Default type and capacity.
             Type = SegmentType.FLOOR;
+            Capacity = 3;
         }
 
-        public Segment(SegmentType type = SegmentType.FLOOR)
-            : this()
+        public Segment(Floor owner, Common.DataModel.Segment segment)
         {
-            Type = type;
-            Capacity = 5;
-        }
+            _floor = owner;
 
-        public Segment(Common.DataModel.Segment segment)
-            : this()
-        {
             Type = segment.Type;
             Orientation = segment.Orientation;
             Capacity = segment.Capacity;
@@ -55,6 +53,7 @@ namespace BuildingEditor.Logic
         #region Properties
         public int Row { get; set; }
         public int Column { get; set; }
+        public int Level { get { return _floor.Level; } }
 
         public Direction Fenotype { get; set; }
         public string GenotypeText
@@ -70,7 +69,7 @@ namespace BuildingEditor.Logic
                     case Direction.RIGHT:
                         return "11";
                     case Direction.DOWN:
-                        return "01";  
+                        return "01";
                 }
 
                 return "";
@@ -123,6 +122,29 @@ namespace BuildingEditor.Logic
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Returns segment which this segment leads to (determined by fenotype).
+        /// </summary>
+        /// <returns></returns>
+        public Segment GetNextSegment()
+        {
+            Segment result;
+
+            if (Type == SegmentType.STAIRS)
+            {
+                // Get segment that is on exit of second stairs from pair.
+                StairsPair pair = (StairsPair)AdditionalData;
+                Segment secondStairs;
+                if (this == pair.First.AssignedSegment)
+                    secondStairs = pair.Second.AssignedSegment;
+                else
+                    secondStairs = pair.First.AssignedSegment;
+                return secondStairs.GetNeighbour(secondStairs.Orientation);
+            }
+            else
+                return GetNeighbour(Fenotype);
         }
 
         public Dictionary<Direction, Segment> GetNeighbours()
@@ -240,7 +262,6 @@ namespace BuildingEditor.Logic
             // Set walls around stairs except entry
             if (Type == SegmentType.STAIRS)
             {
-
                 foreach (Direction s in typeof(Direction).GetEnumValues())
                     if (s != Orientation)
                         SetSide(s, SideElementType.WALL);
@@ -272,7 +293,7 @@ namespace BuildingEditor.Logic
             result.Orientation = Orientation;
             result.PeopleCount = PeopleCount;
 
-            result.LeftSide = LeftSide.ToDataModel(); 
+            result.LeftSide = LeftSide.ToDataModel();
             result.TopSide = TopSide.ToDataModel();
             result.RightSide = RightSide.ToDataModel();
             result.BottomSide = BottomSide.ToDataModel();
