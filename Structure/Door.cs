@@ -25,7 +25,7 @@ namespace Structure
         /// <summary>
         /// Door efficiency
         /// </summary>
-        public uint Efficiency { get; set; }
+        public int Efficiency { get; set; }
 
         /// <summary>
         /// Is there need to draw this door in visualiser
@@ -36,7 +36,7 @@ namespace Structure
         /// Initalize door with given efficiency
         /// </summary>
         /// <param name="c">Efficiency</param>
-        public Door(uint c)
+        public Door(int c)
         {
             Efficiency = c;
             Draw = true;
@@ -47,7 +47,7 @@ namespace Structure
         /// </summary>
         /// <param name="c">Efficiency</param>
         /// <param name="d">To draw or not to draw?</param>
-        public Door(uint c, bool d)
+        public Door(int c, bool d)
         {
             Efficiency = c;
             Draw = d;

@@ -25,12 +25,12 @@ namespace Simulation
         /// <summary>
         /// Number of people standing in this element
         /// </summary>
-        public uint PeopleQuantity { get; protected set; }
+        public int PeopleQuantity { get; protected set; }
 
         /// <summary>
         /// Last update time (calculated in elapsed ticks)
         /// </summary>
-        public uint Ticks { get; set; }
+        public int Ticks { get; set; }
 
         /// <summary>
         /// Was this element processed?
@@ -45,7 +45,7 @@ namespace Simulation
         /// <summary>
         /// How many people can get in this evacuation route element
         /// </summary>
-        public virtual uint PeopleQuantityLeft { 
+        public virtual int PeopleQuantityLeft { 
             get 
             { 
                 return FloorSquare.Capacity - PeopleQuantity; 
@@ -73,17 +73,17 @@ namespace Simulation
             Processed = true;
         }
 
-        public virtual void AddPeople(uint quantity)
+        public virtual void AddPeople(int quantity)
         {
             PeopleQuantity += quantity;
         }
 
-        public virtual void RemovePeople(uint quantity)
+        public virtual void RemovePeople(int quantity)
         {
             PeopleQuantity -= quantity;
         }
 
-        public virtual void Setup(uint peopleQuantity)
+        public virtual void Setup(int peopleQuantity)
         {
             Processed = false;
             PeopleQuantity = peopleQuantity;

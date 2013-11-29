@@ -17,12 +17,12 @@ namespace Simulation
         /// <summary>
         /// Width of map
         /// </summary>
-        private List<uint> _width;
+        private List<int> _width;
 
         /// <summary>
         /// Height of map
         /// </summary>
-        private List<uint> _height;
+        private List<int> _height;
 
         private int _floors;
 
@@ -37,9 +37,9 @@ namespace Simulation
         /// <param name="row">Row 0 indexed</param>
         /// <param name="col">Column 0 indexed</param>
         /// <returns>True if coordinates belong to e. m., false - otherwise</returns>
-        private bool CheckRanges(int floor, uint row, uint col)
+        private bool CheckRanges(int floor, int row, int col)
         {
-            return !(floor <0 || floor >= _floors || row >= _height[floor] || col >= _width[floor]);
+            return !(floor < 0 || row < 0 || col < 0 || floor >= _floors || row >= _height[floor] || col >= _width[floor]);
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Simulation
         /// <param name="row">Row (0 indexed)</param>
         /// <param name="col">Column (0 indexed)</param>
         /// <returns>Return evacuation element with given coords, null if such coordinates are outside map</returns>
-        public EvacuationElement Get(int floor, uint row, uint col)
+        public EvacuationElement Get(int floor, int row, int col)
         {
             if (CheckRanges(floor, row, col)) return _map[floor][row][col];
             return null;
@@ -65,13 +65,13 @@ namespace Simulation
         /// <param name="bm">Building map</param>
         public void InitializeFromBuildingMap(BuildingMap bm)
         {
-            uint w, h;
+            int w, h;
             EvacuationElement[][] temp;
             FloorSquare fs;
 
             _floors = bm.Floors.Count;
-            _width = new List<uint>(_floors);
-            _height = new List<uint>(_floors);
+            _width = new List<int>(_floors);
+            _height = new List<int>(_floors);
             _map = new List<EvacuationElement[][]>();
 
 
@@ -84,17 +84,17 @@ namespace Simulation
                 _height.Add(h);
 
                 temp = new EvacuationElement[h][];
-                for (uint j = 0; j < h; ++j)
+                for (int j = 0; j < h; ++j)
                 {
                     temp[j] = new EvacuationElement[w];
 
-                    for (uint k = 0; k < w; ++k)
+                    for (int k = 0; k < w; ++k)
                     {
                         if ((fs = bm.GetSquare(i, j, k)) != null)
                             temp[j][k] = new EvacuationElement(fs);
                     }
-                    _map.Add(temp);
                 }
+                _map.Add(temp);
             }
 
             /*
@@ -103,7 +103,7 @@ namespace Simulation
             _height = bm.Height;
 
             _map = new EvacuationElement[bm.Height][];
-            for (uint i = 0; i < bm.Height; ++i)
+            for (int i = 0; i < bm.Height; ++i)
             {
                 _map[i] = new EvacuationElement[bm.Width];
                 for (int j = 0; j < bm.Width; ++j)
@@ -136,7 +136,9 @@ namespace Simulation
                     {
                         //element.PeopleQuantity = 0;
                         //;element.Processed = false;
-                        element.Setup(0);
+
+                        if(element != null)
+                            element.Setup(0);
                     }
         }
 
@@ -152,18 +154,18 @@ namespace Simulation
             {
                 fenotypeEnumerator = fenotype[i].GetEnumerator();
 
-                for (uint j = 0; j < _height[i]; ++j)
+                for (int j = 0; j < _height[i]; ++j)
                 {
-                    for (uint k = 0; k < _width[i]; ++k)
+                    for (int k = 0; k < _width[i]; ++k)
                     {
                         EvacuationElement element = Get(i, j, k);
-
-                        if (element == null) continue;
 
                         if (!fenotypeEnumerator.MoveNext())
                         {
                             throw new BadFenotypeLengthException();
                         }
+
+                        if (element == null) continue;
 
                         Direction direction = fenotypeEnumerator.Current;
 

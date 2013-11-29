@@ -9,11 +9,11 @@ namespace Structure
 {
     public class Floor
     {
-        public uint Height { get; set; }
+        public int Height { get; set; }
 
-        public uint Width { get; set; }
+        public int Width { get; set; }
 
-        public uint PassageEfficiency { get; set; }
+        public int PassageEfficiency { get; set; }
 
         public FloorSquare[][] Base { get; set; }
 
@@ -23,7 +23,7 @@ namespace Structure
         /// <param name="w">Floor width</param>
         /// <param name="h">Floor height</param>
         /// <param name="standardPassageEfficency">Standard efficiency for not set passages</param>
-        public void Setup(uint w, uint h, uint standardPassageEfficency)
+        public void Setup(int w, int h, int standardPassageEfficency)
         {
             Height = h;
             Width = w;
@@ -41,7 +41,7 @@ namespace Structure
         /// <param name="row">Row</param>
         /// <param name="col">Column</param>
         /// <param name="capacity">Capacity</param>
-        public void SetFloor(uint row, uint col, uint capacity)
+        public void SetFloor(int row, int col, int capacity)
         {
             Base[row][col] = new FloorSquare(capacity);
             for (int i = 0; i < 4; ++i)
@@ -56,7 +56,7 @@ namespace Structure
         /// <param name="row">Row</param>
         /// <param name="col">Column</param>
         /// <param name="position">Wall orientation</param>
-        public void SetWall(uint row, uint col, WallPlace position)
+        public void SetWall(int row, int col, WallPlace position)
         {
             SetWallElement(row, col, new Wall(), position);
         }
@@ -68,12 +68,12 @@ namespace Structure
         /// <param name="col">Column</param>
         /// <param name="capacity">Door eficiency</param>
         /// <param name="position">Door orientation</param>
-        public void SetDoor(uint row, uint col, uint capacity, WallPlace position)
+        public void SetDoor(int row, int col, int capacity, WallPlace position)
         {
             SetWallElement(row, col, new Door(capacity), position);
         }
 
-        public void SetStairsEntry(uint row, uint col, WallPlace position, StairsEntry se)
+        public void SetStairsEntry(int row, int col, WallPlace position, StairsEntry se)
         {
             SetWallElement(row, col, se, position);
         }
@@ -85,7 +85,7 @@ namespace Structure
         /// <param name="col">Column</param>
         /// <param name="wallElement">Wall element</param>
         /// <param name="wallPosition">Wall element orientation</param>
-        private void SetWallElement(uint row, uint col, IWallElement wallElement, WallPlace wallPosition)
+        private void SetWallElement(int row, int col, IWallElement wallElement, WallPlace wallPosition)
         {
             if (wallPosition == WallPlace.LEFT)
             {

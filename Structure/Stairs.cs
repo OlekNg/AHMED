@@ -8,19 +8,19 @@ namespace Structure
 {
     public class Stairs
     {
-        private uint _capacity;
+        private int _capacity;
 
-        public uint Capacity { get { return _capacity; } }
+        public int Capacity { get { return _capacity; } }
 
-        private uint _delay;
+        private int _delay;
 
-        public uint Delay { get { return _delay; } }
+        public int Delay { get { return _delay; } }
 
         private StairsEntry[] _entries;
 
         public StairsEntry[] Entries { get { return _entries; } }
 
-        public Stairs(uint c, uint d)
+        public Stairs(int c, int d)
         {
             _entries = new StairsEntry[2];
             _capacity = c;
