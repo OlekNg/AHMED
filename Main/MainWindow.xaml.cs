@@ -102,6 +102,7 @@ namespace Main
             sim.MaximumTicks = 100;
             sim.SetupSimulator(mapBuilder.BuildBuildingMap(), mapBuilder.BuildPeopleMap());
             AHMEDEvaluator evaluator = new AHMEDEvaluator(sim, new Building(_building.ToDataModel()));
+            //AHMEDEvaluator evaluator = new AHMEDEvaluator(sim, _building); // works on actual building
 
             //BinaryChromosome.CrossoverOperator = new FloorByFloorCrossover(_building);
             BinaryChromosome.CrossoverOperator = new MultiPointCrossover(2);

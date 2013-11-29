@@ -47,7 +47,7 @@ namespace Genetics.Repairers
                         // If fenotype points at the wall, then change it to available direction.
                         if (segment.GetSideElement(segment.Fenotype).Type == SideElementType.WALL)
                         {
-                            var availableDirections = GetAvailableDirections(segment);
+                            var availableDirections = segment.GetAvailableDirections();
                             if (availableDirections.Count == 0)
                                 throw new Exception("Cannot fix wall pointing fenotype - invalid building? (No direction available).");
 
@@ -86,7 +86,7 @@ namespace Genetics.Repairers
             // Firstly try to fix from segment1 perspective, then from segment2.
             if (!fixedSegments.Contains(segment1))
             {
-                var availableDirections = GetAvailableDirections(segment1, segment1.Fenotype);
+                var availableDirections = segment1.GetAvailableDirections(segment1.Fenotype);
 
                 // If there are available directions then we can fix it.
                 // Otherwise try to fix it from segment2 perspective.
@@ -100,7 +100,7 @@ namespace Genetics.Repairers
 
             if (!fixedSegments.Contains(segment2))
             {
-                var availableDirections = GetAvailableDirections(segment2, segment2.Fenotype);
+                var availableDirections = segment2.GetAvailableDirections(segment2.Fenotype);
 
                 // If there are available directions then we can fix it.
                 // Otherwise cannot be fixed.
@@ -111,52 +111,6 @@ namespace Genetics.Repairers
                     return;
                 }
             }
-        }
-
-        /// <summary>
-        /// Checks for available directions from given segment.
-        /// It excludes directions that lead to walls.
-        /// Does not excludes directions that might lead to another small adjacent loop.
-        /// (it allows that change - change is good for genetic algorithm).
-        /// </summary>
-        /// <param name="segment">Considered segment.</param>
-        /// <returns>List of available directions.</returns>
-        protected List<Direction> GetAvailableDirections(Segment segment)
-        {
-            List<Direction> result = new List<Direction>() { Direction.LEFT, Direction.UP, Direction.RIGHT, Direction.DOWN };
-
-            var sideElements = segment.GetSideElements();
-            var neighbours = segment.GetNeighbours();
-
-            foreach (Direction side in typeof(Direction).GetEnumValues())
-            {
-                // Doors are ok - analyze next direction.
-                if (sideElements[side].Type == SideElementType.DOOR)
-                    continue;
-
-                // If we encount wall - remove from available directions.
-                if (sideElements[side].Type == SideElementType.WALL)
-                {
-                    result.Remove(side);
-                    continue;
-                }
-
-                // Remove direction that leads to segment of type none
-                // (note we DO NOT exclude null segments - they are considered
-                // as escape from building.
-                if (neighbours[side].Type == SegmentType.NONE)
-                    result.Remove(side);
-            }
-
-            return result;
-        }
-
-        /// <param name="except">Excludes explicitly one direction from result.</param>
-        protected List<Direction> GetAvailableDirections(Segment segment, Direction except)
-        {
-            List<Direction> result = GetAvailableDirections(segment);
-            result.Remove(except);
-            return result;
         }
     }
 }

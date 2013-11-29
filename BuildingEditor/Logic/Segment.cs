@@ -12,13 +12,12 @@ namespace BuildingEditor.Logic
     [ImplementPropertyChanged]
     public class Segment
     {
-        protected List<SideElement> _outerWalls;
+        protected List<SideElement> _outerWalls = new List<SideElement>();
         private Floor _floor;
 
         public Segment(Floor owner)
         {
             _floor = owner;
-            _outerWalls = new List<SideElement>();
 
             LeftSide = new SideElement();
             TopSide = new SideElement();
@@ -33,12 +32,13 @@ namespace BuildingEditor.Logic
             // Default type and capacity.
             Type = SegmentType.FLOOR;
             Capacity = 3;
+
+            FlowValue = Int32.MaxValue;
         }
 
         public Segment(Floor owner, Common.DataModel.Segment segment)
+            : this(owner)
         {
-            _floor = owner;
-
             Type = segment.Type;
             Orientation = segment.Orientation;
             Capacity = segment.Capacity;
@@ -84,6 +84,8 @@ namespace BuildingEditor.Logic
 
         public object AdditionalData { get; set; }
 
+        public int FlowValue { get; set; }
+
         public int Capacity { get; set; }
         public int PeopleCount { get; set; }
         public SegmentType Type { get; set; }
@@ -104,6 +106,52 @@ namespace BuildingEditor.Logic
         public SideElement BottomRightCorner { get; set; }
         public SideElement BottomLeftCorner { get; set; }
         #endregion
+
+        /// <summary>
+        /// Checks for available directions from given segment.
+        /// It excludes directions that lead to walls.
+        /// Does not excludes directions that might lead to another small adjacent loop.
+        /// (it allows that change - change is good for genetic algorithm).
+        /// </summary>
+        /// <param name="segment">Considered segment.</param>
+        /// <returns>List of available directions.</returns>
+        public List<Direction> GetAvailableDirections()
+        {
+            List<Direction> result = new List<Direction>() { Direction.LEFT, Direction.UP, Direction.RIGHT, Direction.DOWN };
+
+            var sideElements = GetSideElements();
+            var neighbours = GetNeighbours();
+
+            foreach (Direction side in typeof(Direction).GetEnumValues())
+            {
+                // Doors are ok - analyze next direction.
+                if (sideElements[side].Type == SideElementType.DOOR)
+                    continue;
+
+                // If we encount wall - remove from available directions.
+                if (sideElements[side].Type == SideElementType.WALL)
+                {
+                    result.Remove(side);
+                    continue;
+                }
+
+                // Remove direction that leads to segment of type none
+                // (note we DO NOT exclude null segments - they are considered
+                // as escape from building.
+                if (neighbours[side].Type == SegmentType.NONE)
+                    result.Remove(side);
+            }
+
+            return result;
+        }
+
+        /// <param name="except">Excludes explicitly one direction from result.</param>
+        public List<Direction> GetAvailableDirections(Direction except)
+        {
+            List<Direction> result = GetAvailableDirections();
+            result.Remove(except);
+            return result;
+        }
 
         public Segment GetNeighbour(Direction side)
         {
