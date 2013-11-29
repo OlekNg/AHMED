@@ -267,10 +267,7 @@ namespace BuildingEditor.Logic
             int result = 0;
 
             foreach (var f in Floors)
-                foreach (var row in f.Segments)
-                    foreach (var segment in row)
-                        if (segment.Type == SegmentType.FLOOR)
-                            result += segment.PeopleCount;
+                result += f.GetPeopleCount();
 
             return result;
         }

@@ -2,6 +2,7 @@
 using Common.DataModel.Enums;
 using Genetics;
 using Genetics.Evaluators;
+using Genetics.Operators;
 using Genetics.Repairers;
 using Genetics.Specialized;
 using Simulation;
@@ -98,16 +99,19 @@ namespace Main
             MapBuilder mapBuilder = new MapBuilder(_building.ToDataModel());
             Simulator sim = new Simulator();
 
-            sim.MaximumTicks = 50;
+            sim.MaximumTicks = 100;
             sim.SetupSimulator(mapBuilder.BuildBuildingMap(), mapBuilder.BuildPeopleMap());
             AHMEDEvaluator evaluator = new AHMEDEvaluator(sim, new Building(_building.ToDataModel()));
 
-            BinaryChromosome.CrossoverOperator = new OnePointCrossover();
-            BinaryChromosome.MutationOperator = new ClassicMutation(0.5);
+            //BinaryChromosome.CrossoverOperator = new FloorByFloorCrossover(_building);
+            BinaryChromosome.CrossoverOperator = new MultiPointCrossover(2);
+            BinaryChromosome.MutationOperator = new ClassicMutation();
             BinaryChromosome.Evaluator = evaluator;
             BinaryChromosome.Repairer = r;
             GeneticAlgorithm ga = new GeneticAlgorithm(new BinaryChromosomeFactory(_building.GetFloorCount() * 2));
             ga.Selector = new TournamentSelector();
+            //ga.Selector = new RankSelector();
+            //ga.Selector = new RouletteSelector();
             ga.MaxIterations = 500;
             ga.ReportStatus += AlgorithmStatus;
             ga.Start();

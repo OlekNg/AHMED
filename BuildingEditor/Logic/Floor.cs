@@ -249,5 +249,17 @@ namespace BuildingEditor.Logic
 
             return result;
         }
+
+        public int GetPeopleCount()
+        {
+            int result = 0;
+
+            foreach (var row in Segments)
+                foreach (var segment in row)
+                    if (segment.Type == SegmentType.FLOOR)
+                        result += segment.PeopleCount;
+
+            return result;
+        }
     }
 }
