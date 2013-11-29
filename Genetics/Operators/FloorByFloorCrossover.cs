@@ -8,16 +8,29 @@ using System.Text;
 
 namespace Genetics.Operators
 {
+    /// <summary>
+    /// Crossover operator that applies multipoint crossover
+    /// to specific floors depending on chromosome's value.
+    /// </summary>
     public class FloorByFloorCrossover : ICrossoverOperator<List<bool>>
     {
-        protected ICrossoverOperator<List<bool>> _multi;
+        /// <summary>
+        /// Multipoint crossover operator used to crossing genotype between floors.
+        /// </summary>
+        protected ICrossoverOperator<List<bool>> _multi = new MultiPointCrossover(2);
+
+        /// <summary>
+        /// Genotype slice points that split it into genotypes per floor.
+        /// </summary>
         protected List<int> _genotypeSlicePoints;
+
+        /// <summary>
+        /// Distribution function of people count from bottom to top level of building.
+        /// </summary>
         protected List<int> _cumulativePeopleCount;
 
         public FloorByFloorCrossover(Building building)
         {
-            _multi = new MultiPointCrossover(5);
-            
             _genotypeSlicePoints = new List<int>();
             int sum = 0;
             foreach(var f in building.Floors)
@@ -85,7 +98,5 @@ namespace Genetics.Operators
 
             return result;
         }
-
-        
     }
 }
