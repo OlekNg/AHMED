@@ -1,0 +1,116 @@
+﻿<Window x:Class="Main.GeneticsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Genetics configuration" Height="500" Width="350">
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- GENERAL ALGORITHM CONFIGURATION -->
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Content="General" HorizontalContentAlignment="Center"
+               Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
+               Background="LightGray"/>
+
+            <Label Content="Maximum iterations:" Grid.Row="1" Grid.Column="0"/>
+            <TextBox Text="{Binding MaxIterations}" Grid.Row="1" Grid.Column="1"
+                     VerticalAlignment="Center"/>
+
+            <Label Content="Initial population size:" Grid.Row="2" Grid.Column="0"/>
+            <TextBox Text="{Binding InitPopSize}" Grid.Row="2" Grid.Column="1"
+                     VerticalAlignment="Center"/>
+        </Grid>
+
+        <!-- SELECTION CONFIGURATION -->
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Selection" HorizontalContentAlignment="Center"
+               Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
+               Background="LightGray"/>
+            <Label Content="Selection operator:" Grid.Row="1" Grid.Column="0"/>
+            <ComboBox  Grid.Row="1" Grid.Column="1"
+                  ItemsSource="{Binding Selectors}"
+                  SelectedItem="{Binding SelectedSelector}"
+                  VerticalAlignment="Center">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Label Content="Additional configuration:" Grid.Row="2" Grid.Column="0"/>
+            <ContentControl Content="{Binding SelectedSelector.GUI}" Grid.Row="2" Grid.Column="1"/>
+        </Grid>
+
+        <!-- CROSSOVER CONFIGURATION -->
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Crossing over" HorizontalContentAlignment="Center"
+               Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
+               Background="LightGray"/>
+            <Label Content="Crossover operator:" Grid.Row="1" Grid.Column="0"/>
+            <ComboBox  Grid.Row="1" Grid.Column="1"
+                  ItemsSource="{Binding Crossovers}"
+                  SelectedItem="{Binding SelectedCrossover}"
+                  VerticalAlignment="Center">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Label Content="Additional configuration:" Grid.Row="2" Grid.Column="0"/>
+            <ContentControl Content="{Binding SelectedCrossover.GUI}" Grid.Row="2" Grid.Column="1"/>
+        </Grid>
+
+        <!-- MUTATION CONFIGURATION -->
+        <Grid Grid.Row="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Mutation" HorizontalContentAlignment="Center"
+               Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
+               Background="LightGray"/>
+        </Grid>
+
+        <!-- BOTTOM BUTTON PANEL -->
+        <Button Grid.Row="5" Grid.Column="0" Content="OK"
+                Width="100" HorizontalAlignment="Right" Click="OK_Click"/>
+    </Grid>
+</Window>

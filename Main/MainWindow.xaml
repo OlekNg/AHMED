@@ -94,6 +94,7 @@
                 <MenuItem Header="Run" Click="ProcessRun_Click"/>
             </MenuItem>
             <MenuItem Header="Tools" Height="25">
+                <MenuItem Header="Genetics" Click="ToolsGenetics_Click"/>
                 <MenuItem Header="Editor" Click="ToolsEditor_Click"/>
             </MenuItem>
         </Menu>

@@ -5,6 +5,7 @@ using Genetics.Evaluators;
 using Genetics.Operators;
 using Genetics.Repairers;
 using Genetics.Specialized;
+using Main.GeneticsConfiguration;
 using Simulation;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,7 @@ namespace Main
     public partial class MainWindow : Window
     {
         private Building _building;
+        private Configuration _geneticsConfiguration = new Configuration();
 
         public MainWindow()
         {
@@ -169,6 +171,12 @@ namespace Main
         private void ToolsEditor_Click(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Process.Start(typeof(BuildingEditor.App).Assembly.Location);
+        }
+
+        private void ToolsGenetics_Click(object sender, RoutedEventArgs e)
+        {
+            GeneticsWindow window = new GeneticsWindow(_geneticsConfiguration);
+            window.Show();
         }
 
         
