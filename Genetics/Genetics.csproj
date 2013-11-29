@@ -42,12 +42,10 @@
   <ItemGroup>
     <Compile Include="Evaluators\AHMEDEvaluator.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="ISimulationResult.cs" />
     <Compile Include="Operators\FloorByFloorCrossover.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repairers\AHMEDSimpleRepairer.cs" />
     <Compile Include="Repairers\AHMEDAdvancedRepairer.cs" />
-    <Compile Include="TestSimulationResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BuildingEditor\BuildingEditor.csproj">
