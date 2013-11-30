@@ -101,21 +101,18 @@ namespace Main
             MapBuilder mapBuilder = new MapBuilder(_building.ToDataModel());
             Simulator sim = new Simulator();
 
-            sim.MaximumTicks = 100;
+            sim.MaximumTicks = _building.GetFloorCount() * 2;
             sim.SetupSimulator(mapBuilder.BuildBuildingMap(), mapBuilder.BuildPeopleMap());
             AHMEDEvaluator evaluator = new AHMEDEvaluator(sim, new Building(_building.ToDataModel()));
             //AHMEDEvaluator evaluator = new AHMEDEvaluator(sim, _building); // works on actual building
 
-            //BinaryChromosome.CrossoverOperator = new FloorByFloorCrossover(_building);
-            BinaryChromosome.CrossoverOperator = new MultiPointCrossover();
-            BinaryChromosome.MutationOperator = new ClassicMutation();
+            BinaryChromosome.CrossoverOperator = _geneticsConfiguration.SelectedCrossover.BuildCrossoverOperator();
+            BinaryChromosome.MutationOperator = _geneticsConfiguration.SelectedMutation.BuildMutationOperator();
             BinaryChromosome.Evaluator = evaluator;
             BinaryChromosome.Repairer = r;
-            GeneticAlgorithm ga = new GeneticAlgorithm(new BinaryChromosomeFactory(_building.GetFloorCount() * 2), 100);
-            ga.Selector = new TournamentSelector();
-            //ga.Selector = new RankSelector();
-            //ga.Selector = new RouletteSelector();
-            ga.MaxIterations = 500;
+            GeneticAlgorithm ga = new GeneticAlgorithm(new BinaryChromosomeFactory(_building.GetFloorCount() * 2), _geneticsConfiguration.InitPopSize);
+            ga.Selector = _geneticsConfiguration.SelectedSelector.BuildSelector();
+            ga.MaxIterations = _geneticsConfiguration.MaxIterations;
             ga.ReportStatus += AlgorithmStatus;
             ga.Start();
             _building.SetFenotype(((BinaryChromosome)ga.BestChromosome).Genotype.ToFenotype());

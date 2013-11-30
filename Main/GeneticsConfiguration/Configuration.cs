@@ -1,4 +1,9 @@
-﻿using PropertyChanged;
+﻿using Genetics;
+using Genetics.Evaluators;
+using Genetics.Repairers;
+using Genetics.Specialized;
+using PropertyChanged;
+using Simulation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
