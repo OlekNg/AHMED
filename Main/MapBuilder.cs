@@ -85,7 +85,7 @@ namespace Main
                 pos = (first.Orientation == Direction.LEFT || first.Orientation == Direction.RIGHT) ? Structure.WallPlace.LEFT : Structure.WallPlace.TOP;
 
                 Structure.WallElementPosition wep1 = new Structure.WallElementPosition(f, r, c, pos);
-                Structure.StairsEntry se1 = new Structure.StairsEntry(first.Capacity, wep1);
+                Structure.StairsEntry se1 = new Structure.StairsEntry(first.EntranceCapacity, wep1);
 
                 // Second stairs entry.
                 var second = stairsPair.Second;
@@ -95,7 +95,7 @@ namespace Main
                 pos = (second.Orientation == Direction.LEFT || second.Orientation == Direction.RIGHT) ? Structure.WallPlace.LEFT : Structure.WallPlace.TOP;
 
                 Structure.WallElementPosition wep2 = new Structure.WallElementPosition(f, r, c, pos);
-                Structure.StairsEntry se2 = new Structure.StairsEntry(second.Capacity, wep2);
+                Structure.StairsEntry se2 = new Structure.StairsEntry(second.EntranceCapacity, wep2);
 
                 stairs.SetEntries(se1, se2);
 

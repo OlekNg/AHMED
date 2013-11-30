@@ -36,9 +36,7 @@ namespace BuildingEditor
         {
             InitializeComponent();
             _building = new Building();
-            uxWorkspaceViewbox.DataContext = _building;
-            uxFloors.DataContext = _building;
-            uxStairs.ItemsSource = _building.Stairs;
+            DataContext = _building;
 
             NewBuilding();
 
