@@ -51,7 +51,7 @@ namespace BuildingEditor.Tools.Logic
             return panel;
         }
 
-        public override void CancelAction()
+        public override void ClearPreview()
         {
             _mouseoverSegment = null;
             UpdateSelectionPreview();

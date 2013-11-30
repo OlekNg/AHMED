@@ -173,6 +173,10 @@ namespace BuildingEditor.Logic
 
         public void RemoveRow(int index)
         {
+            // Delete all stairs that are in deleted row.
+            var stairsToDelete = Segments[index].Where(x => x.Type == SegmentType.STAIRS).Select(y => (StairsPair)y.AdditionalData).ToList();
+            stairsToDelete.ForEach(x => x.Destroy());
+
             Segments.RemoveAt(index);
             ConnectSegments();
             RecalculateIndexes();
@@ -182,7 +186,13 @@ namespace BuildingEditor.Logic
         public void RemoveColumn(int index)
         {
             foreach (ObservableCollection<Segment> row in Segments)
+            {
+                // Destroy stairs if we encountered one.
+                if (row[index].Type == SegmentType.STAIRS)
+                    ((StairsPair)row[index].AdditionalData).Destroy();
+
                 row.RemoveAt(index);
+            }
 
             ConnectSegments();
             RecalculateIndexes();
