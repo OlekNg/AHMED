@@ -77,6 +77,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="GeneticsConfiguration\Configuration.cs" />
+    <Compile Include="GeneticsConfiguration\ClassicMutationConfiguration.cs" />
+    <Compile Include="GeneticsConfiguration\IMutationConfiguration.cs" />
     <Compile Include="GeneticsConfiguration\RankSelectionConfiguration.cs" />
     <Compile Include="GeneticsConfiguration\RouletteSelectionConfiguration.cs" />
     <Compile Include="GeneticsConfiguration\ISelectionConfiguration.cs" />

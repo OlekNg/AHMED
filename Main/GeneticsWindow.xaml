@@ -62,12 +62,15 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
             <Label Content="Additional configuration:" Grid.Row="2" Grid.Column="0"/>
-            <ContentControl Content="{Binding SelectedSelector.GUI}" Grid.Row="2" Grid.Column="1"/>
+            <ContentControl DataContext="{Binding SelectedSelector}"
+                            Content="{Binding GUI}" 
+                            Grid.Row="2" Grid.Column="1"/>
         </Grid>
 
         <!-- CROSSOVER CONFIGURATION -->
         <Grid Grid.Row="2">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -90,13 +93,19 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-            <Label Content="Additional configuration:" Grid.Row="2" Grid.Column="0"/>
-            <ContentControl Content="{Binding SelectedCrossover.GUI}" Grid.Row="2" Grid.Column="1"/>
+            <Label Content="Probability:" Grid.Row="2" Grid.Column="0"/>
+            <TextBox Text="{Binding CrossoverProbability}" Grid.Row="2" Grid.Column="1"
+                     VerticalAlignment="Center"/>
+            <Label Content="Additional configuration:" Grid.Row="3" Grid.Column="0"/>
+            <ContentControl DataContext="{Binding SelectedCrossover}"
+                            Content="{Binding GUI}"
+                            Grid.Row="3" Grid.Column="1"/>
         </Grid>
 
         <!-- MUTATION CONFIGURATION -->
         <Grid Grid.Row="3">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
@@ -107,6 +116,21 @@
             <Label Content="Mutation" HorizontalContentAlignment="Center"
                Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
                Background="LightGray"/>
+            <Label Content="Mutation operator:" Grid.Row="1" Grid.Column="0"/>
+            <ComboBox  Grid.Row="1" Grid.Column="1"
+                  ItemsSource="{Binding Mutations}"
+                  SelectedItem="{Binding SelectedMutation}"
+                  VerticalAlignment="Center">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Label Content="Additional configuration:" Grid.Row="2" Grid.Column="0"/>
+            <ContentControl DataContext="{Binding SelectedMutation}"
+                            Content="{Binding GUI}"
+                            Grid.Row="2" Grid.Column="1"/>
         </Grid>
 
         <!-- BOTTOM BUTTON PANEL -->

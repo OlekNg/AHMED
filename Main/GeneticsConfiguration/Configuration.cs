@@ -12,14 +12,17 @@ namespace Main.GeneticsConfiguration
     {
         public Configuration()
         {
-            Crossovers = new ObservableCollection<ICrossoverConfiguration>();
-            Crossovers.Add(SelectedCrossover = new OnePointCrossoverConfiguration());
-            Crossovers.Add(new MultiPointCrossoverConfiguration());
-
             Selectors = new ObservableCollection<ISelectionConfiguration>();
             Selectors.Add(SelectedSelector = new TournamentSelectionConfiguration());
             Selectors.Add(new RankSelectionConfiguration());
             Selectors.Add(new RouletteSelectionConfiguration());
+
+            Crossovers = new ObservableCollection<ICrossoverConfiguration>();
+            Crossovers.Add(SelectedCrossover = new OnePointCrossoverConfiguration());
+            Crossovers.Add(new MultiPointCrossoverConfiguration());
+
+            Mutations = new ObservableCollection<IMutationConfiguration>();
+            Mutations.Add(SelectedMutation = new ClassicMutationConfiguration());
 
             // Default values
             MaxIterations = 500;
@@ -39,5 +42,9 @@ namespace Main.GeneticsConfiguration
         public ObservableCollection<ICrossoverConfiguration> Crossovers { get; set; }
         public ICrossoverConfiguration SelectedCrossover { get; set; }
         public double CrossoverProbability { get; set; }
+
+        // Mutation
+        public ObservableCollection<IMutationConfiguration> Mutations { get; set; }
+        public IMutationConfiguration SelectedMutation { get; set; }
     }
 }

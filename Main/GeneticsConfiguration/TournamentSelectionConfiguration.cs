@@ -1,4 +1,5 @@
 ﻿using Genetics.Specialized;
+using PropertyChanged;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Windows.Data;
 
 namespace Main.GeneticsConfiguration
 {
+    [ImplementPropertyChanged]
     public class TournamentSelectionConfiguration : IGUIConfiguration, ISelectionConfiguration
     {
         public Genetics.Generic.ISelector BuildSelector()
