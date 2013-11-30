@@ -60,6 +60,12 @@ namespace BuildingEditor
             SegmentEventHandler.Register(this);
         }
 
+        public MainWindow(string file)
+            : this()
+        {
+            LoadBuilding(file);
+        }
+
         private void Workspace_MouseLeave(object sender, MouseEventArgs e)
         {
             // Clear preview when out of workspace.
@@ -164,6 +170,19 @@ namespace BuildingEditor
             _building.ViewMode = _currentTool.Name;
         }
 
+        private void LoadBuilding(string file)
+        {
+            Common.DataModel.Building building = new Common.DataModel.Building();
+            building.Load(file);
+            Building viewModel = new Building(building);
+
+
+            _building.Floors = viewModel.Floors;
+            _building.Stairs = viewModel.Stairs;
+            _building.CurrentFloor = _building.Floors[0];
+            uxStairs.ItemsSource = _building.Stairs;
+        }
+
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             // Create OpenFileDialog 
@@ -202,16 +221,7 @@ namespace BuildingEditor
             if (result == true)
             {
                 // Open document 
-                string filename = dlg.FileName;
-                Common.DataModel.Building building = new Common.DataModel.Building();
-                building.Load(filename);
-                Building viewModel = new Building(building);
-
-
-                _building.Floors = viewModel.Floors;
-                _building.Stairs = viewModel.Stairs;
-                _building.CurrentFloor = _building.Floors[0];
-                uxStairs.ItemsSource = _building.Stairs;
+                LoadBuilding(dlg.FileName);
             }
         }
 

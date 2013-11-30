@@ -30,22 +30,14 @@ namespace Main
     public partial class MainWindow : Window
     {
         private Building _building;
+        private string _currentFile;
         private Configuration _geneticsConfiguration = new Configuration();
 
         public MainWindow()
         {
             InitializeComponent();
+
             _building = new Building();
-
-            Common.DataModel.Building building = new Common.DataModel.Building();
-            building.Load("officialtest.xml");
-            Building viewModel = new Building(building);
-
-
-            _building.Floors = viewModel.Floors;
-            _building.Stairs = viewModel.Stairs;
-            _building.CurrentFloor = _building.Floors[0];
-
             uxWorkspaceViewbox.DataContext = _building;
             uxFloors.DataContext = _building;
         }
@@ -71,9 +63,9 @@ namespace Main
             if (result == true)
             {
                 // Open document 
-                string filename = dlg.FileName;
+                _currentFile = dlg.FileName;
                 Common.DataModel.Building building = new Common.DataModel.Building();
-                building.Load(filename);
+                building.Load(_currentFile);
                 Building viewModel = new Building(building);
 
 
@@ -167,7 +159,7 @@ namespace Main
 
         private void ToolsEditor_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start(typeof(BuildingEditor.App).Assembly.Location);
+            System.Diagnostics.Process.Start(typeof(BuildingEditor.App).Assembly.Location, _currentFile);
         }
 
         private void ToolsGenetics_Click(object sender, RoutedEventArgs e)
