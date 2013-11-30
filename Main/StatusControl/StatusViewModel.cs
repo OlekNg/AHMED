@@ -7,6 +7,9 @@ using System.Text;
 
 namespace Main.StatusControl
 {
+    /// <summary>
+    /// View model for GeneticStatusControl.
+    /// </summary>
     [ImplementPropertyChanged]
     public class StatusViewModel
     {

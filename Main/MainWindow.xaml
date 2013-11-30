@@ -85,8 +85,6 @@
         <!-- MENU -->
         <Menu Grid.Column="0" Grid.Row="0" Background="White" Grid.ColumnSpan="2">
             <MenuItem Header="File" Height="25">
-                <MenuItem Header="Test" Click="Test_Click"/>
-                <MenuItem Header="Test2" Click="Test2_Click"/>
                 <MenuItem Header="Open" Click="Open_Click"/>
                 <MenuItem Header="Exit" Click="Exit_Click"/>
             </MenuItem>

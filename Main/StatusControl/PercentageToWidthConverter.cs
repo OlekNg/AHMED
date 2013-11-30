@@ -7,6 +7,9 @@ using System.Windows.Media;
 
 namespace Main.StatusControl
 {
+    /// <summary>
+    /// Converts percentage value to width value based on parameter (full width).
+    /// </summary>
     [ValueConversion(typeof(double), typeof(string))]
     public class PercentageToWidthConverter : IValueConverter
     {

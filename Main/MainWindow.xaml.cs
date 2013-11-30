@@ -31,34 +31,113 @@ namespace Main
     /// </summary>
     public partial class MainWindow : Window
     {
+        #region Fields
+        /// <summary>
+        /// Currently open building.
+        /// </summary>
         private Building _building;
+
+        /// <summary>
+        /// Path to currently open file.
+        /// </summary>
         private string _currentFile;
-        private bool _fileDirty;
+
+        /// <summary>
+        /// True - file with open building has been overwritten and should
+        /// be reloaded.
+        /// </summary>
+        private bool _isFileDirty;
+
+        /// <summary>
+        /// Genetic algorithm view model configuration.
+        /// </summary>
         private Configuration _geneticsConfiguration = new Configuration();
+
+        /// <summary>
+        /// Tracks open file for overwritting (for example by editor).
+        /// </summary>
         private FileSystemWatcher _watcher;
+        #endregion
 
         public MainWindow()
         {
             InitializeComponent();
             InitFileWatcher();
 
+            // Init empty building.
             _building = new Building();
+
+            // Set data contexts.
             uxWorkspaceViewbox.DataContext = _building;
             uxFloors.DataContext = _building;
         }
 
-        
-
+        /// <summary>
+        /// Path to currently open file.
+        /// </summary>
         public string CurrentFile
         {
             get { return _currentFile; }
             set {
                 _currentFile = value;
-                Title = String.Format("AHMED v2 - {0}", value);
                 _watcher.Path = System.IO.Path.GetDirectoryName(value);
+                Title = String.Format("AHMED v2 - {0}", value); // Update window title.
             }
         }
 
+        /// <summary>
+        /// Loads building from specified file and applies it to view model.
+        /// </summary>
+        /// <param name="file">Path to xml file with building definition.</param>
+        private void LoadBuilding(string file)
+        {
+            CurrentFile = file;
+            Common.DataModel.Building building = new Common.DataModel.Building();
+            building.Load(file);
+            Building viewModel = new Building(building);
+
+            _building.Floors = viewModel.Floors;
+            _building.Stairs = viewModel.Stairs;
+            _building.CurrentFloor = _building.Floors[0];
+        }
+
+        /// <summary>
+        /// Updates building view mode.
+        /// </summary>
+        private void ViewMode_Clicked(object sender, RoutedEventArgs e)
+        {
+            FrameworkElement element = sender as FrameworkElement;
+            if (element == null) return;
+
+            string mode = element.Tag as string;
+
+            if (mode != null)
+                _building.ViewMode = mode;
+        }
+
+        /// <summary>
+        /// Applies final solution to building view model.
+        /// </summary>
+        private void OnGeneticCompleted(GeneticAlgorithmStatus status)
+        {
+            _building.SetFenotype(((BinaryChromosome)status.BestChromosome).Genotype.ToFenotype());
+            _building.DrawSolution();
+        }
+
+        /// <summary>
+        /// Reloads building from file if it was overwritten.
+        /// </summary>
+        private void Window_Activated(object sender, EventArgs e)
+        {
+            // Refresh building if it has changed.
+            if (_isFileDirty)
+            {
+                _isFileDirty = false;
+                LoadBuilding(CurrentFile);
+            }
+        }
+
+        #region File watcher
         private void InitFileWatcher()
         {
             _watcher = new FileSystemWatcher();
@@ -71,27 +150,20 @@ namespace Main
             _watcher.EnableRaisingEvents = true;
         }
 
+        /// <summary>
+        /// Checks if our currently open file has changed and marks it as dirty (if yes).
+        /// </summary>
         private void OnFileChanged(object sender, FileSystemEventArgs e)
         {
-            Console.WriteLine("{0} - {1}", e.FullPath, e.ChangeType);
-            if(e.FullPath == _currentFile)
-                _fileDirty = true;
+            if (e.FullPath == _currentFile)
+                _isFileDirty = true;
         }
-
+        #endregion
+        
+        #region Menu actions
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
-        }
-
-        private void LoadBuilding(string file)
-        {
-            Common.DataModel.Building building = new Common.DataModel.Building();
-            building.Load(file);
-            Building viewModel = new Building(building);
-
-            _building.Floors = viewModel.Floors;
-            _building.Stairs = viewModel.Stairs;
-            _building.CurrentFloor = _building.Floors[0];
         }
 
         private void Open_Click(object sender, RoutedEventArgs e)
@@ -109,25 +181,17 @@ namespace Main
             // Get the selected file name and display in a TextBox 
             if (result == true)
             {
-                // Open document 
-                CurrentFile = dlg.FileName;
+                // Load building.
                 LoadBuilding(CurrentFile);
             }
         }
 
-        private void ViewMode_Clicked(object sender, RoutedEventArgs e)
-        {
-            FrameworkElement element = sender as FrameworkElement;
-            if (element == null) return;
-
-            string mode = element.Tag as string;
-
-            if (mode != null)
-                _building.ViewMode = mode;
-        }
-
         private void ProcessRun_Click(object sender, RoutedEventArgs e)
         {
+            // If no building is currently loaded then do nothing.
+            if (CurrentFile == "")
+                return;
+
             AdvancedRepairer r = new AdvancedRepairer(new Building(_building.ToDataModel()));
 
             MapBuilder mapBuilder = new MapBuilder(_building.ToDataModel());
@@ -145,23 +209,31 @@ namespace Main
             GeneticAlgorithm ga = new GeneticAlgorithm(new BinaryChromosomeFactory(_building.GetFloorCount() * 2), _geneticsConfiguration.InitPopSize);
             ga.Selector = _geneticsConfiguration.SelectedSelector.BuildSelector();
             ga.MaxIterations = _geneticsConfiguration.MaxIterations;
-            ga.ReportStatus += AlgorithmStatus;
             ga.Completed += OnGeneticCompleted;
 
+            // Create view model for presenting progression of algorithm.
             StatusViewModel statusModel = new StatusViewModel(ga);
             StatusWindow statusWindow = new StatusWindow();
             statusWindow.DataContext = statusModel;
             statusWindow.Show();
 
+            // Run algorithm asynchronously.
             new Task(ga.Start).Start();
         }
 
-        private void OnGeneticCompleted(GeneticAlgorithmStatus status)
+        private void ToolsEditor_Click(object sender, RoutedEventArgs e)
         {
-            _building.SetFenotype(((BinaryChromosome)status.BestChromosome).Genotype.ToFenotype());
-            _building.DrawSolution();
+            System.Diagnostics.Process.Start(typeof(BuildingEditor.App).Assembly.Location, CurrentFile);
         }
 
+        private void ToolsGenetics_Click(object sender, RoutedEventArgs e)
+        {
+            GeneticsWindow window = new GeneticsWindow(_geneticsConfiguration);
+            window.Show();
+        }
+        #endregion
+
+        #region Diagnostics functions
         private void AlgorithmStatus(GeneticAlgorithmStatus status)
         {
             Console.CursorTop = 0;
@@ -176,59 +248,6 @@ namespace Main
             Console.WriteLine("Best population chromosome value: {0:0.000}", status.CurrentPopulation.BestChromosome.Value);
             Console.WriteLine("Best algorithm chromosome value: {0:0.000}", status.BestChromosome.Value);
         }
-
-        private void Test_Click(object sender, RoutedEventArgs e)
-        {
-            List<Direction> fenotype = new List<Direction>() { Direction.DOWN, Direction.LEFT, Direction.RIGHT, Direction.RIGHT, Direction.DOWN,
-                                                               Direction.DOWN, Direction.LEFT, Direction.RIGHT, Direction.RIGHT, Direction.UP };
-            _building.SetFenotype(fenotype);
-            _building.DrawSolution();
-
-            MapBuilder mapBuilder = new MapBuilder(_building.ToDataModel());
-            Simulator sim = new Simulator();
-
-            sim.MaximumTicks = 50;
-            sim.SetupSimulator(mapBuilder.BuildBuildingMap(), mapBuilder.BuildPeopleMap());
-            var result = sim.Simulate(_building.GetSimulatorFenotype());
-
-            foreach (var group in result)
-            {
-                Console.WriteLine("Escaped group: quantity {0}, ticks {1}", group.Quantity, group.Ticks);
-            }
-        }
-
-        private void Test2_Click(object sender, RoutedEventArgs e)
-        {
-            List<Direction> fenotype = new List<Direction>() { Direction.DOWN, Direction.LEFT, Direction.RIGHT, Direction.RIGHT, Direction.DOWN,
-                                                               Direction.DOWN, Direction.LEFT, Direction.RIGHT, Direction.RIGHT, Direction.DOWN,
-                                                               Direction.DOWN, Direction.LEFT, Direction.RIGHT, Direction.RIGHT, Direction.DOWN,
-                                                               Direction.DOWN, Direction.LEFT, Direction.RIGHT, Direction.RIGHT, Direction.DOWN,
-                                                               Direction.RIGHT, Direction.RIGHT, Direction.DOWN, Direction.LEFT, Direction.LEFT };
-            _building.SetFenotype(fenotype);
-            _building.DrawSolution();
-        }
-
-        private void ToolsEditor_Click(object sender, RoutedEventArgs e)
-        {
-            System.Diagnostics.Process.Start(typeof(BuildingEditor.App).Assembly.Location, CurrentFile);
-        }
-
-        private void ToolsGenetics_Click(object sender, RoutedEventArgs e)
-        {
-            GeneticsWindow window = new GeneticsWindow(_geneticsConfiguration);
-            window.Show();
-        }
-
-        private void Window_Activated(object sender, EventArgs e)
-        {
-            // Refresh building if it has changed.
-            if (_fileDirty)
-            {
-                _fileDirty = false;
-                LoadBuilding(CurrentFile);
-            }
-        }
-
-        
+        #endregion
     }
 }

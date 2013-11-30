@@ -14,7 +14,7 @@ using System.Windows.Shapes;
 namespace Main
 {
     /// <summary>
-    /// Interaction logic for Genetics.xaml
+    /// Interaction logic for GeneticsWindow.xaml
     /// </summary>
     public partial class GeneticsWindow : Window
     {
