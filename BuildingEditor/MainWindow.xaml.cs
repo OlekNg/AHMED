@@ -30,18 +30,17 @@ namespace BuildingEditor
         private Building _building;
         private Tool _currentTool;
         private Random _randomizer;
+        private string _currentFile;
 
         public MainWindow()
         {
             InitializeComponent();
-            _building = new Building(5, 5);
-
+            _building = new Building();
             uxWorkspaceViewbox.DataContext = _building;
-
             uxFloors.DataContext = _building;
-            _building.CurrentFloor = _building.Floors[0];
-            
             uxStairs.ItemsSource = _building.Stairs;
+
+            NewBuilding();
 
             ObservableCollection<Tool> toolbox = new ObservableCollection<Tool>();
             toolbox.Add(new DragTool(uxWorkspaceViewbox, uxModePanel));
@@ -64,6 +63,17 @@ namespace BuildingEditor
             : this()
         {
             LoadBuilding(file);
+            CurrentFile = file;
+        }
+
+        public string CurrentFile
+        {
+            get { return _currentFile; }
+            set
+            {
+                _currentFile = value;
+                Title = String.Format("Building Editor - {0}", value);
+            }
         }
 
         private void Workspace_MouseLeave(object sender, MouseEventArgs e)
@@ -170,20 +180,44 @@ namespace BuildingEditor
             _building.ViewMode = _currentTool.Name;
         }
 
+        private void NewBuilding()
+        {
+            CurrentFile = "";
+            Building b = new Building(5, 5);
+            _building.Floors = b.Floors;
+            _building.Stairs = b.Stairs;
+            _building.CurrentFloor = _building.Floors[0];
+        }
+
         private void LoadBuilding(string file)
         {
+            CurrentFile = file;
             Common.DataModel.Building building = new Common.DataModel.Building();
             building.Load(file);
             Building viewModel = new Building(building);
 
-
             _building.Floors = viewModel.Floors;
             _building.Stairs = viewModel.Stairs;
             _building.CurrentFloor = _building.Floors[0];
-            uxStairs.ItemsSource = _building.Stairs;
+        }
+
+        private void New_Click(object sender, RoutedEventArgs e)
+        {
+            NewBuilding();
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            if (CurrentFile == "")
+                SaveAs_Click(sender, e);
+            else
+            {
+                Common.DataModel.Building building = _building.ToDataModel();
+                building.Save(CurrentFile);
+            }
+        }
+
+        private void SaveAs_Click(object sender, RoutedEventArgs e)
         {
             // Create OpenFileDialog 
             Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
@@ -199,7 +233,7 @@ namespace BuildingEditor
             if (result == true)
             {
                 string filename = dlg.FileName;
-                Console.WriteLine(filename);
+                CurrentFile = filename;
                 Common.DataModel.Building building = _building.ToDataModel();
                 building.Save(filename);
             }
