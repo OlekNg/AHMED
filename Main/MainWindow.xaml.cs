@@ -9,6 +9,7 @@ using Main.GeneticsConfiguration;
 using Simulation;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,20 +32,65 @@ namespace Main
     {
         private Building _building;
         private string _currentFile;
+        private bool _fileDirty;
         private Configuration _geneticsConfiguration = new Configuration();
+        private FileSystemWatcher _watcher;
 
         public MainWindow()
         {
             InitializeComponent();
+            InitFileWatcher();
 
             _building = new Building();
             uxWorkspaceViewbox.DataContext = _building;
             uxFloors.DataContext = _building;
         }
 
+        
+
+        public string CurrentFile
+        {
+            get { return _currentFile; }
+            set {
+                _currentFile = value;
+                Title = String.Format("AHMED v2 - {0}", value);
+                _watcher.Path = System.IO.Path.GetDirectoryName(value);
+            }
+        }
+
+        private void InitFileWatcher()
+        {
+            _watcher = new FileSystemWatcher();
+            _watcher.NotifyFilter = NotifyFilters.LastWrite;
+            _watcher.Path = "C:\\";
+            _watcher.Filter = "*.xml";
+
+            _watcher.Changed += new FileSystemEventHandler(OnFileChanged);
+
+            _watcher.EnableRaisingEvents = true;
+        }
+
+        private void OnFileChanged(object sender, FileSystemEventArgs e)
+        {
+            Console.WriteLine("{0} - {1}", e.FullPath, e.ChangeType);
+            if(e.FullPath == _currentFile)
+                _fileDirty = true;
+        }
+
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void LoadBuilding(string file)
+        {
+            Common.DataModel.Building building = new Common.DataModel.Building();
+            building.Load(file);
+            Building viewModel = new Building(building);
+
+            _building.Floors = viewModel.Floors;
+            _building.Stairs = viewModel.Stairs;
+            _building.CurrentFloor = _building.Floors[0];
         }
 
         private void Open_Click(object sender, RoutedEventArgs e)
@@ -63,15 +109,8 @@ namespace Main
             if (result == true)
             {
                 // Open document 
-                _currentFile = dlg.FileName;
-                Common.DataModel.Building building = new Common.DataModel.Building();
-                building.Load(_currentFile);
-                Building viewModel = new Building(building);
-
-
-                _building.Floors = viewModel.Floors;
-                _building.Stairs = viewModel.Stairs;
-                _building.CurrentFloor = _building.Floors[0];
+                CurrentFile = dlg.FileName;
+                LoadBuilding(CurrentFile);
             }
         }
 
@@ -159,13 +198,23 @@ namespace Main
 
         private void ToolsEditor_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start(typeof(BuildingEditor.App).Assembly.Location, _currentFile);
+            System.Diagnostics.Process.Start(typeof(BuildingEditor.App).Assembly.Location, CurrentFile);
         }
 
         private void ToolsGenetics_Click(object sender, RoutedEventArgs e)
         {
             GeneticsWindow window = new GeneticsWindow(_geneticsConfiguration);
             window.Show();
+        }
+
+        private void Window_Activated(object sender, EventArgs e)
+        {
+            // Refresh building if it has changed.
+            if (_fileDirty)
+            {
+                _fileDirty = false;
+                LoadBuilding(CurrentFile);
+            }
         }
 
         
