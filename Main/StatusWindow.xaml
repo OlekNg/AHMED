@@ -1,0 +1,9 @@
+﻿<Window x:Class="Main.StatusWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:l="clr-namespace:Main.StatusControl"
+        Title="StatusWindow" Height="200" Width="350">
+    <Grid Margin="5">
+        <l:GeneticStatusControl DataContext="{Binding}"/>
+    </Grid>
+</Window>

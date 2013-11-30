@@ -64,6 +64,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="StatusControl\PercentageToWidthConverter.cs" />
+    <Compile Include="StatusControl\PercentageToColorConverter.cs" />
+    <Compile Include="StatusControl\StatusViewModel.cs" />
+    <Compile Include="StatusWindow.xaml.cs">
+      <DependentUpon>StatusWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="StatusControl\GeneticStatusControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GeneticsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -83,6 +93,9 @@
     <Compile Include="GeneticsConfiguration\RouletteSelectionConfiguration.cs" />
     <Compile Include="GeneticsConfiguration\ISelectionConfiguration.cs" />
     <Compile Include="GeneticsConfiguration\TournamentSelectionConfiguration.cs" />
+    <Compile Include="StatusControl\GeneticStatusControl.xaml.cs">
+      <DependentUpon>GeneticStatusControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GeneticsWindow.xaml.cs">
       <DependentUpon>GeneticsWindow.xaml</DependentUpon>
     </Compile>
@@ -94,6 +107,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="StatusWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MapBuilder.cs" />

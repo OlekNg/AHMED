@@ -6,6 +6,7 @@ using Genetics.Operators;
 using Genetics.Repairers;
 using Genetics.Specialized;
 using Main.GeneticsConfiguration;
+using Main.StatusControl;
 using Simulation;
 using System;
 using System.Collections.Generic;
@@ -145,8 +146,19 @@ namespace Main
             ga.Selector = _geneticsConfiguration.SelectedSelector.BuildSelector();
             ga.MaxIterations = _geneticsConfiguration.MaxIterations;
             ga.ReportStatus += AlgorithmStatus;
-            ga.Start();
-            _building.SetFenotype(((BinaryChromosome)ga.BestChromosome).Genotype.ToFenotype());
+            ga.Completed += OnGeneticCompleted;
+
+            StatusViewModel statusModel = new StatusViewModel(ga);
+            StatusWindow statusWindow = new StatusWindow();
+            statusWindow.DataContext = statusModel;
+            statusWindow.Show();
+
+            new Task(ga.Start).Start();
+        }
+
+        private void OnGeneticCompleted(GeneticAlgorithmStatus status)
+        {
+            _building.SetFenotype(((BinaryChromosome)status.BestChromosome).Genotype.ToFenotype());
             _building.DrawSolution();
         }
 

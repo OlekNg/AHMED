@@ -178,8 +178,6 @@ namespace BuildingEditor.Logic
         /// <returns></returns>
         public Segment GetNextSegment()
         {
-            Segment result;
-
             if (Type == SegmentType.STAIRS)
             {
                 // Get segment that is on exit of second stairs from pair.
