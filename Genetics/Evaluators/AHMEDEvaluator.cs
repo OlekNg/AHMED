@@ -61,17 +61,17 @@ namespace Genetics.Evaluators
             foreach (var group in _peopleGroups)
                 value -= GetPeopleGroupFlowValue(group);
 
-            return value;
+            //return value;
 
-            //double avg;
-            //if (peopleEscaped != _peopleCount)
-            //    avg = 0;
-            //else
-            //{
-            //    avg = _maxAvgEscapeTime - (sum / (double)_peopleCount);
-            //}
+            double avg;
+            if (peopleEscaped != _peopleCount)
+                avg = 0;
+            else
+            {
+                avg = _maxAvgEscapeTime - (sum / (double)_peopleCount);
+            }
 
-            //return (double)peopleEscaped + avg;
+            return value + avg;
         }
 
         public void CreateBuildingFlow()
