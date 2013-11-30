@@ -18,9 +18,17 @@ namespace Main
     /// </summary>
     public partial class StatusWindow : Window
     {
-        public StatusWindow()
+        private Action _stopAction;
+
+        public StatusWindow(Action StopAction)
         {
             InitializeComponent();
+            _stopAction = StopAction;
+        }
+
+        private void Stop_Click(object sender, RoutedEventArgs e)
+        {
+            _stopAction();
         }
     }
 }

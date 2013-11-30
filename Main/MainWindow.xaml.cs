@@ -43,6 +43,11 @@ namespace Main
         private string _currentFile;
 
         /// <summary>
+        /// Currently running genetic algorithm.
+        /// </summary>
+        private GeneticAlgorithm _currentGA;
+
+        /// <summary>
         /// True - file with open building has been overwritten and should
         /// be reloaded.
         /// </summary>
@@ -78,7 +83,8 @@ namespace Main
         public string CurrentFile
         {
             get { return _currentFile; }
-            set {
+            set
+            {
                 _currentFile = value;
                 _watcher.Path = System.IO.Path.GetDirectoryName(value);
                 Title = String.Format("AHMED v2 - {0}", value); // Update window title.
@@ -159,7 +165,7 @@ namespace Main
                 _isFileDirty = true;
         }
         #endregion
-        
+
         #region Menu actions
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
@@ -182,14 +188,20 @@ namespace Main
             if (result == true)
             {
                 // Load building.
-                LoadBuilding(CurrentFile);
+                LoadBuilding(dlg.FileName);
             }
+        }
+
+        private void ProcessCancel_Click(object sender, RoutedEventArgs e)
+        {
+            if (_currentGA != null)
+                _currentGA.Stop();
         }
 
         private void ProcessRun_Click(object sender, RoutedEventArgs e)
         {
             // If no building is currently loaded then do nothing.
-            if (CurrentFile == "")
+            if (String.IsNullOrEmpty(CurrentFile))
                 return;
 
             AdvancedRepairer r = new AdvancedRepairer(new Building(_building.ToDataModel()));
@@ -213,11 +225,12 @@ namespace Main
 
             // Create view model for presenting progression of algorithm.
             StatusViewModel statusModel = new StatusViewModel(ga);
-            StatusWindow statusWindow = new StatusWindow();
+            StatusWindow statusWindow = new StatusWindow(ga.Stop);
             statusWindow.DataContext = statusModel;
             statusWindow.Show();
 
             // Run algorithm asynchronously.
+            _currentGA = ga;
             new Task(ga.Start).Start();
         }
 

@@ -90,6 +90,7 @@
             </MenuItem>
             <MenuItem Header="Process" Height="25">
                 <MenuItem Header="Run" Click="ProcessRun_Click"/>
+                <MenuItem Header="Cancel" Click="ProcessCancel_Click"/>
             </MenuItem>
             <MenuItem Header="Tools" Height="25">
                 <MenuItem Header="Genetics" Click="ToolsGenetics_Click"/>
