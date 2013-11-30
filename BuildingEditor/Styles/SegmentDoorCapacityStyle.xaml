@@ -2,12 +2,29 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:l="clr-namespace:BuildingEditor.Logic"
                     xmlns:enum="clr-namespace:Common.DataModel.Enums;assembly=Common">
-    
+
     <Style x:Key="SegmentDoorCapacityStyle" TargetType="DockPanel">
+        <Style.Resources>
+            <l:OrientationToAngleConverter x:Key="OrientationToAngleConverter"/>
+        </Style.Resources>
         <Setter Property="Background" Value="White"/>
         <Style.Triggers>
+            <!-- Floor -->
             <DataTrigger Binding="{Binding Type}" Value="{x:Static enum:SegmentType.FLOOR}">
                 <Setter Property="Background" Value="LightGray"/>
+            </DataTrigger>
+
+            <!-- Stairs -->
+            <DataTrigger Binding="{Binding Type}" Value="{x:Static enum:SegmentType.STAIRS}">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <ImageBrush ImageSource="../Images/stairs.png">
+                            <ImageBrush.Transform>
+                                <RotateTransform Angle="{Binding Orientation, Converter={StaticResource OrientationToAngleConverter}}"  CenterX="25" CenterY="25"/>
+                            </ImageBrush.Transform>
+                        </ImageBrush>
+                    </Setter.Value>
+                </Setter>
             </DataTrigger>
         </Style.Triggers>
     </Style>
@@ -17,7 +34,7 @@
         <Style.Resources>
             <l:NumberToBoolConverter x:Key="NumberToBoolConverter"/>
         </Style.Resources>
-        
+
         <Style.Triggers>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>

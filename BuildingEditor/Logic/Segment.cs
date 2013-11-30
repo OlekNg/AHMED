@@ -83,6 +83,17 @@ namespace BuildingEditor.Logic
         public Direction PreviewOrientation { get; set; }
 
         public object AdditionalData { get; set; }
+        public string StairsInfo
+        {
+            get
+            {
+                StairsPair sp = AdditionalData as StairsPair;
+                if (sp == null) return "";
+                var stairs = this == sp.First.AssignedSegment ? sp.Second : sp.First;
+
+                return String.Format("{0}:{1}:{2}", stairs.EntranceCapacity, stairs.Capacity, stairs.Delay);
+            }
+        }
 
         public int FlowValue { get; set; }
 
