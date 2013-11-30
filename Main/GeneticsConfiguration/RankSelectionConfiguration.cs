@@ -25,7 +25,7 @@ namespace Main.GeneticsConfiguration
 
         public Genetics.Generic.ISelector BuildSelector()
         {
-            return new RankSelector(SelectedMode.Mode) { Number = Number, Percentage = Percentage };
+            return new RankSelector(SelectedMode.RankMode) { Number = Number, Percentage = Percentage };
         }
 
         public FrameworkElement BuildGUIConfiguration()
@@ -50,7 +50,7 @@ namespace Main.GeneticsConfiguration
             modeGrid.ColumnDefinitions.Add(new ColumnDefinition());
             modeGrid.ColumnDefinitions.Add(new ColumnDefinition());
 
-            Mode percentageMode = new Mode() { Name = "Percentage", Mode = RankSelector.SelectionMode.Percentage };
+            Mode percentageMode = new Mode() { Name = "Percentage", RankMode = RankSelector.SelectionMode.Percentage };
 
             l = new Label() { Content = "Percentage:" };
             modeGrid.Children.Add(l);
@@ -68,7 +68,7 @@ namespace Main.GeneticsConfiguration
             modeGrid.ColumnDefinitions.Add(new ColumnDefinition());
             modeGrid.ColumnDefinitions.Add(new ColumnDefinition());
 
-            Mode numberMode = new Mode() { Name = "Best N", Mode = RankSelector.SelectionMode.Number };
+            Mode numberMode = new Mode() { Name = "Best N", RankMode = RankSelector.SelectionMode.Number };
 
             l = new Label() { Content = "N:" };
             modeGrid.Children.Add(l);
@@ -111,7 +111,7 @@ namespace Main.GeneticsConfiguration
             public FrameworkElement ModeGUI { get; set; }
 
             public string Name { get; set; }
-            public RankSelector.SelectionMode Mode { get; set; }
+            public RankSelector.SelectionMode RankMode { get; set; }
 
             public override string ToString()
             {
