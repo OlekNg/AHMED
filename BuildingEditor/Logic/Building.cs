@@ -31,6 +31,10 @@ namespace BuildingEditor.Logic
             AddFloor(rows, cols);
         }
 
+        /// <summary>
+        /// Creates building from data model.
+        /// </summary>
+        /// <param name="building">Data model building.</param>
         public Building(Common.DataModel.Building building)
             : this()
         {
@@ -49,6 +53,47 @@ namespace BuildingEditor.Logic
         }
 
         /// <summary>
+        /// Sets Solution to true only in segments which are used by people to escape.
+        /// </summary>
+        public void DrawSolution()
+        {
+            // Clear old solution.
+            foreach (var floor in Floors)
+                foreach (var row in floor.Segments)
+                    foreach (var segment in row)
+                        segment.Solution = false;
+
+            foreach (var floor in Floors)
+                foreach (var row in floor.Segments)
+                    foreach (var segment in row)
+                        if (segment.Type == SegmentType.FLOOR && segment.PeopleCount > 0)
+                            DrawSolutionPath(segment);
+        }
+
+        protected void DrawSolutionPath(Segment segment)
+        {
+            while (segment != null && segment.Solution == false)
+            {
+                // If encountered stairs, then move to segment where are second stairs from pair.
+                if (segment.Type == SegmentType.STAIRS)
+                {
+                    StairsPair pair = segment.AdditionalData as StairsPair;
+                    if (segment == pair.First.AssignedSegment)
+                        segment = pair.Second.AssignedSegment;
+                    else
+                        segment = pair.First.AssignedSegment;
+
+                    // Stairs have no fenotype, so we have to use orientation.
+                    segment.Solution = true;
+                    segment = segment.GetNeighbour(segment.Orientation);
+                }
+
+                segment.Solution = true;
+                segment = segment.GetNeighbour(segment.Fenotype);
+            }
+        }
+
+        /// <summary>
         /// Counts all segments of type floor.
         /// </summary>
         /// <returns>Number of floor type segments.</returns>
@@ -62,7 +107,39 @@ namespace BuildingEditor.Logic
             return result;
         }
 
+        /// <summary>
+        /// Calculates normal fenotype of building (only floor-type segments).
+        /// </summary>
+        /// <returns>Fenotype.</returns>
+        public List<Direction> GetFenotype()
+        {
+            List<Direction> result = new List<Direction>();
 
+            // Order floors by level to make sure we are creating fenotype
+            // from bottom to top level of building.
+            List<Floor> floors = Floors.OrderBy(x => x.Level).ToList();
+
+            // Add fenotype from all segments of type floor.
+            foreach (var floor in floors)
+            {
+                foreach (var row in floor.Segments)
+                    foreach (var segment in row)
+                        if(segment.Type == SegmentType.FLOOR)
+                            result.Add(segment.Fenotype);
+            }
+
+            return result;
+        }
+
+        public List<Segment> GetPeopleGroups()
+        {
+            List<Segment> result = new List<Segment>();
+
+            foreach (var floor in Floors)
+                result.AddRange(floor.GetPeopleGroups());
+
+            return result;
+        }
 
         /// <summary>
         /// Creates fenotype for simulator which requires all segments (even of type NONE)
@@ -197,6 +274,16 @@ namespace BuildingEditor.Logic
                 if (x.Second.Level > level)
                     x.Second.Level--;
             });
+        }
+
+        public int GetPeopleCount()
+        {
+            int result = 0;
+
+            foreach (var f in Floors)
+                result += f.GetPeopleCount();
+
+            return result;
         }
     }
 }

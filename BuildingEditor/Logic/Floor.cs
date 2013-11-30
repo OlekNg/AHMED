@@ -11,7 +11,6 @@ namespace BuildingEditor.Logic
     /// <summary>
     /// Represents single floor in the building.
     /// </summary>
-    [Serializable]
     [ImplementPropertyChanged]
     public class Floor
     {
@@ -36,7 +35,7 @@ namespace BuildingEditor.Logic
             {
                 ObservableCollection<Segment> row = new ObservableCollection<Segment>();
                 for (int j = 0; j < cols; j++)
-                    row.Add(new Segment());
+                    row.Add(new Segment(this));
 
                 Segments.Add(row);
             }
@@ -56,7 +55,7 @@ namespace BuildingEditor.Logic
                 ObservableCollection<Segment> segmentRow = new ObservableCollection<Segment>();
                 for (int col = 0; col < floor.Segments[row].Count; col++)
                 {
-                    segmentRow.Add(new Segment(floor.Segments[row][col]));
+                    segmentRow.Add(new Segment(this, floor.Segments[row][col]));
                 }
                 Segments.Add(segmentRow);
             }
@@ -149,7 +148,7 @@ namespace BuildingEditor.Logic
             int cols = Segments[0].Count;
             ObservableCollection<Segment> row = new ObservableCollection<Segment>();
             for (int j = 0; j < cols; j++)
-                row.Add(new Segment());
+                row.Add(new Segment(this));
 
             Segments.Insert(index, row);
             ConnectSegments();
@@ -165,7 +164,7 @@ namespace BuildingEditor.Logic
         {
             int rows = Segments.Count;
             for (int i = 0; i < rows; i++)
-                Segments[i].Insert(index, new Segment());
+                Segments[i].Insert(index, new Segment(this));
 
             ConnectSegments();
             RecalculateIndexes();
@@ -174,6 +173,10 @@ namespace BuildingEditor.Logic
 
         public void RemoveRow(int index)
         {
+            // Delete all stairs that are in deleted row.
+            var stairsToDelete = Segments[index].Where(x => x.Type == SegmentType.STAIRS).Select(y => (StairsPair)y.AdditionalData).ToList();
+            stairsToDelete.ForEach(x => x.Destroy());
+
             Segments.RemoveAt(index);
             ConnectSegments();
             RecalculateIndexes();
@@ -183,7 +186,13 @@ namespace BuildingEditor.Logic
         public void RemoveColumn(int index)
         {
             foreach (ObservableCollection<Segment> row in Segments)
+            {
+                // Destroy stairs if we encountered one.
+                if (row[index].Type == SegmentType.STAIRS)
+                    ((StairsPair)row[index].AdditionalData).Destroy();
+
                 row.RemoveAt(index);
+            }
 
             ConnectSegments();
             RecalculateIndexes();
@@ -246,6 +255,30 @@ namespace BuildingEditor.Logic
                 }
                 result.Segments.Add(segmentRow);
             }
+
+            return result;
+        }
+
+        public int GetPeopleCount()
+        {
+            int result = 0;
+
+            foreach (var row in Segments)
+                foreach (var segment in row)
+                    if (segment.Type == SegmentType.FLOOR)
+                        result += segment.PeopleCount;
+
+            return result;
+        }
+
+        public List<Segment> GetPeopleGroups()
+        {
+            List<Segment> result = new List<Segment>();
+
+            foreach (var row in Segments)
+                foreach (var segment in row)
+                    if (segment.PeopleCount > 0)
+                        result.Add(segment);
 
             return result;
         }

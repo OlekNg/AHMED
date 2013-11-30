@@ -12,11 +12,12 @@ namespace BuildingEditor.Logic
     [ImplementPropertyChanged]
     public class Segment
     {
-        protected List<SideElement> _outerWalls;
+        protected List<SideElement> _outerWalls = new List<SideElement>();
+        private Floor _floor;
 
-        public Segment()
+        public Segment(Floor owner)
         {
-            _outerWalls = new List<SideElement>();
+            _floor = owner;
 
             LeftSide = new SideElement();
             TopSide = new SideElement();
@@ -28,18 +29,15 @@ namespace BuildingEditor.Logic
             BottomRightCorner = new SideElement();
             BottomLeftCorner = new SideElement();
 
+            // Default type and capacity.
             Type = SegmentType.FLOOR;
+            Capacity = 3;
+
+            FlowValue = Int32.MaxValue;
         }
 
-        public Segment(SegmentType type = SegmentType.FLOOR)
-            : this()
-        {
-            Type = type;
-            Capacity = 5;
-        }
-
-        public Segment(Common.DataModel.Segment segment)
-            : this()
+        public Segment(Floor owner, Common.DataModel.Segment segment)
+            : this(owner)
         {
             Type = segment.Type;
             Orientation = segment.Orientation;
@@ -55,6 +53,7 @@ namespace BuildingEditor.Logic
         #region Properties
         public int Row { get; set; }
         public int Column { get; set; }
+        public int Level { get { return _floor.Level; } }
 
         public Direction Fenotype { get; set; }
         public string GenotypeText
@@ -70,18 +69,22 @@ namespace BuildingEditor.Logic
                     case Direction.RIGHT:
                         return "11";
                     case Direction.DOWN:
-                        return "01";  
+                        return "01";
                 }
 
                 return "";
             }
         }
 
+        public bool Solution { get; set; }
+
         public bool Preview { get; set; }
         public SegmentType PreviewType { get; set; }
         public Direction PreviewOrientation { get; set; }
 
         public object AdditionalData { get; set; }
+
+        public int FlowValue { get; set; }
 
         public int Capacity { get; set; }
         public int PeopleCount { get; set; }
@@ -104,6 +107,52 @@ namespace BuildingEditor.Logic
         public SideElement BottomLeftCorner { get; set; }
         #endregion
 
+        /// <summary>
+        /// Checks for available directions from given segment.
+        /// It excludes directions that lead to walls.
+        /// Does not excludes directions that might lead to another small adjacent loop.
+        /// (it allows that change - change is good for genetic algorithm).
+        /// </summary>
+        /// <param name="segment">Considered segment.</param>
+        /// <returns>List of available directions.</returns>
+        public List<Direction> GetAvailableDirections()
+        {
+            List<Direction> result = new List<Direction>() { Direction.LEFT, Direction.UP, Direction.RIGHT, Direction.DOWN };
+
+            var sideElements = GetSideElements();
+            var neighbours = GetNeighbours();
+
+            foreach (Direction side in typeof(Direction).GetEnumValues())
+            {
+                // Doors are ok - analyze next direction.
+                if (sideElements[side].Type == SideElementType.DOOR)
+                    continue;
+
+                // If we encount wall - remove from available directions.
+                if (sideElements[side].Type == SideElementType.WALL)
+                {
+                    result.Remove(side);
+                    continue;
+                }
+
+                // Remove direction that leads to segment of type none
+                // (note we DO NOT exclude null segments - they are considered
+                // as escape from building.
+                if (neighbours[side].Type == SegmentType.NONE)
+                    result.Remove(side);
+            }
+
+            return result;
+        }
+
+        /// <param name="except">Excludes explicitly one direction from result.</param>
+        public List<Direction> GetAvailableDirections(Direction except)
+        {
+            List<Direction> result = GetAvailableDirections();
+            result.Remove(except);
+            return result;
+        }
+
         public Segment GetNeighbour(Direction side)
         {
             Segment result = null;
@@ -123,6 +172,41 @@ namespace BuildingEditor.Logic
             return result;
         }
 
+        /// <summary>
+        /// Returns segment which this segment leads to (determined by fenotype).
+        /// </summary>
+        /// <returns></returns>
+        public Segment GetNextSegment()
+        {
+            Segment result;
+
+            if (Type == SegmentType.STAIRS)
+            {
+                // Get segment that is on exit of second stairs from pair.
+                StairsPair pair = (StairsPair)AdditionalData;
+                Segment secondStairs;
+                if (this == pair.First.AssignedSegment)
+                    secondStairs = pair.Second.AssignedSegment;
+                else
+                    secondStairs = pair.First.AssignedSegment;
+                return secondStairs.GetNeighbour(secondStairs.Orientation);
+            }
+            else
+                return GetNeighbour(Fenotype);
+        }
+
+        public Dictionary<Direction, Segment> GetNeighbours()
+        {
+            Dictionary<Direction, Segment> result = new Dictionary<Direction, Segment>();
+
+            result.Add(Direction.LEFT, LeftSegment);
+            result.Add(Direction.UP, TopSegment);
+            result.Add(Direction.RIGHT, RightSegment);
+            result.Add(Direction.DOWN, BottomSegment);
+
+            return result;
+        }
+
         public SideElement GetSideElement(Direction side)
         {
             SideElement result = null;
@@ -138,6 +222,18 @@ namespace BuildingEditor.Logic
                 case Direction.DOWN:
                     result = BottomSide; break;
             }
+
+            return result;
+        }
+
+        public Dictionary<Direction, SideElement> GetSideElements()
+        {
+            Dictionary<Direction, SideElement> result = new Dictionary<Direction, SideElement>();
+
+            result.Add(Direction.LEFT, LeftSide);
+            result.Add(Direction.UP, TopSide);
+            result.Add(Direction.RIGHT, RightSide);
+            result.Add(Direction.DOWN, BottomSide);
 
             return result;
         }
@@ -211,6 +307,16 @@ namespace BuildingEditor.Logic
                 return;
             }
 
+            // Set walls around stairs except entry
+            if (Type == SegmentType.STAIRS)
+            {
+                foreach (Direction s in typeof(Direction).GetEnumValues())
+                    if (s != Orientation)
+                        SetSide(s, SideElementType.WALL);
+
+                return;
+            }
+
             // Set walls and add them to current outer walls list.
             foreach (Direction s in typeof(Direction).GetEnumValues())
             {
@@ -235,7 +341,7 @@ namespace BuildingEditor.Logic
             result.Orientation = Orientation;
             result.PeopleCount = PeopleCount;
 
-            result.LeftSide = LeftSide.ToDataModel(); 
+            result.LeftSide = LeftSide.ToDataModel();
             result.TopSide = TopSide.ToDataModel();
             result.RightSide = RightSide.ToDataModel();
             result.BottomSide = BottomSide.ToDataModel();

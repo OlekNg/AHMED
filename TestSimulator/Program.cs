@@ -54,7 +54,7 @@ namespace TestSimulator
             f[0].Setup(3, 1, 3);
             f[1].Setup(3, 1, 3);
 
-            for (uint i = 0; i < 3; ++i)
+            for (int i = 0; i < 3; ++i)
             {
                 f[0].SetFloor(0, i, 3);
                 f[1].SetFloor(0, i, 3);

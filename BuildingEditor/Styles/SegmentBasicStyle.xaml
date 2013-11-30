@@ -11,7 +11,7 @@
         <Setter Property="Background" Value="White"/>
         <Setter Property="TextAlignment" Value="Center"/>
         <Setter Property="Padding" Value="0,10"/>
-        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="FontSize" Value="18"/>
         <Setter Property="FontWeight" Value="Bold"/>
 
         <Style.Resources>
@@ -55,8 +55,18 @@
                     <Condition Binding="{Binding PeopleCount, Converter={StaticResource NumberToBoolConverter}}" Value="True"/>
                 </MultiDataTrigger.Conditions>
                 <Setter Property="Text" Value="{Binding PeopleCount}"/>
-                <Setter Property="Foreground" Value="Green"/>
+                <Setter Property="Foreground" Value="Red"/>
             </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Type}" Value="{x:Static enum:SegmentType.FLOOR}"/>
+                    <Condition Binding="{Binding Path=DataContext.ViewMode, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Viewbox}}}" Value="Solution"/>
+                    <Condition Binding="{Binding PeopleCount, Converter={StaticResource NumberToBoolConverter}}" Value="True"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Text" Value="{Binding PeopleCount}"/>
+                <Setter Property="Foreground" Value="Red"/>
+            </MultiDataTrigger>
+            
             
             <!-- Genotype text -->
             <MultiDataTrigger>
@@ -71,6 +81,24 @@
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
                     <Condition Binding="{Binding Type}" Value="{x:Static enum:SegmentType.FLOOR}"/>
+                    <Condition Binding="{Binding Path=DataContext.ViewMode, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Viewbox}}}" Value="Fenotype"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <ImageBrush ImageSource="../Images/arrow.png">
+                            <ImageBrush.Transform>
+                                <RotateTransform Angle="{Binding Fenotype, Converter={StaticResource OrientationToAngleConverter}}"  CenterX="25" CenterY="25"/>
+                            </ImageBrush.Transform>
+                        </ImageBrush>
+                    </Setter.Value>
+                </Setter>
+            </MultiDataTrigger>
+
+            <!-- Solution -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Type}" Value="{x:Static enum:SegmentType.FLOOR}"/>
+                    <Condition Binding="{Binding Solution}" Value="True"/>
                     <Condition Binding="{Binding Path=DataContext.ViewMode, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Viewbox}}}" Value="Solution"/>
                 </MultiDataTrigger.Conditions>
                 <Setter Property="Background">

@@ -6,8 +6,16 @@ using System.Text;
 
 namespace Genetics
 {
+    /// <summary>
+    /// Extension methods related to genetics.
+    /// </summary>
     public static class GeneticExtensions
     {
+        /// <summary>
+        /// Converts genotype to fenotype.
+        /// </summary>
+        /// <param name="genotype">Source genotype.</param>
+        /// <returns>Fenotype.</returns>
         public static List<Direction> ToFenotype(this List<bool> genotype)
         {
             if (genotype.Count % 2 != 0)
@@ -30,6 +38,41 @@ namespace Genetics
                         result.Add(Direction.DOWN); // 01
                     else
                         result.Add(Direction.LEFT); // 00
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Converts fenotype to genotype.
+        /// </summary>
+        /// <param name="fenotype">Source fenotype.</param>
+        /// <returns>Genotype.</returns>
+        public static List<bool> ToGenotype(this List<Direction> fenotype)
+        {
+            List<bool> result = new List<bool>();
+
+            foreach (var f in fenotype)
+            {
+                switch (f)
+                {
+                    case Direction.LEFT:
+                        result.Add(false);
+                        result.Add(false);
+                        break;
+                    case Direction.UP:
+                        result.Add(true);
+                        result.Add(false);
+                        break;
+                    case Direction.RIGHT:
+                        result.Add(true);
+                        result.Add(true);
+                        break;
+                    case Direction.DOWN:
+                        result.Add(false);
+                        result.Add(true);
+                        break;
                 }
             }
 
