@@ -1,7 +1,7 @@
 ﻿<Window x:Class="Main.View.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="AHMED v2" Height="400" Width="600" Activated="Window_Activated">
+        Title="{Binding CurrentFile, StringFormat=AHMED v2 - {0}}" Height="400" Width="600" Activated="Window_Activated">
 
     <Window.Resources>
         <Style TargetType="ListViewItem">
@@ -25,7 +25,7 @@
         <!-- WORKSPACE -->
         <Border BorderBrush="LightGray" BorderThickness="1"
                 Grid.Column="1" Grid.Row="1" Grid.RowSpan="2">
-            <DockPanel>
+            <DockPanel DataContext="{Binding CurrentBuilding}">
                 <Canvas Name="uxWorkspaceCanvas"
                         Focusable="True"
                 ClipToBounds="True">
@@ -61,7 +61,7 @@
         </StackPanel>
 
         <!-- FLOORS -->
-        <DockPanel Name="uxFloorsPanel" Grid.Column="0" Grid.Row="1">
+        <DockPanel DataContext="{Binding CurrentBuilding}" Name="uxFloorsPanel" Grid.Column="0" Grid.Row="1">
             <Border DockPanel.Dock="Top" BorderBrush="LightGray" BorderThickness="1,1,0,1">
                 <TextBlock Text="Floors" TextAlignment="Center" Margin="5"/>
             </Border>

@@ -32,141 +32,19 @@ namespace Main.View
     public partial class MainWindow : Window
     {
         #region Fields
-        /// <summary>
-        /// Currently open building.
-        /// </summary>
-        private Building _building;
-
-        /// <summary>
-        /// Path to currently open file.
-        /// </summary>
-        private string _currentFile;
-
-        /// <summary>
-        /// Currently running genetic algorithm.
-        /// </summary>
-        private GeneticAlgorithm _currentGA;
-
-        /// <summary>
-        /// True - file with open building has been overwritten and should
-        /// be reloaded.
-        /// </summary>
-        private bool _isFileDirty;
-
-        /// <summary>
-        /// Genetic algorithm view model configuration.
-        /// </summary>
-        private Configuration _geneticsConfiguration = new Configuration();
-
-        /// <summary>
-        /// Tracks open file for overwritting (for example by editor).
-        /// </summary>
-        private FileSystemWatcher _watcher;
+        private Calculator _viewModel;
         #endregion
 
         public MainWindow()
         {
             InitializeComponent();
-            InitFileWatcher();
 
-            // Init empty building.
-            _building = new Building();
+            _viewModel = new Calculator();
 
-            // Set data contexts.
-            uxWorkspaceViewbox.DataContext = _building;
-            uxFloors.DataContext = _building;
+            DataContext = _viewModel;
         }
 
-        /// <summary>
-        /// Path to currently open file.
-        /// </summary>
-        public string CurrentFile
-        {
-            get { return _currentFile; }
-            set
-            {
-                _currentFile = value;
-                _watcher.Path = System.IO.Path.GetDirectoryName(value);
-                Title = String.Format("AHMED v2 - {0}", value); // Update window title.
-            }
-        }
-
-        /// <summary>
-        /// Loads building from specified file and applies it to view model.
-        /// </summary>
-        /// <param name="file">Path to xml file with building definition.</param>
-        private void LoadBuilding(string file)
-        {
-            CurrentFile = file;
-            Common.DataModel.Building building = new Common.DataModel.Building();
-            building.Load(file);
-            Building viewModel = new Building(building);
-
-            _building.Floors = viewModel.Floors;
-            _building.Stairs = viewModel.Stairs;
-            _building.CurrentFloor = _building.Floors[0];
-        }
-
-        /// <summary>
-        /// Updates building view mode.
-        /// </summary>
-        private void ViewMode_Clicked(object sender, RoutedEventArgs e)
-        {
-            FrameworkElement element = sender as FrameworkElement;
-            if (element == null) return;
-
-            string mode = element.Tag as string;
-
-            if (mode != null)
-                _building.ViewMode = mode;
-        }
-
-        /// <summary>
-        /// Applies final solution to building view model.
-        /// </summary>
-        private void OnGeneticCompleted(GeneticAlgorithmStatus status)
-        {
-            _building.SetFenotype(((BinaryChromosome)status.BestChromosome).Genotype.ToFenotype());
-            _building.DrawSolution();
-        }
-
-        /// <summary>
-        /// Reloads building from file if it was overwritten.
-        /// </summary>
-        private void Window_Activated(object sender, EventArgs e)
-        {
-            // Refresh building if it has changed.
-            if (_isFileDirty)
-            {
-                _isFileDirty = false;
-                LoadBuilding(CurrentFile);
-            }
-        }
-
-        #region File watcher
-        private void InitFileWatcher()
-        {
-            _watcher = new FileSystemWatcher();
-            _watcher.NotifyFilter = NotifyFilters.LastWrite;
-            _watcher.Path = "C:\\";
-            _watcher.Filter = "*.xml";
-
-            _watcher.Changed += new FileSystemEventHandler(OnFileChanged);
-
-            _watcher.EnableRaisingEvents = true;
-        }
-
-        /// <summary>
-        /// Checks if our currently open file has changed and marks it as dirty (if yes).
-        /// </summary>
-        private void OnFileChanged(object sender, FileSystemEventArgs e)
-        {
-            if (e.FullPath == _currentFile)
-                _isFileDirty = true;
-        }
-        #endregion
-
-        #region Menu actions
+        #region Actions
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -188,61 +66,48 @@ namespace Main.View
             if (result == true)
             {
                 // Load building.
-                LoadBuilding(dlg.FileName);
+                _viewModel.LoadBuilding(dlg.FileName);
             }
         }
 
         private void ProcessCancel_Click(object sender, RoutedEventArgs e)
         {
-            if (_currentGA != null)
-                _currentGA.Stop();
+            _viewModel.CancelGA();
         }
 
         private void ProcessRun_Click(object sender, RoutedEventArgs e)
         {
-            // If no building is currently loaded then do nothing.
-            if (String.IsNullOrEmpty(CurrentFile))
-                return;
-
-            AdvancedRepairer r = new AdvancedRepairer(new Building(_building.ToDataModel()));
-
-            MapBuilder mapBuilder = new MapBuilder(_building.ToDataModel());
-            Simulator sim = new Simulator();
-
-            sim.MaximumTicks = _building.GetFloorCount() * 2;
-            sim.SetupSimulator(mapBuilder.BuildBuildingMap(), mapBuilder.BuildPeopleMap());
-            AHMEDEvaluator evaluator = new AHMEDEvaluator(sim, new Building(_building.ToDataModel()));
-            //AHMEDEvaluator evaluator = new AHMEDEvaluator(sim, _building); // works on actual building
-
-            BinaryChromosome.CrossoverOperator = _geneticsConfiguration.SelectedCrossover.BuildCrossoverOperator();
-            BinaryChromosome.MutationOperator = _geneticsConfiguration.SelectedMutation.BuildMutationOperator();
-            BinaryChromosome.Evaluator = evaluator;
-            BinaryChromosome.Repairer = r;
-            GeneticAlgorithm ga = new GeneticAlgorithm(new BinaryChromosomeFactory(_building.GetFloorCount() * 2), _geneticsConfiguration.InitPopSize);
-            ga.Selector = _geneticsConfiguration.SelectedSelector.BuildSelector();
-            ga.MaxIterations = _geneticsConfiguration.MaxIterations;
-            ga.Completed += OnGeneticCompleted;
-
-            // Create view model for presenting progression of algorithm.
-            Status statusModel = new Status(ga);
-            StatusWindow statusWindow = new StatusWindow(ga.Stop);
-            statusWindow.DataContext = statusModel;
-            statusWindow.Show();
-
-            // Run algorithm asynchronously.
-            _currentGA = ga;
-            new Task(ga.Start).Start();
+            _viewModel.RunGA();
         }
 
         private void ToolsEditor_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start(typeof(BuildingEditor.App).Assembly.Location, CurrentFile);
+            System.Diagnostics.Process.Start(typeof(BuildingEditor.App).Assembly.Location, _viewModel.CurrentFile);
         }
 
         private void ToolsGenetics_Click(object sender, RoutedEventArgs e)
         {
-            GeneticsWindow window = new GeneticsWindow(_geneticsConfiguration);
-            window.Show();
+            _viewModel.ShowGeneticsConfiguration();
+            
+        }
+
+        /// <summary>
+        /// Updates view model view mode.
+        /// </summary>
+        private void ViewMode_Clicked(object sender, RoutedEventArgs e)
+        {
+            FrameworkElement element = sender as FrameworkElement;
+            if (element == null) return;
+
+            string mode = element.Tag as string;
+
+            if (mode != null)
+                _viewModel.SetViewMode(mode);
+        }
+        
+        private void Window_Activated(object sender, EventArgs e)
+        {
+            _viewModel.RefreshFileIfDirty();
         }
         #endregion
 
@@ -269,7 +134,7 @@ namespace Main.View
             ItemsControl control = new ItemsControl();
             var template = uxDataFloor.ItemTemplate;
             control.ItemTemplate = Application.Current.FindResource("SegmentRowTemplate") as DataTemplate;
-            control.ItemsSource = _building.Floors[0].Segments;
+            control.ItemsSource = _viewModel.CurrentBuilding.Floors[0].Segments;
             c.Children.Add(control);
             
             c.Measure(new Size(1000, 1000));
