@@ -115,7 +115,8 @@
 
             <DockPanel>
                 <ScrollViewer>
-                    <ListView Name="uxStairs">
+                    <ListView Name="uxStairs"
+                              ItemsSource="{Binding Stairs}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock TextAlignment="Center"

@@ -36,7 +36,18 @@
                         </ImageBrush>
                     </Setter.Value>
                 </Setter>
+                
             </DataTrigger>
+            
+            <!-- Stairs info -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Type}" Value="{x:Static enum:SegmentType.STAIRS}"/>
+                    <Condition Binding="{Binding Path=DataContext.ViewMode, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Viewbox}}}" Value="Stairs"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="Text" Value="{Binding StairsInfo}"/>
+            </MultiDataTrigger>
 
             <!-- Segment capacity -->
             <MultiDataTrigger>

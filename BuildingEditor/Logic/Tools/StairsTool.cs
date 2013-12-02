@@ -24,10 +24,12 @@ namespace BuildingEditor.Tools.Logic
             _firstStairs = true;
             Name = "Stairs";
             Capacity = 3;
+            EntranceCapacity = 3;
             Delay = 2;
             UpdateMessage();
         }
 
+        public int EntranceCapacity { get; set; }
         public int Capacity { get; set; }
         public int Delay { get; set; }
         public string Message { get; set; }
@@ -41,6 +43,13 @@ namespace BuildingEditor.Tools.Logic
             capacityPanel.Children.Add(new Label() { Content = "Capacity" });
             capacityPanel.Children.Add(capacity);
 
+            TextBox entranceCapacity = new TextBox() { Width = 20, Height = 20 };
+            entranceCapacity.SetBinding(TextBox.TextProperty, new Binding("EntranceCapacity"));
+
+            StackPanel entranceCapacityPanel = new StackPanel() { Orientation = Orientation.Horizontal };
+            entranceCapacityPanel.Children.Add(new Label() { Content = "Entrance capacity" });
+            entranceCapacityPanel.Children.Add(entranceCapacity);
+
             TextBox delay = new TextBox() { Width = 20, Height = 20 };
             delay.SetBinding(TextBox.TextProperty, new Binding("Delay"));
 
@@ -52,6 +61,7 @@ namespace BuildingEditor.Tools.Logic
             messageLabel.SetBinding(Label.ContentProperty, new Binding("Message"));
 
             StackPanel panel = new StackPanel();
+            panel.Children.Add(entranceCapacityPanel);
             panel.Children.Add(capacityPanel);
             panel.Children.Add(delayPanel);
             panel.Children.Add(messageLabel);
@@ -113,6 +123,7 @@ namespace BuildingEditor.Tools.Logic
                 _stairsPair.First = new Stairs()
                 {
                     AssignedSegment = segment,
+                    EntranceCapacity = EntranceCapacity,
                     Capacity = Capacity,
                     Delay = Delay,
                     Level = _building.CurrentFloor.Level

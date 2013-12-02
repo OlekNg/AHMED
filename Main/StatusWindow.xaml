@@ -1,0 +1,16 @@
+﻿<Window x:Class="Main.StatusWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:l="clr-namespace:Main.StatusControl"
+        Title="StatusWindow" Height="230" Width="350">
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <l:GeneticStatusControl Grid.Row="0" DataContext="{Binding}"/>
+        <Button Grid.Row="2" Content="Stop" Click="Stop_Click" Margin="5"/>
+    </Grid>
+</Window>

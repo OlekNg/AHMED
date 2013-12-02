@@ -14,18 +14,21 @@ namespace BuildingEditor.Logic
         public Stairs()
         {
             Level = 0;
-            Capacity = 1;
+            Capacity = 3;
             Delay = 1;
+            EntranceCapacity = 3;
         }
 
         public Stairs(Common.DataModel.Stairs stairs)
         {
             Level = stairs.Level;
             Capacity = stairs.Capacity;
+            EntranceCapacity = stairs.EntranceCapacity;
             Delay = stairs.Delay;
         }
 
         public int Level { get; set; }
+        public int EntranceCapacity { get; set; }
         public int Capacity { get; set; }
         public int Delay { get; set; }
 
@@ -35,6 +38,7 @@ namespace BuildingEditor.Logic
         {
             Common.DataModel.Stairs result = new Common.DataModel.Stairs();
 
+            result.EntranceCapacity = EntranceCapacity;
             result.Capacity = Capacity;
             result.Delay = Delay;
             result.Level = Level;
