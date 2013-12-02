@@ -262,5 +262,47 @@ namespace Main
             Console.WriteLine("Best algorithm chromosome value: {0:0.000}", status.BestChromosome.Value);
         }
         #endregion
+
+        private void Test_Click(object sender, RoutedEventArgs e)
+        {
+            Canvas c = new Canvas();
+            ItemsControl control = new ItemsControl();
+            var template = uxDataFloor.ItemTemplate;
+            control.ItemTemplate = Application.Current.FindResource("SegmentRowTemplate") as DataTemplate;
+            control.ItemsSource = _building.Floors[0].Segments;
+            c.Children.Add(control);
+            
+            c.Measure(new Size(1000, 1000));
+            c.Arrange(new Rect(new Size(1000, 1000)));
+
+            RenderTargetBitmap bmp = new RenderTargetBitmap((int)control.DesiredSize.Width, (int)control.DesiredSize.Height, 96, 96, PixelFormats.Pbgra32);
+            bmp.Render(control);
+
+            var encoder = new PngBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(bmp));
+            using (Stream stm = File.Create(@"D:\test.png"))
+            {
+                encoder.Save(stm);
+            }
+            return;
+
+            //int width = (int)uxDataFloor.ActualWidth;
+            //int height = (int)uxDataFloor.ActualHeight;
+            //int width = 1000;
+            //int height = 1000;
+
+            //uxDataFloor.Measure(new Size(width, height));
+            //uxDataFloor.Arrange(new Rect(uxDataFloor.DesiredSize));
+
+            //RenderTargetBitmap bmp = new RenderTargetBitmap(width, height, 96, 96, PixelFormats.Pbgra32);
+            //bmp.Render(uxDataFloor);
+
+            //var encoder = new PngBitmapEncoder();
+            //encoder.Frames.Add(BitmapFrame.Create(bmp));
+            //using (Stream stm = File.Create(@"D:\test.png"))
+            //{
+            //    encoder.Save(stm);
+            //}
+        }
     }
 }

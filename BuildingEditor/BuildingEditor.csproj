@@ -63,6 +63,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Logic\FloorIconUpdater.cs" />
     <Compile Include="Logic\OrientationToAngleConverter.cs" />
     <Compile Include="Logic\SegmentEventHandler.cs" />
     <Compile Include="Logic\StairsPair.cs" />

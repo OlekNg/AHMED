@@ -263,5 +263,10 @@ namespace BuildingEditor
 
             _building.RemoveFloor((int)b.Tag);
         }
+
+        private void Test_Click(object sender, RoutedEventArgs e)
+        {
+            FloorIconUpdater iu = new FloorIconUpdater(_building, uxFloors);
+        }
     }
 }

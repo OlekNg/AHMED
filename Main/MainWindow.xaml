@@ -88,6 +88,7 @@
             <MenuItem Header="File" Height="25">
                 <MenuItem Header="Open" Click="Open_Click"/>
                 <MenuItem Header="Exit" Click="Exit_Click"/>
+                <MenuItem Header="Test" Click="Test_Click"/>
             </MenuItem>
             <MenuItem Header="Process" Height="25">
                 <MenuItem Header="Run" Click="ProcessRun_Click"/>

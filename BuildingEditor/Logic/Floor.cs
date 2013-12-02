@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Windows.Media;
 
 namespace BuildingEditor.Logic
 {
@@ -67,6 +68,7 @@ namespace BuildingEditor.Logic
 
         public ObservableCollection<ObservableCollection<Segment>> Segments { get; set; }
         public int Level { get; set; }
+        public ImageSource Icon { get; set; }
 
         /// <summary>
         /// Calculates number of floor type segments (available to genotype).
