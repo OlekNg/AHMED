@@ -25,140 +25,37 @@ namespace BuildingEditor.View
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window, ISegmentEventHandler
+    public partial class MainWindow : Window
     {
-        private Building _building;
-        private Tool _currentTool;
-        private Random _randomizer;
-        private string _currentFile;
+        private Editor _viewModel;
 
         public MainWindow()
         {
             InitializeComponent();
-            _building = new Building();
-            DataContext = _building;
 
-            NewBuilding();
+            _viewModel = new Editor(uxWorkspaceViewbox, this);
+            _viewModel.NewBuilding();
 
-            ObservableCollection<Tool> toolbox = new ObservableCollection<Tool>();
-            toolbox.Add(new DragTool(uxWorkspaceViewbox, uxModePanel));
-            toolbox.Add(new FloorTool(_building));
-            toolbox.Add(new SideElementTool(_building, SideElementType.WALL, "Wall"));
-            toolbox.Add(new SideElementTool(_building, SideElementType.DOOR, "Door") { Capacity = 5 });
-            toolbox.Add(new PeopleTool(_building));
-            toolbox.Add(new DeleteTool(_building));
-            toolbox.Add(new StairsTool(_building));
-
-            uxToolbox.ItemsSource = toolbox;
-            uxToolbox.SelectedIndex = 0;
-
-            _randomizer = new Random();
-
-            SegmentEventHandler.Register(this);
+            DataContext = _viewModel;
         }
 
         public MainWindow(string file)
             : this()
         {
-            LoadBuilding(file);
-            CurrentFile = file;
+            _viewModel.LoadBuilding(file);
         }
 
-        public string CurrentFile
-        {
-            get { return _currentFile; }
-            set
-            {
-                _currentFile = value;
-                Title = String.Format("Building Editor - {0}", value);
-            }
-        }
+        
 
+        #region Workspace event handlers.
         private void Workspace_MouseLeave(object sender, MouseEventArgs e)
         {
-            // Clear preview when out of workspace.
-            Tool selectedTool = (Tool)uxToolbox.SelectedItem;
-            if (selectedTool != null)
-                selectedTool.ClearPreview();
+            _viewModel.Workspace_MouseLeave(sender, e);
         }
 
-        private void Exit_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
-        #region Segment events handlers.
-        public void Segment_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            Tool selectedTool = (Tool)uxToolbox.SelectedItem;
-
-            if (selectedTool != null)
-                selectedTool.MouseDown(sender, e);
-        }
-
-        public void Segment_MouseMove(object sender, MouseEventArgs e)
-        {
-            Tool selectedTool = (Tool)uxToolbox.SelectedItem;
-
-            if (selectedTool != null)
-                selectedTool.MouseMove(sender, e);
-        }
-
-        public void Segment_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            Tool selectedTool = (Tool)uxToolbox.SelectedItem;
-
-            if (selectedTool != null)
-                selectedTool.MouseUp(sender, e);
-        }
-
-        public void Segment_MouseEnter(object sender, MouseEventArgs e)
-        {
-            Tool selectedTool = (Tool)uxToolbox.SelectedItem;
-
-            if (selectedTool != null)
-                selectedTool.MouseEnter(sender, e);
-        }
-
-        public void Segment_MouseLeave(object sender, MouseEventArgs e)
-        {
-            Tool selectedTool = (Tool)uxToolbox.SelectedItem;
-
-            if (selectedTool != null)
-                selectedTool.MouseLeave(sender, e);
-        }
-
-        /// <summary>
-        /// Performs zoom in/out of the building.
-        /// </summary>
         private void Workspace_MouseWHeel(object sender, MouseWheelEventArgs e)
         {
-            Tool selectedTool = (Tool)uxToolbox.SelectedItem;
-
-            if (selectedTool != null)
-                selectedTool.MouseWheel(sender, e);
-        }
-        #endregion
-
-        /// <summary>
-        /// Adds new floor to the building.
-        /// </summary>
-        private void AddFloor_Click(object sender, RoutedEventArgs e)
-        {
-            int rows, cols;
-            if (!Int32.TryParse(uxCols.Text, out cols)) return;
-            if (!Int32.TryParse(uxRows.Text, out rows)) return;
-
-            _building.AddFloor(rows, cols);
-        }
-
-        /// <summary>
-        /// Expands current floor.
-        /// </summary>
-        private void Expand_Click(object sender, RoutedEventArgs e)
-        {
-            Button b = sender as Button;
-            _building.CurrentFloor.Expand((Direction)b.Tag);
+            _viewModel.Workspace_MouseWheel(sender, e);
         }
 
         /// <summary>
@@ -168,73 +65,38 @@ namespace BuildingEditor.View
         {
             uxWorkspaceCanvas.Focus();
         }
+        #endregion
 
-        private void Toolbox_Selected(object sender, SelectionChangedEventArgs e)
+        #region Actions
+        /// <summary>
+        /// Adds new floor to the building.
+        /// </summary>
+        private void AddFloor_Click(object sender, RoutedEventArgs e)
         {
-            if (_currentTool != null)
-                _currentTool.CancelAction();
+            int rows, cols;
+            if (!Int32.TryParse(uxCols.Text, out cols)) return;
+            if (!Int32.TryParse(uxRows.Text, out rows)) return;
 
-            _currentTool = (Tool)uxToolbox.SelectedItem;
-            _building.ViewMode = _currentTool.Name;
+            _viewModel.AddFloor(rows, cols);
         }
 
-        private void NewBuilding()
+        private void Exit_Click(object sender, RoutedEventArgs e)
         {
-            CurrentFile = "";
-            Building b = new Building(5, 5);
-            _building.Floors = b.Floors;
-            _building.Stairs = b.Stairs;
-            _building.CurrentFloor = _building.Floors[0];
+            this.Close();
         }
 
-        private void LoadBuilding(string file)
+        /// <summary>
+        /// Expands current floor.
+        /// </summary>
+        private void Expand_Click(object sender, RoutedEventArgs e)
         {
-            CurrentFile = file;
-            Common.DataModel.Building building = new Common.DataModel.Building();
-            building.Load(file);
-            Building viewModel = new Building(building);
-
-            _building.Floors = viewModel.Floors;
-            _building.Stairs = viewModel.Stairs;
-            _building.CurrentFloor = _building.Floors[0];
+            Button b = sender as Button;
+            _viewModel.Expand((Direction)b.Tag);
         }
 
         private void New_Click(object sender, RoutedEventArgs e)
         {
-            NewBuilding();
-        }
-
-        private void Save_Click(object sender, RoutedEventArgs e)
-        {
-            if (CurrentFile == "")
-                SaveAs_Click(sender, e);
-            else
-            {
-                Common.DataModel.Building building = _building.ToDataModel();
-                building.Save(CurrentFile);
-            }
-        }
-
-        private void SaveAs_Click(object sender, RoutedEventArgs e)
-        {
-            // Create OpenFileDialog 
-            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
-
-            // Set filter for file extension and default file extension 
-            dlg.DefaultExt = ".xml";
-            dlg.Filter = "Building definition file|*.xml";
-
-            // Display SaveFileDialog by calling ShowDialog method 
-            Nullable<bool> result = dlg.ShowDialog();
-
-            // Get the selected file name and display in a TextBox 
-            if (result == true)
-            {
-                string filename = dlg.FileName;
-                CurrentFile = filename;
-                Common.DataModel.Building building = _building.ToDataModel();
-                building.Save(filename);
-            }
+            _viewModel.NewBuilding();
         }
 
         private void Open_Click(object sender, RoutedEventArgs e)
@@ -253,7 +115,7 @@ namespace BuildingEditor.View
             if (result == true)
             {
                 // Open document 
-                LoadBuilding(dlg.FileName);
+                _viewModel.LoadBuilding(dlg.FileName);
             }
         }
 
@@ -261,12 +123,47 @@ namespace BuildingEditor.View
         {
             Button b = sender as Button;
 
-            _building.RemoveFloor((int)b.Tag);
+            _viewModel.RemoveFloor((int)b.Tag);
+        }
+
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            if (_viewModel.CurrentFile == "")
+                SaveAs_Click(sender, e);
+            else
+            {
+                _viewModel.SaveBuilding();
+            }
+        }
+
+        private void SaveAs_Click(object sender, RoutedEventArgs e)
+        {
+            // Create OpenFileDialog 
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+
+            // Set filter for file extension and default file extension 
+            dlg.DefaultExt = ".xml";
+            dlg.Filter = "Building definition file|*.xml";
+
+            // Display SaveFileDialog by calling ShowDialog method 
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Get the selected file name and display in a TextBox 
+            if (result == true)
+            {
+                _viewModel.SaveBuilding(dlg.FileName);
+            }
+        }
+
+        private void Toolbox_Selected(object sender, SelectionChangedEventArgs e)
+        {
+            _viewModel.Toolbox_Selected(sender, e);
         }
 
         private void Test_Click(object sender, RoutedEventArgs e)
         {
-            FloorIconUpdater iu = new FloorIconUpdater(_building, uxFloors);
+            FloorIconUpdater iu = new FloorIconUpdater(_viewModel.CurrentBuilding, uxFloors);
         }
+        #endregion
     }
 }

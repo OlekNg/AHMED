@@ -16,14 +16,14 @@ namespace BuildingEditor.ViewModel.Tools
     [ImplementPropertyChanged]
     public class FloorTool : Tool
     {
-        private Building _building;
+        private Editor _editor;
         private Segment _selectionStart;
         private Segment _selectionEnd;
         private List<Segment> _selectedSegments;
 
-        public FloorTool(Building b)
+        public FloorTool(Editor editor)
         {
-            _building = b;
+            _editor = editor;
             _selectedSegments = new List<Segment>();
             Name = "Floor";
             Capacity = 3;
@@ -128,7 +128,7 @@ namespace BuildingEditor.ViewModel.Tools
                 x.Type = value;
                 x.Capacity = Capacity;
             });
-            _building.CurrentFloor.UpdateRender();
+            _editor.CurrentBuilding.CurrentFloor.UpdateRender();
         }
 
         private void UpdateSelectionPreview()
@@ -154,7 +154,7 @@ namespace BuildingEditor.ViewModel.Tools
 
             for (int row = rowBegin; row <= rowEnd; row++)
                 for (int col = colBegin; col <= colEnd; col++)
-                    result.Add(_building.CurrentFloor.Segments[row][col]);
+                    result.Add(_editor.CurrentBuilding.CurrentFloor.Segments[row][col]);
 
             return result;
         }

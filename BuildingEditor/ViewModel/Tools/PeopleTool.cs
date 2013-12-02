@@ -12,12 +12,8 @@ namespace BuildingEditor.ViewModel.Tools
     [ImplementPropertyChanged]
     public class PeopleTool : Tool
     {
-        private Building _building;
-
-
-        public PeopleTool(Building building)
+        public PeopleTool()
         {
-            _building = building;
             Name = "People";
             GroupCount = 3;
         }

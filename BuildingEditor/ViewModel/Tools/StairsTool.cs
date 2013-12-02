@@ -13,15 +13,14 @@ namespace BuildingEditor.ViewModel.Tools
 {
     public class StairsTool : Tool
     {
-        private Building _building; 
         private Segment _previewSegment;
-        private bool _firstStairs;
+        private bool _firstStairs = true;
         private StairsPair _stairsPair;
+        private Editor _editor;
 
-        public StairsTool(Building building)
+        public StairsTool(Editor editor)
         {
-            _building = building;
-            _firstStairs = true;
+            _editor = editor;
             Name = "Stairs";
             Capacity = 3;
             EntranceCapacity = 3;
@@ -119,14 +118,14 @@ namespace BuildingEditor.ViewModel.Tools
 
             if (_firstStairs)
             {
-                _stairsPair = new StairsPair(_building.Stairs);
+                _stairsPair = new StairsPair(_editor.CurrentBuilding.Stairs);
                 _stairsPair.First = new Stairs()
                 {
                     AssignedSegment = segment,
                     EntranceCapacity = EntranceCapacity,
                     Capacity = Capacity,
                     Delay = Delay,
-                    Level = _building.CurrentFloor.Level
+                    Level = _editor.CurrentBuilding.CurrentFloor.Level
                 };
             }
             else
@@ -136,17 +135,17 @@ namespace BuildingEditor.ViewModel.Tools
                     AssignedSegment = segment,
                     Capacity = Capacity,
                     Delay = Delay,
-                    Level = _building.CurrentFloor.Level
+                    Level = _editor.CurrentBuilding.CurrentFloor.Level
                 };
 
                 _stairsPair.SetAdditionalData();
-                _building.Stairs.Add(_stairsPair);
+                _editor.CurrentBuilding.Stairs.Add(_stairsPair);
             }
 
             _firstStairs = !_firstStairs;
             UpdateMessage();
 
-            _building.CurrentFloor.UpdateRender();
+            _editor.CurrentBuilding.CurrentFloor.UpdateRender();
         }
 
         private void UpdateMessage()

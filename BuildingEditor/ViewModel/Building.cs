@@ -29,6 +29,7 @@ namespace BuildingEditor.ViewModel
             : this()
         {
             AddFloor(rows, cols);
+            CurrentFloor = Floors[0];
         }
 
         /// <summary>
@@ -50,6 +51,8 @@ namespace BuildingEditor.ViewModel
                 stairsPair.SetAdditionalData();
                 Stairs.Add(stairsPair);
             }
+
+            CurrentFloor = Floors[0];
         }
 
         /// <summary>

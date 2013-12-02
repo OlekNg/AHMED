@@ -27,15 +27,15 @@ namespace BuildingEditor.ViewModel.Tools
 
     public class SideElementTool : Tool
     {
-        protected Building _building;
         protected SegmentSide _selectionStart;
         protected SegmentSide _selectionEnd;
         protected List<SideElement> _selectedSides = new List<SideElement>();
         protected SideElementType _elementType;
+        private Editor _editor;
 
-        public SideElementTool(Building b, SideElementType elementType, string name = "SideTool")
+        public SideElementTool(Editor editor, SideElementType elementType, string name = "SideTool")
         {
-            _building = b;
+            _editor = editor;
             _elementType = elementType;
             Name = name;
             Capacity = 3;
@@ -102,7 +102,7 @@ namespace BuildingEditor.ViewModel.Tools
         {
             SideElementType value = ClearMode == true ? SideElementType.NONE : _elementType;
             _selectedSides.ForEach(x => { x.Type = value; x.Capacity = Capacity; });
-            _building.CurrentFloor.UpdateRender();
+            _editor.CurrentBuilding.CurrentFloor.UpdateRender();
         }
 
         protected override FrameworkElement BuildGUIConfiguration()
@@ -164,14 +164,14 @@ namespace BuildingEditor.ViewModel.Tools
                 // Vertical line
                 Direction s = GetHorizontalRelation();
                 for (int row = rowBegin; row <= rowEnd; row++)
-                    result.Add(_building.CurrentFloor.Segments[row][_selectionStart.Segment.Column].GetSideElement(s));
+                    result.Add(_editor.CurrentBuilding.CurrentFloor.Segments[row][_selectionStart.Segment.Column].GetSideElement(s));
             }
             else
             {
                 // Horizontal line
                 Direction s = GetVerticalRelation();
                 for (int col = colBegin; col <= colEnd; col++)
-                    result.Add(_building.CurrentFloor.Segments[_selectionStart.Segment.Row][col].GetSideElement(s));
+                    result.Add(_editor.CurrentBuilding.CurrentFloor.Segments[_selectionStart.Segment.Row][col].GetSideElement(s));
 
             }
 

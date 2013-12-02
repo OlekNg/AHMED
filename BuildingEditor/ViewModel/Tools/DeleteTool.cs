@@ -13,13 +13,13 @@ namespace BuildingEditor.ViewModel.Tools
     [ImplementPropertyChanged]
     public class DeleteTool : Tool
     {
-        private Building _building;
         private List<Segment> _selectedSegments;
         private Segment _mouseoverSegment;
+        private Editor _editor;
 
-        public DeleteTool(Building buidling)
+        public DeleteTool(Editor editor)
         {
-            _building = buidling;
+            _editor = editor;
             _selectedSegments = new List<Segment>();
             Name = "Reduce building";
             DeleteRow = true;
@@ -81,9 +81,9 @@ namespace BuildingEditor.ViewModel.Tools
         private void Apply()
         {
             if (DeleteRow)
-                _building.CurrentFloor.RemoveRow(_mouseoverSegment.Row);
+                _editor.CurrentBuilding.CurrentFloor.RemoveRow(_mouseoverSegment.Row);
             else
-                _building.CurrentFloor.RemoveColumn(_mouseoverSegment.Column);
+                _editor.CurrentBuilding.CurrentFloor.RemoveColumn(_mouseoverSegment.Column);
         }
 
         private void UpdateSelectionPreview()
@@ -103,11 +103,11 @@ namespace BuildingEditor.ViewModel.Tools
 
             if (DeleteRow)
             {
-                result = _building.CurrentFloor.Segments[_mouseoverSegment.Row].ToList();
+                result = _editor.CurrentBuilding.CurrentFloor.Segments[_mouseoverSegment.Row].ToList();
             }
             else
             {
-                result = _building.CurrentFloor.Segments.Select(x => x.Where(y => y.Column == _mouseoverSegment.Column).First()).ToList();
+                result = _editor.CurrentBuilding.CurrentFloor.Segments.Select(x => x.Where(y => y.Column == _mouseoverSegment.Column).First()).ToList();
             }
 
             return result;
