@@ -46,7 +46,7 @@ namespace Structure
             Base[row][col] = new FloorSquare(capacity);
             for (int i = 0; i < 4; ++i)
             {
-                Base[row][col].Side[i] = new Door(PassageEfficiency, false);
+                Base[row][col].Side[i] = new StandardPassage(PassageEfficiency);
             }
         }
 

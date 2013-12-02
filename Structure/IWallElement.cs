@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Structure
 {
-    public enum WallElementType { WALL, DOOR, STAIR_ENTRY }
+    public enum WallElementType { WALL, DOOR, STANDARD_PASSAGE, STAIR_ENTRY }
 
     /// <summary>
     /// Interface desctibing each wall element

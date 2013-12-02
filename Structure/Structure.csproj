@@ -44,6 +44,8 @@
     <Compile Include="Door.cs" />
     <Compile Include="Floor.cs" />
     <Compile Include="FloorSquare.cs" />
+    <Compile Include="StandardPassage.cs" />
+    <Compile Include="Validators\IFloorSquareValidator.cs" />
     <Compile Include="IWallElement.cs" />
     <Compile Include="PeopleGroup.cs" />
     <Compile Include="PeopleMap.cs" />
@@ -60,6 +62,7 @@
       <Name>Common</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
