@@ -1,4 +1,4 @@
-﻿using BuildingEditor.Logic;
+﻿using BuildingEditor.ViewModel;
 using Common.DataModel.Enums;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Shapes;
 
-namespace BuildingEditor.Tools.Logic
+namespace BuildingEditor.ViewModel.Tools
 {
     public class SegmentSide
     {

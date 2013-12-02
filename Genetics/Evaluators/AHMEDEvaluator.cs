@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Simulation;
 using Genetics.Generic;
-using BuildingEditor.Logic;
+using BuildingEditor.ViewModel;
 using Common.DataModel.Enums;
 
 namespace Genetics.Evaluators

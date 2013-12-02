@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Data;
 
-namespace BuildingEditor.Logic
+namespace BuildingEditor.ViewModel
 {
     [ValueConversion(typeof(Direction), typeof(int))]
     public class OrientationToAngleConverter : IValueConverter

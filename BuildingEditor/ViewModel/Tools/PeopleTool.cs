@@ -1,4 +1,4 @@
-﻿using BuildingEditor.Logic;
+﻿using BuildingEditor.ViewModel;
 using PropertyChanged;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Windows.Controls;
 using System.Windows.Data;
 
-namespace BuildingEditor.Tools.Logic
+namespace BuildingEditor.ViewModel.Tools
 {
     [ImplementPropertyChanged]
     public class PeopleTool : Tool

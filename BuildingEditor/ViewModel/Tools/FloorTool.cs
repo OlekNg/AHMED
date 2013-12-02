@@ -1,4 +1,4 @@
-﻿using BuildingEditor.Logic;
+﻿using BuildingEditor.ViewModel;
 using Common.DataModel.Enums;
 using PropertyChanged;
 using System;
@@ -11,7 +11,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Shapes;
 
-namespace BuildingEditor.Tools.Logic
+namespace BuildingEditor.ViewModel.Tools
 {
     [ImplementPropertyChanged]
     public class FloorTool : Tool

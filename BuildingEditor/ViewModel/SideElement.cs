@@ -6,7 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
-namespace BuildingEditor.Logic
+namespace BuildingEditor.ViewModel
 {
     [ImplementPropertyChanged]
     public class SideElement

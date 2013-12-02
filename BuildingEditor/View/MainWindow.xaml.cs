@@ -14,13 +14,13 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using BuildingEditor.Logic;
-using BuildingEditor.Tools.Logic;
+using BuildingEditor.ViewModel;
+using BuildingEditor.ViewModel.Tools;
 using System.Xml.Serialization;
 using System.IO;
 using Common.DataModel.Enums;
 
-namespace BuildingEditor
+namespace BuildingEditor.View
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

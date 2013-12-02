@@ -1,4 +1,4 @@
-﻿using BuildingEditor.Logic;
+﻿using BuildingEditor.ViewModel;
 using Common.DataModel.Enums;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 
-namespace BuildingEditor.Tools.Logic
+namespace BuildingEditor.ViewModel.Tools
 {
     public class StairsTool : Tool
     {

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Data;
 
-namespace BuildingEditor.Logic
+namespace BuildingEditor.ViewModel
 {
     [ImplementPropertyChanged]
     public class Segment

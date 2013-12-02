@@ -6,7 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
-namespace BuildingEditor.Logic
+namespace BuildingEditor.ViewModel
 {
     /// <summary>
     /// Represents view model of building that can be used in wpf gui applications.

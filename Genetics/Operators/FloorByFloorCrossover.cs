@@ -1,4 +1,4 @@
-﻿using BuildingEditor.Logic;
+﻿using BuildingEditor.ViewModel;
 using Genetics.Generic;
 using Genetics.Specialized;
 using System;

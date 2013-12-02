@@ -1,4 +1,4 @@
-﻿using BuildingEditor.Logic;
+﻿using BuildingEditor.ViewModel;
 using Common.DataModel.Enums;
 using Genetics.Generic;
 using System;

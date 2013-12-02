@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Data;
 
-namespace BuildingEditor.Logic
+namespace BuildingEditor.ViewModel
 {
     [ValueConversion(typeof(int), typeof(bool))]
     public class NumberToBoolConverter : IValueConverter

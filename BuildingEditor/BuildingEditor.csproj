@@ -63,27 +63,28 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Logic\FloorIconUpdater.cs" />
-    <Compile Include="Logic\OrientationToAngleConverter.cs" />
-    <Compile Include="Logic\SegmentEventHandler.cs" />
-    <Compile Include="Logic\StairsPair.cs" />
-    <Page Include="DataTemplates\SegmentBasicTemplate.xaml">
+    <Compile Include="ViewModel\Editor.cs" />
+    <Compile Include="ViewModel\FloorIconUpdater.cs" />
+    <Compile Include="ViewModel\OrientationToAngleConverter.cs" />
+    <Compile Include="ViewModel\SegmentEventHandler.cs" />
+    <Compile Include="ViewModel\StairsPair.cs" />
+    <Page Include="View\DataTemplates\SegmentBasicTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="DataTemplates\SegmentDoorCapacityTemplate.xaml">
+    <Page Include="View\DataTemplates\SegmentDoorCapacityTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="DataTemplates\SegmentRowTemplate.xaml">
+    <Page Include="View\DataTemplates\SegmentRowTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="DataTemplates\SegmentTemplate.xaml">
+    <Page Include="View\DataTemplates\SegmentTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -91,35 +92,35 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Logic\Building.cs" />
-    <Compile Include="Logic\Tools\DeleteTool.cs" />
-    <Compile Include="Logic\Tools\DragTool.cs" />
-    <Compile Include="Logic\Floor.cs" />
-    <Compile Include="Logic\Tools\FloorTool.cs" />
-    <Compile Include="Logic\NumberToBoolConverter.cs" />
-    <Compile Include="Logic\Tools\PeopleTool.cs" />
-    <Compile Include="Logic\Segment.cs" />
-    <Compile Include="Logic\SideElement.cs" />
-    <Compile Include="Logic\Tools\SideElementTool.cs" />
-    <Compile Include="Logic\Tools\StairsTool.cs" />
-    <Compile Include="Logic\Tools\Tool.cs" />
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="ViewModel\Building.cs" />
+    <Compile Include="ViewModel\Tools\DeleteTool.cs" />
+    <Compile Include="ViewModel\Tools\DragTool.cs" />
+    <Compile Include="ViewModel\Floor.cs" />
+    <Compile Include="ViewModel\Tools\FloorTool.cs" />
+    <Compile Include="ViewModel\NumberToBoolConverter.cs" />
+    <Compile Include="ViewModel\Tools\PeopleTool.cs" />
+    <Compile Include="ViewModel\Segment.cs" />
+    <Compile Include="ViewModel\SideElement.cs" />
+    <Compile Include="ViewModel\Tools\SideElementTool.cs" />
+    <Compile Include="ViewModel\Tools\StairsTool.cs" />
+    <Compile Include="ViewModel\Tools\Tool.cs" />
+    <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Styles\SegmentDoorCapacityStyle.xaml">
+    <Page Include="View\Styles\SegmentDoorCapacityStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Styles\SegmentBasicStyle.xaml">
+    <Page Include="View\Styles\SegmentBasicStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Styles\SegmentContentStyle.xaml">
+    <Page Include="View\Styles\SegmentContentStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Styles\SideElementStyle.xaml">
+    <Page Include="View\Styles\SideElementStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -154,7 +155,7 @@
     <Resource Include="FodyWeavers.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\stairs.png">
+    <Resource Include="View\Images\stairs.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
@@ -165,7 +166,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\arrow.png">
+    <Resource Include="View\Images\arrow.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

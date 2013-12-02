@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Media;
 
-namespace BuildingEditor.Logic
+namespace BuildingEditor.ViewModel
 {
     /// <summary>
     /// Represents single floor in the building.

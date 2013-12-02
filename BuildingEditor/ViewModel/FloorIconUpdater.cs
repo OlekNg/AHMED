@@ -12,8 +12,12 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace BuildingEditor.Logic
+namespace BuildingEditor.ViewModel
 {
+    /// <summary>
+    /// Updates floor icons - currently not used because of troubles with
+    /// desired multithreading.
+    /// </summary>
     public class FloorIconUpdater
     {
         private Building _building;
