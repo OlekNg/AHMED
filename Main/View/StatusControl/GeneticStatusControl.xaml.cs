@@ -9,26 +9,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Main
+namespace Main.View.StatusControl
 {
     /// <summary>
-    /// Interaction logic for StatusWindow.xaml
+    /// Interaction logic for GeneticStatusControl.xaml
     /// </summary>
-    public partial class StatusWindow : Window
+    public partial class GeneticStatusControl : UserControl
     {
-        private Action _stopAction;
-
-        public StatusWindow(Action StopAction)
+        public GeneticStatusControl()
         {
             InitializeComponent();
-            _stopAction = StopAction;
-        }
-
-        private void Stop_Click(object sender, RoutedEventArgs e)
-        {
-            _stopAction();
         }
     }
 }

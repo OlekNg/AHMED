@@ -5,15 +5,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Main.StatusControl
+namespace Main.ViewModel
 {
     /// <summary>
     /// View model for GeneticStatusControl.
     /// </summary>
     [ImplementPropertyChanged]
-    public class StatusViewModel
+    public class Status
     {
-        public StatusViewModel(GeneticAlgorithm ga)
+        public Status(GeneticAlgorithm ga)
         {
             ga.ReportStatus += OnReportStatus;
         }

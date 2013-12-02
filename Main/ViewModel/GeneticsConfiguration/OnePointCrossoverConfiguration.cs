@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Main.GeneticsConfiguration
+namespace Main.ViewModel.GeneticsConfiguration
 {
     public class OnePointCrossoverConfiguration : IGUIConfiguration, ICrossoverConfiguration
     {

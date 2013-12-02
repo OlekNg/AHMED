@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace Main.StatusControl
+namespace Main.ViewModel
 {
     /// <summary>
     /// Converts percentage value to width value based on parameter (full width).

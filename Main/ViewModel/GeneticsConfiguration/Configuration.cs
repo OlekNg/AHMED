@@ -10,7 +10,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
-namespace Main.GeneticsConfiguration
+namespace Main.ViewModel.GeneticsConfiguration
 {
     [ImplementPropertyChanged]
     public class Configuration

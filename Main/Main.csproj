@@ -64,21 +64,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="StatusControl\PercentageToWidthConverter.cs" />
-    <Compile Include="StatusControl\PercentageToColorConverter.cs" />
-    <Compile Include="StatusControl\StatusViewModel.cs" />
-    <Compile Include="StatusWindow.xaml.cs">
+    <Compile Include="ViewModel\PercentageToWidthConverter.cs" />
+    <Compile Include="ViewModel\PercentageToColorConverter.cs" />
+    <Compile Include="ViewModel\Status.cs" />
+    <Compile Include="View\StatusWindow.xaml.cs">
       <DependentUpon>StatusWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="StatusControl\GeneticStatusControl.xaml">
+    <Page Include="View\StatusControl\GeneticStatusControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GeneticsWindow.xaml">
+    <Page Include="View\GeneticsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -86,34 +86,34 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="GeneticsConfiguration\Configuration.cs" />
-    <Compile Include="GeneticsConfiguration\ClassicMutationConfiguration.cs" />
-    <Compile Include="GeneticsConfiguration\IMutationConfiguration.cs" />
-    <Compile Include="GeneticsConfiguration\RankSelectionConfiguration.cs" />
-    <Compile Include="GeneticsConfiguration\RouletteSelectionConfiguration.cs" />
-    <Compile Include="GeneticsConfiguration\ISelectionConfiguration.cs" />
-    <Compile Include="GeneticsConfiguration\TournamentSelectionConfiguration.cs" />
-    <Compile Include="StatusControl\GeneticStatusControl.xaml.cs">
+    <Compile Include="ViewModel\GeneticsConfiguration\Configuration.cs" />
+    <Compile Include="ViewModel\GeneticsConfiguration\ClassicMutationConfiguration.cs" />
+    <Compile Include="ViewModel\GeneticsConfiguration\IMutationConfiguration.cs" />
+    <Compile Include="ViewModel\GeneticsConfiguration\RankSelectionConfiguration.cs" />
+    <Compile Include="ViewModel\GeneticsConfiguration\RouletteSelectionConfiguration.cs" />
+    <Compile Include="ViewModel\GeneticsConfiguration\ISelectionConfiguration.cs" />
+    <Compile Include="ViewModel\GeneticsConfiguration\TournamentSelectionConfiguration.cs" />
+    <Compile Include="View\StatusControl\GeneticStatusControl.xaml.cs">
       <DependentUpon>GeneticStatusControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GeneticsWindow.xaml.cs">
+    <Compile Include="View\GeneticsWindow.xaml.cs">
       <DependentUpon>GeneticsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GeneticsConfiguration\MultiPointCrossoverConfiguration.cs" />
-    <Compile Include="GeneticsConfiguration\ICrossoverConfiguration.cs" />
-    <Compile Include="GeneticsConfiguration\IGUIConfiguration.cs" />
-    <Compile Include="GeneticsConfiguration\OnePointCrossoverConfiguration.cs" />
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="ViewModel\GeneticsConfiguration\MultiPointCrossoverConfiguration.cs" />
+    <Compile Include="ViewModel\GeneticsConfiguration\ICrossoverConfiguration.cs" />
+    <Compile Include="ViewModel\GeneticsConfiguration\IGUIConfiguration.cs" />
+    <Compile Include="ViewModel\GeneticsConfiguration\OnePointCrossoverConfiguration.cs" />
+    <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="StatusWindow.xaml">
+    <Page Include="View\StatusWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MapBuilder.cs" />
+    <Compile Include="ViewModel\MapBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

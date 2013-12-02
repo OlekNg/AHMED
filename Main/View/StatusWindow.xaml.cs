@@ -11,22 +11,24 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Main
+namespace Main.View
 {
     /// <summary>
-    /// Interaction logic for GeneticsWindow.xaml
+    /// Interaction logic for StatusWindow.xaml
     /// </summary>
-    public partial class GeneticsWindow : Window
+    public partial class StatusWindow : Window
     {
-        public GeneticsWindow(GeneticsConfiguration.Configuration cfg)
+        private Action _stopAction;
+
+        public StatusWindow(Action StopAction)
         {
             InitializeComponent();
-            DataContext = cfg;
+            _stopAction = StopAction;
         }
 
-        private void OK_Click(object sender, RoutedEventArgs e)
+        private void Stop_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            _stopAction();
         }
     }
 }

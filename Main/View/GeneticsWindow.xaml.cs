@@ -9,19 +9,24 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Main.StatusControl
+namespace Main.View
 {
     /// <summary>
-    /// Interaction logic for GeneticStatusControl.xaml
+    /// Interaction logic for GeneticsWindow.xaml
     /// </summary>
-    public partial class GeneticStatusControl : UserControl
+    public partial class GeneticsWindow : Window
     {
-        public GeneticStatusControl()
+        public GeneticsWindow(ViewModel.GeneticsConfiguration.Configuration cfg)
         {
             InitializeComponent();
+            DataContext = cfg;
+        }
+
+        private void OK_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

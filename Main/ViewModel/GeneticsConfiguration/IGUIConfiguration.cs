@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 
-namespace Main.GeneticsConfiguration
+namespace Main.ViewModel.GeneticsConfiguration
 {
     public interface IGUIConfiguration
     {

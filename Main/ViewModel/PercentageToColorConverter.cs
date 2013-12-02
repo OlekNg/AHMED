@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace Main.StatusControl
+namespace Main.ViewModel
 {
     /// <summary>
     /// Converts percentage to color (from green for 0% through orange to red for 100%).

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Main
+namespace Main.ViewModel
 {
     /// <summary>
     /// Builds building map and people map specific for simulator.

@@ -9,7 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 
-namespace Main.GeneticsConfiguration
+namespace Main.ViewModel.GeneticsConfiguration
 {
     [ImplementPropertyChanged]
     public class RankSelectionConfiguration : IGUIConfiguration, ISelectionConfiguration

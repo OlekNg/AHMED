@@ -5,8 +5,8 @@ using Genetics.Evaluators;
 using Genetics.Operators;
 using Genetics.Repairers;
 using Genetics.Specialized;
-using Main.GeneticsConfiguration;
-using Main.StatusControl;
+using Main.ViewModel;
+using Main.ViewModel.GeneticsConfiguration;
 using Simulation;
 using System;
 using System.Collections.Generic;
@@ -24,7 +24,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Main
+namespace Main.View
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -224,7 +224,7 @@ namespace Main
             ga.Completed += OnGeneticCompleted;
 
             // Create view model for presenting progression of algorithm.
-            StatusViewModel statusModel = new StatusViewModel(ga);
+            Status statusModel = new Status(ga);
             StatusWindow statusWindow = new StatusWindow(ga.Stop);
             statusWindow.DataContext = statusModel;
             statusWindow.Show();
