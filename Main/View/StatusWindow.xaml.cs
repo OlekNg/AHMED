@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BuildingEditor.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,17 +19,11 @@ namespace Main.View
     /// </summary>
     public partial class StatusWindow : Window
     {
-        private Action _stopAction;
-
-        public StatusWindow(Action StopAction)
+        public StatusWindow()
         {
             InitializeComponent();
-            _stopAction = StopAction;
         }
 
-        private void Stop_Click(object sender, RoutedEventArgs e)
-        {
-            _stopAction();
-        }
+        
     }
 }

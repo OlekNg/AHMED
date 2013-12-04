@@ -147,7 +147,7 @@ namespace Main.ViewModel
 
             // Create view model for presenting progression of algorithm.
             Status statusModel = new Status(ga);
-            StatusWindow statusWindow = new StatusWindow(ga.Stop);
+            StatusWindow statusWindow = new StatusWindow();
             statusWindow.DataContext = statusModel;
             statusWindow.Show();
 

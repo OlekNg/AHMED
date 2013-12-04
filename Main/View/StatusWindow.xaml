@@ -11,6 +11,6 @@
         </Grid.RowDefinitions>
 
         <l:GeneticStatusControl Grid.Row="0" DataContext="{Binding}"/>
-        <Button Grid.Row="2" Content="Stop" Click="Stop_Click" Margin="5"/>
+        <Button Grid.Row="2" Content="Stop" Command="{Binding StopCommand}" Margin="5"/>
     </Grid>
 </Window>

@@ -1,9 +1,11 @@
-﻿using Genetics;
+﻿using BuildingEditor.ViewModel;
+using Genetics;
 using PropertyChanged;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Input;
 
 namespace Main.ViewModel
 {
@@ -16,7 +18,10 @@ namespace Main.ViewModel
         public Status(GeneticAlgorithm ga)
         {
             ga.ReportStatus += OnReportStatus;
+            StopCommand = new SimpleCommand(x => ga.Stop());
         }
+
+        public ICommand StopCommand { get; set; }
 
         #region Properties
         public double SelectionOverhead { get; set; }
@@ -30,6 +35,7 @@ namespace Main.ViewModel
         public int CurrentIteration { get; set; }
         public int PercentCompleted { get; set; }
         public string ProgressInfo { get; set; }
+        public double BestChromosomeValue { get; set; }
         #endregion
 
         private void OnReportStatus(GeneticAlgorithmStatus status)
@@ -44,6 +50,7 @@ namespace Main.ViewModel
             MaxIterations = status.MaxIterations;
             CurrentIteration = status.IterationNumber;
             PercentCompleted = (CurrentIteration * 100) / MaxIterations;
+            BestChromosomeValue = status.BestChromosome.Value;
 
             ProgressInfo = String.Format("Iteration {0} of {1}", CurrentIteration, MaxIterations);
         }

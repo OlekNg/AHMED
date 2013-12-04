@@ -38,6 +38,7 @@
         <TextBlock Grid.Row="4" Text="Repair:"/>
         <TextBlock Grid.Row="5" Text="Transform:"/>
         <TextBlock Grid.Row="6" Text="Evaluation:"/>
+        <TextBlock Grid.Row="7" Grid.ColumnSpan="2" Text="Best ch. value:"/>
 
         <!-- PERCENTAGE VALUES -->
         <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding SelectionOverhead, StringFormat={}{0:0.00}}"/>
@@ -71,6 +72,8 @@
         <TextBlock Grid.Row="6" Grid.Column="2" 
                    Background="{Binding EvaluationOverhead, Converter={StaticResource PercentageToColorConverter}}"
                    Width="{Binding EvaluationOverhead, Converter={StaticResource PercentageToWidthConverter}, ConverterParameter=200}"
+                   HorizontalAlignment="Left"/>
+        <TextBlock Grid.Row="7" Grid.Column="2" Text="{Binding BestChromosomeValue}"
                    HorizontalAlignment="Left"/>
         
         <!-- OVERALL ALGORITHM PROGRESSION -->
