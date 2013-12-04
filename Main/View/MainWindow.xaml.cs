@@ -39,7 +39,7 @@ namespace Main.View
         {
             InitializeComponent();
 
-            _viewModel = new Calculator();
+            _viewModel = new Calculator(uxWorkspaceViewbox, this);
 
             DataContext = _viewModel;
         }
@@ -168,6 +168,11 @@ namespace Main.View
             //{
             //    encoder.Save(stm);
             //}
+        }
+
+        private void Workspace_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            _viewModel.Workspace_MouseWheel(sender, e);
         }
     }
 }

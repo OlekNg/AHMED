@@ -65,12 +65,20 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ViewModel\Calculator.cs" />
+    <Compile Include="ViewModel\DebugInfo.cs" />
     <Compile Include="ViewModel\PercentageToWidthConverter.cs" />
     <Compile Include="ViewModel\PercentageToColorConverter.cs" />
     <Compile Include="ViewModel\Status.cs" />
+    <Compile Include="View\DebugWindow.xaml.cs">
+      <DependentUpon>DebugWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\StatusWindow.xaml.cs">
       <DependentUpon>StatusWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="View\DebugWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\StatusControl\GeneticStatusControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

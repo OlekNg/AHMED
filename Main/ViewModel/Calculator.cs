@@ -1,4 +1,5 @@
 ﻿using BuildingEditor.ViewModel;
+using BuildingEditor.ViewModel.Tools;
 using Genetics;
 using Genetics.Evaluators;
 using Genetics.Repairers;
@@ -8,10 +9,7 @@ using Main.ViewModel.GeneticsConfiguration;
 using PropertyChanged;
 using Simulation;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -22,7 +20,7 @@ namespace Main.ViewModel
     /// View model for MainWindow.
     /// </summary>
     [ImplementPropertyChanged]
-    public class Calculator
+    public class Calculator : ISegmentEventHandler
     {
         #region Fields
         /// <summary>
@@ -34,6 +32,16 @@ namespace Main.ViewModel
         /// Currently running genetic algorithm.
         /// </summary>
         private GeneticAlgorithm _currentGA;
+
+        /// <summary>
+        /// Debug info for debug window.
+        /// </summary>
+        private DebugInfo _debugInfo;
+
+        /// <summary>
+        /// The only tool that can be used in main application.
+        /// </summary>
+        private Tool _dragTool;
 
         /// <summary>
         /// True - file with open building has been overwritten and should
@@ -54,9 +62,23 @@ namespace Main.ViewModel
         #endregion
 
         #region Calculator construction
-        public Calculator()
+        public Calculator(FrameworkElement workspace, FrameworkElement window)
         {
+            _debugInfo = new DebugInfo();
+            _dragTool = new DragTool(workspace, window);
             InitFileWatcher();
+            CreateCommands();
+
+            SegmentEventHandler.Register(this);
+        }
+
+        private void CreateCommands()
+        {
+            DebugInfoCommand = new SimpleCommand(x =>
+            {
+                DebugWindow wnd = new DebugWindow(_debugInfo);
+                wnd.Show();
+            });
         }
 
         private void InitFileWatcher()
@@ -101,6 +123,10 @@ namespace Main.ViewModel
         }
         #endregion
 
+        #region Commands
+        public ICommand DebugInfoCommand { get; set; }
+        #endregion
+
         #region Actions
         public void CancelGA()
         {
@@ -118,6 +144,7 @@ namespace Main.ViewModel
             Common.DataModel.Building building = new Common.DataModel.Building();
             building.Load(file);
             CurrentBuilding = new Building(building);
+            _debugInfo.Building = CurrentBuilding;
         }
 
         public void RunGA()
@@ -180,6 +207,38 @@ namespace Main.ViewModel
             }
         }
         #endregion
+
+        #region Segment events handlers.
+        public void Segment_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            _dragTool.MouseDown(sender, e);
+        }
+
+        public void Segment_MouseMove(object sender, MouseEventArgs e)
+        {
+            _dragTool.MouseMove(sender, e);
+        }
+
+        public void Segment_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            _dragTool.MouseUp(sender, e);
+        }
+
+        public void Segment_MouseEnter(object sender, MouseEventArgs e)
+        {
+            _dragTool.MouseEnter(sender, e);
+        }
+
+        public void Segment_MouseLeave(object sender, MouseEventArgs e)
+        {
+            _dragTool.MouseLeave(sender, e);
+        }
+        #endregion
+
+        public void Workspace_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            _dragTool.MouseWheel(sender, e);
+        }
 
         /// <summary>
         /// Applies final solution to building view model.
