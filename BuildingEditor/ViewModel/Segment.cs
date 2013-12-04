@@ -14,6 +14,8 @@ namespace BuildingEditor.ViewModel
     {
         protected List<SideElement> _outerWalls = new List<SideElement>();
         private Floor _floor;
+        private Floor floor;
+        private Segment segment;
 
         public Segment(Floor owner)
         {
@@ -48,6 +50,13 @@ namespace BuildingEditor.ViewModel
             TopSide = new SideElement(segment.TopSide);
             RightSide = new SideElement(segment.RightSide);
             BottomSide = new SideElement(segment.BottomSide);
+        }
+
+        public Segment(Floor owner, Segment segment)
+            : this(owner)
+        {
+            Capacity = segment.Capacity;
+            Type = segment.Type == SegmentType.NONE ? SegmentType.NONE : SegmentType.FLOOR;
         }
 
         #region Properties

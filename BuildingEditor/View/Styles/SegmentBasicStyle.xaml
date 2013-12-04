@@ -31,7 +31,7 @@
                     <Setter.Value>
                         <ImageBrush ImageSource="../Images/stairs.png">
                             <ImageBrush.Transform>
-                                <RotateTransform Angle="{Binding Orientation, Converter={StaticResource OrientationToAngleConverter}}"  CenterX="25" CenterY="25"/>
+                                <RotateTransform Angle="{Binding Orientation, Converter={StaticResource OrientationToAngleConverter}}" CenterX="25" CenterY="25"/>
                             </ImageBrush.Transform>
                         </ImageBrush>
                     </Setter.Value>

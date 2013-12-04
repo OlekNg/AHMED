@@ -68,35 +68,9 @@ namespace BuildingEditor.View
         #endregion
 
         #region Actions
-        /// <summary>
-        /// Adds new floor to the building.
-        /// </summary>
-        private void AddFloor_Click(object sender, RoutedEventArgs e)
-        {
-            int rows, cols;
-            if (!Int32.TryParse(uxCols.Text, out cols)) return;
-            if (!Int32.TryParse(uxRows.Text, out rows)) return;
-
-            _viewModel.AddFloor(rows, cols);
-        }
-
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
-        }
-
-        /// <summary>
-        /// Expands current floor.
-        /// </summary>
-        private void Expand_Click(object sender, RoutedEventArgs e)
-        {
-            Button b = sender as Button;
-            _viewModel.Expand((Direction)b.Tag);
-        }
-
-        private void New_Click(object sender, RoutedEventArgs e)
-        {
-            _viewModel.NewBuilding();
         }
 
         private void Open_Click(object sender, RoutedEventArgs e)

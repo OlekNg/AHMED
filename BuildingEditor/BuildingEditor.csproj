@@ -67,6 +67,7 @@
     <Compile Include="ViewModel\FloorIconUpdater.cs" />
     <Compile Include="ViewModel\OrientationToAngleConverter.cs" />
     <Compile Include="ViewModel\SegmentEventHandler.cs" />
+    <Compile Include="ViewModel\SimpleCommand.cs" />
     <Compile Include="ViewModel\StairsPair.cs" />
     <Page Include="View\DataTemplates\SegmentBasicTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>

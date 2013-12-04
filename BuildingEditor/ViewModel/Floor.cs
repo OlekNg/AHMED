@@ -46,6 +46,26 @@ namespace BuildingEditor.ViewModel
             UpdateRender();
         }
 
+        public Floor(Floor floor)
+            : this()
+        {
+            Level = floor.Level + 1;
+
+            for (int row = 0; row < floor.Segments.Count; row++)
+            {
+                ObservableCollection<Segment> segmentRow = new ObservableCollection<Segment>();
+                for (int col = 0; col < floor.Segments[row].Count; col++)
+                {
+                    segmentRow.Add(new Segment(this, floor.Segments[row][col]));
+                }
+                Segments.Add(segmentRow);
+            }
+
+            ConnectSegments();
+            RecalculateIndexes();
+            UpdateRender();
+        }
+
         public Floor(Common.DataModel.Floor floor)
             : this()
         {

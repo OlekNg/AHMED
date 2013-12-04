@@ -253,6 +253,17 @@ namespace BuildingEditor.ViewModel
         }
 
         /// <summary>
+        /// Adds floor based on last floor.
+        /// </summary>
+        public void AddFloor()
+        {
+            // Create new floor based on last floor.
+            var lastFloor = Floors.OrderBy(x => x.Level).Last();
+
+            Floors.Insert(0, new Floor(lastFloor));
+        }
+
+        /// <summary>
         /// Removes floor from building.
         /// </summary>
         /// <param name="level">Level to remove.</param>

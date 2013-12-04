@@ -76,20 +76,12 @@
 
 
         <!-- FLOORS -->
-        <DockPanel DataContext="{Binding CurrentBuilding}" Name="uxFloorsPanel" Grid.Column="0" Grid.Row="2" Grid.RowSpan="3">
+        <DockPanel  Name="uxFloorsPanel" Grid.Column="0" Grid.Row="2" Grid.RowSpan="3">
             <Border DockPanel.Dock="Top" BorderBrush="LightGray" BorderThickness="1,1,0,1">
                 <TextBlock Text="Floors" TextAlignment="Center" Margin="5"/>
             </Border>
-            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
-                <StackPanel.Background>
-                    <ImageBrush/>
-                </StackPanel.Background>
-                <TextBox Name="uxCols" Text="5" Width="30" Margin="5,0" TextAlignment="Center"/>
-                <TextBlock Text="x"/>
-                <TextBox Name="uxRows" Text="5" Width="30" Margin="5,0" TextAlignment="Center"/>
-                <Button DockPanel.Dock="Top" Content="  +  " Click="AddFloor_Click"/>
-            </StackPanel>
-            <ListView Name="uxFloors" 
+            <Button DockPanel.Dock="Top" Content="  +  " Command="{Binding AddFloorCommand}"/>
+            <ListView Name="uxFloors" DataContext="{Binding CurrentBuilding}"
                       ItemsSource="{Binding Floors}"
                       SelectedItem="{Binding CurrentFloor}">
                 <ListView.ItemTemplate>
@@ -133,16 +125,16 @@
                     Orientation="Horizontal" HorizontalAlignment="Left">
             <!-- Building expanding -->
             <TextBlock Text="Expand floor:" VerticalAlignment="Center" Padding="5,0"/>
-            <Button Content="&lt;" Width="20" Click="Expand_Click" Tag="{x:Static enum:Direction.LEFT}"/>
-            <Button Content=">" Width="20" Click="Expand_Click" Tag="{x:Static enum:Direction.RIGHT}"/>
-            <Button Content="v" Width="20" Click="Expand_Click" Tag="{x:Static enum:Direction.DOWN}"/>
-            <Button Content="^" Width="20" Click="Expand_Click" Tag="{x:Static enum:Direction.UP}"/>
+            <Button Content="&lt;" Width="20" Command="{Binding ExpandCommand}" CommandParameter="{x:Static enum:Direction.LEFT}"/>
+            <Button Content=">" Width="20" Command="{Binding ExpandCommand}" CommandParameter="{x:Static enum:Direction.RIGHT}"/>
+            <Button Content="v" Width="20" Command="{Binding ExpandCommand}" CommandParameter="{x:Static enum:Direction.DOWN}"/>
+            <Button Content="^" Width="20" Command="{Binding ExpandCommand}" CommandParameter="{x:Static enum:Direction.UP}"/>
         </StackPanel>
 
         <!-- MENU -->
         <Menu Grid.Column="0" Grid.Row="0" Background="White">
             <MenuItem Header="File" Height="25">
-                <MenuItem Header="New" Click="New_Click"/>
+                <MenuItem Header="New" Command="{Binding NewCommand}"/>
                 <MenuItem Header="Open" Click="Open_Click"/>
                 <MenuItem Header="Save" Click="Save_Click"/>
                 <MenuItem Header="Save as" Click="SaveAs_Click"/>

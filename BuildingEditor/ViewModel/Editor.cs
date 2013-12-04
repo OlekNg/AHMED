@@ -27,9 +27,17 @@ namespace BuildingEditor.ViewModel
             _workspace = workspace;
             _window = window;
 
+            CreateCommands();
             CreateToolbox();
 
             SegmentEventHandler.Register(this);
+        }
+
+        protected void CreateCommands()
+        {
+            ExpandCommand = new SimpleCommand(x => Expand((Direction)x));
+            NewCommand = new SimpleCommand(x => NewBuilding());
+            AddFloorCommand = new SimpleCommand(x => AddFloor());
         }
 
         private void CreateToolbox()
@@ -45,6 +53,12 @@ namespace BuildingEditor.ViewModel
 
             CurrentTool = Tools[0];
         }
+        #endregion
+
+        #region Commands
+        public ICommand ExpandCommand { get; set; }
+        public ICommand NewCommand { get; set; }
+        public ICommand AddFloorCommand { get; set; }
         #endregion
 
         #region Properties
@@ -70,9 +84,9 @@ namespace BuildingEditor.ViewModel
         #endregion
 
         #region Actions
-        public void AddFloor(int rows, int cols)
+        public void AddFloor()
         {
-            CurrentBuilding.AddFloor(rows, cols);
+            CurrentBuilding.AddFloor();
         }
 
         public void Expand(Direction direction)
@@ -125,6 +139,7 @@ namespace BuildingEditor.ViewModel
             building.Save(file);
         }
         #endregion
+
 
         #region Segment events handlers.
         public void Segment_MouseDown(object sender, MouseButtonEventArgs e)
