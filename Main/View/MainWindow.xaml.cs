@@ -169,10 +169,5 @@ namespace Main.View
             //    encoder.Save(stm);
             //}
         }
-
-        private void Workspace_MouseWheel(object sender, MouseWheelEventArgs e)
-        {
-            _viewModel.Workspace_MouseWheel(sender, e);
-        }
     }
 }

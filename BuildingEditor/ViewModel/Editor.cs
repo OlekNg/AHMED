@@ -140,7 +140,6 @@ namespace BuildingEditor.ViewModel
         }
         #endregion
 
-
         #region Segment events handlers.
         public void Segment_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -167,18 +166,13 @@ namespace BuildingEditor.ViewModel
             CurrentTool.MouseLeave(sender, e);
         }
 
-
-        #endregion
-
-        #region Workspace events handlers.
-        /// <summary>
-        /// Performs zoom in/out of the building.
-        /// </summary>
-        public void Workspace_MouseWheel(object sender, MouseWheelEventArgs e)
+        public void Segment_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             CurrentTool.MouseWheel(sender, e);
         }
+        #endregion
 
+        #region Workspace events handlers.
         public void Workspace_MouseLeave(object sender, MouseEventArgs e)
         {
             CurrentTool.ClearPreview();

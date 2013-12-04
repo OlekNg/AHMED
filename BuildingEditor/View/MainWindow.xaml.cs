@@ -53,11 +53,6 @@ namespace BuildingEditor.View
             _viewModel.Workspace_MouseLeave(sender, e);
         }
 
-        private void Workspace_MouseWHeel(object sender, MouseWheelEventArgs e)
-        {
-            _viewModel.Workspace_MouseWheel(sender, e);
-        }
-
         /// <summary>
         /// Prevents focus on capacity texbox.
         /// </summary>

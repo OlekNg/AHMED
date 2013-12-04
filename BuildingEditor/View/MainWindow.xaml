@@ -32,8 +32,7 @@
                         Focusable="True"
                 ClipToBounds="True"
                 MouseLeave="Workspace_MouseLeave"
-                        MouseEnter="Workspace_MouseEnter"
-                MouseWheel="Workspace_MouseWHeel">
+                        MouseEnter="Workspace_MouseEnter">
                     <Viewbox Name="uxWorkspaceViewbox" Stretch="Uniform" Margin="10,10,10,10">
                         <Viewbox.RenderTransform>
                             <TransformGroup>

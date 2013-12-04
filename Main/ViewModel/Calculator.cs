@@ -1,5 +1,6 @@
 ﻿using BuildingEditor.ViewModel;
 using BuildingEditor.ViewModel.Tools;
+using Common.DataModel.Enums;
 using Genetics;
 using Genetics.Evaluators;
 using Genetics.Repairers;
@@ -9,6 +10,7 @@ using Main.ViewModel.GeneticsConfiguration;
 using PropertyChanged;
 using Simulation;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
@@ -54,6 +56,9 @@ namespace Main.ViewModel
         /// </summary>
         private Configuration _geneticsConfiguration = new Configuration();
 
+        private Dictionary<Direction, Direction> _nextDirections;
+        private Dictionary<Direction, Direction> _previousDirections;
+
         /// <summary>
         /// Tracks open file for overwritting (for example by editor).
         /// </summary>
@@ -68,6 +73,7 @@ namespace Main.ViewModel
             _dragTool = new DragTool(workspace, window);
             InitFileWatcher();
             CreateCommands();
+            CreateDirections();
 
             SegmentEventHandler.Register(this);
         }
@@ -79,6 +85,21 @@ namespace Main.ViewModel
                 DebugWindow wnd = new DebugWindow(_debugInfo);
                 wnd.Show();
             });
+        }
+
+        private void CreateDirections()
+        {
+            _nextDirections = new Dictionary<Direction, Direction>();
+            _nextDirections.Add(Direction.LEFT, Direction.UP);
+            _nextDirections.Add(Direction.UP, Direction.RIGHT);
+            _nextDirections.Add(Direction.RIGHT, Direction.DOWN);
+            _nextDirections.Add(Direction.DOWN, Direction.LEFT);
+
+            _previousDirections = new Dictionary<Direction, Direction>();
+            _previousDirections.Add(Direction.LEFT, Direction.DOWN);
+            _previousDirections.Add(Direction.UP, Direction.LEFT);
+            _previousDirections.Add(Direction.RIGHT, Direction.UP);
+            _previousDirections.Add(Direction.DOWN, Direction.RIGHT);
         }
 
         private void InitFileWatcher()
@@ -233,12 +254,32 @@ namespace Main.ViewModel
         {
             _dragTool.MouseLeave(sender, e);
         }
+
+        public void Segment_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            // Changing segment fenotype if solution mode
+            if (CurrentBuilding.ViewMode == "Solution")
+            {
+                var element = sender as FrameworkElement;
+                if (element == null) return;
+
+                var segment = element.Tag as Segment;
+                if (segment == null) return;
+
+                if (e.Delta > 0)
+                    segment.Fenotype = _nextDirections[segment.Fenotype];
+                else
+                    segment.Fenotype = _previousDirections[segment.Fenotype];
+
+                CurrentBuilding.DrawSolution();
+                _debugInfo.Update();
+            }
+            else
+                _dragTool.MouseWheel(sender, e);
+        }
         #endregion
 
-        public void Workspace_MouseWheel(object sender, MouseWheelEventArgs e)
-        {
-            _dragTool.MouseWheel(sender, e);
-        }
+        
 
         /// <summary>
         /// Applies final solution to building view model.

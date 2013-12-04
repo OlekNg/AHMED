@@ -40,38 +40,44 @@ namespace Genetics.Evaluators
         public double Eval(List<bool> genotype)
         {
             _building.SetFenotype(genotype.ToFenotype());
-
-            List<EscapedGroup> result = _simulator.Simulate(_building.GetSimulatorFenotype());
-
-            // Calculate avarage.
-            double sum = 0;
-            int sumTicks = 0;
-            int peopleEscaped = 0;
-
-            foreach (EscapedGroup g in result)
+            try
             {
-                sum += g.Quantity * g.Ticks;
-                sumTicks += g.Ticks;
-                peopleEscaped += g.Quantity;
+                List<EscapedGroup> result = _simulator.Simulate(_building.GetSimulatorFenotype());
+
+                // Calculate avarage.
+                double sum = 0;
+                int sumTicks = 0;
+                int peopleEscaped = 0;
+
+                foreach (EscapedGroup g in result)
+                {
+                    sum += g.Quantity * g.Ticks;
+                    sumTicks += g.Ticks;
+                    peopleEscaped += g.Quantity;
+                }
+
+                double value = 0;
+                value += peopleEscaped;
+
+                foreach (var group in _peopleGroups)
+                    value -= GetPeopleGroupFlowValue(group);
+
+                //return value;
+
+                double avg;
+                if (peopleEscaped != _peopleCount)
+                    avg = 0;
+                else
+                {
+                    avg = _maxAvgEscapeTime - (sum / (double)_peopleCount);
+                }
+
+                return value + avg;
             }
-
-            double value = 0;
-            value += peopleEscaped;
-
-            foreach (var group in _peopleGroups)
-                value -= GetPeopleGroupFlowValue(group);
-
-            //return value;
-
-            double avg;
-            if (peopleEscaped != _peopleCount)
-                avg = 0;
-            else
+            catch
             {
-                avg = _maxAvgEscapeTime - (sum / (double)_peopleCount);
+                return 0;
             }
-
-            return value + avg;
         }
 
         public void CreateBuildingFlow()

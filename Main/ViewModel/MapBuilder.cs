@@ -36,7 +36,8 @@ namespace Main.ViewModel
                 int height = f.Segments.Count;
 
                 Structure.Floor floor = new Structure.Floor();
-                floor.Setup(width, height, 3);
+                // FIXME - standard passage efficiency should be as configurable parameter.
+                floor.Setup(width, height, Int32.MaxValue);
 
                 for (int row = 0; row < f.Segments.Count; row++)
                 {

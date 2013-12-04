@@ -28,8 +28,7 @@
             <DockPanel DataContext="{Binding CurrentBuilding}">
                 <Canvas Name="uxWorkspaceCanvas"
                         Focusable="True"
-                ClipToBounds="True"
-                        MouseWheel="Workspace_MouseWheel">
+                ClipToBounds="True">
                     <Viewbox Name="uxWorkspaceViewbox" Stretch="Uniform" Margin="10,10,10,10">
                         <Viewbox.RenderTransform>
                             <TransformGroup>

@@ -13,6 +13,7 @@ namespace BuildingEditor.ViewModel
         void Segment_MouseUp(object sender, MouseButtonEventArgs e);
         void Segment_MouseEnter(object sender, MouseEventArgs e);
         void Segment_MouseLeave(object sender, MouseEventArgs e);
+        void Segment_MouseWheel(object sender, MouseWheelEventArgs e);
     }
 
     public partial class SegmentEventHandler
@@ -56,6 +57,12 @@ namespace BuildingEditor.ViewModel
         {
             foreach (ISegmentEventHandler h in _handlers)
                 h.Segment_MouseLeave(sender, e);
+        }
+
+        private void Segment_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            foreach (ISegmentEventHandler h in _handlers)
+                h.Segment_MouseWheel(sender, e);
         }
     }
 }

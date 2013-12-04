@@ -13,6 +13,7 @@
                   MouseUp="Segment_MouseUp"
                   MouseEnter="Segment_MouseEnter"
                   MouseLeave="Segment_MouseLeave"
+                  MouseWheel="Segment_MouseWheel"
                   Tag="{Binding}">
             <Grid.Resources>
                 <!-- Styles to make walls same thickness -->
