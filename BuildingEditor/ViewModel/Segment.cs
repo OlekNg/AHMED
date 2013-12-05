@@ -137,6 +137,10 @@ namespace BuildingEditor.ViewModel
         /// <returns>List of available directions.</returns>
         public List<Direction> GetAvailableDirections()
         {
+            // From segment of type NONE there is no available directions.
+            if (Type == SegmentType.NONE)
+                return new List<Direction>();
+
             List<Direction> result = new List<Direction>() { Direction.LEFT, Direction.UP, Direction.RIGHT, Direction.DOWN };
 
             var sideElements = GetSideElements();

@@ -44,6 +44,10 @@ namespace Genetics.Repairers
                 {
                     foreach (var segment in row)
                     {
+                        // Segments of type none aren't part of fenotype
+                        if (segment.Type == SegmentType.NONE)
+                            continue;
+
                         // If fenotype points at the wall, then change it to available direction.
                         if (segment.GetSideElement(segment.Fenotype).Type == SideElementType.WALL)
                         {
