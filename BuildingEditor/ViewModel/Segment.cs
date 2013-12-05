@@ -33,7 +33,7 @@ namespace BuildingEditor.ViewModel
 
             // Default type and capacity.
             Type = SegmentType.FLOOR;
-            Capacity = 3;
+            Capacity = 10;
 
             FlowValue = Int32.MaxValue;
         }

@@ -43,6 +43,7 @@
     <Compile Include="Evaluators\AHMEDEvaluator.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Operators\FloorByFloorCrossover.cs" />
+    <Compile Include="PeoplePath.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repairers\AHMEDSimpleRepairer.cs" />
     <Compile Include="Repairers\AHMEDAdvancedRepairer.cs" />

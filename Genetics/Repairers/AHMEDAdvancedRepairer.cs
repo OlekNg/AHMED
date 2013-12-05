@@ -69,14 +69,18 @@ namespace Genetics.Repairers
                 {
                     foreach (var segment in row)
                     {
+                        // Only segment of type FLOOR has fenotype that should be repaired.
+                        if (segment.Type != SegmentType.FLOOR)
+                            continue;
+
                         var dir = segment.Fenotype;
                         var opposite = _oppositeDirections[dir];
 
                         var neighbour = segment.GetNeighbour(dir);
 
-                        // If neighbour that we are pointing at is pointing at us then
+                        // If neighbour that we are pointing at is pointing at us (and it is also FLOOR) then
                         // we have to fix that loop.
-                        if (neighbour != null && neighbour.Fenotype == opposite)
+                        if (neighbour != null && neighbour.Type == SegmentType.FLOOR && neighbour.Fenotype == opposite)
                             FixSmallLoop(segment, neighbour, fixedSegments);
                     }
                 }

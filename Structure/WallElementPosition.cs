@@ -34,7 +34,7 @@ namespace Structure
 
         public WallElementPosition FindAdjacentSquare()
         {
-            if (_place == WallPlace.LEFT)
+            if (_place == WallPlace.TOP)
             {
                 return new WallElementPosition(_floor, _row - 1, _col, _place);
             }

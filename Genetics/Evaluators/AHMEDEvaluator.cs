@@ -25,7 +25,7 @@ namespace Genetics.Evaluators
         private Simulator _simulator;
         private Building _building;
 
-        private List<Segment> _peopleGroups;
+        private List<PeoplePath> _peoplePaths;
 
         public AHMEDEvaluator(Simulator simulator, Building building)
         {
@@ -33,7 +33,12 @@ namespace Genetics.Evaluators
             _building = building;
             _maxAvgEscapeTime = building.GetFloorCount() * 1.5;
             _peopleCount = building.GetPeopleCount();
-            _peopleGroups = building.GetPeopleGroups();
+
+            _peoplePaths = new List<PeoplePath>();
+            var peopleGroups = building.GetPeopleGroups();
+            foreach (var group in peopleGroups)
+                _peoplePaths.Add(new PeoplePath(group));
+
             CreateBuildingFlow();
         }
 
@@ -59,8 +64,16 @@ namespace Genetics.Evaluators
                 double value = 0;
                 value += peopleEscaped;
 
-                foreach (var group in _peopleGroups)
-                    value -= GetPeopleGroupFlowValue(group);
+                foreach (var path in _peoplePaths)
+                {
+                    path.Update();
+                    value -= path.LowestFlowValue;
+
+                    // Penalty for number of corners
+                    value -= (0.01 * path.Corners);
+                }
+
+                
 
                 //return value;
 
@@ -138,25 +151,6 @@ namespace Genetics.Evaluators
                 if (next != null)
                     Flood(value + 1, next);
             }
-        }
-
-        protected int GetPeopleGroupFlowValue(Segment segment)
-        {
-            // We need to stop if we will be again in already visited segment.
-            List<Segment> history = new List<Segment>();
-
-            // Follow fenotype until null segment or loop detected.
-            int bestValue = segment.FlowValue;
-            while (segment != null && !history.Contains(segment))
-            {
-                if (segment.FlowValue < bestValue)
-                    bestValue = segment.FlowValue;
-
-                history.Add(segment);
-                segment = segment.GetNextSegment();
-            }
-
-            return bestValue;
         }
     }
 }
