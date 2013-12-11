@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using System.Windows.Media;
 
 namespace BuildingEditor.ViewModel
@@ -195,6 +196,12 @@ namespace BuildingEditor.ViewModel
 
         public void RemoveRow(int index)
         {
+            if (Segments.Count <= 2)
+            {
+                MessageBox.Show("Cannot reduce building.\nMinimal size is 2 segments long in each dimension.");
+                return;
+            }
+
             // Delete all stairs that are in deleted row.
             var stairsToDelete = Segments[index].Where(x => x.Type == SegmentType.STAIRS).Select(y => (StairsPair)y.AdditionalData).ToList();
             stairsToDelete.ForEach(x => x.Destroy());
@@ -207,6 +214,12 @@ namespace BuildingEditor.ViewModel
 
         public void RemoveColumn(int index)
         {
+            if (Segments[0].Count <= 2)
+            {
+                MessageBox.Show("Cannot reduce building.\nMinimal size is 2 segments long in each dimension.");
+                return;
+            }
+
             foreach (ObservableCollection<Segment> row in Segments)
             {
                 // Destroy stairs if we encountered one.

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Windows;
 
 namespace BuildingEditor.ViewModel
 {
@@ -269,6 +270,12 @@ namespace BuildingEditor.ViewModel
         /// <param name="level">Level to remove.</param>
         internal void RemoveFloor(int level)
         {
+            if (Floors.Count == 1)
+            {
+                MessageBox.Show("Cannot remove the only floor in the building.");
+                return;
+            }
+
             Floor f = Floors.Where(x => x.Level == level).First();
             Floors.Remove(f);
 

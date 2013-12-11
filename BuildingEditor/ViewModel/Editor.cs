@@ -113,6 +113,7 @@ namespace BuildingEditor.ViewModel
         {
             CurrentFile = "";
             CurrentBuilding = new Building(5, 5);
+            CurrentBuilding.ViewMode = CurrentTool.Name;
         }
 
         public void RemoveFloor(int index)

@@ -128,11 +128,6 @@ namespace BuildingEditor.View
         {
             _viewModel.Toolbox_Selected(sender, e);
         }
-
-        private void Test_Click(object sender, RoutedEventArgs e)
-        {
-            FloorIconUpdater iu = new FloorIconUpdater(_viewModel.CurrentBuilding, uxFloors);
-        }
         #endregion
     }
 }

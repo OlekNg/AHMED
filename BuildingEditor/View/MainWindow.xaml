@@ -5,7 +5,8 @@
         Title="{Binding CurrentFile, StringFormat=AHMED v2 - {0}}" Height="600" Width="1000" BorderThickness="0">
     <Window.Resources>
         <Style TargetType="ListViewItem">
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
         </Style>
     </Window.Resources>
 
@@ -85,8 +86,14 @@
                       SelectedItem="{Binding CurrentFloor}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Level}"/>
-                        <!--<Image Source="{Binding Icon}" Stretch="Uniform" Width="100" Height="70"/>-->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="20"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding Level}" TextAlignment="Center"/>
+                            <Button Grid.Column="1" Tag="{Binding Level}" Content="-" Click="RemoveFloor_Click"/>
+                        </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
@@ -138,9 +145,6 @@
                 <MenuItem Header="Save" Click="Save_Click"/>
                 <MenuItem Header="Save as" Click="SaveAs_Click"/>
                 <MenuItem Header="Exit" Click="Exit_Click"/>
-            </MenuItem>
-            <MenuItem Header="View" Height="25">
-                <MenuItem Header="Test" Click="Test_Click"/>
             </MenuItem>
         </Menu>
     </Grid>
