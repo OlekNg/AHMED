@@ -47,6 +47,15 @@
 
         <!-- CONTROL -->
         <StackPanel Name="uxControlPanel" Grid.Column="2" Grid.Row="1">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type RadioButton}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding CurrentBuilding}" Value="{x:Null}">
+                            <Setter Property="IsEnabled" Value="False"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Resources>
             <Border BorderBrush="LightGray" BorderThickness="0,1,1,1">
                 <TextBlock Text="View" TextAlignment="Center" Margin="5"/>
             </Border>
