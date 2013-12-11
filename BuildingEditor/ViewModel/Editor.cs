@@ -46,7 +46,7 @@ namespace BuildingEditor.ViewModel
             Tools.Add(new DragTool(_workspace, _window));
             Tools.Add(new FloorTool(this));
             Tools.Add(new SideElementTool(this, SideElementType.WALL, "Wall"));
-            Tools.Add(new SideElementTool(this, SideElementType.DOOR, "Door") { Capacity = 5 });
+            Tools.Add(new SideElementTool(this, SideElementType.DOOR, "Door", true) { Capacity = 5 });
             Tools.Add(new PeopleTool());
             Tools.Add(new DeleteTool(this));
             Tools.Add(new StairsTool(this));

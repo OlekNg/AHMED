@@ -32,13 +32,16 @@ namespace BuildingEditor.ViewModel.Tools
         protected List<SideElement> _selectedSides = new List<SideElement>();
         protected SideElementType _elementType;
         private Editor _editor;
+        private bool _enableCapacity;
 
-        public SideElementTool(Editor editor, SideElementType elementType, string name = "SideTool")
+        public SideElementTool(Editor editor, SideElementType elementType, string name = "SideTool", bool enableCapacity = false)
         {
             _editor = editor;
             _elementType = elementType;
+            _enableCapacity = enableCapacity;
             Name = name;
             Capacity = 3;
+            GUIConfiguration = BuildGUIConfiguration();
         }
 
         public int Capacity { get; set; }
@@ -107,19 +110,22 @@ namespace BuildingEditor.ViewModel.Tools
 
         protected override FrameworkElement BuildGUIConfiguration()
         {
+            StackPanel panel = new StackPanel();
+
             CheckBox clearMode = new CheckBox() { Content = "Clear mode" };
             clearMode.SetBinding(CheckBox.IsCheckedProperty, new Binding("ClearMode"));
-
-            TextBox capacity = new TextBox() { Width = 20, Height = 20 };
-            capacity.SetBinding(TextBox.TextProperty, new Binding("Capacity"));
-
-            StackPanel capacityPanel = new StackPanel() { Orientation = Orientation.Horizontal };
-            capacityPanel.Children.Add(new Label() { Content = "Capacity" });
-            capacityPanel.Children.Add(capacity);
-
-            StackPanel panel = new StackPanel();
             panel.Children.Add(clearMode);
-            panel.Children.Add(capacityPanel);
+
+            if (_enableCapacity)
+            {
+                TextBox capacity = new TextBox() { Width = 20, Height = 20 };
+                capacity.SetBinding(TextBox.TextProperty, new Binding("Capacity"));
+
+                StackPanel capacityPanel = new StackPanel() { Orientation = Orientation.Horizontal };
+                capacityPanel.Children.Add(new Label() { Content = "Capacity" });
+                capacityPanel.Children.Add(capacity);
+                panel.Children.Add(capacityPanel);
+            }
 
             return panel;
         }
