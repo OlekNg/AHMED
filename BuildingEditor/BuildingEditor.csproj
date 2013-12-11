@@ -172,7 +172,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="BuildingEditor_TemporaryKey.pfx" />
     <None Include="Fody.targets" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
