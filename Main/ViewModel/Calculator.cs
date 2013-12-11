@@ -164,7 +164,11 @@ namespace Main.ViewModel
             CurrentFile = file;
             Common.DataModel.Building building = new Common.DataModel.Building();
             building.Load(file);
+
+            var viewMode = CurrentBuilding != null ? CurrentBuilding.ViewMode : "";
             CurrentBuilding = new Building(building);
+            CurrentBuilding.ViewMode = viewMode;
+
             _debugInfo.Building = CurrentBuilding;
         }
 
@@ -197,11 +201,12 @@ namespace Main.ViewModel
             Status statusModel = new Status(ga);
             StatusWindow statusWindow = new StatusWindow();
             statusWindow.DataContext = statusModel;
-            statusWindow.Show();
 
             // Run algorithm asynchronously.
             _currentGA = ga;
             new Task(ga.Start).Start();
+
+            statusWindow.ShowDialog();
         }
 
         public void SetViewMode(string viewMode)
