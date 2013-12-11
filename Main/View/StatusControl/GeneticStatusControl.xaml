@@ -73,7 +73,7 @@
                    Background="{Binding EvaluationOverhead, Converter={StaticResource PercentageToColorConverter}}"
                    Width="{Binding EvaluationOverhead, Converter={StaticResource PercentageToWidthConverter}, ConverterParameter=200}"
                    HorizontalAlignment="Left"/>
-        <TextBlock Grid.Row="7" Grid.Column="2" Text="{Binding BestChromosomeValue}"
+        <TextBlock Grid.Row="7" Grid.Column="2" Text="{Binding BestChromosomeValue, StringFormat={}{0:0.000}}"
                    HorizontalAlignment="Left"/>
         
         <!-- OVERALL ALGORITHM PROGRESSION -->
