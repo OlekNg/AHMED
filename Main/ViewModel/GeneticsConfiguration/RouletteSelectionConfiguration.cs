@@ -1,4 +1,5 @@
-﻿using Genetics.Specialized;
+﻿using Genetics.Operators;
+using Genetics.Specialized;
 using PropertyChanged;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace Main.ViewModel.GeneticsConfiguration
     {
         public Genetics.Generic.ISelector BuildSelector()
         {
-            return new RouletteSelector();
+            return new ModifiedRouletteSelector();
         }
 
         public string Name
