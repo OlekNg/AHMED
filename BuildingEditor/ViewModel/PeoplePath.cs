@@ -13,6 +13,7 @@ namespace BuildingEditor.ViewModel
     public class PeoplePath
     {
         private Segment _segment;
+        private List<Segment> _pathSegments;
 
         /// <param name="peopleSegment">Segment with people count > 0</param>
         public PeoplePath(Segment peopleSegment)
@@ -27,6 +28,16 @@ namespace BuildingEditor.ViewModel
         public int LowestFlowValue { get; set; }
         public Segment LowestFlowSegment { get; set; }
         public bool LoopDetected { get { return LowestFlowValue > 0; } }
+
+        public List<Segment> Segments
+        {
+            get
+            {
+                if (_pathSegments == null)
+                    Update();
+                return _pathSegments;
+            }
+        }
 
         public void Update()
         {
@@ -60,6 +71,8 @@ namespace BuildingEditor.ViewModel
                 history.Add(segment);
                 segment = segment.GetNextSegment();
             }
+
+            _pathSegments = history;
         }
 
         private void ResetProperties()

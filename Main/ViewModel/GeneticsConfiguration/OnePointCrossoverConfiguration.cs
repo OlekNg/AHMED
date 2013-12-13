@@ -8,7 +8,7 @@ namespace Main.ViewModel.GeneticsConfiguration
 {
     public class OnePointCrossoverConfiguration : IGUIConfiguration, ICrossoverConfiguration
     {
-        public Genetics.Generic.ICrossoverOperator<List<bool>> BuildCrossoverOperator()
+        public Genetics.Generic.ICrossoverOperator<List<bool>> BuildCrossoverOperator(BuildingEditor.ViewModel.Building building)
         {
             return new OnePointCrossover();
         }

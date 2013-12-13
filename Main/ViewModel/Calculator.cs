@@ -25,6 +25,8 @@ namespace Main.ViewModel
     public class Calculator : ISegmentEventHandler
     {
         #region Fields
+        private Building _currentBuilding;
+
         /// <summary>
         /// Currently open file.
         /// </summary>
@@ -54,7 +56,7 @@ namespace Main.ViewModel
         /// <summary>
         /// Genetic algorithm view model configuration.
         /// </summary>
-        private Configuration _geneticsConfiguration = new Configuration();
+        private Configuration _geneticsConfiguration;
 
         private Dictionary<Direction, Direction> _nextDirections;
         private Dictionary<Direction, Direction> _previousDirections;
@@ -69,6 +71,7 @@ namespace Main.ViewModel
         #region Calculator construction
         public Calculator(FrameworkElement workspace, FrameworkElement window)
         {
+            _geneticsConfiguration = new Configuration();
             _debugInfo = new DebugInfo();
             _dragTool = new DragTool(workspace, window);
             InitFileWatcher();
@@ -128,7 +131,11 @@ namespace Main.ViewModel
         /// <summary>
         /// Currently open building.
         /// </summary>
-        public Building CurrentBuilding { get; set; }
+        public Building CurrentBuilding
+        {
+            get { return _currentBuilding; }
+            set { _currentBuilding = value; }
+        }
 
         /// <summary>
         /// Path to currently open file.
@@ -188,8 +195,8 @@ namespace Main.ViewModel
             AHMEDEvaluator evaluator = new AHMEDEvaluator(sim, new Building(CurrentBuilding.ToDataModel()));
             //AHMEDEvaluator evaluator = new AHMEDEvaluator(sim, _building); // works on actual building
 
-            BinaryChromosome.CrossoverOperator = _geneticsConfiguration.SelectedCrossover.BuildCrossoverOperator();
-            BinaryChromosome.MutationOperator = _geneticsConfiguration.SelectedMutation.BuildMutationOperator();
+            BinaryChromosome.CrossoverOperator = _geneticsConfiguration.SelectedCrossover.BuildCrossoverOperator(CurrentBuilding);
+            BinaryChromosome.MutationOperator = _geneticsConfiguration.SelectedMutation.BuildMutationOperator(CurrentBuilding);
             BinaryChromosome.Evaluator = evaluator;
             BinaryChromosome.Repairer = r;
             GeneticAlgorithm ga = new GeneticAlgorithm(new BinaryChromosomeFactory(CurrentBuilding.GetFloorCount() * 2), _geneticsConfiguration.InitPopSize);

@@ -1,4 +1,5 @@
-﻿using Genetics.Specialized;
+﻿using Genetics.Operators;
+using Genetics.Specialized;
 using PropertyChanged;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,9 @@ using System.Windows.Data;
 namespace Main.ViewModel.GeneticsConfiguration
 {
     [ImplementPropertyChanged]
-    public class ClassicMutationConfiguration : IGUIConfiguration, IMutationConfiguration
+    public class PathDirectionMutationConfiguration : IGUIConfiguration, IMutationConfiguration
     {
-        public ClassicMutationConfiguration()
+        public PathDirectionMutationConfiguration()
         {
             GUI = BuildGUIConfiguration();
 
@@ -22,7 +23,7 @@ namespace Main.ViewModel.GeneticsConfiguration
 
         public Genetics.Generic.IMutationOperator<List<bool>> BuildMutationOperator(BuildingEditor.ViewModel.Building building)
         {
-            return new ClassicMutation(Probability);
+            return new PathDirectionMutation(building, Probability);
         }
 
         public System.Windows.FrameworkElement BuildGUIConfiguration()
@@ -37,7 +38,7 @@ namespace Main.ViewModel.GeneticsConfiguration
             return panel;
         }
 
-        public string Name { get { return "Classic"; } }
+        public string Name { get { return "Path direction"; } }
         public double Probability { get; set; }
 
         public System.Windows.FrameworkElement GUI { get; set; }

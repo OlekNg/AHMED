@@ -9,6 +9,6 @@ namespace Main.ViewModel.GeneticsConfiguration
 {
     public interface ICrossoverConfiguration
     {
-        ICrossoverOperator<List<bool>> BuildCrossoverOperator();
+        ICrossoverOperator<List<bool>> BuildCrossoverOperator(BuildingEditor.ViewModel.Building building);
     }
 }

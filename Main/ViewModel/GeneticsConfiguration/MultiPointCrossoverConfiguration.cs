@@ -19,7 +19,7 @@ namespace Main.ViewModel.GeneticsConfiguration
             Points = 2;
         }
 
-        public Genetics.Generic.ICrossoverOperator<List<bool>> BuildCrossoverOperator()
+        public Genetics.Generic.ICrossoverOperator<List<bool>> BuildCrossoverOperator(BuildingEditor.ViewModel.Building building)
         {
             return new MultiPointCrossover(Points);
         }

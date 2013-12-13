@@ -94,6 +94,7 @@
     </ApplicationDefinition>
     <Compile Include="ViewModel\Calculator.cs" />
     <Compile Include="ViewModel\DebugInfo.cs" />
+    <Compile Include="ViewModel\GeneticsConfiguration\PathDirectionMutationConfiguration.cs" />
     <Compile Include="ViewModel\PercentageToWidthConverter.cs" />
     <Compile Include="ViewModel\PercentageToColorConverter.cs" />
     <Compile Include="ViewModel\Status.cs" />

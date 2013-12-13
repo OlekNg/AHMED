@@ -9,6 +9,6 @@ namespace Main.ViewModel.GeneticsConfiguration
 {
     public interface IMutationConfiguration
     {
-        IMutationOperator<List<bool>> BuildMutationOperator();
+        IMutationOperator<List<bool>> BuildMutationOperator(BuildingEditor.ViewModel.Building building);
     }
 }

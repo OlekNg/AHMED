@@ -1,4 +1,5 @@
-﻿using Genetics;
+﻿using BuildingEditor.ViewModel;
+using Genetics;
 using Genetics.Evaluators;
 using Genetics.Repairers;
 using Genetics.Specialized;
@@ -28,6 +29,7 @@ namespace Main.ViewModel.GeneticsConfiguration
 
             Mutations = new ObservableCollection<IMutationConfiguration>();
             Mutations.Add(SelectedMutation = new ClassicMutationConfiguration());
+            Mutations.Add(new PathDirectionMutationConfiguration());
 
             // Default values
             MaxIterations = 500;

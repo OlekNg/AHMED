@@ -1,4 +1,6 @@
 ﻿using Genetics;
+using Genetics.Operators;
+using Genetics.Specialized;
 using Main.ViewModel;
 using System;
 using System.IO;
@@ -151,6 +153,16 @@ namespace Main.View
             //{
             //    encoder.Save(stm);
             //}
+        }
+
+        private void Test2_Click(object sender, RoutedEventArgs e)
+        {
+            BinaryChromosome.MutationOperator = new PathDirectionMutation(_viewModel.CurrentBuilding, 1);
+
+            BinaryChromosome c = new BinaryChromosome(_viewModel.CurrentBuilding.GetFenotype().ToGenotype());
+            c.Mutate();
+            _viewModel.CurrentBuilding.SetFenotype(c.Genotype.ToFenotype());
+            _viewModel.CurrentBuilding.DrawSolution();
         }
     }
 }
