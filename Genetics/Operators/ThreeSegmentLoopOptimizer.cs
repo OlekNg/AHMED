@@ -13,10 +13,14 @@ namespace Genetics.Operators
     /// </summary>
     public class ThreeSegmentLoopOptimizer : ITransformer<List<bool>>
     {
+        private const double DEFAULT_PROBABILITY = 1;
+
+        private Random _randomizer = new Random();
         private Building _building;
         private List<PeoplePath> _paths;
 
         private Dictionary<Direction, Direction> _oppositeDirections;
+        private double _probability = DEFAULT_PROBABILITY;
 
         public ThreeSegmentLoopOptimizer(Building building)
         {
@@ -30,6 +34,12 @@ namespace Genetics.Operators
             _oppositeDirections.Add(Direction.RIGHT, Direction.LEFT);
         }
 
+        public ThreeSegmentLoopOptimizer(Building building, double probability)
+            : this(building)
+        {
+            _probability = probability;
+        }
+
         #region ITransformer<List<bool>> Members
 
         public List<bool> Transform(Chromosome<List<bool>> c)
@@ -38,6 +48,8 @@ namespace Genetics.Operators
 
             foreach (var path in _paths)
             {
+                if (_randomizer.NextDouble() > _probability) continue;
+
                 int pos = DetectLoop(path);
                 if (pos >= 0)
                 {

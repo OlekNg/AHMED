@@ -31,6 +31,10 @@ namespace Main.ViewModel.GeneticsConfiguration
             Mutations.Add(SelectedMutation = new ClassicMutationConfiguration());
             Mutations.Add(new PathDirectionMutationConfiguration());
 
+            Transformers = new ObservableCollection<ITransformationConfiguration>();
+            Transformers.Add(SelectedTransformer = new NoneTransformationConfiguration());
+            Transformers.Add(new ThreeSegmentLoopOptimizerConfiguration());
+
             // Default values
             MaxIterations = 500;
             InitPopSize = 50;
@@ -53,5 +57,9 @@ namespace Main.ViewModel.GeneticsConfiguration
         // Mutation
         public ObservableCollection<IMutationConfiguration> Mutations { get; set; }
         public IMutationConfiguration SelectedMutation { get; set; }
+
+        // Transformation
+        public ObservableCollection<ITransformationConfiguration> Transformers { get; set; }
+        public ITransformationConfiguration SelectedTransformer { get; set; }
     }
 }

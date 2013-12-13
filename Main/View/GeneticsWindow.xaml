@@ -8,6 +8,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
@@ -133,8 +134,39 @@
                             Grid.Row="2" Grid.Column="1"/>
         </Grid>
 
+        <!-- TRANSFORMATION CONFIGURATION -->
+        <Grid Grid.Row="4">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Transformation" HorizontalContentAlignment="Center"
+               Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
+               Background="LightGray"/>
+            <Label Content="Transform operator:" Grid.Row="1" Grid.Column="0"/>
+            <ComboBox  Grid.Row="1" Grid.Column="1"
+                  ItemsSource="{Binding Transformers}"
+                  SelectedItem="{Binding SelectedTransformer}"
+                  VerticalAlignment="Center">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Label Content="Additional configuration:" Grid.Row="2" Grid.Column="0"/>
+            <ContentControl DataContext="{Binding SelectedTransformer}"
+                            Content="{Binding GUI}"
+                            Grid.Row="2" Grid.Column="1"/>
+        </Grid>
+
         <!-- BOTTOM BUTTON PANEL -->
-        <Button Grid.Row="5" Grid.Column="0" Content="OK"
+        <Button Grid.Row="6" Grid.Column="0" Content="OK"
                 Width="100" HorizontalAlignment="Right" Click="OK_Click"/>
     </Grid>
 </Window>

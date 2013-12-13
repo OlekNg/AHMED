@@ -198,7 +198,7 @@ namespace Main.ViewModel
 
             BinaryChromosome.CrossoverOperator = _geneticsConfiguration.SelectedCrossover.BuildCrossoverOperator(CurrentBuilding);
             BinaryChromosome.MutationOperator = _geneticsConfiguration.SelectedMutation.BuildMutationOperator(CurrentBuilding);
-            BinaryChromosome.Transformer = new ThreeSegmentLoopOptimizer(CurrentBuilding);
+            BinaryChromosome.Transformer = _geneticsConfiguration.SelectedTransformer.BuildTransformer(CurrentBuilding);
             BinaryChromosome.Evaluator = evaluator;
             BinaryChromosome.Repairer = r;
             GeneticAlgorithm ga = new GeneticAlgorithm(new BinaryChromosomeFactory(CurrentBuilding.GetFloorCount() * 2), _geneticsConfiguration.InitPopSize);
