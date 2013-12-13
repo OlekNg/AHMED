@@ -51,7 +51,7 @@ namespace Genetics.Operators
                 if (_randomizer.NextDouble() > _probability) continue;
 
                 int pos = DetectLoop(path);
-                if (pos >= 0)
+                while(pos >= 0)
                 {
                     // Try optimizing through setting first segment
                     // to direction of second.
@@ -63,6 +63,13 @@ namespace Genetics.Operators
                     {
                         segments[pos].Fenotype = directionToSet;
                         //Console.WriteLine("Optimized 3-segment loop!");
+                        break;
+                    }
+                    else
+                    {
+                        // If cannot be optimized then try to find another loop to optimize
+                        // in the same path.
+                        pos = DetectLoop(path, pos + 1);
                     }
                 }
             }
@@ -77,20 +84,24 @@ namespace Genetics.Operators
         /// form loop.
         /// </summary>
         /// <param name="path">Path to analyze.</param>
+        /// <param name="index">Index from which segment in path start detecting.</param>
         /// <returns>Index of first segment in three-segment loop. -1 if not detected.</returns>
-        private int DetectLoop(PeoplePath path)
+        private int DetectLoop(PeoplePath path, int index = 0)
         {
             path.Update();
             var segments = path.Segments;
 
-            for (int i = 0; i < segments.Count - 2; i++)
+            for (int i = index; i < segments.Count - 2; i++)
             {
                 // Algorithm of detection - if there are three different directions
-                // and first is opposite to third then loop detected.
-                if (segments[i].Fenotype != segments[i + 1].Fenotype &&
+                // and first is opposite to third and they have to be on the same
+                // building level then loop detected.
+                if (segments[i].Level == segments[i + 1].Level && // Level equality
+                    segments[i + 1].Level == segments[i + 2].Level && // Level equality
+                    segments[i].Fenotype != segments[i + 1].Fenotype &&
                     segments[i].Fenotype != segments[i + 2].Fenotype &&
                     segments[i + 1].Fenotype != segments[i + 2].Fenotype &&
-                    segments[i].Fenotype == _oppositeDirections[segments[i + 2].Fenotype])
+                    segments[i].Fenotype == _oppositeDirections[segments[i + 2].Fenotype]) // Opposite direction condition.
                     return i;
             }
 
