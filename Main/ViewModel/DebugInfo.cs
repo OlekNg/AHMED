@@ -26,7 +26,7 @@ namespace Main.ViewModel
             Simulator sim = new Simulator();
             sim.MaximumTicks = _building.GetFloorCount() * 2;
             sim.SetupSimulator(mapBuilder.BuildBuildingMap(), mapBuilder.BuildPeopleMap());
-            _evaluator = new AHMEDEvaluator(sim, _building);
+            _evaluator = new AHMEDEvaluator(sim, _building, true);
         }
 
         public Building Building

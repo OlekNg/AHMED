@@ -26,9 +26,11 @@ namespace Genetics.Evaluators
         private Building _building;
 
         private List<PeoplePath> _peoplePaths;
+        private bool _debug;
 
-        public AHMEDEvaluator(Simulator simulator, Building building)
+        public AHMEDEvaluator(Simulator simulator, Building building, bool debug = false)
         {
+            _debug = debug;
             _simulator = simulator;
             _building = building;
             _maxAvgEscapeTime = building.GetFloorCount() * 1.5;
@@ -59,7 +61,11 @@ namespace Genetics.Evaluators
                     sum += g.Quantity * g.Ticks;
                     sumTicks += g.Ticks;
                     peopleEscaped += g.Quantity;
+
+                    if (_debug)
+                        Console.WriteLine("Escaped group: {0} in {1} ticks", g.Quantity, g.Ticks);
                 }
+                Console.WriteLine();
 
                 double value = 0;
                 value += peopleEscaped;
