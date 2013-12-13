@@ -1,10 +1,9 @@
-﻿using BuildingEditor.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Genetics
+namespace BuildingEditor.ViewModel
 {
     /// <summary>
     /// Handles one people group path. Allows to detect loops,

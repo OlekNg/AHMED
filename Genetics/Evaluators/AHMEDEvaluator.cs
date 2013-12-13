@@ -36,10 +36,7 @@ namespace Genetics.Evaluators
             _maxAvgEscapeTime = building.GetFloorCount() * 1.5;
             _peopleCount = building.GetPeopleCount();
 
-            _peoplePaths = new List<PeoplePath>();
-            var peopleGroups = building.GetPeopleGroups();
-            foreach (var group in peopleGroups)
-                _peoplePaths.Add(new PeoplePath(group));
+            _peoplePaths = _building.GetPeoplePaths();
 
             CreateBuildingFlow();
         }

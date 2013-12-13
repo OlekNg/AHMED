@@ -145,6 +145,17 @@ namespace BuildingEditor.ViewModel
             return result;
         }
 
+        public List<PeoplePath> GetPeoplePaths()
+        {
+            List<PeoplePath> result = new List<PeoplePath>();
+
+            var peopleGroups = GetPeopleGroups();
+            foreach (var group in peopleGroups)
+                result.Add(new PeoplePath(group));
+
+            return result;
+        }
+
         /// <summary>
         /// Creates fenotype for simulator which requires all segments (even of type NONE)
         /// to be covered by fenotype.
