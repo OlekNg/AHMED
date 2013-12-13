@@ -13,9 +13,25 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
-    <FodyPath>..\packages\Fody.1.17.4.0</FodyPath>
+    <FodyPath>..\packages\Fody.1.19.0.0</FodyPath>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>F:\VirtualMachines\Shared\PublishEditor\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>false</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -39,9 +55,21 @@
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>3D8AD1A2D08471615C414F55CBA698DCD3BE050E</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>BuildingEditor_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="PropertyChanged">
-      <HintPath>..\packages\PropertyChanged.Fody.1.41.0.0\Lib\NET35\PropertyChanged.dll</HintPath>
+      <HintPath>..\packages\PropertyChanged.Fody.1.42.0.0\Lib\NET35\PropertyChanged.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -63,26 +91,30 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Logic\OrientationToAngleConverter.cs" />
-    <Compile Include="Logic\SegmentEventHandler.cs" />
-    <Compile Include="Logic\StairsPair.cs" />
-    <Page Include="DataTemplates\SegmentBasicTemplate.xaml">
+    <Compile Include="ViewModel\Editor.cs" />
+    <Compile Include="ViewModel\FloorIconUpdater.cs" />
+    <Compile Include="ViewModel\OrientationToAngleConverter.cs" />
+    <Compile Include="ViewModel\PeoplePath.cs" />
+    <Compile Include="ViewModel\SegmentEventHandler.cs" />
+    <Compile Include="ViewModel\SimpleCommand.cs" />
+    <Compile Include="ViewModel\StairsPair.cs" />
+    <Page Include="View\DataTemplates\SegmentBasicTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="DataTemplates\SegmentDoorCapacityTemplate.xaml">
+    <Page Include="View\DataTemplates\SegmentDoorCapacityTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="DataTemplates\SegmentRowTemplate.xaml">
+    <Page Include="View\DataTemplates\SegmentRowTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="DataTemplates\SegmentTemplate.xaml">
+    <Page Include="View\DataTemplates\SegmentTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -90,35 +122,35 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Logic\Building.cs" />
-    <Compile Include="Logic\Tools\DeleteTool.cs" />
-    <Compile Include="Logic\Tools\DragTool.cs" />
-    <Compile Include="Logic\Floor.cs" />
-    <Compile Include="Logic\Tools\FloorTool.cs" />
-    <Compile Include="Logic\NumberToBoolConverter.cs" />
-    <Compile Include="Logic\Tools\PeopleTool.cs" />
-    <Compile Include="Logic\Segment.cs" />
-    <Compile Include="Logic\SideElement.cs" />
-    <Compile Include="Logic\Tools\SideElementTool.cs" />
-    <Compile Include="Logic\Tools\StairsTool.cs" />
-    <Compile Include="Logic\Tools\Tool.cs" />
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="ViewModel\Building.cs" />
+    <Compile Include="ViewModel\Tools\DeleteTool.cs" />
+    <Compile Include="ViewModel\Tools\DragTool.cs" />
+    <Compile Include="ViewModel\Floor.cs" />
+    <Compile Include="ViewModel\Tools\FloorTool.cs" />
+    <Compile Include="ViewModel\NumberToBoolConverter.cs" />
+    <Compile Include="ViewModel\Tools\PeopleTool.cs" />
+    <Compile Include="ViewModel\Segment.cs" />
+    <Compile Include="ViewModel\SideElement.cs" />
+    <Compile Include="ViewModel\Tools\SideElementTool.cs" />
+    <Compile Include="ViewModel\Tools\StairsTool.cs" />
+    <Compile Include="ViewModel\Tools\Tool.cs" />
+    <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Styles\SegmentDoorCapacityStyle.xaml">
+    <Page Include="View\Styles\SegmentDoorCapacityStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Styles\SegmentBasicStyle.xaml">
+    <Page Include="View\Styles\SegmentBasicStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Styles\SegmentContentStyle.xaml">
+    <Page Include="View\Styles\SegmentContentStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Styles\SideElementStyle.xaml">
+    <Page Include="View\Styles\SideElementStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -153,7 +185,7 @@
     <Resource Include="FodyWeavers.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\stairs.png">
+    <Resource Include="View\Images\stairs.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
@@ -164,13 +196,47 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\arrow.png">
+    <Resource Include="View\Images\arrow.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.4.5">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 4.5</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <PublishFile Include="PropertyChanged">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="Fody.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Import Project="Fody.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

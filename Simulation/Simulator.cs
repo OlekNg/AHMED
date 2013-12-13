@@ -163,7 +163,7 @@ namespace Simulation
 
                 nextStep.AddPeople(peopleCount);
                 //TODO: maybe there is no need for this
-                //nextStep.Processed = true;
+                nextStep.Processed = true;
                 group.RemovePeople(peopleCount);
             }
         }

@@ -16,7 +16,23 @@
     <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <FodyPath>..\packages\Fody.1.17.4.0</FodyPath>
+    <FodyPath>..\packages\Fody.1.19.0.0</FodyPath>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>F:\VirtualMachines\Shared\PublishAHMED\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>false</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -40,9 +56,21 @@
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>3AAE7692005ECE9BB5A31772BBF5CB8010496D89</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>Main_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="PropertyChanged">
-      <HintPath>..\packages\PropertyChanged.Fody.1.41.0.0\Lib\NET35\PropertyChanged.dll</HintPath>
+      <HintPath>..\packages\PropertyChanged.Fody.1.42.0.0\Lib\NET35\PropertyChanged.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -64,21 +92,34 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="StatusControl\PercentageToWidthConverter.cs" />
-    <Compile Include="StatusControl\PercentageToColorConverter.cs" />
-    <Compile Include="StatusControl\StatusViewModel.cs" />
-    <Compile Include="StatusWindow.xaml.cs">
+    <Compile Include="ViewModel\Calculator.cs" />
+    <Compile Include="ViewModel\DebugInfo.cs" />
+    <Compile Include="ViewModel\GeneticsConfiguration\NoneTransformationConfiguration.cs" />
+    <Compile Include="ViewModel\GeneticsConfiguration\ThreeSegmentLoopOptimzierConfiguration.cs" />
+    <Compile Include="ViewModel\GeneticsConfiguration\ITransformationConfiguration.cs" />
+    <Compile Include="ViewModel\GeneticsConfiguration\PathDirectionMutationConfiguration.cs" />
+    <Compile Include="ViewModel\PercentageToWidthConverter.cs" />
+    <Compile Include="ViewModel\PercentageToColorConverter.cs" />
+    <Compile Include="ViewModel\Status.cs" />
+    <Compile Include="View\DebugWindow.xaml.cs">
+      <DependentUpon>DebugWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\StatusWindow.xaml.cs">
       <DependentUpon>StatusWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="StatusControl\GeneticStatusControl.xaml">
+    <Page Include="View\DebugWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GeneticsWindow.xaml">
+    <Page Include="View\StatusControl\GeneticStatusControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="View\GeneticsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -86,34 +127,34 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="GeneticsConfiguration\Configuration.cs" />
-    <Compile Include="GeneticsConfiguration\ClassicMutationConfiguration.cs" />
-    <Compile Include="GeneticsConfiguration\IMutationConfiguration.cs" />
-    <Compile Include="GeneticsConfiguration\RankSelectionConfiguration.cs" />
-    <Compile Include="GeneticsConfiguration\RouletteSelectionConfiguration.cs" />
-    <Compile Include="GeneticsConfiguration\ISelectionConfiguration.cs" />
-    <Compile Include="GeneticsConfiguration\TournamentSelectionConfiguration.cs" />
-    <Compile Include="StatusControl\GeneticStatusControl.xaml.cs">
+    <Compile Include="ViewModel\GeneticsConfiguration\Configuration.cs" />
+    <Compile Include="ViewModel\GeneticsConfiguration\ClassicMutationConfiguration.cs" />
+    <Compile Include="ViewModel\GeneticsConfiguration\IMutationConfiguration.cs" />
+    <Compile Include="ViewModel\GeneticsConfiguration\RankSelectionConfiguration.cs" />
+    <Compile Include="ViewModel\GeneticsConfiguration\RouletteSelectionConfiguration.cs" />
+    <Compile Include="ViewModel\GeneticsConfiguration\ISelectionConfiguration.cs" />
+    <Compile Include="ViewModel\GeneticsConfiguration\TournamentSelectionConfiguration.cs" />
+    <Compile Include="View\StatusControl\GeneticStatusControl.xaml.cs">
       <DependentUpon>GeneticStatusControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GeneticsWindow.xaml.cs">
+    <Compile Include="View\GeneticsWindow.xaml.cs">
       <DependentUpon>GeneticsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GeneticsConfiguration\MultiPointCrossoverConfiguration.cs" />
-    <Compile Include="GeneticsConfiguration\ICrossoverConfiguration.cs" />
-    <Compile Include="GeneticsConfiguration\IGUIConfiguration.cs" />
-    <Compile Include="GeneticsConfiguration\OnePointCrossoverConfiguration.cs" />
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="ViewModel\GeneticsConfiguration\MultiPointCrossoverConfiguration.cs" />
+    <Compile Include="ViewModel\GeneticsConfiguration\ICrossoverConfiguration.cs" />
+    <Compile Include="ViewModel\GeneticsConfiguration\IGUIConfiguration.cs" />
+    <Compile Include="ViewModel\GeneticsConfiguration\OnePointCrossoverConfiguration.cs" />
+    <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="StatusWindow.xaml">
+    <Page Include="View\StatusWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MapBuilder.cs" />
+    <Compile Include="ViewModel\MapBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -170,6 +211,40 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="FodyWeavers.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.4.5">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 4.5</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <PublishFile Include="PropertyChanged">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

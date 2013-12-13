@@ -35,7 +35,7 @@ namespace Simulation
         /// <summary>
         /// Was this element processed?
         /// </summary>
-        public bool Processed { get; private set; }
+        public bool Processed { get; set; }
 
         /// <summary>
         /// Next step in evacuation route

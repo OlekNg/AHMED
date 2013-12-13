@@ -1,0 +1,165 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:l="clr-namespace:BuildingEditor.ViewModel"
+                    xmlns:enum="clr-namespace:Common.DataModel.Enums;assembly=Common">
+
+    <!--
+    Basic segment style - segment that consists of one TextBlock.
+    -->
+    <Style x:Key="SegmentBasicStyle" TargetType="TextBlock">
+        <!-- Basic setttings -->
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="TextAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="0,10"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+
+        <Style.Resources>
+            <l:NumberToBoolConverter x:Key="NumberToBoolConverter"/>
+            <l:OrientationToAngleConverter x:Key="OrientationToAngleConverter"/>
+        </Style.Resources>
+        <Style.Triggers>
+            <!-- SEGMENT TRIGGERS -->
+            <!-- Floor -->
+            <DataTrigger Binding="{Binding Type}" Value="{x:Static enum:SegmentType.FLOOR}">
+                <Setter Property="Background" Value="LightGray"/>
+            </DataTrigger>
+
+            <!-- Stairs -->
+            <DataTrigger Binding="{Binding Type}" Value="{x:Static enum:SegmentType.STAIRS}">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <ImageBrush ImageSource="../Images/stairs.png">
+                            <ImageBrush.Transform>
+                                <RotateTransform Angle="{Binding Orientation, Converter={StaticResource OrientationToAngleConverter}}" CenterX="25" CenterY="25"/>
+                            </ImageBrush.Transform>
+                        </ImageBrush>
+                    </Setter.Value>
+                </Setter>
+                
+            </DataTrigger>
+            
+            <!-- Stairs info -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Type}" Value="{x:Static enum:SegmentType.STAIRS}"/>
+                    <Condition Binding="{Binding Path=DataContext.ViewMode, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Viewbox}}}" Value="Stairs"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="Text" Value="{Binding StairsInfo}"/>
+            </MultiDataTrigger>
+
+            <!-- Segment capacity -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Type}" Value="{x:Static enum:SegmentType.FLOOR}"/>
+                    <Condition Binding="{Binding Path=DataContext.ViewMode, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Viewbox}}}" Value="Floor"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Text" Value="{Binding Capacity}"/>
+            </MultiDataTrigger>
+
+            <!-- People count -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Type}" Value="{x:Static enum:SegmentType.FLOOR}"/>
+                    <Condition Binding="{Binding Path=DataContext.ViewMode, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Viewbox}}}" Value="People"/>
+                    <Condition Binding="{Binding PeopleCount, Converter={StaticResource NumberToBoolConverter}}" Value="True"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Text" Value="{Binding PeopleCount}"/>
+                <Setter Property="Foreground" Value="Red"/>
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Type}" Value="{x:Static enum:SegmentType.FLOOR}"/>
+                    <Condition Binding="{Binding Path=DataContext.ViewMode, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Viewbox}}}" Value="Solution"/>
+                    <Condition Binding="{Binding PeopleCount, Converter={StaticResource NumberToBoolConverter}}" Value="True"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Text" Value="{Binding PeopleCount}"/>
+                <Setter Property="Foreground" Value="Red"/>
+            </MultiDataTrigger>
+            
+            
+            <!-- Genotype text -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Type}" Value="{x:Static enum:SegmentType.FLOOR}"/>
+                    <Condition Binding="{Binding Path=DataContext.ViewMode, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Viewbox}}}" Value="Genotype"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Text" Value="{Binding GenotypeText}"/>
+            </MultiDataTrigger>
+            
+            <!-- Fenotype -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Type}" Value="{x:Static enum:SegmentType.FLOOR}"/>
+                    <Condition Binding="{Binding Path=DataContext.ViewMode, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Viewbox}}}" Value="Fenotype"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <ImageBrush ImageSource="../Images/arrow.png">
+                            <ImageBrush.Transform>
+                                <RotateTransform Angle="{Binding Fenotype, Converter={StaticResource OrientationToAngleConverter}}"  CenterX="25" CenterY="25"/>
+                            </ImageBrush.Transform>
+                        </ImageBrush>
+                    </Setter.Value>
+                </Setter>
+            </MultiDataTrigger>
+
+            <!-- Solution -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Type}" Value="{x:Static enum:SegmentType.FLOOR}"/>
+                    <Condition Binding="{Binding Solution}" Value="True"/>
+                    <Condition Binding="{Binding Path=DataContext.ViewMode, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Viewbox}}}" Value="Solution"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <ImageBrush ImageSource="../Images/arrow.png">
+                            <ImageBrush.Transform>
+                                <RotateTransform Angle="{Binding Fenotype, Converter={StaticResource OrientationToAngleConverter}}"  CenterX="25" CenterY="25"/>
+                            </ImageBrush.Transform>
+                        </ImageBrush>
+                    </Setter.Value>
+                </Setter>
+            </MultiDataTrigger>
+
+            <!-- PREVIEW TRIGGERS -->
+            <!-- Stairs preview -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Preview}" Value="True"/>
+                    <Condition Binding="{Binding PreviewType}" Value="{x:Static enum:SegmentType.STAIRS}"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <ImageBrush ImageSource="../Images/stairs.png">
+                            <ImageBrush.Transform>
+                                <RotateTransform Angle="{Binding PreviewOrientation, Converter={StaticResource OrientationToAngleConverter}}" CenterX="25" CenterY="25"/>
+                            </ImageBrush.Transform>
+                        </ImageBrush>
+                    </Setter.Value>
+                </Setter>
+            </MultiDataTrigger>
+
+            <!-- Floor preview -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Preview}" Value="True"/>
+                    <Condition Binding="{Binding PreviewType}" Value="{x:Static enum:SegmentType.FLOOR}"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="LightGray"/>
+                <Setter Property="Opacity" Value="0.8"/>
+            </MultiDataTrigger>
+
+            <!-- None preview -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Preview}" Value="True"/>
+                    <Condition Binding="{Binding PreviewType}" Value="{x:Static enum:SegmentType.NONE}"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="White"/>
+            </MultiDataTrigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>
