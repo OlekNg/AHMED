@@ -10,7 +10,7 @@ using Common.DataModel.Enums;
 
 namespace Genetics.Evaluators
 {
-    public class AHMEDEvaluator : IEvaluator<List<bool>>
+    public class EvaCalcEvaluator : IEvaluator<List<bool>>
     {
         /// <summary>
         /// Maximum avarage escape time (it is simply amount of all building tiles).
@@ -28,7 +28,7 @@ namespace Genetics.Evaluators
         private List<PeoplePath> _peoplePaths;
         private bool _debug;
 
-        public AHMEDEvaluator(Simulator simulator, Building building, bool debug = false)
+        public EvaCalcEvaluator(Simulator simulator, Building building, bool debug = false)
         {
             _debug = debug;
             _simulator = simulator;

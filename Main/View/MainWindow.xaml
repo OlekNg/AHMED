@@ -1,7 +1,7 @@
 ﻿<Window x:Class="Main.View.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="{Binding CurrentFile, StringFormat=AHMED v2 - {0}}" Height="400" Width="600" Activated="Window_Activated">
+        Title="{Binding CurrentFile, StringFormat=EvaCalc v2 - {0}}" Height="400" Width="600" Activated="Window_Activated">
 
     <Window.Resources>
         <Style TargetType="ListViewItem">
@@ -105,7 +105,6 @@
                 <MenuItem Header="Genetics" Click="ToolsGenetics_Click"/>
                 <MenuItem Header="Editor" Click="ToolsEditor_Click"/>
                 <MenuItem Header="Debug info" Command="{Binding DebugInfoCommand}"/>
-                <MenuItem Header="Test" Click="Test2_Click"/>
             </MenuItem>
         </Menu>
     </Grid>

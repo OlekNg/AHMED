@@ -13,7 +13,7 @@ namespace Main.ViewModel
     [ImplementPropertyChanged]
     public class DebugInfo
     {
-        AHMEDEvaluator _evaluator;
+        EvaCalcEvaluator _evaluator;
         Building _building;
 
         public DebugInfo()
@@ -26,7 +26,7 @@ namespace Main.ViewModel
             Simulator sim = new Simulator();
             sim.MaximumTicks = _building.GetFloorCount() * 2;
             sim.SetupSimulator(mapBuilder.BuildBuildingMap(), mapBuilder.BuildPeopleMap());
-            _evaluator = new AHMEDEvaluator(sim, _building, true);
+            _evaluator = new EvaCalcEvaluator(sim, _building, true);
         }
 
         public Building Building

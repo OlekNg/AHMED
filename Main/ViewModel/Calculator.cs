@@ -193,7 +193,7 @@ namespace Main.ViewModel
 
             sim.MaximumTicks = CurrentBuilding.GetFloorCount() * 2;
             sim.SetupSimulator(mapBuilder.BuildBuildingMap(), mapBuilder.BuildPeopleMap());
-            AHMEDEvaluator evaluator = new AHMEDEvaluator(sim, new Building(CurrentBuilding.ToDataModel()));
+            EvaCalcEvaluator evaluator = new EvaCalcEvaluator(sim, new Building(CurrentBuilding.ToDataModel()));
             //AHMEDEvaluator evaluator = new AHMEDEvaluator(sim, _building); // works on actual building
 
             BinaryChromosome.CrossoverOperator = _geneticsConfiguration.SelectedCrossover.BuildCrossoverOperator(CurrentBuilding);

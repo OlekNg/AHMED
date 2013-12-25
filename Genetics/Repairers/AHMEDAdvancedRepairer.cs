@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Genetics.Repairers
 {
     /// <summary>
-    /// Repairer for AHMED. Repairs chromosomes pointing to the walls
+    /// Repairer for EvaCalc. Repairs chromosomes pointing to the walls
     /// and adjacent small loops.
     /// </summary>
     public class AdvancedRepairer : IRepairer<List<bool>>
