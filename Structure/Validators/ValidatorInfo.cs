@@ -5,8 +5,8 @@ using System.Text;
 
 namespace Structure.Validators
 {
-    public interface IFloorSquareValidator
+    public interface ValidatorInfo
     {
-        ValidatorInfo Validate(int x, int y, Floor fa, ValidationResult result);
+        ValidatorInfoLevel Level { get; }
     }
 }
