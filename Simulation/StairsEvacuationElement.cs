@@ -23,7 +23,7 @@ namespace Simulation
             }
         }
 
-        public StairsEvacuationElement(StairsEntry se, EvacuationMap em) : base(new Structure.FloorSquare(se.ConnectedStairs.Capacity))
+        public StairsEvacuationElement(StairsEntry se, EvacuationMap em) : base(new Structure.Tile(se.ConnectedStairs.Capacity))
         {
             _startingDelay = se.ConnectedStairs.Delay;
             _groups = new List<KeyValuePair<int, int>>();
@@ -43,7 +43,7 @@ namespace Simulation
             }
             else
             {
-                NextStep = em.Get(secondEntry.Position.FindAdjacentSquare());
+                NextStep = em.Get(secondEntry.Position.GetAdjacentPosition());
             }
         }
 

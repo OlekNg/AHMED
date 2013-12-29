@@ -158,12 +158,14 @@ namespace Simulation
             peopleCount = Math.Min(peopleCount, group.PeopleQuantity);
             if (peopleCount != 0)
             {
-                if(!nextStep.Processed)
+                if (!nextStep.Processed)
+                {
                     _evacuationGroups.Add(nextStep);
+                }
 
                 nextStep.AddPeople(peopleCount);
                 //TODO: maybe there is no need for this
-                //nextStep.Processed = true;
+                nextStep.Processed = true;
                 group.RemovePeople(peopleCount);
             }
         }

@@ -48,5 +48,7 @@ namespace Structure
                 return WallElementType.DOOR;
             }
         }
+
+        public WallElementPosition Position { get; set; }
     }
 }

@@ -15,7 +15,7 @@ namespace Simulation
         /// <summary>
         /// Floor tile 
         /// </summary>
-        public FloorSquare FloorSquare { get; set; }
+        public Tile FloorSquare { get; set; }
 
         /// <summary>
         /// Type of passage to next step in evacuation route
@@ -35,7 +35,7 @@ namespace Simulation
         /// <summary>
         /// Was this element processed?
         /// </summary>
-        public bool Processed { get; private set; }
+        public bool Processed { get; set; }
 
         /// <summary>
         /// Next step in evacuation route
@@ -56,7 +56,7 @@ namespace Simulation
         /// Simple constructor
         /// </summary>
         /// <param name="fs">Floor tile connected with this evacuation element</param>
-        public EvacuationElement(FloorSquare fs)
+        public EvacuationElement(Tile fs)
         {
             Ticks = 0;
             Processed = false;

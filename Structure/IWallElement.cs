@@ -29,5 +29,7 @@ namespace Structure
         bool Draw { get; }
 
         WallElementType Type { get; }
+
+        WallElementPosition Position { get; set; }
     }
 }

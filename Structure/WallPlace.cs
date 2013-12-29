@@ -9,5 +9,5 @@ namespace Structure
     /// <summary>
     /// Enum containing possible locations of wall element (door, wall) next to each floor square
     /// </summary>
-    public enum WallPlace { TOP, LEFT }
+    //public enum WallPlace { TOP, LEFT }
 }

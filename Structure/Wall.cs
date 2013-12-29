@@ -51,5 +51,7 @@ namespace Structure
                 return WallElementType.WALL;
             }
         }
+
+        public WallElementPosition Position { get; set; }
     }
 }

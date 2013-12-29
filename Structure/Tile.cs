@@ -10,7 +10,7 @@ namespace Structure
     /// <summary>
     /// Class describing one floor square
     /// </summary>
-    public class FloorSquare
+    public class Tile
     {
         /// <summary>
         /// Capacity of the floor tile
@@ -22,11 +22,13 @@ namespace Structure
         /// </summary>
         public IWallElement[] Side { get; set; }
 
+        public TilePosition Position { get; internal set; }
+
         /// <summary>
         /// Initalize floor square with given capacity
         /// </summary>
         /// <param name="c">Capacity</param>
-        public FloorSquare(int c)
+        public Tile(int c)
         {
             Capacity = c;
             Side = new IWallElement[4];

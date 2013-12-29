@@ -19,11 +19,71 @@ namespace TestSimulator
     {
         static void Main(string[] args)
         {
-            TestStairsRouting();
+            //TestStairsRouting();
+            TestNewStructure();
+        }
+
+        static void TestNewStructure()
+        {
+            BuildingMap bm = new BuildingMap();
+            Floor f0 = new Floor(3);
+            Floor f1 = new Floor(3);
+            StairsEntry se1 = new StairsEntry(3);
+            StairsEntry se2 = new StairsEntry(3);
+            Stairs s = new Stairs(3, 3);
+
+            /*for(int row = 0; row < 5; ++row)
+                for(int col = row; col < row + 3; ++col)
+                    f0.SetTile(row, col, row + 1);
+
+            for (int i = 0; i < 8; ++i)
+            {
+                f0.UnsetFloor(i, i + 1);
+            }*/
+
+            for (int i = 0; i < 3; ++i)
+            {
+                f0.SetTile(0, i, 3);
+                f0.SetWallElement(0, i, Direction.UP, new Wall());
+                f0.SetWallElement(0, i, Direction.DOWN, new Wall());
+                f1.SetTile(0, i, 3);
+                f1.SetWallElement(0, i, Direction.UP, new Wall());
+                f1.SetWallElement(0, i, Direction.DOWN, new Wall());
+            }
+
+            f1.SetWallElement(0, 0, Direction.LEFT, new Wall());
+            f1.SetWallElement(0, 2, Direction.RIGHT, se1);
+            f0.SetWallElement(0, 0, Direction.LEFT, se2);
+            f0.SetWallElement(0, 2, Direction.RIGHT, new Door(3));
+
+            s.SetEntries(se1, se2);
+            bm.AddStairs(s);
+
+            bm.AddFloor(f0);
+            bm.AddFloor(f1);
+
+            /*for (int row = 0; row < 7; ++row)
+            {
+                for (int col = 0; col < 7; ++col)
+                {
+                    Tile t = f0.Get(row, col);
+                    if (t != null)
+                        Console.Write(t.Capacity + " ");
+                    else
+                        Console.Write("# ");
+                }
+                Console.WriteLine();
+            }
+
+            Console.WriteLine("f0.TilesCount = " + f0.TilesCount);
+
+            Console.ReadLine();*/
+
         }
 
         static void TestStairsRouting()
         {
+            /*
             BuildingMap map = new BuildingMap();
             Stairs s = new Stairs(3, 2);
             StairsEntry[] se = new StairsEntry[2];
@@ -47,27 +107,27 @@ namespace TestSimulator
 
             
 
-            Floor[] f = new Floor[2];
-            f[0] = new Floor();
-            f[1] = new Floor();
+            Floor[] f0 = new Floor[2];
+            f0[0] = new Floor();
+            f0[1] = new Floor();
 
-            f[0].Setup(3, 1, 3);
-            f[1].Setup(3, 1, 3);
+            f0[0].Setup(3, 1, 3);
+            f0[1].Setup(3, 1, 3);
 
             for (int i = 0; i < 3; ++i)
             {
-                f[0].SetFloor(0, i, 3);
-                f[1].SetFloor(0, i, 3);
-                f[0].SetWall(0, i, WallPlace.TOP);
-                f[0].SetWall(1, i, WallPlace.TOP);
-                f[1].SetWall(0, i, WallPlace.TOP);
-                f[1].SetWall(1, i, WallPlace.TOP);
+                f0[0].SetTiles(0, i, 3);
+                f0[1].SetTiles(0, i, 3);
+                f0[0].SetWall(0, i, WallPlace.TOP);
+                f0[0].SetWall(1, i, WallPlace.TOP);
+                f0[1].SetWall(0, i, WallPlace.TOP);
+                f0[1].SetWall(1, i, WallPlace.TOP);
             }
-            f[0].SetDoor(0, 3, 3, WallPlace.LEFT);
-            f[1].SetWall(0, 0, WallPlace.LEFT);
+            f0[0].SetDoor(0, 3, 3, WallPlace.LEFT);
+            f0[1].SetWall(0, 0, WallPlace.LEFT);
 
-            map.AddFloor(f[0]);
-            map.AddFloor(f[1]);
+            map.AddFloor(f0[0]);
+            map.AddFloor(f0[1]);
 
             wep[0] = new WallElementPosition(0, 0, 0, WallPlace.LEFT);
             wep[1] = new WallElementPosition(1, 0, 3, WallPlace.LEFT);
@@ -83,6 +143,7 @@ namespace TestSimulator
 
             Console.WriteLine(eg.ToArray().ToString());
             Console.ReadLine();
+             * */
         }
 
         /*
@@ -103,7 +164,7 @@ namespace TestSimulator
             //add floor
             for (uint i = 0; i < h; ++i)
                 for (uint j = 0; j < w; ++j)
-                    map.SetFloor(i, j, capacity);
+                    map.SetTiles(i, j, capacity);
             //add outer walls
             for (uint i = 0; i < w; ++i)
             {

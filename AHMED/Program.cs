@@ -164,7 +164,7 @@ namespace AHMED
             //add floor
             for (uint i = 0; i < h; ++i)
                 for (uint j = 0; j < w; ++j)
-                    map.SetFloor(i, j, capacity);
+                    map.SetTiles(i, j, capacity);
             //add outer walls
             for (uint i = 0; i < w; ++i)
             {
@@ -266,7 +266,7 @@ namespace AHMED
             //add floor
             for (uint i = 0; i < h; ++i)
                 for (uint j = 0; j < w; ++j)
-                    map.SetFloor(i, j, capacity);
+                    map.SetTiles(i, j, capacity);
             //add outer walls
             for (uint i = 0; i < w; ++i)
             {
@@ -401,7 +401,7 @@ namespace AHMED
             //add floor
             for (uint i = 0; i < h; ++i)
                 for (uint j = 0; j < w; ++j)
-                    map.SetFloor(i, j, capacity);
+                    map.SetTiles(i, j, capacity);
             //add outer walls
             for (uint i = 0; i < w; ++i)
             {

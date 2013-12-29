@@ -15,6 +15,8 @@ namespace Structure
 
         public WallElementType Type { get { return WallElementType.STANDARD_PASSAGE; } }
 
+        public WallElementPosition Position { get; set; }
+
         public StandardPassage(int efficiency)
         {
             Efficiency = efficiency;

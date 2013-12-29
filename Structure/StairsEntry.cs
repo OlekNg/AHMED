@@ -28,10 +28,9 @@ namespace Structure
 
         public WallElementPosition Position { get; set; }
 
-        public StairsEntry(int e, WallElementPosition wep)
+        public StairsEntry(int e)
         {
             _efficiency = e;
-            Position = wep;
         }
 
         public void BindStairs(Stairs s, int id)
