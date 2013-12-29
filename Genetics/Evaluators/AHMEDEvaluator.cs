@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Simulation;
 using Genetics.Generic;
-using BuildingEditor.Logic;
+using BuildingEditor.ViewModel;
 using Common.DataModel.Enums;
 
 namespace Genetics.Evaluators
 {
-    public class AHMEDEvaluator : IEvaluator<List<bool>>
+    public class EvaCalcEvaluator : IEvaluator<List<bool>>
     {
         /// <summary>
         /// Maximum avarage escape time (it is simply amount of all building tiles).
@@ -25,53 +25,75 @@ namespace Genetics.Evaluators
         private Simulator _simulator;
         private Building _building;
 
-        private List<Segment> _peopleGroups;
+        private List<PeoplePath> _peoplePaths;
+        private bool _debug;
 
-        public AHMEDEvaluator(Simulator simulator, Building building)
+        public EvaCalcEvaluator(Simulator simulator, Building building, bool debug = false)
         {
+            _debug = debug;
             _simulator = simulator;
             _building = building;
             _maxAvgEscapeTime = building.GetFloorCount() * 1.5;
             _peopleCount = building.GetPeopleCount();
-            _peopleGroups = building.GetPeopleGroups();
+
+            _peoplePaths = _building.GetPeoplePaths();
+
             CreateBuildingFlow();
         }
 
         public double Eval(List<bool> genotype)
         {
             _building.SetFenotype(genotype.ToFenotype());
-
-            List<EscapedGroup> result = _simulator.Simulate(_building.GetSimulatorFenotype());
-
-            // Calculate avarage.
-            double sum = 0;
-            int sumTicks = 0;
-            int peopleEscaped = 0;
-
-            foreach (EscapedGroup g in result)
+            try
             {
-                sum += g.Quantity * g.Ticks;
-                sumTicks += g.Ticks;
-                peopleEscaped += g.Quantity;
+                List<EscapedGroup> result = _simulator.Simulate(_building.GetSimulatorFenotype());
+
+                // Calculate avarage.
+                double sum = 0;
+                int sumTicks = 0;
+                int peopleEscaped = 0;
+
+                foreach (EscapedGroup g in result)
+                {
+                    sum += g.Quantity * g.Ticks;
+                    sumTicks += g.Ticks;
+                    peopleEscaped += g.Quantity;
+
+                    if (_debug)
+                        Console.WriteLine("Escaped group: {0} in {1} ticks", g.Quantity, g.Ticks);
+                }
+                Console.WriteLine();
+
+                double value = 0;
+                value += peopleEscaped;
+
+                foreach (var path in _peoplePaths)
+                {
+                    path.Update();
+                    value -= path.LowestFlowValue;
+
+                    // Penalty for number of corners
+                    value -= (0.01 * path.Corners);
+                }
+
+                
+
+                //return value;
+
+                double avg;
+                if (peopleEscaped != _peopleCount)
+                    avg = 0;
+                else
+                {
+                    avg = _maxAvgEscapeTime - (sum / (double)_peopleCount);
+                }
+
+                return value + avg;
             }
-
-            double value = 0;
-            value += peopleEscaped;
-
-            foreach (var group in _peopleGroups)
-                value -= GetPeopleGroupFlowValue(group);
-
-            //return value;
-
-            double avg;
-            if (peopleEscaped != _peopleCount)
-                avg = 0;
-            else
+            catch
             {
-                avg = _maxAvgEscapeTime - (sum / (double)_peopleCount);
+                return 0;
             }
-
-            return value + avg;
         }
 
         public void CreateBuildingFlow()
@@ -132,25 +154,6 @@ namespace Genetics.Evaluators
                 if (next != null)
                     Flood(value + 1, next);
             }
-        }
-
-        protected int GetPeopleGroupFlowValue(Segment segment)
-        {
-            // We need to stop if we will be again in already visited segment.
-            List<Segment> history = new List<Segment>();
-
-            // Follow fenotype until null segment or loop detected.
-            int bestValue = segment.FlowValue;
-            while (segment != null && !history.Contains(segment))
-            {
-                if (segment.FlowValue < bestValue)
-                    bestValue = segment.FlowValue;
-
-                history.Add(segment);
-                segment = segment.GetNextSegment();
-            }
-
-            return bestValue;
         }
     }
 }

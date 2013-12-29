@@ -9,6 +9,7 @@ namespace Common.DataModel
     [Serializable]
     public class Stairs
     {
+        public int EntranceCapacity;
         public int Capacity;
         public int Delay;
         public int Row;

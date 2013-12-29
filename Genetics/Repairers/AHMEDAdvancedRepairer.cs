@@ -1,4 +1,4 @@
-﻿using BuildingEditor.Logic;
+﻿using BuildingEditor.ViewModel;
 using Common.DataModel.Enums;
 using Genetics.Generic;
 using System;
@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Genetics.Repairers
 {
     /// <summary>
-    /// Repairer for AHMED. Repairs chromosomes pointing to the walls
+    /// Repairer for EvaCalc. Repairs chromosomes pointing to the walls
     /// and adjacent small loops.
     /// </summary>
     public class AdvancedRepairer : IRepairer<List<bool>>
@@ -44,6 +44,10 @@ namespace Genetics.Repairers
                 {
                     foreach (var segment in row)
                     {
+                        // Segments of type none aren't part of fenotype
+                        if (segment.Type == SegmentType.NONE)
+                            continue;
+
                         // If fenotype points at the wall, then change it to available direction.
                         if (segment.GetSideElement(segment.Fenotype).Type == SideElementType.WALL)
                         {
@@ -65,14 +69,18 @@ namespace Genetics.Repairers
                 {
                     foreach (var segment in row)
                     {
+                        // Only segment of type FLOOR has fenotype that should be repaired.
+                        if (segment.Type != SegmentType.FLOOR)
+                            continue;
+
                         var dir = segment.Fenotype;
                         var opposite = _oppositeDirections[dir];
 
                         var neighbour = segment.GetNeighbour(dir);
 
-                        // If neighbour that we are pointing at is pointing at us then
+                        // If neighbour that we are pointing at is pointing at us (and it is also FLOOR) then
                         // we have to fix that loop.
-                        if (neighbour != null && neighbour.Fenotype == opposite)
+                        if (neighbour != null && neighbour.Type == SegmentType.FLOOR && neighbour.Fenotype == opposite)
                             FixSmallLoop(segment, neighbour, fixedSegments);
                     }
                 }
