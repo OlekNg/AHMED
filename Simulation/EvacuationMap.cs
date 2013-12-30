@@ -60,7 +60,7 @@ namespace Simulation
             IDictionary<int, EvacuationElement> rowDict;
             EvacuationElement result;
 
-            if (!_map.TryGetValue(row, out floorDict))
+            if (!_map.TryGetValue(floor, out floorDict))
                 return null;
 
             if (!floorDict.TryGetValue(row, out rowDict))
