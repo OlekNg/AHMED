@@ -178,7 +178,8 @@ namespace BuildingEditor.ViewModel
 
                 foreach (var row in floor.Segments)
                     foreach (var segment in row)
-                        floorFenotype.Add(segment.Fenotype);
+                        if (segment.Type == SegmentType.FLOOR)
+                            floorFenotype.Add(segment.Fenotype);
 
                 result.Add(floorFenotype);
             }
