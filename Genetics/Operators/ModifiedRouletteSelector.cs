@@ -28,7 +28,7 @@ namespace Genetics.Operators
                 if (chromosome.Value < minValue)
                     minValue = chromosome.Value;
 
-            // Raise chromosome values if they are below 0.
+            // Raise chromosome values if min value is below 0.
             if (minValue < 0)
             {
                 double value = Math.Abs(minValue);

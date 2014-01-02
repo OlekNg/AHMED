@@ -76,17 +76,11 @@ namespace Genetics.Evaluators
                     value -= (0.01 * path.Corners);
                 }
 
-                
-
-                //return value;
-
                 double avg;
                 if (peopleEscaped != _peopleCount)
                     avg = 0;
                 else
-                {
                     avg = _maxAvgEscapeTime - (sum / (double)_peopleCount);
-                }
 
                 return value + avg;
             }
