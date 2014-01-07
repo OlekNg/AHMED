@@ -13,9 +13,9 @@ namespace Simulation
     public class EvacuationElement
     {
         /// <summary>
-        /// Floor tile 
+        /// Capacity of this element
         /// </summary>
-        public Tile FloorSquare { get; set; }
+        public int Capacity { get; set; }
 
         /// <summary>
         /// Type of passage to next step in evacuation route
@@ -28,19 +28,24 @@ namespace Simulation
         public int PeopleQuantity { get; protected set; }
 
         /// <summary>
-        /// Last update time (calculated in elapsed ticks)
-        /// </summary>
-        public int Ticks { get; set; }
-
-        /// <summary>
-        /// Was this element processed?
+        /// Was this element processed in this cycle?
         /// </summary>
         public bool Processed { get; set; }
 
         /// <summary>
-        /// Next step in evacuation route
+        /// Next step in evacuation route 
         /// </summary>
         public EvacuationElement NextStep { get; set; }
+
+        /// <summary>
+        /// All (four) evacuation elements contiguous with this one 
+        /// </summary>
+        public EvacuationElement[] Neighbours { get; set; }
+
+        /// <summary>
+        /// Passages to all (four) evacuation elements contiguous with this one
+        /// </summary>
+        public IWallElement[] NeighboursPassages { get; set; }
 
         /// <summary>
         /// How many people can get in this evacuation route element
@@ -48,47 +53,70 @@ namespace Simulation
         public virtual int PeopleQuantityLeft { 
             get 
             { 
-                return FloorSquare.Capacity - PeopleQuantity; 
+                return Capacity - PeopleQuantity; 
             } 
         }
 
         /// <summary>
         /// Simple constructor
         /// </summary>
-        /// <param name="fs">Floor tile connected with this evacuation element</param>
-        public EvacuationElement(Tile fs)
+        /// <param name="c">Capacity of this field</param>
+        public EvacuationElement(int c)
         {
-            Ticks = 0;
             Processed = false;
-            FloorSquare = fs;
+            Capacity = c;
+            Neighbours = new EvacuationElement[4];
+            NeighboursPassages = new IWallElement[4];
         }
 
+        /// <summary>
+        /// Method called before end of each simulation cycle - it sets this field as unprocessed
+        /// </summary>
         public virtual void ResetProcessing()
         {
             Processed = false;
         }
 
+        /// <summary>
+        /// Method called after very beginning of processing this element - it setd this element as processed
+        /// </summary>
         public virtual void StartProcessing()
         {
             Processed = true;
         }
 
+        /// <summary>
+        /// Move people into that field
+        /// </summary>
+        /// <param name="quantity">Quantity of the people group</param>
         public virtual void AddPeople(int quantity)
         {
             PeopleQuantity += quantity;
         }
 
+        /// <summary>
+        /// Remove people from this field
+        /// </summary>
+        /// <param name="quantity">Quantity of the moving people group</param>
         public virtual void RemovePeople(int quantity)
         {
             PeopleQuantity -= quantity;
         }
 
+        /// <summary>
+        /// Method called during initialization of each simulation. Sets field as unprocecessed and poeaple quantity accordingly to parameter
+        /// </summary>
+        /// <param name="peopleQuantity">Initial people quatity (based on people map)</param>
         public virtual void Setup(int peopleQuantity)
         {
             Processed = false;
             PeopleQuantity = peopleQuantity;
         }
 
+        /// <summary>
+        /// Method used to check if there are people standing on this element
+        /// </summary>
+        /// <returns>Is there any people?</returns>
         public virtual bool ContainsPeople()
         {
             return PeopleQuantity != 0;

@@ -6,39 +6,60 @@ using System.Threading.Tasks;
 
 namespace Structure
 {
+    /// <summary>
+    /// Class used for describing stairs
+    /// </summary>
     public class Stairs
     {
-        private int _capacity;
+        /// <summary>
+        /// Total capacity for this stairs
+        /// </summary>
+        public int Capacity { get; private set; }
 
-        public int Capacity { get { return _capacity; } }
+        /// <summary>
+        /// Starting delay for each people group
+        /// </summary>
+        public int Delay { get; private set; }
 
-        private int _delay;
+        /// <summary>
+        /// Both entries for that stairs
+        /// </summary>
+        public StairsEntry[] Entries { get; private set; }
 
-        public int Delay { get { return _delay; } }
-
-        private StairsEntry[] _entries;
-
-        public StairsEntry[] Entries { get { return _entries; } }
-
+        /// <summary>
+        /// Simple constructor initializes all properties
+        /// </summary>
+        /// <param name="c">Capacity</param>
+        /// <param name="d">Delay</param>
         public Stairs(int c, int d)
         {
-            _entries = new StairsEntry[2];
-            _capacity = c;
-            _delay = d;
+            Entries = new StairsEntry[2];
+            Capacity = c;
+            Delay = d;
         }
 
+        /// <summary>
+        /// Set both entries (first with index 0, second - with index 1)
+        /// </summary>
+        /// <param name="se1">0 indexed entry</param>
+        /// <param name="se2">1 indexed entry</param>
         public void SetEntries(StairsEntry se1, StairsEntry se2)
         {
-            _entries[0] = se1;
-            _entries[1] = se2;
+            Entries[0] = se1;
+            Entries[1] = se2;
             se1.BindStairs(this, 0);
             se2.BindStairs(this, 1);
             
         }
 
+        /// <summary>
+        /// Get entry with given index
+        /// </summary>
+        /// <param name="id">Index</param>
+        /// <returns>Proper entry</returns>
         public StairsEntry GetEntry(int id)
         {
-            return _entries[id];
+            return Entries[id];
         }
     }
 }

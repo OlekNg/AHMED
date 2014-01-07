@@ -11,6 +11,9 @@ namespace Structure
     /// </summary>
     public class PeopleGroup
     {
+        /// <summary>
+        /// Group location - floor index
+        /// </summary>
         public int Floor { get; set; }
 
         /// <summary>
@@ -26,9 +29,7 @@ namespace Structure
         /// <summary>
         /// Group quantity
         /// </summary>
-        public int Quantity { get; set; }
-
-        
+        public int Quantity { get; set; }     
 
         /// <summary>
         /// Initalize all properties

@@ -12,7 +12,7 @@ namespace Structure
     public class Door : IWallElement
     {
         /// <summary>
-        /// you can pass the door
+        /// You can pass the door
         /// </summary>
         public bool CanPassThrough
         {
@@ -28,7 +28,7 @@ namespace Structure
         public int Efficiency { get; set; }
 
         /// <summary>
-        /// Is there need to draw this door in visualiser
+        /// Draw door
         /// </summary>
         public bool Draw { get { return true; } }
 
@@ -41,6 +41,9 @@ namespace Structure
             Efficiency = c;
         }
 
+        /// <summary>
+        /// Door type
+        /// </summary>
         public WallElementType Type
         {
             get
@@ -49,6 +52,9 @@ namespace Structure
             }
         }
 
+        /// <summary>
+        /// Door position
+        /// </summary>
         public WallElementPosition Position { get; set; }
     }
 }

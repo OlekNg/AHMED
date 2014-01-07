@@ -52,19 +52,8 @@
     <Compile Include="Stairs.cs" />
     <Compile Include="StairsEntry.cs" />
     <Compile Include="TilePosition.cs" />
-    <Compile Include="Validator.cs" />
-    <Compile Include="Validators\BordersValidator.cs" />
-    <Compile Include="Validators\DefaultValidator.cs" />
-    <Compile Include="Validators\IFloorSquareValidator.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Validators\UnfilledBorderFound.cs" />
-    <Compile Include="Validators\ValidationResult.cs" />
-    <Compile Include="Validators\ValidatorInfo.cs" />
-    <Compile Include="Validators\ValidatorInfoLevel.cs" />
     <Compile Include="Wall.cs" />
     <Compile Include="WallElementPositioning\WallElementPosition.cs" />
-    <Compile Include="WallPlace.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

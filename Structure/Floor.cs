@@ -7,20 +7,35 @@ using System.Threading.Tasks;
 
 namespace Structure
 {
+    /// <summary>
+    /// Class for floor
+    /// </summary>
     public class Floor
     {
-        //public int Height { get; set; }
-
-        //public int Width { get; set; }
-
+        /// <summary>
+        /// Standard passage efficiency
+        /// </summary>
         public int PassageEfficiency { get; set; }
 
+        /// <summary>
+        /// Map with each modelled tile
+        /// </summary>
         public IDictionary<int, IDictionary<int, Tile>> Tiles;
 
+        /// <summary>
+        /// Number of floor
+        /// </summary>
         public int Number { get; internal set; }
 
+        /// <summary>
+        /// Counter for modelled tiles
+        /// </summary>
         public int TilesCount { get; private set; }
 
+        /// <summary>
+        /// Simple constructor
+        /// </summary>
+        /// <param name="passageEfficiency">Standard passage efficiency</param>
         public Floor(int passageEfficiency)
         {
             PassageEfficiency = passageEfficiency;
@@ -37,19 +52,19 @@ namespace Structure
         public void SetTile(int row, int col, int capacity)
         {
             Tile t = new Tile(capacity);
-            //t.Position = new TilePosition(row, col);
             for (int i = 0; i < 4; ++i)
             {
                 t.Side[i] = new StandardPassage(PassageEfficiency);
             }
-
-            //Tiles[row][col] = t;
-            SetTile(row, col, t);
-
-            //Base[row][col] = t;
-            
+            SetTile(row, col, t);            
         }
 
+        /// <summary>
+        /// Set floor tile with gicen coordinates
+        /// </summary>
+        /// <param name="row">Row</param>
+        /// <param name="col">Column</param>
+        /// <param name="t">Floor tile</param>
         public void SetTile(int row, int col, Tile t)
         {
             IDictionary<int, Tile> rowDict;
@@ -62,47 +77,29 @@ namespace Structure
             ++TilesCount;
         }
 
-
+        /// <summary>
+        /// Removes tile from given coordinates
+        /// </summary>
+        /// <param name="row">Row</param>
+        /// <param name="col">Column</param>
         public void UnsetTile(int row, int col)
         {
-            //TODO: dokonczyc
             Tile t = Get(row, col);
             if (t != null)
             {
                 Tiles[row].Remove(col);
-                //t.Position = null;
                 --TilesCount;
             }
         }
 
         /// <summary>
-        /// Set wall oriented to floor square with given coordinates
+        /// Set given wall element with gicen coordinates and orientation
         /// </summary>
         /// <param name="row">Row</param>
         /// <param name="col">Column</param>
-        /// <param name="position">Wall orientation</param>
-        /*public void SetWall(int row, int col, WallPlace position)
-        {
-            SetWallElement(row, col, new Wall(), position);
-        }*/
-
-        /// <summary>
-        /// Set door with given efficiency oriented to floor square with given coordinates
-        /// </summary>
-        /// <param name="row">Row</param>
-        /// <param name="col">Column</param>
-        /// <param name="capacity">Door eficiency</param>
-        /// <param name="position">Door orientation</param>
-        /*public void SetDoor(int row, int col, int capacity, WallPlace position)
-        {
-            SetWallElement(row, col, new Door(capacity), position);
-        }
-
-        public void SetStairsEntry(int row, int col, WallPlace position, StairsEntry se)
-        {
-            SetWallElement(row, col, se, position);
-        }*/
-
+        /// <param name="dir">Orienation</param>
+        /// <param name="element">Wall element</param>
+        /// <returns>True if there was at least one floor tile, adjoning this coordinates, false otherwise</returns>
         public bool SetWallElement(int row, int col, Direction dir, IWallElement element)
         {
             WallElementPosition wep = WallElementPosition.Create(this, row, col, dir);
@@ -116,9 +113,16 @@ namespace Structure
             return false;
         }
 
+        /// <summary>
+        /// Set given wall element with gicen coordinates and orientation
+        /// </summary>
+        /// <param name="wep">Wall place position</param>
+        /// <param name="element">Wall element</param>
+        /// <returns>True if there was at least one floor tile, adjoning this coordinates, false otherwise</returns>
         private bool PlaceWallElement(WallElementPosition wep, IWallElement element)
         {
-            Tile t = Get(wep.GetTilePosition());
+            TilePosition tp = wep.GetTilePosition();
+            Tile t = Get(tp.Row, tp.Col);
 
             if (t != null)
             {
@@ -129,66 +133,12 @@ namespace Structure
             return false;
         }
 
-
-
         /// <summary>
-        /// Set given wall element oritented to floor with given coordinations
+        /// Get tile with given coordinates
         /// </summary>
         /// <param name="row">Row</param>
         /// <param name="col">Column</param>
-        /// <param name="wallElement">Wall element</param>
-        /// <param name="wallPosition">Wall element orientation</param>
-        /*private void SetWallElement(int row, int col, IWallElement wallElement, WallPlace wallPosition)
-        {
-            Tile t;
-            if (wallPosition == WallPlace.LEFT)
-            {
-                if (col != 0)
-                {
-                    //not first column
-                    //set as right side of adjacent floor tile
-                    t = Get(row, col - 1);
-                    if (t != null)
-                        t.SetSide(Direction.RIGHT, wallElement);
-                }
-                if (col != Width)
-                {
-                    //not last column
-                    //set as left side
-                    t = Get(row, col);
-                    if (t != null)
-                        t.SetSide(Direction.LEFT, wallElement);
-                }
-            }
-            else
-            {
-                if (row != 0)
-                {
-                    //not first row
-                    //set as bootom side of upper tile
-                    t = Get(row - 1, col);
-                    if (t != null)
-                        t.SetSide(Direction.DOWN, wallElement);
-                }
-                if (row != Height)
-                {
-                    //not last row
-                    //set as top side
-                    t = Get(row, col);
-                    if (t != null)
-                        t.SetSide(Direction.UP, wallElement);
-                }
-            }
-        }*/
-
-
-
-
-
-
-
-
-
+        /// <returns>Tile if there was modelled tile with that coords or null otherwise</returns>
         public Tile Get(int row, int col)
         {
             IDictionary<int, Tile> rowDict;
@@ -200,23 +150,6 @@ namespace Structure
                 result = null;
 
             return result;
-        }
-
-        public Tile Get(TilePosition tp)
-        {
-            return Get(tp.Row, tp.Col);
-        }
-
-        public Tile[] GetNeighbours(int x, int y)
-        {
-            Tile[] neighbours = new Tile[4];
-
-            neighbours[(int)Direction.UP] = Get(x, y - 1);
-            neighbours[(int)Direction.DOWN] = Get(x, y + 1);
-            neighbours[(int)Direction.LEFT] = Get(x - 1, y);
-            neighbours[(int)Direction.RIGHT] = Get(x + 1, y);
-
-            return neighbours;
         }
     }
 }

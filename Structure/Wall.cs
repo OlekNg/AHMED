@@ -44,6 +44,9 @@ namespace Structure
             }
         }
 
+        /// <summary>
+        /// Wall type
+        /// </summary>
         public WallElementType Type 
         {
             get
@@ -52,6 +55,9 @@ namespace Structure
             }
         }
 
+        /// <summary>
+        /// Wal position
+        /// </summary>
         public WallElementPosition Position { get; set; }
     }
 }

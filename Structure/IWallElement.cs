@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Structure
 {
+    /// <summary>
+    /// Types of each used wall element
+    /// </summary>
     public enum WallElementType { WALL, DOOR, STANDARD_PASSAGE, STAIR_ENTRY }
 
     /// <summary>
@@ -28,8 +31,14 @@ namespace Structure
         /// </summary>
         bool Draw { get; }
 
+        /// <summary>
+        /// Wall element type
+        /// </summary>
         WallElementType Type { get; }
 
+        /// <summary>
+        /// Wall element position
+        /// </summary>
         WallElementPosition Position { get; set; }
     }
 }

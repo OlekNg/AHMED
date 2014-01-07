@@ -7,36 +7,60 @@ using Structure;
 
 namespace Simulation
 {
+    /// <summary>
+    /// Special evcuation element used to manage stairs
+    /// </summary>
     public class StairsEvacuationElement : EvacuationElement
     {
+        /// <summary>
+        /// List of people groups moving in stairs
+        /// </summary>
         private List<KeyValuePair<int, int>> _groups;
 
+        /// <summary>
+        /// Total number of people using this stairs
+        /// </summary>
         private int _totalPeople;
 
+        /// <summary>
+        /// Starting delay for each getting in people group
+        /// </summary>
         private int _startingDelay;
 
+        /// <summary>
+        /// Left place for other people
+        /// </summary>
         public override int PeopleQuantityLeft
         {
             get
             {
-                return FloorSquare.Capacity - _totalPeople;
+                return Capacity - _totalPeople;
             }
         }
 
-        public StairsEvacuationElement(StairsEntry se, EvacuationMap em) : base(new Structure.Tile(se.ConnectedStairs.Capacity))
+        /// <summary>
+        /// Counstrructor - initializes delay, passage and determine next step (exit from stairs)
+        /// </summary>
+        /// <param name="se">Stairs entry</param>
+        /// <param name="em">Whole evacuation map</param>
+        public StairsEvacuationElement(StairsEntry se, EvacuationMap em) : base(se.ConnectedStairs.Capacity)
         {
             _startingDelay = se.ConnectedStairs.Delay;
             _groups = new List<KeyValuePair<int, int>>();
 
             DetermineNextStep(se, em);
-            Passage = se;
         }
 
+        /// <summary>
+        /// Setup next step (filed connected with other stairs entry)
+        /// </summary>
+        /// <param name="se">First stairs entry</param>
+        /// <param name="em">Whole evacution map</param>
         private void DetermineNextStep(StairsEntry se, EvacuationMap em)
         {
             StairsEntry secondEntry = se.ConnectedStairs.GetEntry(1 - se.ID);
             EvacuationElement tempEe = em.Get(secondEntry.Position);
-
+            Passage = secondEntry;
             if (tempEe != null)
             {
                 NextStep = tempEe;
@@ -47,6 +71,9 @@ namespace Simulation
             }
         }
 
+        /// <summary>
+        /// Method called at the beggining of the file processing. Index for each people group is decremented. If it equals 0, that people group is read to get out.
+        /// </summary>
         public override void StartProcessing()
         {
             int newDelay;
@@ -68,25 +95,30 @@ namespace Simulation
             _groups = newList;
         }
 
-        /*public override void ResetProcessing()
-        {
-            base.ResetProcessing();
-            _groups.Clear();
-            _totalPeople = 0;
-        }*/
-
+        /// <summary>
+        /// Add people to stairs - new poeple group is added to list with index equal to _startingDelay
+        /// </summary>
+        /// <param name="quantity">Quantity of people group</param>
         public override void AddPeople(int quantity)
         {
             _totalPeople += quantity;
             _groups.Add(new KeyValuePair<int, int>(_startingDelay, quantity));
         }
 
+        /// <summary>
+        /// Remove poeple from stairs
+        /// </summary>
+        /// <param name="quantity">People group quantity</param>
         public override void RemovePeople(int quantity)
         {
             base.RemovePeople(quantity);
             _totalPeople -= quantity;
         }
 
+        /// <summary>
+        /// Check if there is anybody on stairs
+        /// </summary>
+        /// <returns>Is there anybody out there?</returns>
         public override bool ContainsPeople()
         {
             return _totalPeople != 0;

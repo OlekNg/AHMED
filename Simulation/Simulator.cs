@@ -69,9 +69,11 @@ namespace Simulation
         {
             _escapedGroups.Clear();
 
-            //setup current situation
+            //reset
             _evacuationGroups.Clear();
             _evacuationMap.ResetPeopleGroups();
+
+            //setup current situation
             foreach (PeopleGroup group in _peopleMap.People)
             {
                 _evacuationMap.SetPeopleGroup(group);
@@ -82,9 +84,11 @@ namespace Simulation
             //start simulation
             for (int i = 1; i <= MaximumTicks; ++i)
             {
+                //processing tiles
                 for (int j = _evacuationGroups.Count - 1; j >= 0; --j)
                     Process(_evacuationGroups[j], i);
 
+                //resetting 
                 for (int j = _evacuationGroups.Count - 1; j >= 0; --j)
                 {
                     _evacuationGroups[j].ResetProcessing();
@@ -92,7 +96,6 @@ namespace Simulation
                     if (!_evacuationGroups[j].ContainsPeople())
                         _evacuationGroups.RemoveAt(j);
                 }
-
             }
 
             return _escapedGroups;
@@ -102,7 +105,7 @@ namespace Simulation
         /// Process one element of evacuation route
         /// </summary>
         /// <param name="group">Evacuation element to process</param>
-        /// <param name="tick">Process goven element with this tick</param>
+        /// <param name="tick">Process given element with this tick</param>
         private void Process(EvacuationElement group, int tick)
         {
             int peopleCount;
@@ -111,28 +114,19 @@ namespace Simulation
             if (group.Processed == true) return;
 
             group.StartProcessing();
-            group.Ticks = tick;
 
             if (nextStep == null)
             {
                 //group finally evacuated, yeah
-                if (group.Passage.CanPassThrough)
-                {
-                    peopleCount = Math.Min(group.Passage.Efficiency, group.PeopleQuantity);
+                peopleCount = Math.Min(group.Passage.Efficiency, group.PeopleQuantity);
 
-                    if (peopleCount > 0)
-                    {
-                        _escapedGroups.Add(new EscapedGroup(peopleCount, tick));
-                        group.RemovePeople(peopleCount);
-                    }
-                    
-                    return;
-                }
-                else
+                if (peopleCount > 0)
                 {
-                    //there is a wall
-                    throw new UnexpectedWallException();
+                    _escapedGroups.Add(new EscapedGroup(peopleCount, tick));
+                    group.RemovePeople(peopleCount);
                 }
+                    
+                return;
             }
 
             //there is more steps to do in evacuation route
@@ -145,27 +139,19 @@ namespace Simulation
                 //there is no room for anybody
                 return;
             }
-            if (group.Passage.CanPassThrough)
-            {
-                peopleCount = Math.Min(peopleCount, group.Passage.Efficiency);
-            }
-            else
-            {
-                //ooops, something went wrong, wall found
-                throw new UnexpectedWallException();
-            }
-
-            peopleCount = Math.Min(peopleCount, group.PeopleQuantity);
+  
+            peopleCount = Math.Min(Math.Min(peopleCount, group.Passage.Efficiency), group.PeopleQuantity);
             if (peopleCount != 0)
             {
                 if (!nextStep.Processed)
                 {
+                    //new field for processing
                     _evacuationGroups.Add(nextStep);
                 }
 
+                nextStep.Processed = true; //prevent from multiple moves
+                //move people
                 nextStep.AddPeople(peopleCount);
-                //TODO: maybe there is no need for this
-                nextStep.Processed = true;
                 group.RemovePeople(peopleCount);
             }
         }
