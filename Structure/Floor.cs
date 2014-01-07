@@ -37,7 +37,7 @@ namespace Structure
         public void SetTile(int row, int col, int capacity)
         {
             Tile t = new Tile(capacity);
-            t.Position = new TilePosition(row, col);
+            //t.Position = new TilePosition(row, col);
             for (int i = 0; i < 4; ++i)
             {
                 t.Side[i] = new StandardPassage(PassageEfficiency);
@@ -63,14 +63,14 @@ namespace Structure
         }
 
 
-        public void UnsetFloor(int row, int col)
+        public void UnsetTile(int row, int col)
         {
             //TODO: dokonczyc
             Tile t = Get(row, col);
             if (t != null)
             {
                 Tiles[row].Remove(col);
-                t.Position = null;
+                //t.Position = null;
                 --TilesCount;
             }
         }

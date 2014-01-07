@@ -22,7 +22,7 @@ namespace Structure
         /// </summary>
         public IWallElement[] Side { get; set; }
 
-        public TilePosition Position { get; internal set; }
+        //public TilePosition Position { get; internal set; }
 
         /// <summary>
         /// Initalize floor square with given capacity

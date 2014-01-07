@@ -38,7 +38,7 @@ namespace TestSimulator
 
             for (int i = 0; i < 8; ++i)
             {
-                f0.UnsetFloor(i, i + 1);
+                f0.UnsetTile(i, i + 1);
             }*/
 
             for (int i = 0; i < 3; ++i)

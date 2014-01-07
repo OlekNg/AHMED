@@ -53,7 +53,7 @@ namespace Structure
             //TODO: usunac powiazanie miedzy wejsciami a schodami
         }
 
-        public Tile GetSquare(int floor, int row, int col)
+        /*public Tile GetSquare(int floor, int row, int col)
         {
             //return Floors[floor].Base[row][col];
             Floor f;
@@ -62,6 +62,6 @@ namespace Structure
                 return f.Get(row, col);
 
             return null;
-        }
+        }*/
     }
 }
