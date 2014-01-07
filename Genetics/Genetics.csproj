@@ -40,7 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Evaluators\AHMEDEvaluator.cs" />
+    <Compile Include="Evaluators\EvaCalcEvaluator.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Operators\FloorByFloorCrossover.cs" />
     <Compile Include="Operators\ModifiedRouletteSelector.cs" />
