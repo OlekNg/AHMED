@@ -33,6 +33,11 @@ namespace Simulation
         public bool Processed { get; set; }
 
         /// <summary>
+        /// Is there any path that leads to exit from this evacuation element.
+        /// </summary>
+        public bool ExistsPathToExit { get; set; }
+
+        /// <summary>
         /// Next step in evacuation route 
         /// </summary>
         public EvacuationElement NextStep { get; set; }
@@ -120,6 +125,21 @@ namespace Simulation
         public virtual bool ContainsPeople()
         {
             return PeopleQuantity != 0;
+        }
+
+        /// <summary>
+        /// Goes backward based on NextStep to get possible evacuation elements with people.
+        /// </summary>
+        public IEnumerable<EvacuationElement> GetPossibleEvaucationGroups()
+        {
+            if (ContainsPeople())
+                yield return this;
+
+            var groups = Neighbours.Where(x => x != null && x.NextStep == this)
+                .SelectMany(x => x.GetPossibleEvaucationGroups());
+
+            foreach (var g in groups)
+                yield return g;
         }
     }
 }

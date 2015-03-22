@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Structure;
 using Simulation.Exceptions;
 using Common.DataModel.Enums;
+using System.Diagnostics;
 
 namespace Simulation
 {
@@ -77,13 +78,16 @@ namespace Simulation
             foreach (PeopleGroup group in _peopleMap.People)
             {
                 _evacuationMap.SetPeopleGroup(group);
-                _evacuationGroups.Add(_evacuationMap.Get(group.Floor, group.Row, group.Col));
             }
             _evacuationMap.MapFenotype(fenotype);
+            _evacuationGroups.AddRange(_evacuationMap.GetPossibleEvacuationGroups());
 
             //start simulation
             for (int i = 1; i <= MaximumTicks; ++i)
             {
+                if (_evacuationGroups.Count == 0)
+                    break;
+
                 //processing tiles
                 for (int j = _evacuationGroups.Count - 1; j >= 0; --j)
                     Process(_evacuationGroups[j], i);

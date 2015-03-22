@@ -23,6 +23,11 @@ namespace Structure
         public IDictionary<int, IDictionary<int, Tile>> Tiles;
 
         /// <summary>
+        /// Doors on the floor.
+        /// </summary>
+        public IList<Door> Doors;
+
+        /// <summary>
         /// Number of floor
         /// </summary>
         public int Number { get; internal set; }
@@ -41,6 +46,7 @@ namespace Structure
             PassageEfficiency = passageEfficiency;
             TilesCount = 0;
             Tiles = new SortedDictionary<int, IDictionary<int, Tile>>();
+            Doors = new List<Door>();
         }
 
         /// <summary>
@@ -107,6 +113,9 @@ namespace Structure
             if (PlaceWallElement(wep, element) || PlaceWallElement(wep.GetAdjacentPosition(), element))
             {
                 element.Position = wep;
+
+                if (element.Type == WallElementType.DOOR)
+                    Doors.Add((Door)element);
                 return true;
             }
             

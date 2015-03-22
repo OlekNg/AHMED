@@ -19,6 +19,10 @@ namespace Simulation
         /// </summary>
         private IDictionary<int, IDictionary<int, IDictionary<int, EvacuationElement>>> _map;
 
+        /// <summary>
+        /// Evacuation elements whose next step is outside of the building (null).
+        /// </summary>
+        public List<EvacuationElement> Exits;
 
         /// <summary>
         /// Get evacuation route element with given coordinates
@@ -134,6 +138,7 @@ namespace Simulation
                     foreach (var element in e.Value)
                     {
                         element.Value.Setup(0);
+                        element.Value.ExistsPathToExit = false;
                     }
         }
 
@@ -143,18 +148,19 @@ namespace Simulation
         /// <param name="fenotype">Given fenotype</param>
         public void MapFenotype(List<List<Direction>> fenotype)
         {
-            var buildingFenotypeEnumerator = fenotype.GetEnumerator();
-            List<Direction>.Enumerator fenotypeEnumerator;
+            Exits = new List<EvacuationElement>();
+            var floorsEnumerator = fenotype.GetEnumerator();
+            List<Direction>.Enumerator floorSegmentsEnumerator;
 
             foreach(var floorMap in _map)
             {
                 //not enough floors in fenotype
-                if (!buildingFenotypeEnumerator.MoveNext())
+                if (!floorsEnumerator.MoveNext())
                 {
                     throw new BadFenotypeLengthException();
                 }
 
-                fenotypeEnumerator = buildingFenotypeEnumerator.Current.GetEnumerator();
+                floorSegmentsEnumerator = floorsEnumerator.Current.GetEnumerator();
 
                 foreach(var row in floorMap.Value)
                 {
@@ -163,17 +169,19 @@ namespace Simulation
                         EvacuationElement element = tile.Value;
 
                         //not enough tiles in floor fenotype
-                        if (!fenotypeEnumerator.MoveNext())
+                        if (!floorSegmentsEnumerator.MoveNext())
                         {
                             throw new BadFenotypeLengthException();
                         }
 
-                        Direction direction = fenotypeEnumerator.Current;
+                        Direction direction = floorSegmentsEnumerator.Current;
 
                         element.Passage = element.NeighboursPassages[(int)direction];
                         if (element.Passage.CanPassThrough)
                         {
                             element.NextStep = element.Neighbours[(int)direction];
+                            if (element.NextStep == null)
+                                Exits.Add(element);
                         }
                         else
                         {
@@ -182,6 +190,15 @@ namespace Simulation
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Based on NextStep in reverse order (from exits) creates list
+        /// of people groups that can be evacuated.
+        /// </summary>
+        internal IEnumerable<EvacuationElement> GetPossibleEvacuationGroups()
+        {
+            return Exits.SelectMany(x => x.GetPossibleEvaucationGroups());
         }
     }
 }
