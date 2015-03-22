@@ -198,7 +198,7 @@ namespace Simulation
         /// </summary>
         internal IEnumerable<EvacuationElement> GetPossibleEvacuationGroups()
         {
-            return Exits.SelectMany(x => x.GetPossibleEvaucationGroups());
+            return Exits.SelectMany(x => x.GetPossibleEvaucationGroups(false));
         }
     }
 }

@@ -27,6 +27,19 @@ namespace Simulation
         /// </summary>
         private int _startingDelay;
 
+        private StairsEntry _entry;
+        private StairsEntry _secondEntry;
+
+        /// <summary>
+        /// Element where people will go from stairs.
+        /// </summary>
+        private EvacuationElement _exitEvacuationElement;
+
+        /// <summary>
+        /// Element where people will go from stairs from the other entry.
+        /// </summary>
+        private EvacuationElement _secondExitEvacuationElement;
+
         /// <summary>
         /// Left place for other people
         /// </summary>
@@ -47,28 +60,22 @@ namespace Simulation
         {
             _startingDelay = se.ConnectedStairs.Delay;
             _groups = new List<KeyValuePair<int, int>>();
+            _entry = se;
+            _secondEntry = se.ConnectedStairs.GetEntry(1 - se.ID);
 
-            DetermineNextStep(se, em);
+            _exitEvacuationElement = em.Get(_entry.Position) ?? em.Get(_entry.Position.GetAdjacentPosition());
+            _secondExitEvacuationElement = em.Get(_secondEntry.Position) ?? em.Get(_secondEntry.Position.GetAdjacentPosition());
+
+            DetermineNextStep();
         }
 
         /// <summary>
         /// Setup next step (filed connected with other stairs entry)
         /// </summary>
-        /// <param name="se">First stairs entry</param>
-        /// <param name="em">Whole evacution map</param>
-        private void DetermineNextStep(StairsEntry se, EvacuationMap em)
+        private void DetermineNextStep()
         {
-            StairsEntry secondEntry = se.ConnectedStairs.GetEntry(1 - se.ID);
-            EvacuationElement tempEe = em.Get(secondEntry.Position);
-            Passage = secondEntry;
-            if (tempEe != null)
-            {
-                NextStep = tempEe;
-            }
-            else
-            {
-                NextStep = em.Get(secondEntry.Position.GetAdjacentPosition());
-            }
+            Passage = _secondEntry;
+            NextStep = _secondExitEvacuationElement;
         }
 
         /// <summary>
@@ -124,6 +131,9 @@ namespace Simulation
             return _totalPeople != 0;
         }
 
-
+        public override IEnumerable<EvacuationElement> GetPossibleEvaucationGroups(bool excludeStairs)
+        {
+            return _secondExitEvacuationElement.GetPossibleEvaucationGroups(true);
+        }
     }
 }

@@ -130,13 +130,13 @@ namespace Simulation
         /// <summary>
         /// Goes backward based on NextStep to get possible evacuation elements with people.
         /// </summary>
-        public IEnumerable<EvacuationElement> GetPossibleEvaucationGroups()
+        public virtual IEnumerable<EvacuationElement> GetPossibleEvaucationGroups(bool excludeStairs)
         {
             if (ContainsPeople())
                 yield return this;
 
-            var groups = Neighbours.Where(x => x != null && x.NextStep == this)
-                .SelectMany(x => x.GetPossibleEvaucationGroups());
+            var groups = Neighbours.Where(x => x != null && x.NextStep == this || (!excludeStairs && x is StairsEvacuationElement))
+                .SelectMany(x => x.GetPossibleEvaucationGroups(false));
 
             foreach (var g in groups)
                 yield return g;
