@@ -58,6 +58,15 @@
                 <Setter Property="Text" Value="{Binding Capacity}"/>
             </MultiDataTrigger>
 
+            <!-- Debug flow info -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Type}" Value="{x:Static enum:SegmentType.FLOOR}"/>
+                    <Condition Binding="{Binding Path=DataContext.ViewMode, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Viewbox}}}" Value="Flow"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Text" Value="{Binding FlowValue}"/>
+            </MultiDataTrigger>
+
             <!-- People count -->
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>

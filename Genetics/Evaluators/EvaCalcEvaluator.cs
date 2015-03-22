@@ -7,6 +7,7 @@ using Simulation;
 using Genetics.Generic;
 using BuildingEditor.ViewModel;
 using Common.DataModel.Enums;
+using System.Diagnostics;
 
 namespace Genetics.Evaluators
 {
