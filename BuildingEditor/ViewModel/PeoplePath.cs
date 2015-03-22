@@ -29,6 +29,9 @@ namespace BuildingEditor.ViewModel
         public Segment LowestFlowSegment { get; set; }
         public bool LoopDetected { get { return LowestFlowValue > 0; } }
 
+        public int PeopleCount { get { return _segment.PeopleCount; } }
+        public bool SuccessfulEscape { get; private set; }
+
         public List<Segment> Segments
         {
             get
@@ -72,6 +75,9 @@ namespace BuildingEditor.ViewModel
                 segment = segment.GetNextSegment();
             }
 
+            if (segment == null && LowestFlowValue == 0)
+                SuccessfulEscape = true;
+
             _pathSegments = history;
         }
 
@@ -80,6 +86,7 @@ namespace BuildingEditor.ViewModel
             LowestFlowValue = _segment.FlowValue;
             LowestFlowSegment = _segment;
             Corners = 0;
+            SuccessfulEscape = false;
         }
     }
 }

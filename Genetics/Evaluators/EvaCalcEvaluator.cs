@@ -44,15 +44,34 @@ namespace Genetics.Evaluators
 
         public double Eval(List<bool> genotype)
         {
+            double avg = 0;
+            double value = 0;
             _building.SetFenotype(genotype.ToFenotype());
-            try
-            {
-                List<EscapedGroup> result = _simulator.Simulate(_building.GetSimulatorFenotype());
 
+            int peopleEscapedFromPaths = 0;
+            foreach (var path in _peoplePaths)
+            {
+                path.Update();
+                value -= path.LowestFlowValue;
+
+                // Penalty for number of corners
+                value -= (0.01 * path.Corners);
+
+                if (path.SuccessfulEscape)
+                    peopleEscapedFromPaths += path.PeopleCount;
+            }
+
+            value += peopleEscapedFromPaths;
+
+
+            if (peopleEscapedFromPaths == _peopleCount)
+            {
                 // Calculate avarage.
                 double sum = 0;
                 int sumTicks = 0;
                 int peopleEscaped = 0;
+
+                List<EscapedGroup> result = _simulator.Simulate(_building.GetSimulatorFenotype());
 
                 foreach (EscapedGroup g in result)
                 {
@@ -63,32 +82,17 @@ namespace Genetics.Evaluators
                     if (_debug)
                         Console.WriteLine("Escaped group: {0} in {1} ticks", g.Quantity, g.Ticks);
                 }
-                Console.WriteLine();
 
-                double value = 0;
-                value += peopleEscaped;
+                if (peopleEscaped != peopleEscapedFromPaths)
+                    throw new InvalidProgramException("People escaped from simulator doesn't match number of people from precalculation.");
 
-                foreach (var path in _peoplePaths)
-                {
-                    path.Update();
-                    value -= path.LowestFlowValue;
-
-                    // Penalty for number of corners
-                    value -= (0.01 * path.Corners);
-                }
-
-                double avg;
-                if (peopleEscaped != _peopleCount)
+                if (peopleEscapedFromPaths != _peopleCount)
                     avg = 0;
                 else
                     avg = _maxAvgEscapeTime - (sum / (double)_peopleCount);
+            }
 
-                return value + avg;
-            }
-            catch
-            {
-                return 0;
-            }
+            return value + avg;
         }
 
         public void CreateBuildingFlow()
