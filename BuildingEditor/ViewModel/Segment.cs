@@ -56,7 +56,13 @@ namespace BuildingEditor.ViewModel
             : this(owner)
         {
             Capacity = segment.Capacity;
+            PeopleCount = segment.PeopleCount;
             Type = segment.Type == SegmentType.NONE ? SegmentType.NONE : SegmentType.FLOOR;
+
+            LeftSide = new SideElement(segment.LeftSide);
+            TopSide = new SideElement(segment.TopSide);
+            RightSide = new SideElement(segment.RightSide);
+            BottomSide = new SideElement(segment.BottomSide);
         }
 
         #region Properties

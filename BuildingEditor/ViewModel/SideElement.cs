@@ -27,6 +27,12 @@ namespace BuildingEditor.ViewModel
             Capacity = sideElement.Capacity;
         }
 
+        public SideElement(SideElement sideElement)
+        {
+            Type = sideElement.Type;
+            Capacity = sideElement.Capacity;
+        }
+
         #region Properties
         public int Capacity { get; set; }
         public SideElementType Type { get; set; }
