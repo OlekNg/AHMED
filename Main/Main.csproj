@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{C3A4AE1F-BE34-4D55-9BC1-7DCFCB507E7B}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Main</RootNamespace>
     <AssemblyName>Main</AssemblyName>
@@ -72,6 +72,9 @@
     <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="PropertyChanged">
       <HintPath>..\packages\PropertyChanged.Fody.1.42.0.0\Lib\NET35\PropertyChanged.dll</HintPath>
       <Private>False</Private>
@@ -176,6 +179,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Fody.targets" />
+    <None Include="Log4net.conf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -197,7 +203,7 @@
     </ProjectReference>
     <ProjectReference Include="..\GeneticAlgorithm\GeneticAlgorithm\GeneticAlgorithm.csproj">
       <Project>{2f9368f3-05b9-4a87-9845-5afac662de16}</Project>
-      <Name>GeneticAlgorithm %28GeneticAlgorithm\GeneticAlgorithm%29</Name>
+      <Name>GeneticAlgorithm</Name>
     </ProjectReference>
     <ProjectReference Include="..\Genetics\Genetics.csproj">
       <Project>{b9d02f16-015b-4640-aed3-f850ae382a32}</Project>
