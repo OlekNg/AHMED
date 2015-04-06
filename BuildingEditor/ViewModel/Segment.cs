@@ -13,13 +13,11 @@ namespace BuildingEditor.ViewModel
     public class Segment
     {
         protected List<SideElement> _outerWalls = new List<SideElement>();
-        private Floor _floor;
-        private Floor floor;
-        private Segment segment;
+        public Floor Floor { get; protected set; }
 
         public Segment(Floor owner)
         {
-            _floor = owner;
+            Floor = owner;
 
             LeftSide = new SideElement();
             TopSide = new SideElement();
@@ -68,7 +66,7 @@ namespace BuildingEditor.ViewModel
         #region Properties
         public int Row { get; set; }
         public int Column { get; set; }
-        public int Level { get { return _floor.Level; } }
+        public int Level { get { return Floor.Level; } }
 
         public Room Room { get; set; }
 

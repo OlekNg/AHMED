@@ -15,6 +15,8 @@ namespace BuildingEditor.ViewModel
     [ImplementPropertyChanged]
     public class Building
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(typeof(Building));
+
         public Building()
         {
             Floors = new ObservableCollection<Floor>();
@@ -63,13 +65,30 @@ namespace BuildingEditor.ViewModel
         /// </summary>
         public void UpdateFlow()
         {
-            Room.ResetCounter(); // TODO Find better solution
             Floors.SelectMany(x => x.Segments)
                 .SelectMany(x => x.Select(y => y))
                 .ToList()
                 .ForEach(x => x.FlowValue = Int32.MaxValue);
 
             FindEntrances().ForEach(x => x.Flood(0, null));
+            Rooms = Floors.SelectMany(x => x.Segments)
+                .SelectMany(x => x.Select(y => y))
+                .Select(x => x.Room)
+                .Distinct()
+                .OrderBy(x => x.Segments.First().Level)
+                .ToList();
+
+            int counter = 1;
+            Rooms.ForEach(x =>
+            {
+                x.Id = counter++;
+                x.NumberOfDoors = x.Segments.Where(y => y.GetSideElements().Any(z => z.Value != null && z.Value.Type == SideElementType.DOOR)).Count();
+            });
+
+            log.DebugFormat("Building flow updated. Rooms:\n{0}", String.Join("\n",
+                Rooms.OrderBy(x => x.Segments.First().Level)
+                .Select(x => String.Format("Floor {0}, Room.Id {1}, Doors {2}", x.Segments.First().Level, x.Id, x.NumberOfDoors))
+                ));
         }
 
         private List<Segment> FindEntrances()
@@ -294,6 +313,8 @@ namespace BuildingEditor.ViewModel
         public ObservableCollection<StairsPair> Stairs { get; set; }
 
         public string ViewMode { get; set; }
+
+        public List<Room> Rooms { get; set; }
 
         /// <summary>
         /// Currently selected floor in editor.
