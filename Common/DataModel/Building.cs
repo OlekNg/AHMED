@@ -24,7 +24,7 @@ namespace Common.DataModel
 
         public void Load(string path)
         {
-            log.Debug(String.Format("Loading building from file {0}", path));
+            log.InfoFormat("Loading building from file {0}", path);
             XmlSerializer serializer = new XmlSerializer(typeof(Building));
 
             using (FileStream fs = new FileStream(path, FileMode.Open))
@@ -37,7 +37,7 @@ namespace Common.DataModel
 
         public void Save(string path)
         {
-            log.Debug(String.Format("Saving building to file {0}", path));
+            log.InfoFormat("Saving building to file {0}", path);
             XmlSerializer serializer = new XmlSerializer(typeof(Building));
 
             using (FileStream fs = new FileStream(path, FileMode.Create))

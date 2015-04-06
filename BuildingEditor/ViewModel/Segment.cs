@@ -70,6 +70,8 @@ namespace BuildingEditor.ViewModel
         public int Column { get; set; }
         public int Level { get { return _floor.Level; } }
 
+        public Room Room { get; set; }
+
         public Direction Fenotype { get; set; }
         public string GenotypeText
         {
@@ -269,6 +271,38 @@ namespace BuildingEditor.ViewModel
         public void SetSide(Direction side, SideElementType value)
         {
             GetSideElement(side).Type = value;
+        }
+
+        public void Flood(int value, Room room)
+        {
+            // Stop recursion.
+            if (FlowValue <= value || Type == SegmentType.NONE)
+                return;
+
+            // If stairs - then move to segment at exit of second stairs in pair.
+            if (Type == SegmentType.STAIRS)
+            {
+                GetNextSegment().Flood(value, null);
+                return;
+            }
+
+            // Update segment flow value.
+            FlowValue = value;
+            if (Room == null)
+            {
+                (room ?? new Room()).AddSegment(this);
+            }
+
+            // Flood available directions.
+            var directions = GetAvailableDirections();
+            foreach (var dir in directions)
+            {
+                var next = GetNeighbour(dir);
+                if (next != null)
+                {
+                    next.Flood(value + 1, GetSideElement(dir).Type == SideElementType.DOOR ? null : Room);
+                }
+            }
         }
 
         /// <summary>

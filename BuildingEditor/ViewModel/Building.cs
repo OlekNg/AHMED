@@ -31,6 +31,7 @@ namespace BuildingEditor.ViewModel
         {
             AddFloor(rows, cols);
             CurrentFloor = Floors[0];
+            UpdateFlow();
         }
 
         /// <summary>
@@ -54,6 +55,48 @@ namespace BuildingEditor.ViewModel
             }
 
             CurrentFloor = Floors[0];
+            UpdateFlow();
+        }
+
+        /// <summary>
+        /// Calculates building's flow and rooms.
+        /// </summary>
+        public void UpdateFlow()
+        {
+            Room.ResetCounter(); // TODO Find better solution
+            Floors.SelectMany(x => x.Segments)
+                .SelectMany(x => x.Select(y => y))
+                .ToList()
+                .ForEach(x => x.FlowValue = Int32.MaxValue);
+
+            FindEntrances().ForEach(x => x.Flood(0, null));
+        }
+
+        private List<Segment> FindEntrances()
+        {
+            // Each segment which has available direction to null segment
+            // can be considered as entrance to building.
+            List<Segment> result = new List<Segment>();
+
+            var floor = Floors.Where(x => x.Level == 0).First();
+
+            foreach (var row in floor.Segments)
+            {
+                foreach (var segment in row)
+                {
+                    var directions = segment.GetAvailableDirections();
+                    foreach (var dir in directions)
+                    {
+                        if (segment.GetNeighbour(dir) == null)
+                        {
+                            result.Add(segment);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -307,6 +350,8 @@ namespace BuildingEditor.ViewModel
                 if (x.Second.Level > level)
                     x.Second.Level--;
             });
+
+            UpdateFlow();
         }
 
         public int GetPeopleCount()

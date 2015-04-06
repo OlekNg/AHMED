@@ -68,6 +68,7 @@
             <RadioButton Tag="Fenotype" Content="Fenotype" GroupName="ViewMode" Click="ViewMode_Clicked"/>
             <RadioButton Tag="Solution" Content="Solution" GroupName="ViewMode" Click="ViewMode_Clicked"/>
             <RadioButton Tag="Flow" Content="Flow" GroupName="ViewMode" Click="ViewMode_Clicked"/>
+            <RadioButton Tag="Rooms" Content="Rooms" GroupName="ViewMode" Click="ViewMode_Clicked"/>
         </StackPanel>
 
         <!-- FLOORS -->

@@ -39,7 +39,7 @@ namespace Genetics.Evaluators
 
             _peoplePaths = _building.GetPeoplePaths();
 
-            CreateBuildingFlow();
+            _building.UpdateFlow();
         }
 
         public double Eval(List<bool> genotype)
@@ -93,66 +93,6 @@ namespace Genetics.Evaluators
             }
 
             return value + avg;
-        }
-
-        public void CreateBuildingFlow()
-        {
-            var entrances = FindBuildingEntrances();
-            foreach (var segment in entrances)
-                Flood(0, segment);
-        }
-
-        protected List<Segment> FindBuildingEntrances()
-        {
-            // Each segment which has available direction to null segment
-            // can be considered as entrance to building.
-            List<Segment> result = new List<Segment>();
-
-            var floor = _building.Floors.Where(x => x.Level == 0).First();
-
-            foreach (var row in floor.Segments)
-            {
-                foreach (var segment in row)
-                {
-                    var directions = segment.GetAvailableDirections();
-                    foreach (var dir in directions)
-                    {
-                        if (segment.GetNeighbour(dir) == null)
-                        {
-                            result.Add(segment);
-                            break;
-                        }
-                    }
-                }
-            }
-
-            return result;
-        }
-
-        protected void Flood(int value, Segment segment)
-        {
-            // Stop recursion.
-            if (segment.FlowValue <= value || segment.Type == SegmentType.NONE)
-                return;
-
-            // If stairs - then move to segment at exit of second stairs in pair.
-            if (segment.Type == SegmentType.STAIRS)
-            {
-                Flood(value, segment.GetNextSegment());
-                return;
-            }
-
-            // Update segment flow value.
-            segment.FlowValue = value;
-
-            // Flood available directions.
-            var directions = segment.GetAvailableDirections();
-            foreach (var dir in directions)
-            {
-                var next = segment.GetNeighbour(dir);
-                if (next != null)
-                    Flood(value + 1, next);
-            }
         }
     }
 }
