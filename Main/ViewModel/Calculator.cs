@@ -11,6 +11,7 @@ using Main.ViewModel.GeneticsConfiguration;
 using PropertyChanged;
 using Simulation;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -186,14 +187,23 @@ namespace Main.ViewModel
             if (String.IsNullOrEmpty(CurrentFile))
                 return;
 
-            AdvancedRepairer r = new AdvancedRepairer(new Building(CurrentBuilding.ToDataModel()));
+            CurrentBuilding.ShortGenotype = _geneticsConfiguration.ShortGenotype;
+            if (_geneticsConfiguration.ShortGenotype)
+            {
+                CurrentBuilding.Rooms
+                    .Where(x => x.NumberOfDoors == 1)
+                    .ToList()
+                    .ForEach(x => x.ApplySimpleEvacuation());
+            }
+
+            AdvancedRepairer r = new AdvancedRepairer(new Building(CurrentBuilding));
 
             MapBuilder mapBuilder = new MapBuilder(CurrentBuilding.ToDataModel());
             Simulator sim = new Simulator();
 
             sim.MaximumTicks = CurrentBuilding.GetFloorCount() * 2;
             sim.SetupSimulator(mapBuilder.BuildBuildingMap(), mapBuilder.BuildPeopleMap());
-            EvaCalcEvaluator evaluator = new EvaCalcEvaluator(sim, new Building(CurrentBuilding.ToDataModel()));
+            EvaCalcEvaluator evaluator = new EvaCalcEvaluator(sim, new Building(CurrentBuilding));
             //AHMEDEvaluator evaluator = new AHMEDEvaluator(sim, _building); // works on actual building
 
             BinaryChromosome.CrossoverOperator = _geneticsConfiguration.SelectedCrossover.BuildCrossoverOperator(CurrentBuilding);

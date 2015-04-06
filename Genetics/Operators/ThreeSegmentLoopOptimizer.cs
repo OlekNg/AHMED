@@ -24,7 +24,7 @@ namespace Genetics.Operators
 
         public ThreeSegmentLoopOptimizer(Building building)
         {
-            _building = new Building(building.ToDataModel());
+            _building = new Building(building);
             _paths = _building.GetPeoplePaths();
 
             _oppositeDirections = new Dictionary<Direction, Direction>();

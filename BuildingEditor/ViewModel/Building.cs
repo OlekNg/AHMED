@@ -23,6 +23,8 @@ namespace BuildingEditor.ViewModel
             Stairs = new ObservableCollection<StairsPair>();
         }
 
+        public bool ShortGenotype { get; set; }
+
         /// <summary>
         /// Creates building with one floor.
         /// </summary>
@@ -58,6 +60,12 @@ namespace BuildingEditor.ViewModel
 
             CurrentFloor = Floors[0];
             UpdateFlow();
+        }
+
+        public Building(Building other)
+            : this(other.ToDataModel())
+        {
+            ShortGenotype = other.ShortGenotype;
         }
 
         /// <summary>
@@ -166,12 +174,7 @@ namespace BuildingEditor.ViewModel
         /// <returns>Number of floor type segments.</returns>
         public int GetFloorCount()
         {
-            int result = 0;
-
-            foreach (var f in Floors)
-                result += f.GetFloorCount();
-
-            return result;
+            return GetGenotypeSegments().Count();
         }
 
         /// <summary>
@@ -180,22 +183,23 @@ namespace BuildingEditor.ViewModel
         /// <returns>Fenotype.</returns>
         public List<Direction> GetFenotype()
         {
-            List<Direction> result = new List<Direction>();
+            return GetGenotypeSegments().Select(x => x.Fenotype).ToList();
+        }
 
-            // Order floors by level to make sure we are creating fenotype
-            // from bottom to top level of building.
-            List<Floor> floors = Floors.OrderBy(x => x.Level).ToList();
+        /// <summary>
+        /// Returns list of segments in genotype order.
+        /// </summary>
+        private List<Segment> GetGenotypeSegments()
+        {
+            var segments = Floors.OrderBy(x => x.Level)
+                .SelectMany(x => x.Segments)
+                .SelectMany(x => x.Select(y => y))
+                .Where(x => x.Type == SegmentType.FLOOR);
 
-            // Add fenotype from all segments of type floor.
-            foreach (var floor in floors)
-            {
-                foreach (var row in floor.Segments)
-                    foreach (var segment in row)
-                        if(segment.Type == SegmentType.FLOOR)
-                            result.Add(segment.Fenotype);
-            }
+            if (ShortGenotype)
+                segments = segments.Where(x => x.Room.NumberOfDoors > 1);
 
-            return result;
+            return segments.ToList();
         }
 
         public List<Segment> GetPeopleGroups()
@@ -273,17 +277,9 @@ namespace BuildingEditor.ViewModel
             if (fenotype.Count != expectedLength)
                 throw new Exception("Invalid fenotype to set.");
 
-            List<Floor> floors = Floors.Reverse().ToList();
-
             int index = 0;
-            foreach(var f in floors)
-                foreach(var row in f.Segments)
-                    foreach(var segment in row)
-                        if (segment.Type == SegmentType.FLOOR)
-                        {
-                            segment.Fenotype = fenotype[index];
-                            index++;
-                        }
+            GetGenotypeSegments()
+                .ForEach(x => x.Fenotype = fenotype[index++]);
         }
 
         /// <summary>

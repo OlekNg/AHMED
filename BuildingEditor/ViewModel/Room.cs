@@ -28,5 +28,20 @@ namespace BuildingEditor.ViewModel
             Segments.Add(segment);
             segment.Room = this;
         }
+
+        /// <summary>
+        /// Simple segment flow value based evacuation algorithm (especially for single-door rooms).
+        /// </summary>
+        public void ApplySimpleEvacuation()
+        {
+            Segments.ForEach(segment =>
+            {
+                var dirs = segment.GetAvailableDirections();
+                var bestDirection = dirs.OrderBy(x => segment.GetNeighbour(x).FlowValue)
+                    .First();
+
+                segment.Fenotype = bestDirection;
+            });
+        }
     }
 }

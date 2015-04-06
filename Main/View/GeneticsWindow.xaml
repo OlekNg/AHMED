@@ -1,7 +1,7 @@
 ﻿<Window x:Class="Main.View.GeneticsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Genetics configuration" Height="500" Width="350">
+        Title="Genetics configuration" Height="550" Width="350">
     <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -16,6 +16,7 @@
         <!-- GENERAL ALGORITHM CONFIGURATION -->
         <Grid Grid.Row="0">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -34,6 +35,10 @@
 
             <Label Content="Initial population size:" Grid.Row="2" Grid.Column="0"/>
             <TextBox Text="{Binding InitPopSize}" Grid.Row="2" Grid.Column="1"
+                     VerticalAlignment="Center"/>
+
+            <Label Content="Short genotype:" Grid.Row="3" Grid.Column="0"/>
+            <CheckBox IsChecked="{Binding ShortGenotype}" Grid.Row="3" Grid.Column="1"
                      VerticalAlignment="Center"/>
         </Grid>
 

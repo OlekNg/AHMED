@@ -24,7 +24,7 @@ namespace Genetics.Operators
         public PathDirectionMutation(Building building)
         {
             // Do not operate on potentially view model building.
-            _building = new Building(building.ToDataModel());
+            _building = new Building(building);
             _paths = _building.GetPeoplePaths();
         }
 

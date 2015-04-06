@@ -39,6 +39,7 @@ namespace Main.ViewModel.GeneticsConfiguration
             MaxIterations = 500;
             InitPopSize = 50;
             CrossoverProbability = 0.75;
+            ShortGenotype = false;
         }
 
         // General
@@ -61,5 +62,7 @@ namespace Main.ViewModel.GeneticsConfiguration
         // Transformation
         public ObservableCollection<ITransformationConfiguration> Transformers { get; set; }
         public ITransformationConfiguration SelectedTransformer { get; set; }
+
+        public bool ShortGenotype { get; set; }
     }
 }
