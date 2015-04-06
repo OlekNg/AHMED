@@ -73,6 +73,7 @@ namespace BuildingEditor.ViewModel
             FindEntrances().ForEach(x => x.Flood(0, null));
             Rooms = Floors.SelectMany(x => x.Segments)
                 .SelectMany(x => x.Select(y => y))
+                .Where(x => x.Type == SegmentType.FLOOR)
                 .Select(x => x.Room)
                 .Distinct()
                 .OrderBy(x => x.Segments.First().Level)
@@ -85,7 +86,7 @@ namespace BuildingEditor.ViewModel
                 x.NumberOfDoors = x.Segments.Where(y => y.GetSideElements().Any(z => z.Value != null && z.Value.Type == SideElementType.DOOR)).Count();
             });
 
-            log.DebugFormat("Building flow updated. Rooms:\n{0}", String.Join("\n",
+            log.DebugFormat("Building flow updated. Rooms:\n\t{0}\n", String.Join("\n\t",
                 Rooms.OrderBy(x => x.Segments.First().Level)
                 .Select(x => String.Format("Floor {0}, Room.Id {1}, Doors {2}", x.Segments.First().Level, x.Id, x.NumberOfDoors))
                 ));
