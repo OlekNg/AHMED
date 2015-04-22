@@ -61,6 +61,8 @@ namespace BuildingEditor.ViewModel
             TopSide = new SideElement(segment.TopSide);
             RightSide = new SideElement(segment.RightSide);
             BottomSide = new SideElement(segment.BottomSide);
+
+            Fenotype = segment.Fenotype;
         }
 
         #region Properties

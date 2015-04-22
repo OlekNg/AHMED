@@ -34,7 +34,7 @@ namespace Genetics.Evaluators
             _debug = debug;
             _simulator = simulator;
             _building = building;
-            _maxAvgEscapeTime = building.GetFloorCount() * 1.5;
+            _maxAvgEscapeTime = building.GetFloorSegmentsCount() * 1.5;
             _peopleCount = building.GetPeopleCount();
 
             _peoplePaths = _building.GetPeoplePaths();

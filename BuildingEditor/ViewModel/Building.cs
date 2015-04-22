@@ -66,6 +66,13 @@ namespace BuildingEditor.ViewModel
             : this(other.ToDataModel())
         {
             ShortGenotype = other.ShortGenotype;
+
+            if (ShortGenotype)
+            {
+                Rooms.Where(x => x.NumberOfDoors == 1)
+                    .ToList()
+                    .ForEach(x => x.ApplySimpleEvacuation());
+            }
         }
 
         /// <summary>
@@ -185,6 +192,17 @@ namespace BuildingEditor.ViewModel
         public List<Direction> GetFenotype()
         {
             return GetGenotypeSegments().Select(x => x.Fenotype).ToList();
+        }
+
+        /// <summary>
+        /// Returns total number of segments of type FLOOR in the building.
+        /// </summary>
+        public int GetFloorSegmentsCount()
+        {
+            return Floors.SelectMany(x => x.Segments)
+                .SelectMany(x => x.Select(y => y))
+                .Where(x => x.Type == SegmentType.FLOOR)
+                .Count();
         }
 
         /// <summary>
