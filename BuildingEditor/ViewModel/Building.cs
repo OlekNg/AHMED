@@ -84,6 +84,7 @@ namespace BuildingEditor.ViewModel
                 .Where(x => x.Type == SegmentType.FLOOR)
                 .Select(x => x.Room)
                 .Distinct()
+                .Where(x => x != null)
                 .OrderBy(x => x.Segments.First().Level)
                 .ToList();
 
