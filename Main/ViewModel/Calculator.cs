@@ -37,7 +37,7 @@ namespace Main.ViewModel
         /// <summary>
         /// Currently running genetic algorithm.
         /// </summary>
-        private GeneticAlgorithm _currentGA;
+        private EvacuationSimulation _currentSimulation;
 
         /// <summary>
         /// Debug info for debug window.
@@ -160,8 +160,8 @@ namespace Main.ViewModel
         #region Actions
         public void CancelGA()
         {
-            if (_currentGA != null)
-                _currentGA.Stop();
+            if (_currentSimulation != null)
+                _currentSimulation.Stop();
         }
 
         /// <summary>
@@ -188,42 +188,19 @@ namespace Main.ViewModel
                 return;
 
             CurrentBuilding.ShortGenotype = _geneticsConfiguration.ShortGenotype;
-            if (_geneticsConfiguration.ShortGenotype)
-            {
-                CurrentBuilding.Rooms
-                    .Where(x => x.NumberOfDoors == 1)
-                    .ToList()
-                    .ForEach(x => x.ApplySimpleEvacuation());
-            }
 
-            AdvancedRepairer r = new AdvancedRepairer(new Building(CurrentBuilding));
+            GeneticsConfiguration<List<bool>> geneticsConfiguration = _geneticsConfiguration.BuildConfiguration(CurrentBuilding);
+            _currentSimulation = new EvacuationSimulation(new Building(CurrentBuilding), geneticsConfiguration);
 
-            MapBuilder mapBuilder = new MapBuilder(CurrentBuilding.ToDataModel());
-            Simulator sim = new Simulator();
-
-            sim.MaximumTicks = CurrentBuilding.GetFloorCount() * 2;
-            sim.SetupSimulator(mapBuilder.BuildBuildingMap(), mapBuilder.BuildPeopleMap());
-            EvaCalcEvaluator evaluator = new EvaCalcEvaluator(sim, new Building(CurrentBuilding));
-            //AHMEDEvaluator evaluator = new AHMEDEvaluator(sim, _building); // works on actual building
-
-            BinaryChromosome.CrossoverOperator = _geneticsConfiguration.SelectedCrossover.BuildCrossoverOperator(CurrentBuilding);
-            BinaryChromosome.MutationOperator = _geneticsConfiguration.SelectedMutation.BuildMutationOperator(CurrentBuilding);
-            BinaryChromosome.Transformer = _geneticsConfiguration.SelectedTransformer.BuildTransformer(CurrentBuilding);
-            BinaryChromosome.Evaluator = evaluator;
-            BinaryChromosome.Repairer = r;
-            GeneticAlgorithm ga = new GeneticAlgorithm(new BinaryChromosomeFactory(CurrentBuilding.GetFloorCount() * 2), _geneticsConfiguration.InitPopSize);
-            ga.Selector = _geneticsConfiguration.SelectedSelector.BuildSelector();
-            ga.MaxIterations = _geneticsConfiguration.MaxIterations;
-            ga.Completed += OnGeneticCompleted;
+            _currentSimulation.GeneticAlgorithm.Completed += OnGeneticCompleted;
 
             // Create view model for presenting progression of algorithm.
-            Status statusModel = new Status(ga);
+            Status statusModel = new Status(_currentSimulation.GeneticAlgorithm);
             StatusWindow statusWindow = new StatusWindow();
             statusWindow.DataContext = statusModel;
 
             // Run algorithm asynchronously.
-            _currentGA = ga;
-            new Task(ga.Start).Start();
+            new Task(_currentSimulation.Start).Start();
 
             statusWindow.ShowDialog();
         }

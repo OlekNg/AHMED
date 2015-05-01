@@ -64,5 +64,19 @@ namespace Main.ViewModel.GeneticsConfiguration
         public ITransformationConfiguration SelectedTransformer { get; set; }
 
         public bool ShortGenotype { get; set; }
+
+        internal GeneticsConfiguration<List<bool>> BuildConfiguration(Building CurrentBuilding)
+        {
+            return new GeneticsConfiguration<List<bool>>()
+            {
+                CrossoverOperator = SelectedCrossover.BuildCrossoverOperator(CurrentBuilding),
+                MutationOperator = SelectedMutation.BuildMutationOperator(CurrentBuilding),
+                InitialPopulationSize = InitPopSize,
+                MaxIterations = MaxIterations,
+                Selector = SelectedSelector.BuildSelector(),
+                Transformer = SelectedTransformer.BuildTransformer(CurrentBuilding),
+                ShortGenotype = ShortGenotype
+            };
+        }
     }
 }
