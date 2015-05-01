@@ -27,6 +27,14 @@ namespace BuildingEditor.ViewModel
             Delay = stairs.Delay;
         }
 
+        public Stairs(Stairs other)
+        {
+            Level = other.Level;
+            Capacity = other.Capacity;
+            EntranceCapacity = other.EntranceCapacity;
+            Delay = other.Delay;
+        }
+
         public int Level { get; set; }
         public int EntranceCapacity { get; set; }
         public int Capacity { get; set; }
@@ -70,6 +78,13 @@ namespace BuildingEditor.ViewModel
             _stairs = stairs;
             First = new Stairs(stairsPair.First);
             Second = new Stairs(stairsPair.Second);
+        }
+
+        public StairsPair(ObservableCollection<StairsPair> stairs, StairsPair other)
+        {
+            _stairs = stairs;
+            First = new Stairs(other.First);
+            Second = new Stairs(other.Second);
         }
 
         public Stairs First { get; set; }

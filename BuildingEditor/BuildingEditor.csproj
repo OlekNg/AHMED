@@ -135,6 +135,7 @@
     <Compile Include="ViewModel\Floor.cs" />
     <Compile Include="ViewModel\Tools\FloorTool.cs" />
     <Compile Include="ViewModel\NumberToBoolConverter.cs" />
+    <Compile Include="ViewModel\Tools\DangerTool.cs" />
     <Compile Include="ViewModel\Tools\PeopleTool.cs" />
     <Compile Include="ViewModel\Segment.cs" />
     <Compile Include="ViewModel\SideElement.cs" />

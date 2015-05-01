@@ -25,6 +25,15 @@
                 <Setter Property="Background" Value="LightGray"/>
             </DataTrigger>
 
+            <!-- Danger -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Type}" Value="{x:Static enum:SegmentType.FLOOR}"/>
+                    <Condition Binding="{Binding Danger}" Value="true"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="Orange"/>
+            </MultiDataTrigger>
+
             <!-- Stairs -->
             <DataTrigger Binding="{Binding Type}" Value="{x:Static enum:SegmentType.STAIRS}">
                 <Setter Property="Background">
@@ -65,6 +74,15 @@
                     <Condition Binding="{Binding Path=DataContext.ViewMode, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Viewbox}}}" Value="Flow"/>
                 </MultiDataTrigger.Conditions>
                 <Setter Property="Text" Value="{Binding FlowValue}"/>
+            </MultiDataTrigger>
+
+            <!-- Danger value -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Type}" Value="{x:Static enum:SegmentType.FLOOR}"/>
+                    <Condition Binding="{Binding Path=DataContext.ViewMode, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Viewbox}}}" Value="Danger"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Text" Value="{Binding DangerValue}"/>
             </MultiDataTrigger>
 
             <!-- Rooms -->

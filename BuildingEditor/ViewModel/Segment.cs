@@ -39,6 +39,7 @@ namespace BuildingEditor.ViewModel
         public Segment(Floor owner, Common.DataModel.Segment segment)
             : this(owner)
         {
+            Danger = segment.Danger;
             Type = segment.Type;
             Orientation = segment.Orientation;
             Capacity = segment.Capacity;
@@ -53,6 +54,8 @@ namespace BuildingEditor.ViewModel
         public Segment(Floor owner, Segment segment)
             : this(owner)
         {
+            Danger = segment.Danger;
+            DangerValue = segment.DangerValue;
             Capacity = segment.Capacity;
             PeopleCount = segment.PeopleCount;
             Type = segment.Type == SegmentType.NONE ? SegmentType.NONE : SegmentType.FLOOR;
@@ -112,7 +115,20 @@ namespace BuildingEditor.ViewModel
             }
         }
 
+        /// <summary>
+        /// Distance from nearest escape.
+        /// </summary>
         public int FlowValue { get; set; }
+
+        /// <summary>
+        /// Is this segment source of danger.
+        /// </summary>
+        public bool Danger { get; set; }
+
+        /// <summary>
+        /// Extra modification value for evaluation
+        /// </summary>
+        public int DangerValue { get; set; }
 
         public int Capacity { get; set; }
         public int PeopleCount { get; set; }
@@ -402,6 +418,7 @@ namespace BuildingEditor.ViewModel
             result.Type = Type;
             result.Orientation = Orientation;
             result.PeopleCount = PeopleCount;
+            result.Danger = Danger;
 
             result.LeftSide = LeftSide.ToDataModel();
             result.TopSide = TopSide.ToDataModel();
@@ -409,6 +426,29 @@ namespace BuildingEditor.ViewModel
             result.BottomSide = BottomSide.ToDataModel();
 
             return result;
+        }
+
+        internal void UpdateDangerLevel()
+        {
+            SpreadDanger(10);
+            DangerValue = 25;
+            
+        }
+
+        private void SpreadDanger(int dangerValue)
+        {
+            if (dangerValue <= DangerValue)
+                return;
+
+            DangerValue = dangerValue;
+
+            var directionsToSpread = GetAvailableDirections();
+            foreach (var dir in directionsToSpread)
+            {
+                var next = GetNeighbour(dir);
+                if (next != null)
+                    next.SpreadDanger(dangerValue - 5);
+            }
         }
     }
 }

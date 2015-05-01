@@ -317,5 +317,26 @@ namespace BuildingEditor.ViewModel
 
             return result;
         }
+
+        internal void UpdateDangerLevels()
+        {
+            ForEachSegment(x => x.DangerValue = 0);
+            GetSegments().Where(x => x.Danger)
+                .ToList()
+                .ForEach(x => x.UpdateDangerLevel());
+
+        }
+
+        private IEnumerable<Segment> GetSegments()
+        {
+            return Segments.SelectMany(x => x);
+        }
+
+        private void ForEachSegment(Action<Segment> fn)
+        {
+            foreach (var row in Segments)
+                foreach (var segment in row)
+                    fn(segment);
+        }
     }
 }

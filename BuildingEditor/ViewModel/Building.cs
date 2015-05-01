@@ -102,6 +102,8 @@ namespace BuildingEditor.ViewModel
                 x.NumberOfDoors = x.Segments.Where(y => y.GetSideElements().Any(z => z.Value != null && z.Value.Type == SideElementType.DOOR)).Count();
             });
 
+            Floors.ToList().ForEach(x => x.UpdateDangerLevels());
+
             log.DebugFormat("Building flow updated. Rooms:\n\t{0}\n", String.Join("\n\t",
                 Rooms.OrderBy(x => x.Segments.First().Level)
                 .Select(x => String.Format("Floor {0}, Room.Id {1}, Doors {2}", x.Segments.First().Level, x.Id, x.NumberOfDoors))

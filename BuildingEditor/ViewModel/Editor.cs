@@ -50,6 +50,7 @@ namespace BuildingEditor.ViewModel
             Tools.Add(new PeopleTool());
             Tools.Add(new DeleteTool(this));
             Tools.Add(new StairsTool(this));
+            Tools.Add(new DangerTool(this));
 
             CurrentTool = Tools[0];
         }

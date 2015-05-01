@@ -8,11 +8,14 @@ using Genetics.Generic;
 using BuildingEditor.ViewModel;
 using Common.DataModel.Enums;
 using System.Diagnostics;
+using log4net.Core;
 
 namespace Genetics.Evaluators
 {
     public class EvaCalcEvaluator : IEvaluator<List<bool>>
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(typeof(EvaCalcEvaluator));
+
         /// <summary>
         /// Maximum avarage escape time (it is simply amount of all building tiles).
         /// </summary>
@@ -56,6 +59,9 @@ namespace Genetics.Evaluators
 
                 // Penalty for number of corners
                 value -= (0.01 * path.Corners);
+
+                // Penalty for danger
+                value -= path.TotalDangerValue;
 
                 if (path.SuccessfulEscape)
                     peopleEscapedFromPaths += path.PeopleCount;

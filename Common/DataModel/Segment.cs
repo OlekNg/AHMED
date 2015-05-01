@@ -13,6 +13,7 @@ namespace Common.DataModel
         public Direction Orientation;
         public int Capacity;
         public int PeopleCount;
+        public bool Danger;
 
         public SideElement LeftSide;
         public SideElement TopSide;

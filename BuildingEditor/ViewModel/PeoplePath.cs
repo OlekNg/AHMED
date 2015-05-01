@@ -26,6 +26,7 @@ namespace BuildingEditor.ViewModel
         /// </summary>
         public int Corners { get; set; }
         public int LowestFlowValue { get; set; }
+        public int TotalDangerValue { get; set; }
         public Segment LowestFlowSegment { get; set; }
         public bool LoopDetected { get { return LowestFlowValue > 0; } }
 
@@ -59,6 +60,8 @@ namespace BuildingEditor.ViewModel
             // Follow fenotype until null segment or loop detected.
             while (segment != null && !history.Contains(segment))
             {
+                TotalDangerValue += segment.DangerValue;
+
                 if (direction != segment.Fenotype)
                 {
                     Corners++;
@@ -87,6 +90,7 @@ namespace BuildingEditor.ViewModel
             LowestFlowSegment = _segment;
             Corners = 0;
             SuccessfulEscape = false;
+            TotalDangerValue = 0;
         }
     }
 }
