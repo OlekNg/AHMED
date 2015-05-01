@@ -57,6 +57,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repairers\AHMEDSimpleRepairer.cs" />
     <Compile Include="Repairers\AHMEDAdvancedRepairer.cs" />
+    <Compile Include="Statistics\AlgorithmStatistics.cs" />
+    <Compile Include="Statistics\CsvExport.cs" />
+    <Compile Include="Statistics\IterationData.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BuildingEditor\BuildingEditor.csproj">
