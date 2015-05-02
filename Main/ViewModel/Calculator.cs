@@ -196,8 +196,7 @@ namespace Main.ViewModel
 
             // Create view model for presenting progression of algorithm.
             Status statusModel = new Status(_currentSimulation.GeneticAlgorithm);
-            StatusWindow statusWindow = new StatusWindow();
-            statusWindow.DataContext = statusModel;
+            StatusWindow statusWindow = new StatusWindow(statusModel);
 
             // Run algorithm asynchronously.
             new Task(_currentSimulation.Start).Start();

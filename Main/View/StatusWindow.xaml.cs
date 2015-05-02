@@ -1,4 +1,6 @@
 ﻿using BuildingEditor.ViewModel;
+using Main.ViewModel;
+using OxyPlot.Series;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,11 +21,24 @@ namespace Main.View
     /// </summary>
     public partial class StatusWindow : Window
     {
-        public StatusWindow()
+        public StatusWindow(Status statusModel)
         {
             InitializeComponent();
+            DataContext = statusModel;
+
+            statusModel.PropertyChanged += Test;
         }
 
-        
+        private void Test(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "StatisticsChanged")
+            {
+                Dispatcher.BeginInvoke(new Action(() => {
+                    AvgFitnessPlot.InvalidatePlot();
+                    BestChromosomePlot.InvalidatePlot();
+                    CpuUsagePlot.InvalidatePlot();
+                }));
+            }
+        }
     }
 }
