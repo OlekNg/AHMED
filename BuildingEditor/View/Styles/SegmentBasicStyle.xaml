@@ -141,6 +141,15 @@
                 </Setter>
             </MultiDataTrigger>
 
+            <!-- Fenotype indexes -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Type}" Value="{x:Static enum:SegmentType.FLOOR}"/>
+                    <Condition Binding="{Binding Path=DataContext.ViewMode, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Viewbox}}}" Value="FenotypeIndexes"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Text" Value="{Binding FenotypeIndex}"/>
+            </MultiDataTrigger>
+
             <!-- Solution -->
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>

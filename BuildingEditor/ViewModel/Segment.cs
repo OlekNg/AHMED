@@ -66,6 +66,7 @@ namespace BuildingEditor.ViewModel
             BottomSide = new SideElement(segment.BottomSide);
 
             Fenotype = segment.Fenotype;
+            FenotypeIndex = segment.FenotypeIndex;
         }
 
         #region Properties
@@ -76,6 +77,12 @@ namespace BuildingEditor.ViewModel
         public Room Room { get; set; }
 
         public Direction Fenotype { get; set; }
+
+        /// <summary>
+        /// Index in whole fenotype of building.
+        /// </summary>
+        public int? FenotypeIndex { get; set; }
+
         public string GenotypeText
         {
             get

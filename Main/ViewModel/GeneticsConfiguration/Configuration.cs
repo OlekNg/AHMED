@@ -34,6 +34,7 @@ namespace Main.ViewModel.GeneticsConfiguration
             Transformers = new ObservableCollection<ITransformationConfiguration>();
             Transformers.Add(SelectedTransformer = new NoneTransformationConfiguration());
             Transformers.Add(new ThreeSegmentLoopOptimizerConfiguration());
+            Transformers.Add(new LocalOptimizationConfiguration());
 
             // Default values
             MaxIterations = 500;

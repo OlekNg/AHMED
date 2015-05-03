@@ -14,6 +14,7 @@ namespace BuildingEditor.ViewModel
     {
         private Segment _segment;
         private List<Segment> _pathSegments;
+        private List<Segment> _pathFenotypeSegments;
 
         /// <param name="peopleSegment">Segment with people count > 0</param>
         public PeoplePath(Segment peopleSegment)
@@ -40,6 +41,19 @@ namespace BuildingEditor.ViewModel
                 if (_pathSegments == null)
                     Update();
                 return _pathSegments;
+            }
+        }
+
+        /// <summary>
+        /// Segments in path, that are part of fenotype.
+        /// </summary>
+        public List<Segment> FenotypeSegments
+        {
+            get
+            {
+                if (_pathFenotypeSegments == null)
+                    _pathFenotypeSegments = Segments.Where(x => x.FenotypeIndex.HasValue).ToList();
+                return _pathFenotypeSegments;
             }
         }
 

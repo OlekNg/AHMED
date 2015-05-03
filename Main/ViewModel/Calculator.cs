@@ -26,6 +26,8 @@ namespace Main.ViewModel
     [ImplementPropertyChanged]
     public class Calculator : ISegmentEventHandler
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(typeof(Calculator));
+
         #region Fields
         private Building _currentBuilding;
 
@@ -188,6 +190,13 @@ namespace Main.ViewModel
                 return;
 
             CurrentBuilding.ShortGenotype = _geneticsConfiguration.ShortGenotype;
+            if (CurrentBuilding.ShortGenotype)
+            {
+                CurrentBuilding.Rooms
+                    .Where(x => x.NumberOfDoors == 1)
+                    .ToList()
+                    .ForEach(x => x.ApplySimpleEvacuation());
+            }
 
             GeneticsConfiguration<List<bool>> geneticsConfiguration = _geneticsConfiguration.BuildConfiguration(CurrentBuilding);
             _currentSimulation = new EvacuationSimulation(new Building(CurrentBuilding), geneticsConfiguration);
@@ -212,7 +221,9 @@ namespace Main.ViewModel
         public void ShowGeneticsConfiguration()
         {
             GeneticsWindow window = new GeneticsWindow(_geneticsConfiguration);
-            window.Show();
+            window.ShowDialog();
+            CurrentBuilding.ShortGenotype = _geneticsConfiguration.ShortGenotype;
+            CurrentBuilding.UpdateFenotypeIndexes();
         }
 
         /// <summary>

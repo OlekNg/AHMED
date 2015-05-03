@@ -110,6 +110,7 @@
     <Compile Include="ViewModel\Calculator.cs" />
     <Compile Include="ViewModel\DebugInfo.cs" />
     <Compile Include="ViewModel\GeneticsConfiguration\NoneTransformationConfiguration.cs" />
+    <Compile Include="ViewModel\GeneticsConfiguration\LocalOptimizationConfiguration.cs" />
     <Compile Include="ViewModel\GeneticsConfiguration\ThreeSegmentLoopOptimzierConfiguration.cs" />
     <Compile Include="ViewModel\GeneticsConfiguration\ITransformationConfiguration.cs" />
     <Compile Include="ViewModel\GeneticsConfiguration\PathDirectionMutationConfiguration.cs" />

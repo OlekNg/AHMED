@@ -46,7 +46,7 @@
         </Border>
 
         <!-- CONTROL -->
-        <StackPanel Name="uxControlPanel" Grid.Column="2" Grid.Row="1">
+        <StackPanel Name="uxControlPanel" Grid.Column="2" Grid.Row="1" Grid.RowSpan="2">
             <StackPanel.Resources>
                 <Style TargetType="{x:Type RadioButton}">
                     <Style.Triggers>
@@ -66,6 +66,7 @@
             <RadioButton Tag="Stairs" Content="Stairs info" GroupName="ViewMode" Click="ViewMode_Clicked"/>
             <RadioButton Tag="Genotype" Content="Genotype" GroupName="ViewMode" Click="ViewMode_Clicked"/>
             <RadioButton Tag="Fenotype" Content="Fenotype" GroupName="ViewMode" Click="ViewMode_Clicked"/>
+            <RadioButton Tag="FenotypeIndexes" Content="Fenotype indexes" GroupName="ViewMode" Click="ViewMode_Clicked"/>
             <RadioButton Tag="Solution" Content="Solution" GroupName="ViewMode" Click="ViewMode_Clicked"/>
             <RadioButton Tag="Flow" Content="Flow" GroupName="ViewMode" Click="ViewMode_Clicked"/>
             <RadioButton Tag="Rooms" Content="Rooms" GroupName="ViewMode" Click="ViewMode_Clicked"/>

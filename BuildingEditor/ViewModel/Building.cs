@@ -103,6 +103,7 @@ namespace BuildingEditor.ViewModel
             });
 
             Floors.ToList().ForEach(x => x.UpdateDangerLevels());
+            UpdateFenotypeIndexes();
 
             log.DebugFormat("Building flow updated. Rooms:\n\t{0}\n", String.Join("\n\t",
                 Rooms.OrderBy(x => x.Segments.First().Level)
@@ -401,6 +402,17 @@ namespace BuildingEditor.ViewModel
                 result += f.GetPeopleCount();
 
             return result;
+        }
+
+        public void UpdateFenotypeIndexes()
+        {
+            Floors.SelectMany(x => x.Segments)
+                .SelectMany(x => x)
+                .ToList()
+                .ForEach(x => x.FenotypeIndex = null);
+
+            int index = 0;
+            GetGenotypeSegments().ToList().ForEach(x => x.FenotypeIndex = index++);
         }
     }
 }
