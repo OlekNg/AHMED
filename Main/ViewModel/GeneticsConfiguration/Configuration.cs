@@ -76,7 +76,8 @@ namespace Main.ViewModel.GeneticsConfiguration
                 MaxIterations = MaxIterations,
                 Selector = SelectedSelector.BuildSelector(),
                 Transformer = SelectedTransformer.BuildTransformer(CurrentBuilding),
-                ShortGenotype = ShortGenotype
+                ShortGenotype = ShortGenotype,
+                CrossoverProbability = CrossoverProbability
             };
         }
     }

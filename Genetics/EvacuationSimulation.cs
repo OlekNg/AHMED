@@ -1,11 +1,13 @@
 ﻿using BuildingEditor.ViewModel;
 using Genetics.Evaluators;
+using Genetics.Operators;
 using Genetics.Repairers;
 using Genetics.Specialized;
 using Genetics.Statistics;
 using Simulation;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Xml;
@@ -79,6 +81,7 @@ namespace Genetics
             GeneticAlgorithm = new GeneticAlgorithm(new BinaryChromosomeFactory(_building.GetFloorCount() * 2), _geneticsConfiguration.InitialPopulationSize);
             GeneticAlgorithm.Selector = _geneticsConfiguration.Selector;
             GeneticAlgorithm.MaxIterations = _geneticsConfiguration.MaxIterations;
+            GeneticAlgorithm.CrossoverProbability = _geneticsConfiguration.CrossoverProbability;
             GeneticAlgorithm.ReportStatus += CollectAlgorithmStatus;
         }
 
@@ -146,6 +149,12 @@ namespace Genetics
                     case "Tournament":
                         geneticsConfiguration.Selector = new TournamentSelector();
                         break;
+                    case "Roulette":
+                        geneticsConfiguration.Selector = new RouletteSelector();
+                        break;
+                    case "Rank":
+                        geneticsConfiguration.Selector = new RankSelector();
+                        break;
                     default:
                         throw new ArgumentException("Invalid selector name");
                 }
@@ -158,6 +167,9 @@ namespace Genetics
                     case "OnePoint":
                         geneticsConfiguration.CrossoverOperator = new OnePointCrossover();
                         break;
+                    case "MultiPoint":
+                        geneticsConfiguration.CrossoverOperator = new MultiPointCrossover(Int32.Parse(GetAttributeValueOfElement("Points", "Crossover")));
+                        break;
                     default:
                         throw new ArgumentException("Invalid crossover name");
                 }
@@ -168,7 +180,10 @@ namespace Genetics
                 switch (GetAttributeValueOfElement("Type", "Mutation"))
                 {
                     case "Classic":
-                        geneticsConfiguration.MutationOperator = new ClassicMutation();
+                        geneticsConfiguration.MutationOperator = new ClassicMutation(Double.Parse(GetAttributeValueOfElement("Probability", "Mutation"), CultureInfo.InvariantCulture));
+                        break;
+                    case "PathDirection":
+                        geneticsConfiguration.MutationOperator = new PathDirectionMutation(building, Double.Parse(GetAttributeValueOfElement("Probability", "Mutation"), CultureInfo.InvariantCulture));
                         break;
                     default:
                         throw new ArgumentException("Invalid mutation name");
@@ -181,6 +196,12 @@ namespace Genetics
                 {
                     case "None":
                         geneticsConfiguration.Transformer = null;
+                        break;
+                    case "ThreeSegmentLoopOptimizer":
+                        geneticsConfiguration.Transformer = new ThreeSegmentLoopOptimizer(building, Double.Parse(GetAttributeValueOfElement("Probability", "Transformer"), CultureInfo.InvariantCulture));
+                        break;
+                    case "LocalOptimization":
+                        geneticsConfiguration.Transformer = new LocalOptimization(building, GetEvaluator());
                         break;
                     default:
                         throw new ArgumentException("Invalid transformer name");
@@ -200,6 +221,16 @@ namespace Genetics
             public GeneticsConfiguration<List<bool>> GetGeneticsConfiguration()
             {
                 return geneticsConfiguration;
+            }
+
+            public EvaCalcEvaluator GetEvaluator()
+            {
+                MapBuilder mapBuilder = new MapBuilder(building.ToDataModel());
+                Simulator sim = new Simulator();
+
+                sim.MaximumTicks = building.GetFloorCount() * 2;
+                sim.SetupSimulator(mapBuilder.BuildBuildingMap(), mapBuilder.BuildPeopleMap());
+                return new EvaCalcEvaluator(sim, new Building(building));
             }
         }
     }

@@ -5,8 +5,8 @@
   <Genetics>
     <General PopulationSize="50" MaxIterations="500" ShortGenotype="false"/>
     <Selector Type="Tournament"/>
-    <Crossover Type="OnePoint"/>
-    <Mutation Type="Classic"/>
+    <Crossover Type="OnePoint" Probability="0.75"/>
+    <Mutation Type="Classic" Probability="0.01"/>
     <Transformer Type="None"/>
   </Genetics>
 </Simulation>
