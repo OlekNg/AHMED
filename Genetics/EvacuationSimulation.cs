@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml;
 
 namespace Genetics
 {
@@ -21,6 +22,15 @@ namespace Genetics
         private AlgorithmStatistics _statistics;
 
         public GeneticAlgorithm GeneticAlgorithm { get; protected set; }
+
+        public EvacuationSimulation(string xmlConfigurationFile)
+        {
+            var xmlReader = new XmlConfigurationReader(xmlConfigurationFile);
+            _building = xmlReader.GetBuilding();
+            _geneticsConfiguration = xmlReader.GetGeneticsConfiguration();
+
+            Setup();
+        }
 
         public EvacuationSimulation(Building building, GeneticsConfiguration<List<bool>> geneticsConfiguration)
         {
@@ -75,6 +85,121 @@ namespace Genetics
         private void CollectAlgorithmStatus(GeneticAlgorithmStatus status)
         {
             _statistics.Collect(status);
+        }
+
+        public class XmlConfigurationReader
+        {
+            // Result members
+            private Building building;
+            private GeneticsConfiguration<List<bool>> geneticsConfiguration;
+
+            // Local members
+            private string path;
+            private XmlDocument xmlDocument;
+
+            public XmlConfigurationReader(string path)
+            {
+                this.path = path;
+                LoadXmlDocument();
+                LoadBuilding();
+                CreateGeneticsConfiguration();
+            }
+
+            private void LoadXmlDocument()
+            {
+                xmlDocument = new XmlDocument();
+                xmlDocument.Load(path);
+            }
+
+            private void LoadBuilding()
+            {
+                var buildingNode = xmlDocument.GetElementsByTagName("Building").Item(0);
+                var buildingPath = buildingNode.Attributes.GetNamedItem("Path").InnerText;
+                var buildingCommonModel = new Common.DataModel.Building();
+                buildingCommonModel.Load(buildingPath);
+                building = new Building(buildingCommonModel);
+            }
+
+            private void CreateGeneticsConfiguration()
+            {
+                SetGeneralSettings();
+                CreateSelector();
+                CreateCrossoverOperator();
+                CreateMutationOperator();
+                CreateLocalOptimizationOperator();
+
+            }
+
+            private void SetGeneralSettings()
+            {
+                var generalNode = xmlDocument.GetElementsByTagName("General").Item(0);
+                geneticsConfiguration.InitialPopulationSize = Int32.Parse(generalNode.Attributes.GetNamedItem("PopulationSize").InnerText);
+                geneticsConfiguration.MaxIterations = Int32.Parse(generalNode.Attributes.GetNamedItem("MaxIterations").InnerText);
+                geneticsConfiguration.ShortGenotype = Boolean.Parse(generalNode.Attributes.GetNamedItem("ShortGenotype").InnerText);
+            }
+
+            private void CreateSelector()
+            {
+                switch (GetAttributeValueOfElement("Type", "Selector"))
+                {
+                    case "Tournament":
+                        geneticsConfiguration.Selector = new TournamentSelector();
+                        break;
+                    default:
+                        throw new ArgumentException("Invalid selector name");
+                }
+            }
+
+            private void CreateCrossoverOperator()
+            {
+                switch (GetAttributeValueOfElement("Type", "Crossover"))
+                {
+                    case "OnePoint":
+                        geneticsConfiguration.CrossoverOperator = new OnePointCrossover();
+                        break;
+                    default:
+                        throw new ArgumentException("Invalid crossover name");
+                }
+            }
+
+            private void CreateMutationOperator()
+            {
+                switch (GetAttributeValueOfElement("Type", "Mutation"))
+                {
+                    case "Classic":
+                        geneticsConfiguration.MutationOperator = new ClassicMutation();
+                        break;
+                    default:
+                        throw new ArgumentException("Invalid mutation name");
+                }
+            }
+
+            private void CreateLocalOptimizationOperator()
+            {
+                switch (GetAttributeValueOfElement("Type", "Transformer"))
+                {
+                    case "None":
+                        geneticsConfiguration.Transformer = null;
+                        break;
+                    default:
+                        throw new ArgumentException("Invalid transformer name");
+                }
+            }
+
+            private string GetAttributeValueOfElement(string attributeName, string elementName)
+            {
+                return xmlDocument.GetElementsByTagName(elementName).Item(0).Attributes.GetNamedItem(attributeName).InnerText;
+            }
+
+            public Building GetBuilding()
+            {
+                return building;
+            }
+
+            public GeneticsConfiguration<List<bool>> GetGeneticsConfiguration()
+            {
+                return geneticsConfiguration;
+            }
         }
     }
 }
