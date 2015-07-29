@@ -19,10 +19,16 @@ namespace TestRunner
             }
 
             Console.WriteLine("Loading xml file");
-            var simulation = new EvacuationSimulation(args[0]);
-            Console.WriteLine("Starting simulation");
-            simulation.Start();
-            Console.WriteLine("Simulation ended");
+            var today = DateTime.Now.ToString("yyyy_MM_dd-HH_mm_ss");
+            for (int i = 0; i < 5; i++)
+            {
+                var simulation = new EvacuationSimulation(args[0]);
+                simulation.StatisticsOutputPath = String.Format("session_{0}/pass_{1}", today, i + 1);
+                Console.WriteLine("Simulation pass {0}", i + 1);
+                simulation.Start();
+            }
+            
+            Console.WriteLine("All simulations ended");
             Console.ReadKey();
         }
     }

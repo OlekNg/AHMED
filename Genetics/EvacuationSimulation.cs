@@ -23,6 +23,7 @@ namespace Genetics
         private Building _building;
         private AlgorithmStatistics _statistics;
 
+        public string StatisticsOutputPath { get; set; }
         public GeneticAlgorithm GeneticAlgorithm { get; protected set; }
 
         public EvacuationSimulation(string xmlConfigurationFile)
@@ -44,7 +45,7 @@ namespace Genetics
 
         public void Start()
         {
-            _statistics = new AlgorithmStatistics(DateTime.Now.ToString("yyyy_MM_dd-HH_mm_ss"));
+            _statistics = new AlgorithmStatistics(StatisticsOutputPath ?? DateTime.Now.ToString("yyyy_MM_dd-HH_mm_ss"));
             GeneticAlgorithm.Start();
             _statistics.Dump();
         }
