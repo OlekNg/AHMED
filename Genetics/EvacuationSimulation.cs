@@ -122,6 +122,7 @@ namespace Genetics
 
             private void CreateGeneticsConfiguration()
             {
+                geneticsConfiguration = new GeneticsConfiguration<List<bool>>();
                 SetGeneralSettings();
                 CreateSelector();
                 CreateCrossoverOperator();

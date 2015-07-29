@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Simulation>
+  <Building Path="SampleBuilding.xml"/>
+  
+  <Genetics>
+    <General PopulationSize="50" MaxIterations="500" ShortGenotype="false"/>
+    <Selector Type="Tournament"/>
+    <Crossover Type="OnePoint"/>
+    <Mutation Type="Classic"/>
+    <Transformer Type="None"/>
+  </Genetics>
+</Simulation>
