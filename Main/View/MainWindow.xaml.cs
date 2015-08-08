@@ -73,7 +73,11 @@ namespace Main.View
         private void ToolsGenetics_Click(object sender, RoutedEventArgs e)
         {
             _viewModel.ShowGeneticsConfiguration();
-            
+        }
+
+        private void ToolsResultsViewer_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.ShowResultsViewer();
         }
 
         /// <summary>

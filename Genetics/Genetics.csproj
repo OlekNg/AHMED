@@ -60,6 +60,7 @@
     <Compile Include="Repairers\AHMEDAdvancedRepairer.cs" />
     <Compile Include="Statistics\AlgorithmStatistics.cs" />
     <Compile Include="Statistics\CsvExport.cs" />
+    <Compile Include="Statistics\CsvImport.cs" />
     <Compile Include="Statistics\IterationData.cs" />
   </ItemGroup>
   <ItemGroup>

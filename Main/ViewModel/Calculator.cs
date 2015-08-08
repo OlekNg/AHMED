@@ -226,6 +226,12 @@ namespace Main.ViewModel
             CurrentBuilding.UpdateFenotypeIndexes();
         }
 
+        public void ShowResultsViewer()
+        {
+            ResultsWindow window = new ResultsWindow();
+            window.ShowDialog();
+        }
+
         /// <summary>
         /// Reloads building from file if it was overwritten.
         /// </summary>
@@ -289,8 +295,6 @@ namespace Main.ViewModel
                 _dragTool.MouseWheel(sender, e);
         }
         #endregion
-
-        
 
         /// <summary>
         /// Applies final solution to building view model.

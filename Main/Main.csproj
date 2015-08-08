@@ -90,6 +90,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -116,14 +117,23 @@
     <Compile Include="ViewModel\GeneticsConfiguration\PathDirectionMutationConfiguration.cs" />
     <Compile Include="ViewModel\PercentageToWidthConverter.cs" />
     <Compile Include="ViewModel\PercentageToColorConverter.cs" />
+    <Compile Include="ViewModel\ResultSet.cs" />
+    <Compile Include="ViewModel\ResultsViewer.cs" />
     <Compile Include="ViewModel\Status.cs" />
     <Compile Include="View\DebugWindow.xaml.cs">
       <DependentUpon>DebugWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ResultsWindow.xaml.cs">
+      <DependentUpon>ResultsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\StatusWindow.xaml.cs">
       <DependentUpon>StatusWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="View\DebugWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ResultsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

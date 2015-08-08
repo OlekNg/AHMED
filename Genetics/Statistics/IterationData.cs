@@ -12,7 +12,7 @@ namespace Genetics.Statistics
     {
         public int NumberOfIteration { get; set; }
         public double AverageFitness { get; set; }
-        public double PopulationFintness { get; set; }
+        public double PopulationFitness { get; set; }
         public double BestChromosomeValue { get; set; }
     }
 }

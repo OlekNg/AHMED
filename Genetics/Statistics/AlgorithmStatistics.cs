@@ -34,7 +34,7 @@ namespace Genetics.Statistics
             _iterations.Add(new IterationData()
             {
                 AverageFitness = status.CurrentPopulation.AvgFitness,
-                PopulationFintness = status.CurrentPopulation.Fitness,
+                PopulationFitness = status.CurrentPopulation.Fitness,
                 NumberOfIteration = status.IterationNumber,
                 BestChromosomeValue = status.BestChromosome.Value
             });

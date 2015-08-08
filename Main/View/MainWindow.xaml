@@ -108,6 +108,7 @@
                 <MenuItem Header="Genetics" Click="ToolsGenetics_Click"/>
                 <MenuItem Header="Editor" Click="ToolsEditor_Click"/>
                 <MenuItem Header="Debug info" Command="{Binding DebugInfoCommand}"/>
+                <MenuItem Header="Results viewer" Click="ToolsResultsViewer_Click"/>
             </MenuItem>
         </Menu>
     </Grid>

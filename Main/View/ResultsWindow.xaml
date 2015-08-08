@@ -1,0 +1,45 @@
+﻿<Window x:Class="Main.View.ResultsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:oxy="http://oxyplot.org/wpf"
+        Title="ResultsWindow" Height="700" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button Command="{Binding ChooseResultsPathCommand}" Content="Choose results folder" Margin="5"/>
+            <Label Content="{Binding ResultsPath}" Grid.Column="1"/>
+        </Grid>
+        
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <ScrollViewer>
+                <ListView ItemsSource="{Binding ResultSets}" SelectedItem="{Binding SelectedResultSet}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock TextAlignment="Center"
+                                       Text="{Binding Name}"
+                                       HorizontalAlignment="Stretch"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </ScrollViewer>
+
+            <oxy:PlotView Name="Plot" Title="Average fitness" Grid.Column="1">
+                <oxy:PlotView.Series>
+                    <oxy:LineSeries ItemsSource="{Binding SelectedResultSet.AvgFitness}"/>
+                </oxy:PlotView.Series>
+            </oxy:PlotView>
+        </Grid>
+    </Grid>
+</Window>
