@@ -17,6 +17,7 @@ namespace Main.ViewModel
     public class ResultsViewer : INotifyPropertyChanged
     {
         private string resultsPath;
+        private Calculator calculatorModel;
 
         public string ResultsPath
         {
@@ -30,14 +31,22 @@ namespace Main.ViewModel
         public bool ShowCpuUsage { get; set; }
 
         public ICommand ChooseResultsPathCommand { get; set; }
+        public ICommand LoadBestChromosomeCommand { get; set; }
 
         public ResultsViewer()
         {
             ChooseResultsPathCommand = new SimpleCommand(x => ChooseResultsPath());
+            LoadBestChromosomeCommand = new SimpleCommand(x => LoadBestChromosome());
             ResultSets = new ObservableCollection<ResultSet>();
             ResultsPath = @"D:\Results";
             ShowAverageFitness = true;
             ShowBestChromosome = true;
+        }
+
+        public ResultsViewer(Calculator calculatorModel)
+            : this()
+        {
+            this.calculatorModel = calculatorModel;
         }
 
         public void ChooseResultsPath()
@@ -57,6 +66,15 @@ namespace Main.ViewModel
                 .Where(x => x.IsValid)
                 .ToList()
                 .ForEach(x => ResultSets.Add(x));
+        }
+
+        private void LoadBestChromosome()
+        {
+            if (SelectedResultSet == null || calculatorModel == null)
+                return;
+
+            var folderPath = SelectedResultSet.FolderPath;
+            calculatorModel.LoadBuilding(Path.Combine(folderPath, "Building.xml"));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

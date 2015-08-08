@@ -228,8 +228,8 @@ namespace Main.ViewModel
 
         public void ShowResultsViewer()
         {
-            ResultsWindow window = new ResultsWindow();
-            window.ShowDialog();
+            ResultsWindow window = new ResultsWindow(this);
+            window.Show();
         }
 
         /// <summary>

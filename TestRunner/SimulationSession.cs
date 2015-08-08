@@ -63,7 +63,7 @@ namespace TestRunner
                 }
             }
 
-            File.Copy(Path.Combine(sessionFolder, String.Format("pass_{0}", bestSessionChromosome), "best_chromosome.txt"), Path.Combine(sessionFolder, "best_chromosome.txt"));
+            File.Copy(Path.Combine(sessionFolder, String.Format("pass_{0}", bestSessionChromosome + 1), "best_chromosome.txt"), Path.Combine(sessionFolder, "best_chromosome.txt"));
         }
     }
 }

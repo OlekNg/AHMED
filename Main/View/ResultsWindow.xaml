@@ -98,6 +98,10 @@
                     <oxy:LineSeries ItemsSource="{Binding SelectedResultSet.Evaluation}" Title="Evaluation"/>
                 </oxy:PlotView.Series>
             </oxy:PlotView>
+            
+            <StackPanel Grid.Row="2">
+                <Button Content="Load best chromosome" Command="{Binding LoadBestChromosomeCommand}"/>
+            </StackPanel>
         </Grid>
     </Grid>
 </Window>

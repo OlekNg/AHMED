@@ -20,10 +20,11 @@ namespace Main.View
     /// </summary>
     public partial class ResultsWindow : Window
     {
-        private ResultsViewer viewModel = new ResultsViewer();
-        public ResultsWindow()
+        private ResultsViewer viewModel;
+        public ResultsWindow(Calculator calculatorModel)
         {
             InitializeComponent();
+            viewModel = new ResultsViewer(calculatorModel);
             DataContext = viewModel;
             viewModel.PropertyChanged += OnModelChanged;
         }

@@ -25,6 +25,7 @@ namespace Main.ViewModel
         public List<DataPoint> Transform { get; set; }
         public List<DataPoint> Evaluation { get; set; }
         public string Name { get; set; }
+        public string FolderPath { get { return folderPath; } }
 
         public ResultSet(string folderPath)
         {
