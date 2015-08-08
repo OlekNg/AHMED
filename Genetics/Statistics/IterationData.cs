@@ -15,4 +15,12 @@ namespace Genetics.Statistics
         public double PopulationFitness { get; set; }
         public double BestChromosomeValue { get; set; }
     }
+
+    public class IterationDataWithDeviance
+    {
+        public int NumberOfIteration { get; set; }
+        public double Avg { get; set; }
+        public double Min { get; set; }
+        public double Max { get; set; }
+    }
 }

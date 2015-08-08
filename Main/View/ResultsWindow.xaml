@@ -37,7 +37,14 @@
 
             <oxy:PlotView Name="Plot" Title="Average fitness" Grid.Column="1">
                 <oxy:PlotView.Series>
-                    <oxy:LineSeries ItemsSource="{Binding SelectedResultSet.AvgFitness}"/>
+                    <oxy:AreaSeries ItemsSource="{Binding SelectedResultSet.AvgFitness}"
+                                    DataFieldX="NumberOfIteration" DataFieldY="Min"
+                                    DataFieldX2="NumberOfIteration" DataFieldY2="Max"
+                                    Fill="LightBlue" StrokeThickness="0">
+                    </oxy:AreaSeries>
+                    <oxy:LineSeries ItemsSource="{Binding SelectedResultSet.AvgFitness}"
+                                    DataFieldX="NumberOfIteration" DataFieldY="Avg" Smooth="True" Color="Blue"
+                                    StrokeThickness="1"/>
                 </oxy:PlotView.Series>
             </oxy:PlotView>
         </Grid>

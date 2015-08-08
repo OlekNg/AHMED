@@ -14,9 +14,9 @@ namespace Main.ViewModel
         private List<string> passes;
 
         public bool IsValid { get { return passes != null && passes.Count > 0; } }
-        public List<IterationData> IterationData { get; set; }
+        public List<List<IterationData>> IterationData { get; set; }
+        public List<IterationDataWithDeviance> AvgFitness { get; set; }
         public string Name { get; set; }
-        public List<DataPoint> AvgFitness { get; set; }
 
         public ResultSet(string folderPath)
         {
@@ -26,7 +26,7 @@ namespace Main.ViewModel
             {
                 SetResultSetName();
                 LoadIterationsData();
-                ConvertToDataPoints();
+                CalculateDevianceData();
             }
         }
 
@@ -42,15 +42,28 @@ namespace Main.ViewModel
 
         private void LoadIterationsData()
         {
-            var passFolder = passes.First();
-            var csv = new CsvImport<IterationData>();
-            csv.Import(Path.Combine(passFolder, "iterations.csv"));
-            IterationData = csv.Objects;
+            IterationData = passes.Select(passFolder =>
+            {
+                var csv = new CsvImport<IterationData>();
+                csv.Import(Path.Combine(passFolder, "iterations.csv"));
+                return csv.Objects;
+            }).ToList();
         }
 
-        private void ConvertToDataPoints()
+        private void CalculateDevianceData()
         {
-            AvgFitness = IterationData.Select(x => new DataPoint(x.NumberOfIteration, x.AverageFitness)).ToList();
+            AvgFitness = new List<IterationDataWithDeviance>();
+            var iterations = IterationData.First().Count;
+            for (int i = 0; i < iterations; i++)
+            {
+                AvgFitness.Add(new IterationDataWithDeviance()
+                {
+                    NumberOfIteration = i,
+                    Avg = IterationData.Average(x => x[i].AverageFitness),
+                    Min = IterationData.Min(x => x[i].AverageFitness),
+                    Max = IterationData.Max(x => x[i].AverageFitness)
+                });
+            }
         }
     }
 }
