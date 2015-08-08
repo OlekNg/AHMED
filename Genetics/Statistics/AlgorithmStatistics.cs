@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Genetics.Generic;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace Genetics.Statistics
     class AlgorithmStatistics
     {
         private string _directory;
+        private double _bestChromosomeValue;
+        private IChromosome _bestChromosome;
         private List<IterationData> _iterations;
 
         /// <summary>
@@ -27,6 +30,7 @@ namespace Genetics.Statistics
 
             _directory = directory;
             _iterations = new List<IterationData>();
+            _bestChromosomeValue = Double.MinValue;
         }
 
         public void Collect(GeneticAlgorithmStatus status)
@@ -45,6 +49,12 @@ namespace Genetics.Statistics
                 TransformOverhead = status.TransformOverhead,
                 EvaluationOverhead = status.EvaluationOverhead
             });
+
+            if (status.BestChromosome.Value > _bestChromosomeValue)
+            {
+                _bestChromosomeValue = status.BestChromosome.Value;
+                _bestChromosome = status.BestChromosome.Clone();
+            }
         }
 
         /// <summary>
@@ -54,6 +64,11 @@ namespace Genetics.Statistics
         {
             CsvExport<IterationData> csvExport = new CsvExport<IterationData>(_iterations);
             csvExport.ExportToFile(Path.Combine(_directory, "iterations.csv"));
+
+            var bestChromosome = _bestChromosome as Chromosome<List<bool>>;
+            var genotype = new String(bestChromosome.Genotype.Select(x => x ? '1' : '0').ToArray());
+
+            File.WriteAllLines(Path.Combine(_directory, "best_chromosome.txt"), new string[] { _bestChromosomeValue.ToString(), genotype });
         }
     }
 }
