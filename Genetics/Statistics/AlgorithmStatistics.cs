@@ -1,4 +1,5 @@
 ﻿using Genetics.Generic;
+using Genetics.Specialized;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -67,7 +68,7 @@ namespace Genetics.Statistics
             CsvExport<IterationData> csvExport = new CsvExport<IterationData>(_iterations);
             csvExport.ExportToFile(Path.Combine(_directory, "iterations.csv"));
 
-            var bestChromosome = _bestChromosome as Chromosome<List<bool>>;
+            var bestChromosome = _bestChromosome as BinaryChromosome;
             var genotype = new String(bestChromosome.Genotype.Select(x => x ? '1' : '0').ToArray());
 
             File.WriteAllLines(Path.Combine(_directory, "best_chromosome.txt"), new string[] { _bestChromosomeValue.ToString(), genotype });

@@ -1,4 +1,6 @@
 ﻿using BuildingEditor.ViewModel;
+using Genetics;
+using Genetics.Specialized;
 using Genetics.Statistics;
 using PropertyChanged;
 using System;
@@ -75,6 +77,11 @@ namespace Main.ViewModel
 
             var folderPath = SelectedResultSet.FolderPath;
             calculatorModel.LoadBuilding(Path.Combine(folderPath, "Building.xml"));
+
+            var genotypeString = File.ReadAllLines(Path.Combine(folderPath, "best_chromosome.txt"))[1];
+            List<bool> genotype = genotypeString.Select(x => x == '1' ? true : false).ToList();
+            calculatorModel.CurrentBuilding.SetFenotype(genotype.ToFenotype());
+            calculatorModel.CurrentBuilding.DrawSolution();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
