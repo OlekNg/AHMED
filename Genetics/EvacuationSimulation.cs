@@ -85,6 +85,7 @@ namespace Genetics
         public class XmlConfigurationReader
         {
             // Result members
+            private string buildingPath;
             private Building building;
             private GeneticsConfiguration<List<bool>> geneticsConfiguration;
 
@@ -109,7 +110,7 @@ namespace Genetics
             private void LoadBuilding()
             {
                 var buildingNode = xmlDocument.GetElementsByTagName("Building").Item(0);
-                var buildingPath = buildingNode.Attributes.GetNamedItem("Path").InnerText;
+                buildingPath = buildingNode.Attributes.GetNamedItem("Path").InnerText;
                 var buildingCommonModel = new Common.DataModel.Building();
                 buildingCommonModel.Load(buildingPath);
                 building = new Building(buildingCommonModel);
@@ -213,6 +214,11 @@ namespace Genetics
             public GeneticsConfiguration<List<bool>> GetGeneticsConfiguration()
             {
                 return geneticsConfiguration;
+            }
+
+            public string GetBuildingPath()
+            {
+                return buildingPath;
             }
 
             public EvaCalcEvaluator GetEvaluator()
