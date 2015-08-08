@@ -26,15 +26,6 @@ namespace Genetics
         public string StatisticsOutputPath { get; set; }
         public GeneticAlgorithm GeneticAlgorithm { get; protected set; }
 
-        public EvacuationSimulation(string xmlConfigurationFile)
-        {
-            var xmlReader = new XmlConfigurationReader(xmlConfigurationFile);
-            _building = xmlReader.GetBuilding();
-            _geneticsConfiguration = xmlReader.GetGeneticsConfiguration();
-
-            Setup();
-        }
-
         public EvacuationSimulation(Building building, GeneticsConfiguration<List<bool>> geneticsConfiguration)
         {
             _building = building;

@@ -56,6 +56,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BuildingEditor\BuildingEditor.csproj">
+      <Project>{bd97471a-48c6-48c2-83fd-75054045d0cf}</Project>
+      <Name>BuildingEditor</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Genetics\Genetics.csproj">
       <Project>{b9d02f16-015b-4640-aed3-f850ae382a32}</Project>
       <Name>Genetics</Name>

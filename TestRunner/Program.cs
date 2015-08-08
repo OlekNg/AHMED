@@ -22,7 +22,8 @@ namespace TestRunner
             var today = DateTime.Now.ToString("yyyy_MM_dd-HH_mm_ss");
             for (int i = 0; i < 5; i++)
             {
-                var simulation = new EvacuationSimulation(args[0]);
+                var reader = new EvacuationSimulation.XmlConfigurationReader(args[0]);
+                var simulation = new EvacuationSimulation(reader.GetBuilding(), reader.GetGeneticsConfiguration());
                 simulation.StatisticsOutputPath = String.Format("session_{0}/pass_{1}", today, i + 1);
                 Console.WriteLine("Simulation pass {0}", i + 1);
                 simulation.Start();
