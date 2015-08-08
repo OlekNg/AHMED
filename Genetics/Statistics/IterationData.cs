@@ -14,6 +14,13 @@ namespace Genetics.Statistics
         public double AverageFitness { get; set; }
         public double PopulationFitness { get; set; }
         public double BestChromosomeValue { get; set; }
+
+        public double SelectionOverhead { get; set; }
+        public double CrossoverOverhead { get; set; }
+        public double MutationOverhead { get; set; }
+        public double RepairOverhead { get; set; }
+        public double TransformOverhead { get; set; }
+        public double EvaluationOverhead { get; set; }
     }
 
     public class IterationDataWithDeviance

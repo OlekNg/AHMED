@@ -25,6 +25,10 @@ namespace Main.ViewModel
         }
         public ObservableCollection<ResultSet> ResultSets { get; set; }
         public ResultSet SelectedResultSet { get; set; }
+        public bool ShowAverageFitness { get; set; }
+        public bool ShowBestChromosome { get; set; }
+        public bool ShowCpuUsage { get; set; }
+
         public ICommand ChooseResultsPathCommand { get; set; }
 
         public ResultsViewer()
@@ -32,6 +36,8 @@ namespace Main.ViewModel
             ChooseResultsPathCommand = new SimpleCommand(x => ChooseResultsPath());
             ResultSets = new ObservableCollection<ResultSet>();
             ResultsPath = @"D:\Results";
+            ShowAverageFitness = true;
+            ShowBestChromosome = true;
         }
 
         public void ChooseResultsPath()

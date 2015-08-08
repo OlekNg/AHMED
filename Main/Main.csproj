@@ -115,6 +115,7 @@
     <Compile Include="ViewModel\GeneticsConfiguration\ThreeSegmentLoopOptimzierConfiguration.cs" />
     <Compile Include="ViewModel\GeneticsConfiguration\ITransformationConfiguration.cs" />
     <Compile Include="ViewModel\GeneticsConfiguration\PathDirectionMutationConfiguration.cs" />
+    <Compile Include="ViewModel\BooleanToVisibilityConverter.cs" />
     <Compile Include="ViewModel\PercentageToWidthConverter.cs" />
     <Compile Include="ViewModel\PercentageToColorConverter.cs" />
     <Compile Include="ViewModel\ResultSet.cs" />

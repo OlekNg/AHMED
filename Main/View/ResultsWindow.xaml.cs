@@ -21,7 +21,6 @@ namespace Main.View
     public partial class ResultsWindow : Window
     {
         private ResultsViewer viewModel = new ResultsViewer();
-
         public ResultsWindow()
         {
             InitializeComponent();

@@ -36,7 +36,14 @@ namespace Genetics.Statistics
                 AverageFitness = status.CurrentPopulation.AvgFitness,
                 PopulationFitness = status.CurrentPopulation.Fitness,
                 NumberOfIteration = status.IterationNumber,
-                BestChromosomeValue = status.BestChromosome.Value
+                BestChromosomeValue = status.BestChromosome.Value,
+
+                SelectionOverhead = status.SelectionOverhead,
+                CrossoverOverhead = status.CrossoverOverhead,
+                MutationOverhead = status.MutationOverhead,
+                RepairOverhead = status.RepairOverhead,
+                TransformOverhead = status.TransformOverhead,
+                EvaluationOverhead = status.EvaluationOverhead
             });
         }
 
