@@ -10,12 +10,14 @@ namespace Genetics.Statistics
     /// <summary>
     /// Wraps collecting statistics about running algorithm.
     /// </summary>
-    class AlgorithmStatistics
+    public class AlgorithmStatistics
     {
         private string _directory;
         private double _bestChromosomeValue;
         private IChromosome _bestChromosome;
         private List<IterationData> _iterations;
+
+        public double BestChromosomeValue { get { return _bestChromosomeValue; } }
 
         /// <summary>
         /// Basic constructor.

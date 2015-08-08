@@ -1,4 +1,5 @@
 ﻿using Genetics;
+using Genetics.Generic;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,7 +12,8 @@ namespace TestRunner
     class SimulationSession
     {
         private const int SimulationsInSession = 5;
-
+        private double bestChromosomeValue = Double.MinValue;
+        private int bestSessionChromosome = -1;
         private string xmlConfigurationPath;
         private string sessionFolder;
         private EvacuationSimulation.XmlConfigurationReader xmlConfiguration;
@@ -52,7 +54,16 @@ namespace TestRunner
                 simulation.StatisticsOutputPath = String.Format("{0}/pass_{1}", sessionFolder, i + 1);
                 Console.WriteLine("Simulation pass {0}", i + 1);
                 simulation.Start();
+
+                var statistics = simulation.GetStatistics();
+                if (statistics.BestChromosomeValue > bestChromosomeValue)
+                {
+                    bestChromosomeValue = statistics.BestChromosomeValue;
+                    bestSessionChromosome = i;
+                }
             }
+
+            File.Copy(Path.Combine(sessionFolder, String.Format("pass_{0}", bestSessionChromosome), "best_chromosome.txt"), Path.Combine(sessionFolder, "best_chromosome.txt"));
         }
     }
 }

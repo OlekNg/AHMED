@@ -41,6 +41,11 @@ namespace Genetics
             _statistics.Dump();
         }
 
+        public AlgorithmStatistics GetStatistics()
+        {
+            return _statistics;
+        }
+
         public void Stop()
         {
             GeneticAlgorithm.Stop();
