@@ -34,6 +34,11 @@ namespace Genetics.Operators
             _probability = probability;
         }
 
+        public override string ToString()
+        {
+            return String.Format("Path dir., {0}", _probability);
+        }
+
         #region IMutationOperator<List<bool>> Members
 
         public List<bool> Mutate(Chromosome<List<bool>> c)

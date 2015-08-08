@@ -40,6 +40,11 @@ namespace Genetics.Operators
             _probability = probability;
         }
 
+        public override string ToString()
+        {
+            return String.Format("Three seg. loop. opt., {0}", _probability);
+        }
+
         #region ITransformer<List<bool>> Members
 
         public List<bool> Transform(Chromosome<List<bool>> c)

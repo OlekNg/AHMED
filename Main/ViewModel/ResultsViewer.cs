@@ -43,6 +43,7 @@ namespace Main.ViewModel
             ResultsPath = @"D:\Results";
             ShowAverageFitness = true;
             ShowBestChromosome = true;
+            ShowCpuUsage = true;
         }
 
         public ResultsViewer(Calculator calculatorModel)

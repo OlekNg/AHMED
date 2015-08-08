@@ -28,6 +28,11 @@ namespace Genetics.Operators
             _paths = _building.GetPeoplePaths();
         }
 
+        public override string ToString()
+        {
+            return String.Format("Local opt.");
+        }
+
         #region ITransformer<List<bool>> Members
         public List<bool> Transform(Chromosome<List<bool>> c)
         {

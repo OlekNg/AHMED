@@ -102,8 +102,6 @@ namespace Genetics
             {
                 this.path = path;
                 LoadXmlDocument();
-                LoadBuilding();
-                CreateGeneticsConfiguration();
             }
 
             private void LoadXmlDocument()
@@ -213,16 +211,22 @@ namespace Genetics
 
             public Building GetBuilding()
             {
+                if (building == null)
+                    LoadBuilding();
                 return building;
             }
 
             public GeneticsConfiguration<List<bool>> GetGeneticsConfiguration()
             {
+                if (geneticsConfiguration == null)
+                    CreateGeneticsConfiguration();
                 return geneticsConfiguration;
             }
 
             public string GetBuildingPath()
             {
+                if (building == null)
+                    LoadBuilding();
                 return buildingPath;
             }
 

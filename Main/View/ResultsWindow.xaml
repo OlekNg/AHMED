@@ -62,6 +62,12 @@
 
                 <StackPanel Grid.Row="1">
                     <Button Content="Load best chromosome" Margin="5" Command="{Binding LoadBestChromosomeCommand}"/>
+                    <Label Content="{Binding SelectedResultSet.Selection}" ContentStringFormat="Selection: {0}"/>
+                    <Label Content="{Binding SelectedResultSet.Crossover}" ContentStringFormat="Crossover: {0}"/>
+                    <Label Content="{Binding SelectedResultSet.Mutation}" ContentStringFormat="Mutation: {0}"/>
+                    <Label Content="{Binding SelectedResultSet.Transform}" ContentStringFormat="Transform: {0}"/>
+                    <Label Content="{Binding SelectedResultSet.PopulationSize}" ContentStringFormat="Pop. size: {0}"/>
+                    <Label Content="{Binding SelectedResultSet.ShortGenotype}" ContentStringFormat="Short gen.: {0}"/>
                 </StackPanel>
             </Grid>
 
@@ -107,12 +113,12 @@
                         <oxy:LinearAxis Maximum="1"/>
                     </oxy:PlotView.Axes>
                     <oxy:PlotView.Series>
-                        <oxy:LineSeries ItemsSource="{Binding SelectedResultSet.Selection}" Title="Selection"/>
-                        <oxy:LineSeries ItemsSource="{Binding SelectedResultSet.Crossover}" Title="Crossover"/>
-                        <oxy:LineSeries ItemsSource="{Binding SelectedResultSet.Mutation}" Title="Mutation"/>
-                        <oxy:LineSeries ItemsSource="{Binding SelectedResultSet.Repair}" Title="Repair"/>
-                        <oxy:LineSeries ItemsSource="{Binding SelectedResultSet.Transform}" Title="Transform"/>
-                        <oxy:LineSeries ItemsSource="{Binding SelectedResultSet.Evaluation}" Title="Evaluation"/>
+                        <oxy:LineSeries ItemsSource="{Binding SelectedResultSet.SelectionOverhead}" Title="Selection"/>
+                        <oxy:LineSeries ItemsSource="{Binding SelectedResultSet.CrossoverOverhead}" Title="Crossover"/>
+                        <oxy:LineSeries ItemsSource="{Binding SelectedResultSet.MutationOverhead}" Title="Mutation"/>
+                        <oxy:LineSeries ItemsSource="{Binding SelectedResultSet.RepairOverhead}" Title="Repair"/>
+                        <oxy:LineSeries ItemsSource="{Binding SelectedResultSet.TransformOverhead}" Title="Transform"/>
+                        <oxy:LineSeries ItemsSource="{Binding SelectedResultSet.EvaluationOverhead}" Title="Evaluation"/>
                     </oxy:PlotView.Series>
                 </oxy:PlotView>
             </Grid>

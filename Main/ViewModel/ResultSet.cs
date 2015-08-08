@@ -1,4 +1,5 @@
-﻿using Genetics.Statistics;
+﻿using Genetics;
+using Genetics.Statistics;
 using OxyPlot;
 using PropertyChanged;
 using System;
@@ -20,14 +21,22 @@ namespace Main.ViewModel
         public List<IterationDataWithDeviance> AvgFitness { get; set; }
         public List<IterationDataWithDeviance> BestChromosome { get; set; }
 
-        public List<DataPoint> Selection { get; set; }
-        public List<DataPoint> Crossover { get; set; }
-        public List<DataPoint> Mutation { get; set; }
-        public List<DataPoint> Repair { get; set; }
-        public List<DataPoint> Transform { get; set; }
-        public List<DataPoint> Evaluation { get; set; }
+        public List<DataPoint> SelectionOverhead { get; set; }
+        public List<DataPoint> CrossoverOverhead { get; set; }
+        public List<DataPoint> MutationOverhead { get; set; }
+        public List<DataPoint> RepairOverhead { get; set; }
+        public List<DataPoint> TransformOverhead { get; set; }
+        public List<DataPoint> EvaluationOverhead { get; set; }
         public string Name { get; set; }
         public string FolderPath { get { return folderPath; } }
+
+        public string Selection { get; set; }
+        public string Crossover { get; set; }
+        public string Mutation { get; set; }
+        public string Transform { get; set; }
+        public int PopulationSize { get; set; }
+        public int MaxIterations { get; set; }
+        public bool ShortGenotype { get; set; }
 
         public ResultSet(string folderPath)
         {
@@ -37,6 +46,7 @@ namespace Main.ViewModel
             {
                 SetResultSetName();
                 LoadIterationsData();
+                LoadGeneticsConfigurationData();
                 CalculateDevianceData();
             }
         }
@@ -61,16 +71,29 @@ namespace Main.ViewModel
             }).ToList();
         }
 
+        private void LoadGeneticsConfigurationData()
+        {
+            var reader = new EvacuationSimulation.XmlConfigurationReader(Path.Combine(folderPath, "Scenario.xml"));
+            var cfg = reader.GetGeneticsConfiguration();
+            Selection = cfg.Selector.ToString();
+            Crossover = cfg.CrossoverOperator.ToString();
+            Mutation = cfg.MutationOperator.ToString();
+            Transform = cfg.Transformer != null ? cfg.Transformer.ToString() : "None";
+            PopulationSize = cfg.InitialPopulationSize;
+            MaxIterations = cfg.MaxIterations;
+            ShortGenotype = cfg.ShortGenotype;
+        }
+
         private void CalculateDevianceData()
         {
             AvgFitness = new List<IterationDataWithDeviance>();
             BestChromosome = new List<IterationDataWithDeviance>();
-            Selection = new List<DataPoint>();
-            Crossover = new List<DataPoint>();
-            Mutation = new List<DataPoint>();
-            Repair = new List<DataPoint>();
-            Transform = new List<DataPoint>();
-            Evaluation = new List<DataPoint>();
+            SelectionOverhead = new List<DataPoint>();
+            CrossoverOverhead = new List<DataPoint>();
+            MutationOverhead = new List<DataPoint>();
+            RepairOverhead = new List<DataPoint>();
+            TransformOverhead = new List<DataPoint>();
+            EvaluationOverhead = new List<DataPoint>();
 
             var iterations = IterationData.First().Count;
             for (int i = 0; i < iterations; i++)
@@ -91,12 +114,12 @@ namespace Main.ViewModel
                     Max = IterationData.Max(x => x[i].BestChromosomeValue)
                 });
 
-                Selection.Add(new DataPoint() { X = i, Y = IterationData.Average(x => x[i].SelectionOverhead) });
-                Crossover.Add(new DataPoint() { X = i, Y = IterationData.Average(x => x[i].CrossoverOverhead) });
-                Mutation.Add(new DataPoint() { X = i, Y = IterationData.Average(x => x[i].MutationOverhead) });
-                Repair.Add(new DataPoint() { X = i, Y = IterationData.Average(x => x[i].RepairOverhead) });
-                Transform.Add(new DataPoint() { X = i, Y = IterationData.Average(x => x[i].TransformOverhead) });
-                Evaluation.Add(new DataPoint() { X = i, Y = IterationData.Average(x => x[i].EvaluationOverhead) });
+                SelectionOverhead.Add(new DataPoint() { X = i, Y = IterationData.Average(x => x[i].SelectionOverhead) });
+                CrossoverOverhead.Add(new DataPoint() { X = i, Y = IterationData.Average(x => x[i].CrossoverOverhead) });
+                MutationOverhead.Add(new DataPoint() { X = i, Y = IterationData.Average(x => x[i].MutationOverhead) });
+                RepairOverhead.Add(new DataPoint() { X = i, Y = IterationData.Average(x => x[i].RepairOverhead) });
+                TransformOverhead.Add(new DataPoint() { X = i, Y = IterationData.Average(x => x[i].TransformOverhead) });
+                EvaluationOverhead.Add(new DataPoint() { X = i, Y = IterationData.Average(x => x[i].EvaluationOverhead) });
             }
         }
     }
