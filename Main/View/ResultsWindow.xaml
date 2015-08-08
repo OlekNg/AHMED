@@ -6,6 +6,7 @@
         Title="ResultsWindow" Height="700" Width="800">
     <Window.Resources>
         <l:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <l:BooleanToHeightConverter x:Key="BooleanToHeightConverter"/>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -38,70 +39,83 @@
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200"/>
-                <ColumnDefinition />
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <ScrollViewer Grid.RowSpan="2">
-                <ListView ItemsSource="{Binding ResultSets}" SelectedItem="{Binding SelectedResultSet}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock TextAlignment="Center"
+            
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <ScrollViewer>
+                    <ListView ItemsSource="{Binding ResultSets}" SelectedItem="{Binding SelectedResultSet}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Center"
                                        Text="{Binding Name}"
                                        HorizontalAlignment="Stretch"/>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </ScrollViewer>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </ScrollViewer>
 
-            <oxy:PlotView Name="Plot" Title="Average fitness" Grid.Column="1"
+                <StackPanel Grid.Row="1">
+                    <Button Content="Load best chromosome" Margin="5" Command="{Binding LoadBestChromosomeCommand}"/>
+                </StackPanel>
+            </Grid>
+
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="{Binding ShowAverageFitness, Converter={StaticResource BooleanToHeightConverter}}"/>
+                    <RowDefinition Height="{Binding ShowBestChromosome, Converter={StaticResource BooleanToHeightConverter}}"/>
+                    <RowDefinition Height="{Binding ShowCpuUsage, Converter={StaticResource BooleanToHeightConverter}}"/>
+                </Grid.RowDefinitions>
+                
+
+                <oxy:PlotView Name="Plot" Title="Average fitness"
                           Visibility="{Binding ShowAverageFitness, Converter={StaticResource BooleanToVisibilityConverter}}">
-                <oxy:PlotView.Series>
-                    <oxy:AreaSeries ItemsSource="{Binding SelectedResultSet.AvgFitness}"
+                    <oxy:PlotView.Series>
+                        <oxy:AreaSeries ItemsSource="{Binding SelectedResultSet.AvgFitness}"
                                     DataFieldX="NumberOfIteration" DataFieldY="Min"
                                     DataFieldX2="NumberOfIteration" DataFieldY2="Max"
                                     Fill="LightBlue" StrokeThickness="0">
-                    </oxy:AreaSeries>
-                    <oxy:LineSeries ItemsSource="{Binding SelectedResultSet.AvgFitness}"
+                        </oxy:AreaSeries>
+                        <oxy:LineSeries ItemsSource="{Binding SelectedResultSet.AvgFitness}"
                                     DataFieldX="NumberOfIteration" DataFieldY="Avg" Smooth="True" Color="Blue"
                                     StrokeThickness="1"/>
-                </oxy:PlotView.Series>
-            </oxy:PlotView>
+                    </oxy:PlotView.Series>
+                </oxy:PlotView>
 
-            <oxy:PlotView Name="Plot2" Title="Best chromosome" Grid.Column="1" Grid.Row="1"
-                          Visibility="{Binding ShowBestChromosome, Converter={StaticResource BooleanToVisibilityConverter}}">
-                <oxy:PlotView.Series>
-                    <oxy:AreaSeries ItemsSource="{Binding SelectedResultSet.BestChromosome}"
+                <oxy:PlotView Name="Plot2" Title="Best chromosome" Grid.Row="1"
+                              Visibility="{Binding ShowBestChromosome, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <oxy:PlotView.Series>
+                        <oxy:AreaSeries ItemsSource="{Binding SelectedResultSet.BestChromosome}"
                                     DataFieldX="NumberOfIteration" DataFieldY="Min"
                                     DataFieldX2="NumberOfIteration" DataFieldY2="Max"
                                     Fill="LightBlue" StrokeThickness="0">
-                    </oxy:AreaSeries>
-                    <oxy:LineSeries ItemsSource="{Binding SelectedResultSet.BestChromosome}"
+                        </oxy:AreaSeries>
+                        <oxy:LineSeries ItemsSource="{Binding SelectedResultSet.BestChromosome}"
                                     DataFieldX="NumberOfIteration" DataFieldY="Avg" Smooth="True" Color="Blue"
                                     StrokeThickness="1"/>
-                </oxy:PlotView.Series>
-            </oxy:PlotView>
+                    </oxy:PlotView.Series>
+                </oxy:PlotView>
 
-            <oxy:PlotView Title="CPU Usage" Name="CpuUsagePlot" LegendPlacement="Outside" Grid.Row="2" Grid.Column="1">
-                <oxy:PlotView.Axes>
-                    <oxy:LinearAxis Maximum="1"/>
-                </oxy:PlotView.Axes>
-                <oxy:PlotView.Series>
-                    <oxy:LineSeries ItemsSource="{Binding SelectedResultSet.Selection}" Title="Selection"/>
-                    <oxy:LineSeries ItemsSource="{Binding SelectedResultSet.Crossover}" Title="Crossover"/>
-                    <oxy:LineSeries ItemsSource="{Binding SelectedResultSet.Mutation}" Title="Mutation"/>
-                    <oxy:LineSeries ItemsSource="{Binding SelectedResultSet.Repair}" Title="Repair"/>
-                    <oxy:LineSeries ItemsSource="{Binding SelectedResultSet.Transform}" Title="Transform"/>
-                    <oxy:LineSeries ItemsSource="{Binding SelectedResultSet.Evaluation}" Title="Evaluation"/>
-                </oxy:PlotView.Series>
-            </oxy:PlotView>
-            
-            <StackPanel Grid.Row="2">
-                <Button Content="Load best chromosome" Command="{Binding LoadBestChromosomeCommand}"/>
-            </StackPanel>
+                <oxy:PlotView Title="CPU Usage" Name="CpuUsagePlot" LegendPlacement="Outside" Grid.Row="2"
+                              Visibility="{Binding ShowCpuUsage, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <oxy:PlotView.Axes>
+                        <oxy:LinearAxis Maximum="1"/>
+                    </oxy:PlotView.Axes>
+                    <oxy:PlotView.Series>
+                        <oxy:LineSeries ItemsSource="{Binding SelectedResultSet.Selection}" Title="Selection"/>
+                        <oxy:LineSeries ItemsSource="{Binding SelectedResultSet.Crossover}" Title="Crossover"/>
+                        <oxy:LineSeries ItemsSource="{Binding SelectedResultSet.Mutation}" Title="Mutation"/>
+                        <oxy:LineSeries ItemsSource="{Binding SelectedResultSet.Repair}" Title="Repair"/>
+                        <oxy:LineSeries ItemsSource="{Binding SelectedResultSet.Transform}" Title="Transform"/>
+                        <oxy:LineSeries ItemsSource="{Binding SelectedResultSet.Evaluation}" Title="Evaluation"/>
+                    </oxy:PlotView.Series>
+                </oxy:PlotView>
+            </Grid>
         </Grid>
     </Grid>
 </Window>

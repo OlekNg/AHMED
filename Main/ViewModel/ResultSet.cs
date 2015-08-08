@@ -1,5 +1,6 @@
 ﻿using Genetics.Statistics;
 using OxyPlot;
+using PropertyChanged;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,6 +9,7 @@ using System.Text;
 
 namespace Main.ViewModel
 {
+    [ImplementPropertyChanged]
     public class ResultSet
     {
         private string folderPath;

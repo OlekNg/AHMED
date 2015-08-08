@@ -21,6 +21,7 @@ namespace Main.View
     public partial class ResultsWindow : Window
     {
         private ResultsViewer viewModel;
+        private List<string> showProperties = new List<string>() { "ShowAverageFitness", "ShowBestChromosome", "ShowCpuUsage" };
         public ResultsWindow(Calculator calculatorModel)
         {
             InitializeComponent();
@@ -31,10 +32,9 @@ namespace Main.View
 
         private void OnModelChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "SelectedResultSet")
-            {
-                Plot.InvalidatePlot();
-            }
+            Plot.InvalidatePlot();
+            Plot2.InvalidatePlot();
+            CpuUsagePlot.InvalidatePlot();
         }
     }
 }
