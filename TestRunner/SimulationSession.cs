@@ -21,6 +21,10 @@ namespace TestRunner
         public SimulationSession(string xmlConfigurationPath)
         {
             this.xmlConfigurationPath = xmlConfigurationPath;
+        }
+
+        public void Run()
+        {
             ReadConfiguration();
             CreateSessionFolder();
             CopyBuildingAndConfigurationToSessionFolder();
@@ -48,6 +52,7 @@ namespace TestRunner
 
         private void PerformSession()
         {
+            Console.WriteLine("Running session on {0}", xmlConfigurationPath);
             for (int i = 0; i < SimulationsInSession ;i++)
             {
                 var simulation = new EvacuationSimulation(xmlConfiguration.GetBuilding(), xmlConfiguration.GetGeneticsConfiguration());

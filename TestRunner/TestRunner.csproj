@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SessionSet.cs" />
     <Compile Include="SimulationSession.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -52,7 +53,10 @@
     <Content Include="SampleBuilding.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="SampleScenario.xml">
+    <Content Include="SampleSessionSet.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SampleSimulation.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

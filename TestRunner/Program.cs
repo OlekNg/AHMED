@@ -17,8 +17,8 @@ namespace TestRunner
                 Console.ReadKey();
                 return;
             }
-
-            var session = new SimulationSession(args[0]);
+            var sessionSet = new SessionSet(args[0]);
+            sessionSet.Run();
             
             Console.WriteLine("All simulations ended");
             Console.ReadKey();
