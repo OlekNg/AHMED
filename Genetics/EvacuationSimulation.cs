@@ -76,6 +76,7 @@ namespace Genetics
             BinaryChromosome.Evaluator = evaluator;
 
             GeneticAlgorithm = new GeneticAlgorithm(new BinaryChromosomeFactory(_building.GetFloorCount() * 2), _geneticsConfiguration.InitialPopulationSize);
+            GeneticAlgorithm.EnableBestChromosomeBasedStopCondition();
             GeneticAlgorithm.Selector = _geneticsConfiguration.Selector;
             GeneticAlgorithm.MaxIterations = _geneticsConfiguration.MaxIterations;
             GeneticAlgorithm.CrossoverProbability = _geneticsConfiguration.CrossoverProbability;
