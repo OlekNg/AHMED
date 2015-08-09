@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace TestRunner
 {
@@ -15,12 +16,23 @@ namespace TestRunner
         private double bestChromosomeValue = Double.MinValue;
         private int bestSessionChromosome = -1;
         private string xmlConfigurationPath;
+        private string basePath;
         private string sessionFolder;
+        private XmlDocument xmlDocument;
         private EvacuationSimulation.XmlConfigurationReader xmlConfiguration;
 
         public SimulationSession(string xmlConfigurationPath)
         {
             this.xmlConfigurationPath = xmlConfigurationPath;
+            this.basePath = Path.GetDirectoryName(xmlConfigurationPath);
+            this.xmlDocument = new XmlDocument();
+            this.xmlDocument.Load(xmlConfigurationPath);
+        }
+
+        public SimulationSession(XmlDocument xmlDocument, string basePath)
+        {
+            this.xmlDocument = xmlDocument;
+            this.basePath = basePath;
         }
 
         public void Run()
@@ -33,13 +45,13 @@ namespace TestRunner
 
         private void ReadConfiguration()
         {
-            xmlConfiguration = new EvacuationSimulation.XmlConfigurationReader(xmlConfigurationPath);
+            xmlConfiguration = new EvacuationSimulation.XmlConfigurationReader(xmlDocument, basePath);
         }
 
         private void CreateSessionFolder()
         {
             var today = DateTime.Now.ToString("yyyy_MM_dd-HH_mm_ss");
-            sessionFolder = String.Format("session_{0}", today);
+            sessionFolder = xmlConfiguration.SimulationName ?? String.Format("session_{0}", today);
             Directory.CreateDirectory(sessionFolder);
         }
 
@@ -47,7 +59,7 @@ namespace TestRunner
         {
             var buildingPath = xmlConfiguration.GetBuildingPath();
             File.Copy(buildingPath, Path.Combine(sessionFolder, "Building.xml"));
-            File.Copy(xmlConfigurationPath, Path.Combine(sessionFolder, "Scenario.xml"));
+            xmlDocument.Save(Path.Combine(sessionFolder, "Scenario.xml"));
         }
 
         private void PerformSession()

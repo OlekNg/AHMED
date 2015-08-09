@@ -54,8 +54,8 @@ namespace TestRunner
         {
             foreach (var path in configPaths)
             {
-                var session = new SimulationSession(path);
-                session.Run();
+                var simulationCollection = new SimulationCollection(path);
+                simulationCollection.Run();
             }
         }
     }

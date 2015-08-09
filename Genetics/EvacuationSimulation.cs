@@ -96,6 +96,9 @@ namespace Genetics
             private string basePath;
             private XmlDocument xmlDocument;
             private string overrideBuildingPath;
+            private string simulationName;
+
+            public string SimulationName { get { return simulationName; } }
 
             public XmlConfigurationReader(string path, string overrideBuildingPath = null)
             {
@@ -103,6 +106,24 @@ namespace Genetics
                 basePath = Path.GetDirectoryName(path);
                 this.overrideBuildingPath = overrideBuildingPath;
                 LoadXmlDocument();
+                ReadSimulationName();
+            }
+
+            public XmlConfigurationReader(XmlDocument xmlDocument, string basePath)
+            {
+                this.xmlDocument = xmlDocument;
+                this.basePath = basePath;
+                ReadSimulationName();
+            }
+
+            private void ReadSimulationName()
+            {
+                var simulationNode = xmlDocument.GetElementsByTagName("Simulation").Item(0);
+                var nameAttr = simulationNode.Attributes.GetNamedItem("Name");
+                if (nameAttr != null)
+                {
+                    simulationName = nameAttr.InnerText;
+                }
             }
 
             private void LoadXmlDocument()
