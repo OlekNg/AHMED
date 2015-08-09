@@ -64,7 +64,7 @@ namespace Main.ViewModel
         {
             var pointHelper = new PointHelper(status.IterationNumber);
             AvgFitness.Add(pointHelper.Create(status.CurrentPopulation.AvgFitness));
-            BestChromosome.Add(pointHelper.Create(status.CurrentPopulation.BestChromosome.Value));
+            BestChromosome.Add(pointHelper.Create(status.BestChromosome.Value));
             Selection.Add(pointHelper.Create(status.SelectionOverhead));
             Crossover.Add(pointHelper.Create(status.CrossoverOverhead));
             Mutation.Add(pointHelper.Create(status.MutationOverhead));
