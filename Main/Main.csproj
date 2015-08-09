@@ -18,7 +18,7 @@
     <RestorePackages>true</RestorePackages>
     <FodyPath>..\packages\Fody.1.19.0.0</FodyPath>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>F:\VirtualMachines\Shared\PublishAHMED\</PublishUrl>
+    <PublishUrl>D:\Publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -28,7 +28,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationRevision>3</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -237,6 +237,10 @@
     <ProjectReference Include="..\Structure\Structure.csproj">
       <Project>{fe48dff8-eacb-4778-9df0-5d71a664927a}</Project>
       <Name>Structure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TestRunner\TestRunner.csproj">
+      <Project>{8c3769fa-2582-407e-b9ce-ffef069dd298}</Project>
+      <Name>TestRunner</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

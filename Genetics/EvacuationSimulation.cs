@@ -8,6 +8,7 @@ using Simulation;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
@@ -92,12 +93,14 @@ namespace Genetics
 
             // Local members
             private string path;
+            private string basePath;
             private XmlDocument xmlDocument;
             private string overrideBuildingPath;
 
             public XmlConfigurationReader(string path, string overrideBuildingPath = null)
             {
                 this.path = path;
+                basePath = Path.GetDirectoryName(path);
                 this.overrideBuildingPath = overrideBuildingPath;
                 LoadXmlDocument();
             }
@@ -123,7 +126,7 @@ namespace Genetics
                 else
                 {
                     var buildingNode = xmlDocument.GetElementsByTagName("Building").Item(0);
-                    buildingPath = buildingNode.Attributes.GetNamedItem("Path").InnerText;
+                    buildingPath = Path.Combine(basePath, buildingNode.Attributes.GetNamedItem("Path").InnerText);
                 }
             }
 

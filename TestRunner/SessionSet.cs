@@ -11,11 +11,13 @@ namespace TestRunner
     public class SessionSet
     {
         private string xmlPath;
+        private string basePath;
         private List<string> configPaths;
 
         public SessionSet(string path)
         {
             this.xmlPath = path;
+            basePath = Path.GetDirectoryName(path);
         }
 
         public void Run()
@@ -34,7 +36,7 @@ namespace TestRunner
             var nodes = xml.GetElementsByTagName("Session");
             for (var i = 0; i < nodes.Count; i++)
             {
-                configPaths.Add(nodes[i].Attributes.GetNamedItem("Config").InnerText);
+                configPaths.Add(Path.Combine(basePath, nodes[i].Attributes.GetNamedItem("Config").InnerText));
             }
             Console.WriteLine("Loaded session set - {0} configs", configPaths.Count);
         }
