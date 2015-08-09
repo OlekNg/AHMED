@@ -75,6 +75,16 @@ namespace BuildingEditor.ViewModel
             }
         }
 
+        public void ApplySimpleEvacuationIfShortGenotype()
+        {
+            if (ShortGenotype)
+            {
+                Rooms.Where(x => x.NumberOfDoors == 1)
+                    .ToList()
+                    .ForEach(x => x.ApplySimpleEvacuation());
+            }
+        }
+
         /// <summary>
         /// Calculates building's flow and rooms.
         /// </summary>

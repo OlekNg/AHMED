@@ -54,13 +54,7 @@ namespace Genetics
         private void Setup()
         {
             _building.ShortGenotype = _geneticsConfiguration.ShortGenotype;
-            if (_building.ShortGenotype)
-            {
-                _building.Rooms
-                    .Where(x => x.NumberOfDoors == 1)
-                    .ToList()
-                    .ForEach(x => x.ApplySimpleEvacuation());
-            }
+            _building.ApplySimpleEvacuationIfShortGenotype();
 
             MapBuilder mapBuilder = new MapBuilder(_building.ToDataModel());
             Simulator sim = new Simulator();

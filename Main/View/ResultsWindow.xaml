@@ -46,7 +46,7 @@
             
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition />
+                    <RowDefinition Height="200" />
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
@@ -73,6 +73,7 @@
                     <Label Content="{Binding SelectedResultSet.MaxIterations}" ContentStringFormat="Max iter.: {0}"/>
                     <Label Content="{Binding SelectedResultSet.MaxIterationsWithoutImprovement}" ContentStringFormat="Iter. w/out impr.: {0}"/>
                     <Label Content="{Binding SelectedResultSet.BestChromosomeValue}" ContentStringFormat="Best chr. value: {0}"/>
+                    <Label Content="{Binding SelectedResultSet.ChromosomeLength}" ContentStringFormat="Chromosome length: {0}"/>
                     <Label Content="{Binding SelectedResultSet.Iterations}" ContentStringFormat="# of iter: {0}"/>
                 </StackPanel>
             </Grid>

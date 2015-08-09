@@ -83,6 +83,12 @@ namespace Main.ViewModel
 
             var genotypeString = File.ReadAllLines(Path.Combine(folderPath, "best_chromosome.txt"))[1];
             List<bool> genotype = genotypeString.Select(x => x == '1' ? true : false).ToList();
+            if (SelectedResultSet.ShortGenotype)
+            {
+                calculatorModel.CurrentBuilding.ShortGenotype = true;
+                calculatorModel.CurrentBuilding.ApplySimpleEvacuationIfShortGenotype();
+            }
+
             calculatorModel.CurrentBuilding.SetFenotype(genotype.ToFenotype());
             calculatorModel.CurrentBuilding.DrawSolution();
         }

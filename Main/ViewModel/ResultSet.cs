@@ -40,6 +40,7 @@ namespace Main.ViewModel
         public bool ShortGenotype { get; set; }
         public int MaxIterationsWithoutImprovement { get; set; }
         public string Iterations { get; set; }
+        public int ChromosomeLength { get; set; }
 
         public double BestChromosomeValue { get; set; }
 
@@ -52,6 +53,7 @@ namespace Main.ViewModel
                 SetResultSetName();
                 LoadIterationsData();
                 LoadGeneticsConfigurationData();
+                LoadChromosomeLength();
                 CalculateDevianceData();
             }
         }
@@ -88,6 +90,12 @@ namespace Main.ViewModel
             MaxIterations = cfg.MaxIterations;
             ShortGenotype = cfg.ShortGenotype;
             MaxIterationsWithoutImprovement = cfg.MaxIterationsWithoutImprovement;
+        }
+
+        private void LoadChromosomeLength()
+        {
+            var genotype = File.ReadAllLines(Path.Combine(folderPath, "best_chromosome.txt"))[1];
+            ChromosomeLength = genotype.Length;
         }
 
         private void CalculateDevianceData()
