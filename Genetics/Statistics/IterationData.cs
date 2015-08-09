@@ -21,6 +21,8 @@ namespace Genetics.Statistics
         public double RepairOverhead { get; set; }
         public double TransformOverhead { get; set; }
         public double EvaluationOverhead { get; set; }
+
+        public double IterationTimeInMillis { get; set; }
     }
 
     public class IterationDataWithDeviance

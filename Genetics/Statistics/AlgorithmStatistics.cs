@@ -50,7 +50,9 @@ namespace Genetics.Statistics
                 MutationOverhead = status.MutationOverhead,
                 RepairOverhead = status.RepairOverhead,
                 TransformOverhead = status.TransformOverhead,
-                EvaluationOverhead = status.EvaluationOverhead
+                EvaluationOverhead = status.EvaluationOverhead,
+
+                IterationTimeInMillis = status.IterationTimeInMillis
             });
 
             if (status.BestChromosome.Value > _bestChromosomeValue)
