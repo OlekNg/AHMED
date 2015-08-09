@@ -6,7 +6,7 @@
     <General PopulationSize="50" MaxIterations="500" ShortGenotype="false" MaxIterationsWithoutImprovement="100"/>
     <Selector Type="Tournament"/>
     <Crossover Type="OnePoint" Probability="0.75"/>
-    <Mutation Type="Classic" Probability="0.01"/>
+    <Mutation Type="PathDirection" Probability="0.01"/>
     <Transformer Type="None"/>
   </Genetics>
 </Simulation>

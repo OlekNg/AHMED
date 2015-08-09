@@ -93,10 +93,12 @@ namespace Genetics
             // Local members
             private string path;
             private XmlDocument xmlDocument;
+            private string overrideBuildingPath;
 
-            public XmlConfigurationReader(string path)
+            public XmlConfigurationReader(string path, string overrideBuildingPath = null)
             {
                 this.path = path;
+                this.overrideBuildingPath = overrideBuildingPath;
                 LoadXmlDocument();
             }
 
@@ -108,11 +110,21 @@ namespace Genetics
 
             private void LoadBuilding()
             {
-                var buildingNode = xmlDocument.GetElementsByTagName("Building").Item(0);
-                buildingPath = buildingNode.Attributes.GetNamedItem("Path").InnerText;
+                LoadBuildingPath();
                 var buildingCommonModel = new Common.DataModel.Building();
                 buildingCommonModel.Load(buildingPath);
                 building = new Building(buildingCommonModel);
+            }
+
+            private void LoadBuildingPath()
+            {
+                if (overrideBuildingPath != null)
+                    buildingPath = overrideBuildingPath;
+                else
+                {
+                    var buildingNode = xmlDocument.GetElementsByTagName("Building").Item(0);
+                    buildingPath = buildingNode.Attributes.GetNamedItem("Path").InnerText;
+                }
             }
 
             private void CreateGeneticsConfiguration()
@@ -178,7 +190,7 @@ namespace Genetics
                         geneticsConfiguration.MutationOperator = new ClassicMutation(Double.Parse(GetAttributeValueOfElement("Probability", "Mutation"), CultureInfo.InvariantCulture));
                         break;
                     case "PathDirection":
-                        geneticsConfiguration.MutationOperator = new PathDirectionMutation(building, Double.Parse(GetAttributeValueOfElement("Probability", "Mutation"), CultureInfo.InvariantCulture));
+                        geneticsConfiguration.MutationOperator = new PathDirectionMutation(GetBuilding(), Double.Parse(GetAttributeValueOfElement("Probability", "Mutation"), CultureInfo.InvariantCulture));
                         break;
                     default:
                         throw new ArgumentException("Invalid mutation name");
@@ -193,10 +205,10 @@ namespace Genetics
                         geneticsConfiguration.Transformer = null;
                         break;
                     case "ThreeSegmentLoopOptimizer":
-                        geneticsConfiguration.Transformer = new ThreeSegmentLoopOptimizer(building, Double.Parse(GetAttributeValueOfElement("Probability", "Transformer"), CultureInfo.InvariantCulture));
+                        geneticsConfiguration.Transformer = new ThreeSegmentLoopOptimizer(GetBuilding(), Double.Parse(GetAttributeValueOfElement("Probability", "Transformer"), CultureInfo.InvariantCulture));
                         break;
                     case "LocalOptimization":
-                        geneticsConfiguration.Transformer = new LocalOptimization(building, GetEvaluator());
+                        geneticsConfiguration.Transformer = new LocalOptimization(GetBuilding(), GetEvaluator());
                         break;
                     default:
                         throw new ArgumentException("Invalid transformer name");

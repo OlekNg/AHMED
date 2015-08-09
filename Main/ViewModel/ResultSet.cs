@@ -80,7 +80,7 @@ namespace Main.ViewModel
 
         private void LoadGeneticsConfigurationData()
         {
-            var reader = new EvacuationSimulation.XmlConfigurationReader(Path.Combine(folderPath, "Scenario.xml"));
+            var reader = new EvacuationSimulation.XmlConfigurationReader(Path.Combine(folderPath, "Scenario.xml"), Path.Combine(folderPath, "Building.xml"));
             var cfg = reader.GetGeneticsConfiguration();
             Selection = cfg.Selector.ToString();
             Crossover = cfg.CrossoverOperator.ToString();
