@@ -20,6 +20,7 @@ namespace Main.ViewModel
         public List<List<IterationData>> IterationData { get; set; }
         public List<IterationDataWithDeviance> AvgFitness { get; set; }
         public List<IterationDataWithDeviance> BestChromosome { get; set; }
+        public List<IterationDataWithDeviance> IterationTime { get; set; }
 
         public List<DataPoint> SelectionOverhead { get; set; }
         public List<DataPoint> CrossoverOverhead { get; set; }
@@ -37,6 +38,8 @@ namespace Main.ViewModel
         public int PopulationSize { get; set; }
         public int MaxIterations { get; set; }
         public bool ShortGenotype { get; set; }
+
+        public double BestChromosomeValue { get; set; }
 
         public ResultSet(string folderPath)
         {
@@ -88,12 +91,15 @@ namespace Main.ViewModel
         {
             AvgFitness = new List<IterationDataWithDeviance>();
             BestChromosome = new List<IterationDataWithDeviance>();
+            IterationTime = new List<IterationDataWithDeviance>();
             SelectionOverhead = new List<DataPoint>();
             CrossoverOverhead = new List<DataPoint>();
             MutationOverhead = new List<DataPoint>();
             RepairOverhead = new List<DataPoint>();
             TransformOverhead = new List<DataPoint>();
             EvaluationOverhead = new List<DataPoint>();
+
+            BestChromosomeValue = IterationData.SelectMany(x => x.Select(y => y.BestChromosomeValue)).Max();
 
             var iterations = IterationData.First().Count;
             for (int i = 0; i < iterations; i++)
@@ -112,6 +118,14 @@ namespace Main.ViewModel
                     Avg = IterationData.Average(x => x[i].BestChromosomeValue),
                     Min = IterationData.Min(x => x[i].BestChromosomeValue),
                     Max = IterationData.Max(x => x[i].BestChromosomeValue)
+                });
+
+                IterationTime.Add(new IterationDataWithDeviance()
+                {
+                    NumberOfIteration = i,
+                    Avg = IterationData.Average(x => x[i].IterationTimeInMillis),
+                    Min = IterationData.Min(x => x[i].IterationTimeInMillis),
+                    Max = IterationData.Max(x => x[i].IterationTimeInMillis)
                 });
 
                 SelectionOverhead.Add(new DataPoint() { X = i, Y = IterationData.Average(x => x[i].SelectionOverhead) });

@@ -32,8 +32,9 @@ namespace Main.View
 
         private void OnModelChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            Plot.InvalidatePlot();
-            Plot2.InvalidatePlot();
+            BestChromosomePlot.InvalidatePlot();
+            AvgFitnessPlot.InvalidatePlot();
+            IterationTimePlot.InvalidatePlot();
             CpuUsagePlot.InvalidatePlot();
         }
     }

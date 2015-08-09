@@ -33,6 +33,8 @@
                 <Label Content="Show best chromosome"/>
                 <CheckBox IsChecked="{Binding ShowCpuUsage}" VerticalAlignment="Center"/>
                 <Label Content="Show CPU usage"/>
+                <CheckBox IsChecked="{Binding ShowIterationTime}" VerticalAlignment="Center"/>
+                <Label Content="Show iteration time"/>
             </StackPanel>
         </Grid>
         
@@ -68,6 +70,7 @@
                     <Label Content="{Binding SelectedResultSet.Transform}" ContentStringFormat="Transform: {0}"/>
                     <Label Content="{Binding SelectedResultSet.PopulationSize}" ContentStringFormat="Pop. size: {0}"/>
                     <Label Content="{Binding SelectedResultSet.ShortGenotype}" ContentStringFormat="Short gen.: {0}"/>
+                    <Label Content="{Binding SelectedResultSet.BestChromosomeValue}" ContentStringFormat="Best chr. value: {0}"/>
                 </StackPanel>
             </Grid>
 
@@ -76,10 +79,11 @@
                     <RowDefinition Height="{Binding ShowAverageFitness, Converter={StaticResource BooleanToHeightConverter}}"/>
                     <RowDefinition Height="{Binding ShowBestChromosome, Converter={StaticResource BooleanToHeightConverter}}"/>
                     <RowDefinition Height="{Binding ShowCpuUsage, Converter={StaticResource BooleanToHeightConverter}}"/>
+                    <RowDefinition Height="{Binding ShowIterationTime, Converter={StaticResource BooleanToHeightConverter}}"/>
                 </Grid.RowDefinitions>
                 
 
-                <oxy:PlotView Name="Plot" Title="Average fitness"
+                <oxy:PlotView Name="AvgFitnessPlot" Title="Average fitness"
                           Visibility="{Binding ShowAverageFitness, Converter={StaticResource BooleanToVisibilityConverter}}">
                     <oxy:PlotView.Series>
                         <oxy:AreaSeries ItemsSource="{Binding SelectedResultSet.AvgFitness}"
@@ -93,7 +97,7 @@
                     </oxy:PlotView.Series>
                 </oxy:PlotView>
 
-                <oxy:PlotView Name="Plot2" Title="Best chromosome" Grid.Row="1"
+                <oxy:PlotView Name="BestChromosomePlot" Title="Best chromosome" Grid.Row="1"
                               Visibility="{Binding ShowBestChromosome, Converter={StaticResource BooleanToVisibilityConverter}}">
                     <oxy:PlotView.Series>
                         <oxy:AreaSeries ItemsSource="{Binding SelectedResultSet.BestChromosome}"
@@ -119,6 +123,20 @@
                         <oxy:LineSeries ItemsSource="{Binding SelectedResultSet.RepairOverhead}" Title="Repair"/>
                         <oxy:LineSeries ItemsSource="{Binding SelectedResultSet.TransformOverhead}" Title="Transform"/>
                         <oxy:LineSeries ItemsSource="{Binding SelectedResultSet.EvaluationOverhead}" Title="Evaluation"/>
+                    </oxy:PlotView.Series>
+                </oxy:PlotView>
+
+                <oxy:PlotView Name="IterationTimePlot" Title="Iteration time [ms]" Grid.Row="3"
+                              Visibility="{Binding ShowIterationTime, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <oxy:PlotView.Series>
+                        <oxy:AreaSeries ItemsSource="{Binding SelectedResultSet.IterationTime}"
+                                    DataFieldX="NumberOfIteration" DataFieldY="Min"
+                                    DataFieldX2="NumberOfIteration" DataFieldY2="Max"
+                                    Fill="LightBlue" StrokeThickness="0">
+                        </oxy:AreaSeries>
+                        <oxy:LineSeries ItemsSource="{Binding SelectedResultSet.IterationTime}"
+                                    DataFieldX="NumberOfIteration" DataFieldY="Avg" Smooth="True" Color="Blue"
+                                    StrokeThickness="1"/>
                     </oxy:PlotView.Series>
                 </oxy:PlotView>
             </Grid>

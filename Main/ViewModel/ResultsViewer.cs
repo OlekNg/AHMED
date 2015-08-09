@@ -31,6 +31,7 @@ namespace Main.ViewModel
         public bool ShowAverageFitness { get; set; }
         public bool ShowBestChromosome { get; set; }
         public bool ShowCpuUsage { get; set; }
+        public bool ShowIterationTime { get; set; }
 
         public ICommand ChooseResultsPathCommand { get; set; }
         public ICommand LoadBestChromosomeCommand { get; set; }
@@ -44,6 +45,7 @@ namespace Main.ViewModel
             ShowAverageFitness = true;
             ShowBestChromosome = true;
             ShowCpuUsage = true;
+            ShowIterationTime = true;
         }
 
         public ResultsViewer(Calculator calculatorModel)
