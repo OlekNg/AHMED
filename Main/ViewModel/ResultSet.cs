@@ -38,6 +38,8 @@ namespace Main.ViewModel
         public int PopulationSize { get; set; }
         public int MaxIterations { get; set; }
         public bool ShortGenotype { get; set; }
+        public int MaxIterationsWithoutImprovement { get; set; }
+        public string Iterations { get; set; }
 
         public double BestChromosomeValue { get; set; }
 
@@ -85,6 +87,7 @@ namespace Main.ViewModel
             PopulationSize = cfg.InitialPopulationSize;
             MaxIterations = cfg.MaxIterations;
             ShortGenotype = cfg.ShortGenotype;
+            MaxIterationsWithoutImprovement = cfg.MaxIterationsWithoutImprovement;
         }
 
         private void CalculateDevianceData()
@@ -100,40 +103,43 @@ namespace Main.ViewModel
             EvaluationOverhead = new List<DataPoint>();
 
             BestChromosomeValue = IterationData.SelectMany(x => x.Select(y => y.BestChromosomeValue)).Max();
+            Iterations = String.Join(", ", IterationData.Select(x => x.Count));
 
-            var iterations = IterationData.First().Count;
+            var iterations = IterationData.Max(x => x.Count);
             for (int i = 0; i < iterations; i++)
             {
+                var iterData = IterationData.Where(x => x.Count > i);
+
                 AvgFitness.Add(new IterationDataWithDeviance()
                 {
                     NumberOfIteration = i,
-                    Avg = IterationData.Average(x => x[i].AverageFitness),
-                    Min = IterationData.Min(x => x[i].AverageFitness),
-                    Max = IterationData.Max(x => x[i].AverageFitness)
+                    Avg = iterData.Average(x => x[i].AverageFitness),
+                    Min = iterData.Min(x => x[i].AverageFitness),
+                    Max = iterData.Max(x => x[i].AverageFitness)
                 });
 
                 BestChromosome.Add(new IterationDataWithDeviance()
                 {
                     NumberOfIteration = i,
-                    Avg = IterationData.Average(x => x[i].BestChromosomeValue),
-                    Min = IterationData.Min(x => x[i].BestChromosomeValue),
-                    Max = IterationData.Max(x => x[i].BestChromosomeValue)
+                    Avg = iterData.Average(x => x[i].BestChromosomeValue),
+                    Min = iterData.Min(x => x[i].BestChromosomeValue),
+                    Max = iterData.Max(x => x[i].BestChromosomeValue)
                 });
 
                 IterationTime.Add(new IterationDataWithDeviance()
                 {
                     NumberOfIteration = i,
-                    Avg = IterationData.Average(x => x[i].IterationTimeInMillis),
-                    Min = IterationData.Min(x => x[i].IterationTimeInMillis),
-                    Max = IterationData.Max(x => x[i].IterationTimeInMillis)
+                    Avg = iterData.Average(x => x[i].IterationTimeInMillis),
+                    Min = iterData.Min(x => x[i].IterationTimeInMillis),
+                    Max = iterData.Max(x => x[i].IterationTimeInMillis)
                 });
 
-                SelectionOverhead.Add(new DataPoint() { X = i, Y = IterationData.Average(x => x[i].SelectionOverhead) });
-                CrossoverOverhead.Add(new DataPoint() { X = i, Y = IterationData.Average(x => x[i].CrossoverOverhead) });
-                MutationOverhead.Add(new DataPoint() { X = i, Y = IterationData.Average(x => x[i].MutationOverhead) });
-                RepairOverhead.Add(new DataPoint() { X = i, Y = IterationData.Average(x => x[i].RepairOverhead) });
-                TransformOverhead.Add(new DataPoint() { X = i, Y = IterationData.Average(x => x[i].TransformOverhead) });
-                EvaluationOverhead.Add(new DataPoint() { X = i, Y = IterationData.Average(x => x[i].EvaluationOverhead) });
+                SelectionOverhead.Add(new DataPoint() { X = i, Y = iterData.Average(x => x[i].SelectionOverhead) });
+                CrossoverOverhead.Add(new DataPoint() { X = i, Y = iterData.Average(x => x[i].CrossoverOverhead) });
+                MutationOverhead.Add(new DataPoint() { X = i, Y = iterData.Average(x => x[i].MutationOverhead) });
+                RepairOverhead.Add(new DataPoint() { X = i, Y = iterData.Average(x => x[i].RepairOverhead) });
+                TransformOverhead.Add(new DataPoint() { X = i, Y = iterData.Average(x => x[i].TransformOverhead) });
+                EvaluationOverhead.Add(new DataPoint() { X = i, Y = iterData.Average(x => x[i].EvaluationOverhead) });
             }
         }
     }

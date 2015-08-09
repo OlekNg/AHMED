@@ -19,5 +19,6 @@ namespace Genetics
         public int MaxIterations { get; set; }
         public bool ShortGenotype { get; set; }
         public double CrossoverProbability { get; set; }
+        public int MaxIterationsWithoutImprovement { get; set; }
     }
 }

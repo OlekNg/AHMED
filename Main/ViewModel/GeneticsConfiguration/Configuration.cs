@@ -41,11 +41,13 @@ namespace Main.ViewModel.GeneticsConfiguration
             InitPopSize = 50;
             CrossoverProbability = 0.75;
             ShortGenotype = false;
+            MaxIterationsWithoutImprovement = 0;
         }
 
         // General
         public int MaxIterations { get; set; }
         public int InitPopSize { get; set; }
+        public int MaxIterationsWithoutImprovement { get; set; }
 
         // Selection
         public ObservableCollection<ISelectionConfiguration> Selectors { get; set; }
@@ -77,7 +79,8 @@ namespace Main.ViewModel.GeneticsConfiguration
                 Selector = SelectedSelector.BuildSelector(),
                 Transformer = SelectedTransformer.BuildTransformer(CurrentBuilding),
                 ShortGenotype = ShortGenotype,
-                CrossoverProbability = CrossoverProbability
+                CrossoverProbability = CrossoverProbability,
+                MaxIterationsWithoutImprovement = MaxIterationsWithoutImprovement
             };
         }
     }

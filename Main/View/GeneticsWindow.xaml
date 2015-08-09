@@ -20,6 +20,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -33,12 +34,16 @@
             <TextBox Text="{Binding MaxIterations}" Grid.Row="1" Grid.Column="1"
                      VerticalAlignment="Center"/>
 
-            <Label Content="Initial population size:" Grid.Row="2" Grid.Column="0"/>
-            <TextBox Text="{Binding InitPopSize}" Grid.Row="2" Grid.Column="1"
+            <Label Content="Iter. without improv.:" Grid.Row="2" Grid.Column="0"/>
+            <TextBox Text="{Binding MaxIterationsWithoutImprovement}" Grid.Row="2" Grid.Column="1"
                      VerticalAlignment="Center"/>
 
-            <Label Content="Short genotype:" Grid.Row="3" Grid.Column="0"/>
-            <CheckBox IsChecked="{Binding ShortGenotype}" Grid.Row="3" Grid.Column="1"
+            <Label Content="Initial population size:" Grid.Row="3" Grid.Column="0"/>
+            <TextBox Text="{Binding InitPopSize}" Grid.Row="3" Grid.Column="1"
+                     VerticalAlignment="Center"/>
+
+            <Label Content="Short genotype:" Grid.Row="4" Grid.Column="0"/>
+            <CheckBox IsChecked="{Binding ShortGenotype}" Grid.Row="4" Grid.Column="1"
                      VerticalAlignment="Center"/>
         </Grid>
 

@@ -70,7 +70,10 @@
                     <Label Content="{Binding SelectedResultSet.Transform}" ContentStringFormat="Transform: {0}"/>
                     <Label Content="{Binding SelectedResultSet.PopulationSize}" ContentStringFormat="Pop. size: {0}"/>
                     <Label Content="{Binding SelectedResultSet.ShortGenotype}" ContentStringFormat="Short gen.: {0}"/>
+                    <Label Content="{Binding SelectedResultSet.MaxIterations}" ContentStringFormat="Max iter.: {0}"/>
+                    <Label Content="{Binding SelectedResultSet.MaxIterationsWithoutImprovement}" ContentStringFormat="Iter. w/out impr.: {0}"/>
                     <Label Content="{Binding SelectedResultSet.BestChromosomeValue}" ContentStringFormat="Best chr. value: {0}"/>
+                    <Label Content="{Binding SelectedResultSet.Iterations}" ContentStringFormat="# of iter: {0}"/>
                 </StackPanel>
             </Grid>
 

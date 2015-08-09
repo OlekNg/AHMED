@@ -76,7 +76,8 @@ namespace Genetics
             BinaryChromosome.Evaluator = evaluator;
 
             GeneticAlgorithm = new GeneticAlgorithm(new BinaryChromosomeFactory(_building.GetFloorCount() * 2), _geneticsConfiguration.InitialPopulationSize);
-            GeneticAlgorithm.EnableBestChromosomeBasedStopCondition();
+            if (_geneticsConfiguration.MaxIterationsWithoutImprovement > 0)
+                GeneticAlgorithm.EnableBestChromosomeBasedStopCondition(_geneticsConfiguration.MaxIterationsWithoutImprovement);
             GeneticAlgorithm.Selector = _geneticsConfiguration.Selector;
             GeneticAlgorithm.MaxIterations = _geneticsConfiguration.MaxIterations;
             GeneticAlgorithm.CrossoverProbability = _geneticsConfiguration.CrossoverProbability;
@@ -128,7 +129,6 @@ namespace Genetics
                 CreateCrossoverOperator();
                 CreateMutationOperator();
                 CreateLocalOptimizationOperator();
-
             }
 
             private void SetGeneralSettings()
@@ -137,6 +137,10 @@ namespace Genetics
                 geneticsConfiguration.InitialPopulationSize = Int32.Parse(generalNode.Attributes.GetNamedItem("PopulationSize").InnerText);
                 geneticsConfiguration.MaxIterations = Int32.Parse(generalNode.Attributes.GetNamedItem("MaxIterations").InnerText);
                 geneticsConfiguration.ShortGenotype = Boolean.Parse(generalNode.Attributes.GetNamedItem("ShortGenotype").InnerText);
+
+                var maxIterAttr = generalNode.Attributes.GetNamedItem("MaxIterationsWithoutImprovement");
+                if (maxIterAttr != null)
+                    geneticsConfiguration.MaxIterationsWithoutImprovement = Int32.Parse(maxIterAttr.InnerText);
             }
 
             private void CreateSelector()
