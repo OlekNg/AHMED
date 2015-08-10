@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Simulations>
-  <Simulation Id="SimulationId">
+  <Simulation Name="SimulationId">
     <Building Path="SampleBuilding.xml"/>
   
     <Genetics>
