@@ -214,7 +214,13 @@ namespace Genetics
                         geneticsConfiguration.MutationOperator = new ClassicMutation(Double.Parse(GetAttributeValueOfElement("Probability", "Mutation"), CultureInfo.InvariantCulture));
                         break;
                     case "PathDirection":
-                        geneticsConfiguration.MutationOperator = new PathDirectionMutation(GetBuilding(), Double.Parse(GetAttributeValueOfElement("Probability", "Mutation"), CultureInfo.InvariantCulture));
+                        var building = GetBuilding();
+                        if (geneticsConfiguration.ShortGenotype)
+                        {
+                            building.ShortGenotype = true;
+                            building.ApplySimpleEvacuationIfShortGenotype();
+                        }
+                        geneticsConfiguration.MutationOperator = new PathDirectionMutation(building, Double.Parse(GetAttributeValueOfElement("Probability", "Mutation"), CultureInfo.InvariantCulture));
                         break;
                     default:
                         throw new ArgumentException("Invalid mutation name");
@@ -223,16 +229,29 @@ namespace Genetics
 
             private void CreateLocalOptimizationOperator()
             {
+                Building building;
                 switch (GetAttributeValueOfElement("Type", "Transformer"))
                 {
                     case "None":
                         geneticsConfiguration.Transformer = null;
                         break;
                     case "ThreeSegmentLoopOptimizer":
-                        geneticsConfiguration.Transformer = new ThreeSegmentLoopOptimizer(GetBuilding(), Double.Parse(GetAttributeValueOfElement("Probability", "Transformer"), CultureInfo.InvariantCulture));
+                        building = GetBuilding();
+                        if (geneticsConfiguration.ShortGenotype)
+                        {
+                            building.ShortGenotype = true;
+                            building.ApplySimpleEvacuationIfShortGenotype();
+                        }
+                        geneticsConfiguration.Transformer = new ThreeSegmentLoopOptimizer(building, Double.Parse(GetAttributeValueOfElement("Probability", "Transformer"), CultureInfo.InvariantCulture));
                         break;
                     case "LocalOptimization":
-                        geneticsConfiguration.Transformer = new LocalOptimization(GetBuilding(), GetEvaluator());
+                        building = GetBuilding();
+                        if (geneticsConfiguration.ShortGenotype)
+                        {
+                            building.ShortGenotype = true;
+                            building.ApplySimpleEvacuationIfShortGenotype();
+                        }
+                        geneticsConfiguration.Transformer = new LocalOptimization(building, GetEvaluator());
                         break;
                     default:
                         throw new ArgumentException("Invalid transformer name");

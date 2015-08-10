@@ -20,12 +20,12 @@ namespace TestRunner
 
         public void Run()
         {
-            Console.Write("Running simulation collection from file {0}", xmlPath);
+            Console.WriteLine("Running simulation collection from file {0}", xmlPath);
             var xmlDocument = new XmlDocument();
             xmlDocument.Load(xmlPath);
 
             var nodes = xmlDocument.GetElementsByTagName("Simulation");
-            Console.Write("Found {0} simulations", nodes.Count);
+            Console.WriteLine("Found {0} simulations", nodes.Count);
             for (var i = 0; i < nodes.Count; i++)
             {
                 var node = nodes[i];
