@@ -118,28 +118,34 @@ namespace Main.ViewModel
             {
                 var iterData = IterationData.Where(x => x.Count > i);
 
+                var avgFit = iterData.Average(x => x[i].AverageFitness);
+                var stdDevFit = StandardDeviance(avgFit, iterData.Select(x => x[i].AverageFitness));
                 AvgFitness.Add(new IterationDataWithDeviance()
                 {
                     NumberOfIteration = i,
-                    Avg = iterData.Average(x => x[i].AverageFitness),
-                    Min = iterData.Min(x => x[i].AverageFitness),
-                    Max = iterData.Max(x => x[i].AverageFitness)
+                    Avg = avgFit,
+                    Min = avgFit - stdDevFit,
+                    Max = avgFit + stdDevFit
                 });
 
+                var avgBest = iterData.Average(x => x[i].BestChromosomeValue);
+                var stdDevBest = StandardDeviance(avgBest, iterData.Select(x => x[i].BestChromosomeValue));
                 BestChromosome.Add(new IterationDataWithDeviance()
                 {
                     NumberOfIteration = i,
-                    Avg = iterData.Average(x => x[i].BestChromosomeValue),
-                    Min = iterData.Min(x => x[i].BestChromosomeValue),
-                    Max = iterData.Max(x => x[i].BestChromosomeValue)
+                    Avg = avgBest,
+                    Min = avgBest - stdDevBest,
+                    Max = avgBest + stdDevBest
                 });
 
+                var avgTime = iterData.Average(x => x[i].IterationTimeInMillis);
+                var stdDevTime = StandardDeviance(avgTime, iterData.Select(x => x[i].IterationTimeInMillis));
                 IterationTime.Add(new IterationDataWithDeviance()
                 {
                     NumberOfIteration = i,
-                    Avg = iterData.Average(x => x[i].IterationTimeInMillis),
-                    Min = iterData.Min(x => x[i].IterationTimeInMillis),
-                    Max = iterData.Max(x => x[i].IterationTimeInMillis)
+                    Avg = avgTime,
+                    Min = avgTime - stdDevTime,
+                    Max = avgTime + stdDevTime
                 });
 
                 SelectionOverhead.Add(new DataPoint() { X = i, Y = iterData.Average(x => x[i].SelectionOverhead) });
@@ -149,6 +155,11 @@ namespace Main.ViewModel
                 TransformOverhead.Add(new DataPoint() { X = i, Y = iterData.Average(x => x[i].TransformOverhead) });
                 EvaluationOverhead.Add(new DataPoint() { X = i, Y = iterData.Average(x => x[i].EvaluationOverhead) });
             }
+        }
+
+        private double StandardDeviance(double avg, IEnumerable<double> samples)
+        {
+            return Math.Sqrt(samples.Sum(s => Math.Pow(s - avg, 2)) / samples.Count());
         }
     }
 }
