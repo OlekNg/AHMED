@@ -28,6 +28,7 @@ namespace Main.ViewModel
         }
         public ObservableCollection<ResultSet> ResultSets { get; set; }
         public ResultSet SelectedResultSet { get; set; }
+        public ResultSet SelectedResultSet2 { get; set; }
         public bool ShowAverageFitness { get; set; }
         public bool ShowBestChromosome { get; set; }
         public bool ShowCpuUsage { get; set; }

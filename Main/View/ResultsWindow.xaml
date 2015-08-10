@@ -51,7 +51,8 @@
                 </Grid.RowDefinitions>
 
                 <ScrollViewer>
-                    <ListView ItemsSource="{Binding ResultSets}" SelectedItem="{Binding SelectedResultSet}">
+                    <ListView ItemsSource="{Binding ResultSets}" SelectionMode="Multiple"
+                              SelectionChanged="SelectedResultSets_Changed">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock TextAlignment="Center"
@@ -93,10 +94,19 @@
                         <oxy:AreaSeries ItemsSource="{Binding SelectedResultSet.AvgFitness}"
                                     DataFieldX="NumberOfIteration" DataFieldY="Min"
                                     DataFieldX2="NumberOfIteration" DataFieldY2="Max"
-                                    Fill="LightBlue" StrokeThickness="0">
+                                    Fill="LightBlue" StrokeThickness="0" Opacity="0.5">
                         </oxy:AreaSeries>
                         <oxy:LineSeries ItemsSource="{Binding SelectedResultSet.AvgFitness}"
                                     DataFieldX="NumberOfIteration" DataFieldY="Avg" Smooth="True" Color="Blue"
+                                    StrokeThickness="1"/>
+
+                        <oxy:AreaSeries ItemsSource="{Binding SelectedResultSet2.AvgFitness}"
+                                    DataFieldX="NumberOfIteration" DataFieldY="Min"
+                                    DataFieldX2="NumberOfIteration" DataFieldY2="Max"
+                                    Fill="#7FFFB6C1" StrokeThickness="0" Opacity="0.5">
+                        </oxy:AreaSeries>
+                        <oxy:LineSeries ItemsSource="{Binding SelectedResultSet2.AvgFitness}"
+                                    DataFieldX="NumberOfIteration" DataFieldY="Avg" Smooth="True" Color="Red"
                                     StrokeThickness="1"/>
                     </oxy:PlotView.Series>
                 </oxy:PlotView>
@@ -111,6 +121,15 @@
                         </oxy:AreaSeries>
                         <oxy:LineSeries ItemsSource="{Binding SelectedResultSet.BestChromosome}"
                                     DataFieldX="NumberOfIteration" DataFieldY="Avg" Smooth="True" Color="Blue"
+                                    StrokeThickness="1"/>
+
+                        <oxy:AreaSeries ItemsSource="{Binding SelectedResultSet2.BestChromosome}"
+                                    DataFieldX="NumberOfIteration" DataFieldY="Min"
+                                    DataFieldX2="NumberOfIteration" DataFieldY2="Max"
+                                    Fill="#7FFFB6C1" StrokeThickness="0">
+                        </oxy:AreaSeries>
+                        <oxy:LineSeries ItemsSource="{Binding SelectedResultSet2.BestChromosome}"
+                                    DataFieldX="NumberOfIteration" DataFieldY="Avg" Smooth="True" Color="Red"
                                     StrokeThickness="1"/>
                     </oxy:PlotView.Series>
                 </oxy:PlotView>
@@ -140,6 +159,14 @@
                         </oxy:AreaSeries>
                         <oxy:LineSeries ItemsSource="{Binding SelectedResultSet.IterationTime}"
                                     DataFieldX="NumberOfIteration" DataFieldY="Avg" Smooth="True" Color="Blue"
+                                    StrokeThickness="1"/>
+                        <oxy:AreaSeries ItemsSource="{Binding SelectedResultSet2.IterationTime}"
+                                    DataFieldX="NumberOfIteration" DataFieldY="Min"
+                                    DataFieldX2="NumberOfIteration" DataFieldY2="Max"
+                                    Fill="#7FFFB6C1" StrokeThickness="0">
+                        </oxy:AreaSeries>
+                        <oxy:LineSeries ItemsSource="{Binding SelectedResultSet2.IterationTime}"
+                                    DataFieldX="NumberOfIteration" DataFieldY="Avg" Smooth="True" Color="Pink"
                                     StrokeThickness="1"/>
                     </oxy:PlotView.Series>
                 </oxy:PlotView>

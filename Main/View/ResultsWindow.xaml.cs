@@ -37,5 +37,28 @@ namespace Main.View
             IterationTimePlot.InvalidatePlot();
             CpuUsagePlot.InvalidatePlot();
         }
+
+        private void SelectedResultSets_Changed(object sender, SelectionChangedEventArgs e)
+        {
+            var list = sender as System.Windows.Controls.ListView;
+            var selected = list.SelectedItems;
+
+            if (selected.Count > 2)
+            {
+                var diff = selected.Count - 2;
+                for (var i = 0; i < diff; i++)
+                    selected.RemoveAt(0);
+            }
+
+            if (selected.Count > 0)
+                viewModel.SelectedResultSet = selected[0] as ResultSet;
+            else
+                viewModel.SelectedResultSet = null;
+
+            if (selected.Count > 1)
+                viewModel.SelectedResultSet2 = selected[1] as ResultSet;
+            else
+                viewModel.SelectedResultSet2 = null;
+        }
     }
 }
