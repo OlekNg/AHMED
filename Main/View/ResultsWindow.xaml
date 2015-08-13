@@ -166,7 +166,7 @@
                                     Fill="#7FFFB6C1" StrokeThickness="0">
                         </oxy:AreaSeries>
                         <oxy:LineSeries ItemsSource="{Binding SelectedResultSet2.IterationTime}"
-                                    DataFieldX="NumberOfIteration" DataFieldY="Avg" Smooth="True" Color="Pink"
+                                    DataFieldX="NumberOfIteration" DataFieldY="Avg" Smooth="True" Color="Red"
                                     StrokeThickness="1"/>
                     </oxy:PlotView.Series>
                 </oxy:PlotView>

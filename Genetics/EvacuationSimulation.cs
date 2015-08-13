@@ -167,6 +167,7 @@ namespace Genetics
                 geneticsConfiguration.InitialPopulationSize = Int32.Parse(generalNode.Attributes.GetNamedItem("PopulationSize").InnerText);
                 geneticsConfiguration.MaxIterations = Int32.Parse(generalNode.Attributes.GetNamedItem("MaxIterations").InnerText);
                 geneticsConfiguration.ShortGenotype = Boolean.Parse(generalNode.Attributes.GetNamedItem("ShortGenotype").InnerText);
+                geneticsConfiguration.CrossoverProbability = Double.Parse(GetAttributeValueOfElement("Probability", "Crossover"), CultureInfo.InvariantCulture);
 
                 var maxIterAttr = generalNode.Attributes.GetNamedItem("MaxIterationsWithoutImprovement");
                 if (maxIterAttr != null)

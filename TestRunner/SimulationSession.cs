@@ -12,7 +12,7 @@ namespace TestRunner
 {
     class SimulationSession
     {
-        private const int SimulationsInSession = 5;
+        private const int SimulationsInSession = 10;
         private double bestChromosomeValue = Double.MinValue;
         private int bestSessionChromosome = -1;
         private string xmlConfigurationPath;
