@@ -76,6 +76,7 @@
                     <Label Content="{Binding SelectedResultSet.BestChromosomeValue}" ContentStringFormat="Best chr. value: {0}"/>
                     <Label Content="{Binding SelectedResultSet.ChromosomeLength}" ContentStringFormat="Chromosome length: {0}"/>
                     <Label Content="{Binding SelectedResultSet.Iterations}" ContentStringFormat="# of iter: {0}"/>
+                    <Label Content="{Binding SelectedResultSet.IterationAvgTime}" ContentStringFormat="Iter avg: {0}ms"/>
                 </StackPanel>
             </Grid>
 

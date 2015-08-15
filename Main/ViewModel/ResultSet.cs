@@ -41,6 +41,7 @@ namespace Main.ViewModel
         public int MaxIterationsWithoutImprovement { get; set; }
         public string Iterations { get; set; }
         public int ChromosomeLength { get; set; }
+        public double IterationAvgTime { get; set; }
 
         public double BestChromosomeValue { get; set; }
 
@@ -112,6 +113,7 @@ namespace Main.ViewModel
 
             BestChromosomeValue = IterationData.SelectMany(x => x.Select(y => y.BestChromosomeValue)).Max();
             Iterations = String.Join(", ", IterationData.Select(x => x.Count));
+            IterationAvgTime = IterationData.SelectMany(x => x.Select(y => y.IterationTimeInMillis)).Average();
 
             var iterations = IterationData.Max(x => x.Count);
             for (int i = 0; i < iterations; i++)
